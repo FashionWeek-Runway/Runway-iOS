@@ -16,6 +16,7 @@
 		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
+		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -53,6 +54,7 @@
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC0D042F8A70E49A270DED /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,9 +118,13 @@
 		196AED3E298E5C16007A9E23 /* Runway-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				19A96222299131A900F952DA /* Network */,
+				19A962212991305D00F952DA /* UIComponents */,
+				19A962202991304600F952DA /* ViewModels */,
+				19A9621F2991303B00F952DA /* Views */,
+				19A9621E29912FD800F952DA /* Extensions */,
 				196AED3F298E5C16007A9E23 /* AppDelegate.swift */,
 				196AED41298E5C16007A9E23 /* SceneDelegate.swift */,
-				196AED43298E5C16007A9E23 /* ViewController.swift */,
 				196AED45298E5C16007A9E23 /* Main.storyboard */,
 				196AED48298E5C16007A9E23 /* Assets.xcassets */,
 				196AED4A298E5C16007A9E23 /* LaunchScreen.storyboard */,
@@ -144,6 +150,59 @@
 			path = "Runway-iOSUITests";
 			sourceTree = "<group>";
 		};
+		19A9621E29912FD800F952DA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				19A962252991322800F952DA /* UIColor+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		19A9621F2991303B00F952DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				19A96224299131D700F952DA /* Cells */,
+				19A96223299131CE00F952DA /* ViewControllers */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		19A962202991304600F952DA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19A962212991305D00F952DA /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		19A96222299131A900F952DA /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		19A96223299131CE00F952DA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				196AED43298E5C16007A9E23 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		19A96224299131D700F952DA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		64E03AECFFB4A359DADC4FD1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +213,6 @@
 				3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */,
 				F15D32FEB5CE2D18ECDB7D2A /* Pods-Runway-iOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -408,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				196AED44298E5C16007A9E23 /* ViewController.swift in Sources */,
+				19A962262991322800F952DA /* UIColor+.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 			);
