@@ -11,8 +11,12 @@ target 'Runway-iOS' do
   pod 'RxFlow'
   pod 'RxDataSources'
   pod 'RxGesture'
+  pod 'RxKeyboard'
 
   pod 'NMapsMap'
+  pod 'RxKakaoSDKCommon'
+  pod 'RxKakaoSDKAuth'
+  pod 'RxKakaoSDKUser'
 
   pod 'lottie-ios'
 
