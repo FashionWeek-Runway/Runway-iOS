@@ -14,6 +14,7 @@
 		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
+		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
 		19A962312991566A00F952DA /* SpoqaHanSansNeo-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19A9622C2991566900F952DA /* SpoqaHanSansNeo-Light.otf */; };
@@ -64,6 +65,7 @@
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		19A9622C2991566900F952DA /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
@@ -165,6 +167,14 @@
 			path = "Runway-iOSUITests";
 			sourceTree = "<group>";
 		};
+		1979591329939DC3009A4DDE /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				1979591129939D5F009A4DDE /* APIServiceURL.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +203,7 @@
 		19A96222299131A900F952DA /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				1979591329939DC3009A4DDE /* Constant */,
 				19A962532991785D00F952DA /* Interceptor */,
 				19A9623F29915D7700F952DA /* Services */,
 			);
@@ -566,6 +577,7 @@
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
+				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */,

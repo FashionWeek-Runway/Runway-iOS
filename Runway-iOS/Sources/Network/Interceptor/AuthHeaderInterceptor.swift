@@ -8,9 +8,9 @@
 import Alamofire
 
 class AuthHeaderInterceptor: HeaderInterceptor, AuthTokenHost {
-    func intercept(header: APIService.Header) {
+    func intercept(headers: inout HTTPHeaders) {
         if authToken != "" {
-            header.add(name: "Authorization", value: authToken)
+            headers.add(name: "Authorization", value: authToken)
         }
     }
 }
