@@ -28,11 +28,11 @@ extension KakaoLoginRequestable {
 //    func fetchKakaoUserInfo() -> Single<User> {
 //        return UserApi.shared.rx.me()
 //    }
-//    
+//
 //    func logoutKakao() -> Completable {
 //        return UserApi.shared.rx.logout()
 //    }
-//    
+//
 //    func unlink() -> Completable {
 //        return UserApi.shared.rx.unlink()
 //    }
