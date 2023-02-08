@@ -13,7 +13,6 @@ import RxAlamofire
 public class APIService {
     
     let baseURL: String
-    let useAuthHeader: Bool
     let configuration: URLSessionConfiguration
     let session: Session
     
@@ -22,15 +21,14 @@ public class APIService {
     
     private let disposeBag: DisposeBag = DisposeBag()
     
-    init(baseURL: String, useAuthHeader: Bool, isLogging: Bool = false, configuration: URLSessionConfiguration = .default) {
+    init(baseURL: String, isLogging: Bool = false, configuration: URLSessionConfiguration = .default) {
         self.baseURL = baseURL
-        self.useAuthHeader = useAuthHeader
         self.configuration = configuration
         
         self.session = Session(configuration: configuration, eventMonitors: isLogging ? [self.eventLogger] : [])
     }
     
-    func request(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]? = nil) -> Observable<(HTTPURLResponse, Data)> {
+    func request(_ method: HTTPMethod, _ url: String, useAuthHeader: Bool = true, parameters: Parameters? = nil, encoding: ParameterEncoding = URLEncoding.default, headers: [String: String]? = nil) -> Observable<(HTTPURLResponse, Data)> {
         
         var httpHeaders = HTTPHeaders()
         if let headers = headers {
