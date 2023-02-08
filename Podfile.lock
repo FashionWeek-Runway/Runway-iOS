@@ -58,6 +58,7 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - SnapKit (5.6.0)
   - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - RxKakaoSDKCommon
   - RxKakaoSDKUser
   - RxKeyboard
+  - SnapKit (~> 5.6.0)
 
 SPEC REPOS:
   trunk:
@@ -94,6 +96,7 @@ SPEC REPOS:
     - RxKeyboard
     - RxRelay
     - RxSwift
+    - SnapKit
     - WeakMapTable
 
 SPEC CHECKSUMS:
@@ -116,8 +119,9 @@ SPEC CHECKSUMS:
   RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: a72e9dc4b72d57aea3c8e15cdd929eaae67288d8
+PODFILE CHECKSUM: 213f477083170e75da482b033114f68e47dbf28e
 
 COCOAPODS: 1.11.3

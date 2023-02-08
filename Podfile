@@ -18,6 +18,7 @@ target 'Runway-iOS' do
   pod 'RxKakaoSDKAuth'
   pod 'RxKakaoSDKUser'
 
+  pod 'SnapKit', '~> 5.6.0'
   pod 'lottie-ios'
 
   target 'Runway-iOSTests' do
