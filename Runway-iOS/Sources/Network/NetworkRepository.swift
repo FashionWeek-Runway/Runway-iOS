@@ -38,5 +38,5 @@ class NetworkRepository {
     
     let loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL)
     
-    let appleLoginService: AppleLoginService = AppleLoginService.shared
+    let appleLoginService: AppleService = AppleService.shared
 }

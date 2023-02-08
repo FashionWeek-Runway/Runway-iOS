@@ -35,9 +35,9 @@
 		19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962482991666D00F952DA /* HeaderInterceptor.swift */; };
 		19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9624F299171AC00F952DA /* AuthTokenHost.swift */; };
 		19A962522991735300F952DA /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962512991735300F952DA /* UserDefault.swift */; };
-		19BF2C772993FC4200F1134D /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleLoginService.swift */; };
+		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C782994029600F1134D /* AppleLoginRequestable.swift */; };
-		19BF2C7B2994059200F1134D /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C7A2994059200F1134D /* KakaoLoginService.swift */; };
+		19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -94,9 +94,9 @@
 		19A962482991666D00F952DA /* HeaderInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInterceptor.swift; sourceTree = "<group>"; };
 		19A9624F299171AC00F952DA /* AuthTokenHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
 		19A962512991735300F952DA /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
-		19BF2C762993FC4200F1134D /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
+		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C782994029600F1134D /* AppleLoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestable.swift; sourceTree = "<group>"; };
-		19BF2C7A2994059200F1134D /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestable.swift; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC0D042F8A70E49A270DED /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +140,7 @@
 			children = (
 				194F954D2993C4610016DDFF /* LoginRequestable.swift */,
 				19BF2C782994029600F1134D /* AppleLoginRequestable.swift */,
+				19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */,
 			);
 			path = Requestable;
 			sourceTree = "<group>";
@@ -330,8 +331,7 @@
 				19A9623D29915D7400F952DA /* APIService.swift */,
 				19A9624329915F5600F952DA /* APIEventLogger.swift */,
 				194F95442993B7890016DDFF /* LoginService.swift */,
-				19BF2C762993FC4200F1134D /* AppleLoginService.swift */,
-				19BF2C7A2994059200F1134D /* KakaoLoginService.swift */,
+				19BF2C762993FC4200F1134D /* AppleService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -635,12 +635,12 @@
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
 				194F95532993CE480016DDFF /* ServiceError.swift in Sources */,
-				19BF2C7B2994059200F1134D /* KakaoLoginService.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
+				19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */,
-				19BF2C772993FC4200F1134D /* AppleLoginService.swift in Sources */,
+				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,

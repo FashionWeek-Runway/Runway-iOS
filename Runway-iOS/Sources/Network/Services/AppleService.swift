@@ -16,9 +16,9 @@ struct AppleLoginResult {
     let authorizationCode: Data?
 }
 
-final class AppleLoginService: NSObject {
+final class AppleService: NSObject {
     
-    static let shared = AppleLoginService()
+    static let shared = AppleService()
     
     var appleLoginResult: AppleLoginResult? = nil
     
@@ -38,7 +38,7 @@ final class AppleLoginService: NSObject {
     }
 }
 
-extension AppleLoginService: ASAuthorizationControllerDelegate {
+extension AppleService: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:

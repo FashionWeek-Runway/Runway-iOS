@@ -13,6 +13,7 @@ protocol AppleLoginRequestable {
 
 extension AppleLoginRequestable {
     func loginApple(success: ((String) -> Void)? = nil, failed: ((Error?) -> Void)? = nil, cancelled: (() -> Void)? = nil) {
+        
         NetworkRepository.shared.appleLoginService.login(with: [.fullName, .email]) { (result, error) in
             guard let appleLoginResult = result,
                   let tokenData = appleLoginResult.identityToken,
