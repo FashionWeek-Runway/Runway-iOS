@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxKeyboard
+import SnapKit
 
 class RWButton: UIButton {
     
@@ -79,5 +83,10 @@ class RWButton: UIButton {
     
     private func configureUI() {
         self.layer.cornerRadius = 4.0
+        self.clipsToBounds = true
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(50)
+        }
     }
 }

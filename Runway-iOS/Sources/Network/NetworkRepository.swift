@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import Alamofire
 
-class NetworkRepository {
+final class NetworkRepository {
     static let shared = NetworkRepository()
     
     private init() {
@@ -36,7 +36,7 @@ class NetworkRepository {
     
     // MARK: - API Services
     
-    let loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL)
+    lazy var loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL)
     
-    let appleLoginService: AppleService = AppleService.shared
+    lazy var appleLoginService: AppleService = AppleService.shared
 }

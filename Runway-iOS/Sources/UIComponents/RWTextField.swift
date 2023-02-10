@@ -6,23 +6,43 @@
 //
 
 import UIKit
+
 import RxSwift
 import RxCocoa
 
-class RWTextField: UITextField {
+class RWTextField: UIView {
     
-    var disposeBag = DisposeBag()
+    private let disposeBag: DisposeBag = DisposeBag()
     
-    var bottomLine = CALayer()
+    let textField = UITextField()
     
-    override var placeholder: String? {
+    var bottomLine = UIView()
+
+    var focusColor: UIColor = .black
+    
+    var unfocusColor: UIColor = .gray300 {
         didSet {
-            self.attributedPlaceholder = NSAttributedString(string: placeholder ?? "", attributes: [.font: UIFont.font(.spoqaHanSansNeoRegular, ofSize: 16.0)])
+            bottomLine.backgroundColor = unfocusColor
+        }
+    }
+    
+    let secureToggleButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(named: "icon_pw"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_pw_off"), for: .selected)
+        button.isHidden = true
+        return button
+    }()
+    
+    var placeholder: String? {
+        didSet {
+            self.textField.attributedPlaceholder = NSAttributedString(string: placeholder ?? "", attributes: [.font: UIFont.font(.spoqaHanSansNeoRegular, ofSize: 16.0)])
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        textField.delegate = self
         configureUI()
     }
     
@@ -31,13 +51,52 @@ class RWTextField: UITextField {
     }
     
     private func configureUI() {
-        self.font = UIFont.font(.spoqaHanSansNeoRegular, ofSize: 16.0)
+        self.snp.makeConstraints {
+            $0.height.equalTo(48)
+        }
+        self.textField.font = UIFont.font(.spoqaHanSansNeoRegular, ofSize: 16.0)
         self.layer.cornerRadius = 0.0
         self.layer.borderWidth = 0.0
+
+        bottomLine.backgroundColor = unfocusColor
+        self.textField.borderStyle = UITextField.BorderStyle.none
         
-        bottomLine.frame = CGRect(x: 0.0, y: self.frame.height - 1, width: self.frame.width, height: 1.0)
-        bottomLine.backgroundColor = UIColor.gray300.cgColor
-        self.borderStyle = UITextField.BorderStyle.none
-        self.layer.addSublayer(bottomLine)
+        self.addSubview(bottomLine)
+        bottomLine.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+        
+        self.addSubview(secureToggleButton)
+        secureToggleButton.snp.makeConstraints {
+            $0.trailing.centerY.equalToSuperview()
+        }
+        
+        self.addSubview(textField)
+        textField.snp.makeConstraints {
+            $0.leading.top.bottom.equalToSuperview()
+            $0.trailing.equalTo(secureToggleButton.snp.leading)
+        }
+        
+        setupSecureButtonEvent()
+    }
+    
+    private func setupSecureButtonEvent() {
+        secureToggleButton.rx.tap.asDriver()
+            .drive(onNext: { [weak self] in
+                self?.textField.isSecureTextEntry.toggle()
+                self?.secureToggleButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension RWTextField: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.bottomLine.backgroundColor = focusColor
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.bottomLine.backgroundColor = unfocusColor
     }
 }

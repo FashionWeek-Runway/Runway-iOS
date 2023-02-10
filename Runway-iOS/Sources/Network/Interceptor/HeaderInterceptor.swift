@@ -8,5 +8,5 @@
 import Alamofire
 
 protocol HeaderInterceptor {
-    func intercept(header: inout HTTPHeaders)
+    func intercept(headers: inout HTTPHeaders)
 }
