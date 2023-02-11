@@ -6,12 +6,9 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import RxKeyboard
 import SnapKit
 
-class RWButton: UIButton {
+final class RWButton: UIButton {
     
     enum RWButtonType {
         case primary
@@ -79,6 +76,11 @@ class RWButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init(buttonType: RWButtonType) {
+        self.init()
+        self.type = buttonType
     }
     
     private func configureUI() {

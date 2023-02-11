@@ -33,6 +33,8 @@
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
+		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
+		198CA2B12997C8DB000457CE /* RWTextFieldWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B02997C8DB000457CE /* RWTextFieldWithButton.swift */; };
 		19917EF12994DC440016A175 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF02994DC440016A175 /* AppStep.swift */; };
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
@@ -112,6 +114,8 @@
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
+		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
+		198CA2B02997C8DB000457CE /* RWTextFieldWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextFieldWithButton.swift; sourceTree = "<group>"; };
 		19917EF02994DC440016A175 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 			children = (
 				19BF2C802994100F00F1134D /* RWButton.swift */,
 				1993ACF92994197700BEE983 /* RWTextField.swift */,
+				198CA2B02997C8DB000457CE /* RWTextFieldWithButton.swift */,
+				198CA2AA29976BA3000457CE /* RWPicker.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -722,6 +728,7 @@
 			files = (
 				194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */,
 				19A962522991735300F952DA /* UserDefault.swift in Sources */,
+				198CA2B12997C8DB000457CE /* RWTextFieldWithButton.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
@@ -736,6 +743,7 @@
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
+				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,

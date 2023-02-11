@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RWTextField: UIView {
+final class RWTextField: UIView {
     
     private let disposeBag: DisposeBag = DisposeBag()
     

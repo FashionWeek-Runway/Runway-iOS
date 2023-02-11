@@ -85,14 +85,12 @@ final class PhoneLoginViewController: BaseViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
             $0.leading.equalToSuperview().offset(17)
             $0.trailing.equalToSuperview().offset(-23)
-            $0.centerX.equalToSuperview()
         }
         
         loginButton.snp.makeConstraints {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-70)
             $0.leading.equalToSuperview().offset(17)
             $0.trailing.equalToSuperview().offset(-23)
-            $0.centerX.equalToSuperview()
         }
         
         RxKeyboard.instance.visibleHeight
