@@ -15,13 +15,6 @@ final class ForgotPasswordViewController: BaseViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let navigationTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.body1
-        label.text = "비밀번호 찾기"
-        return label
-    }()
-    
     private let guideTextLabel: UILabel = {
         let label = UILabel()
         let text = "휴대폰 번호를 입력해주세요"

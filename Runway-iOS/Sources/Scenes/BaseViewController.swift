@@ -10,6 +10,12 @@ import SnapKit
 
 class BaseViewController: UIViewController {
     
+    let navigationTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.body1
+        return label
+    }()
+    
     let navigationBarArea: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -32,6 +38,14 @@ class BaseViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
          self.view.endEditing(true)
    }
+    
+    func addNavigationTitleLabel() {
+        self.navigationBarArea.addSubview(navigationTitleLabel)
+        navigationTitleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(44)
+            $0.bottom.equalToSuperview().offset(-15)
+        }
+    }
     
     func addBackButton() {
         self.navigationBarArea.addSubview(backButton)

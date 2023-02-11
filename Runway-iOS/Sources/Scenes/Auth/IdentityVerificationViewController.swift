@@ -24,10 +24,22 @@ final class IdentityVerificationViewController: BaseViewController {
     
     private let guideTextLabel2: UILabel = {
         let label = UILabel()
-        let text = "인증문자가 으로 발송되었습니다."
-        let attributedString = NSMutableAttributedString(string: text, attributes: [.font: UIFont.headline3])
-        attributedString.addAttribute(.font, value: UIFont.subheadline1, range: (text as NSString).range(of: "를 입력해주세요"))
-        label.attributedText = attributedString
+        label.font = UIFont.body2
+        label.text = "인증문자가"
+        return label
+    }()
+    
+    let phoneNumberLabel: UILabel = {
+        let label = UILabel()
+        label.font = .body2M
+        label.text = ""
+        return label
+    }()
+    
+    private let guideTextLabel3: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.body2
+        label.text = "으로 발송되었습니다."
         return label
     }()
     
@@ -62,8 +74,10 @@ final class IdentityVerificationViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         addBackButton()
+        addNavigationTitleLabel()
+        navigationTitleLabel.text = "비밀번호 찾기"
         
-        self.view.addSubviews([guideTextLabel, guideTextLabel2, verificationNumberInputField, confirmButton])
+        self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -73,6 +87,17 @@ final class IdentityVerificationViewController: BaseViewController {
         guideTextLabel2.snp.makeConstraints {
             $0.top.equalTo(guideTextLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
+        }
+        
+        guideTextLabel3.snp.makeConstraints {
+            $0.top.equalTo(guideTextLabel2.snp.top)
+            $0.leading.equalToSuperview().offset(182)
+        }
+        
+        phoneNumberLabel.snp.makeConstraints {
+            $0.leading.equalTo(guideTextLabel.snp.trailing).offset(4)
+            $0.trailing.equalTo(guideTextLabel3.snp.leading).offset(1)
+            $0.top.equalTo(guideTextLabel)
         }
         
         verificationNumberInputField.snp.makeConstraints {
