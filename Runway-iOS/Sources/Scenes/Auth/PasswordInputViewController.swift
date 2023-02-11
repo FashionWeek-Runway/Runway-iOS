@@ -32,6 +32,24 @@ final class PasswordInputViewController: BaseViewController {
         return field
     }()
     
+    private let englishValidationLabel: RWCheckLabelView = {
+        let view = RWCheckLabelView()
+        view.textLabel.text = "영문"
+        return view
+    }()
+    
+    private let numberValidationLabel: RWCheckLabelView = {
+        let view = RWCheckLabelView()
+        view.textLabel.text = "숫자"
+        return view
+    }()
+    
+    private let lengthValidationLabel: RWCheckLabelView = {
+        let view = RWCheckLabelView()
+        view.textLabel.text = "8~16자"
+        return view
+    }()
+    
     private let newPasswordConfirmField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "새로운 비밀번호 확인"
@@ -40,6 +58,12 @@ final class PasswordInputViewController: BaseViewController {
         field.textField.isSecureTextEntry = true
         field.secureToggleButton.isSelected = true
         return field
+    }()
+    
+    private let passwordEqualValidationLabel: RWCheckLabelView = {
+        let view = RWCheckLabelView()
+        view.textLabel.text = "비밀번호 일치"
+        return view
     }()
     
     private let confirmButton: RWButton = {
@@ -65,7 +89,12 @@ final class PasswordInputViewController: BaseViewController {
         addNavigationTitleLabel()
         navigationTitleLabel.text = "비밀번호 찾기"
         
-        self.view.addSubviews([guideTextLabel, newPasswordField, newPasswordConfirmField, confirmButton])
+        let firstStackView = UIStackView(arrangedSubviews: [englishValidationLabel, numberValidationLabel, lengthValidationLabel])
+        firstStackView.axis = .horizontal
+        firstStackView.distribution = .fillProportionally
+        firstStackView.spacing = 14
+        
+        self.view.addSubviews([guideTextLabel, newPasswordField, firstStackView, newPasswordConfirmField, passwordEqualValidationLabel,confirmButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -78,10 +107,21 @@ final class PasswordInputViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
+        firstStackView.snp.makeConstraints {
+            $0.top.equalTo(newPasswordField.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(20)
+            $0.width.equalTo(204)
+        }
+        
         newPasswordConfirmField.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(newPasswordField.snp.bottom).offset(58)
+        }
+        
+        passwordEqualValidationLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalTo(newPasswordConfirmField.snp.bottom).offset(8)
         }
         
         confirmButton.snp.makeConstraints {

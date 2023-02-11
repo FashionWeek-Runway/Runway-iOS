@@ -25,7 +25,7 @@ class BaseViewController: UIViewController {
     
     var backButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "icon_left_black"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_back"), for: .normal)
         return button
     }()
     

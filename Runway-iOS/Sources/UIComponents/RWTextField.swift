@@ -70,6 +70,7 @@ final class RWTextField: UIView {
         self.addSubview(secureToggleButton)
         secureToggleButton.snp.makeConstraints {
             $0.trailing.centerY.equalToSuperview()
+            $0.width.equalTo(24)
         }
         
         self.addSubview(textField)
