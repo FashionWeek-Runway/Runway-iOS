@@ -63,4 +63,17 @@ class BaseViewController: UIViewController {
             $0.height.equalTo(54)
         }
     }
+    
+    func addBlurEffect() {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.tag = 0
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(blurEffectView)
+    }
+    
+    func removeBlurEffect() {
+        self.view.viewWithTag(0)?.removeFromSuperview()
+    }
 }
