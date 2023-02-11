@@ -26,6 +26,9 @@ final class PasswordInputViewController: BaseViewController {
         let field = RWTextField()
         field.placeholder = "새로운 비밀번호 입력"
         field.secureToggleButton.isHidden = false
+        field.textField.isSecureTextEntry = true
+        field.textField.keyboardType = .asciiCapable
+        field.secureToggleButton.isSelected = true
         return field
     }()
     
@@ -33,6 +36,9 @@ final class PasswordInputViewController: BaseViewController {
         let field = RWTextField()
         field.placeholder = "새로운 비밀번호 확인"
         field.secureToggleButton.isHidden = false
+        field.textField.keyboardType = .asciiCapable
+        field.textField.isSecureTextEntry = true
+        field.secureToggleButton.isSelected = true
         return field
     }()
     
