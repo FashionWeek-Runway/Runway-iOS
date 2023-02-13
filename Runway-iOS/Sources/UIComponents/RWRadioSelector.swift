@@ -87,7 +87,8 @@ final class RWRadioSelectorView: UIView {
                     self?.currentOption = nil
                     self?.leadingOptionButton.isSelected = false
                 } else {
-                    self?.currentOption = self?.leadingOptionButton.currentTitle
+                    self?.leadingOptionButton.isSelected = true
+                    self?.currentOption = self?.leadingOptionButton.attributedTitle(for: .normal)?.string
                     self?.trailingOptionButton.isSelected = false
                 }
             }).disposed(by: disposeBag)
@@ -98,7 +99,8 @@ final class RWRadioSelectorView: UIView {
                     self?.currentOption = nil
                     self?.trailingOptionButton.isSelected = false
                 } else {
-                    self?.currentOption = self?.leadingOptionButton.currentTitle
+                    self?.trailingOptionButton.isSelected = true
+                    self?.currentOption = self?.leadingOptionButton.attributedTitle(for: .normal)?.string
                     self?.leadingOptionButton.isSelected = false
                 }
             }).disposed(by: disposeBag)
