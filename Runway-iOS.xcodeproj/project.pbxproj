@@ -25,6 +25,8 @@
 		194F954E2993C4610016DDFF /* LoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954D2993C4610016DDFF /* LoginRequestable.swift */; };
 		194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* NetworkRepository.swift */; };
 		194F95532993CE480016DDFF /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95522993CE480016DDFF /* ServiceError.swift */; };
+		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
+		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
 		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
@@ -106,6 +108,8 @@
 		194F954D2993C4610016DDFF /* LoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestable.swift; sourceTree = "<group>"; };
 		194F954F2993C63F0016DDFF /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
 		194F95522993CE480016DDFF /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
+		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
 		196AED3C298E5C16007A9E23 /* Runway-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runway-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 				19A96236299157EC00F952DA /* Reactive+.swift */,
 				19BF2C822994153C00F1134D /* UIButton+.swift */,
 				19A3112D2996D23C0068FF41 /* UIView+.swift */,
+				196662AF299A69BD00BD0897 /* UIWindow+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				19BE015229980ED700E7C35D /* RWAlertViewController.swift */,
 				19BE01542998103200E7C35D /* RWAlertView.swift */,
 				197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */,
+				196662B1299A6AE200BD0897 /* RWToastView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -749,6 +755,7 @@
 				19BE01552998103200E7C35D /* RWAlertView.swift in Sources */,
 				198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */,
 				19917EF12994DC440016A175 /* AppStep.swift in Sources */,
+				196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */,
 				19345E8B2995613B00E1EF9A /* PolicyDetailViewController.swift in Sources */,
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
@@ -777,6 +784,7 @@
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
+				196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */,
 				194F954E2993C4610016DDFF /* LoginRequestable.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
