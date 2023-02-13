@@ -10,9 +10,9 @@
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
 		19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */; };
-		19345E832995603C00E1EF9A /* IdentityVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E822995603C00E1EF9A /* IdentityVerificationViewController.swift */; };
-		19345E85299560D900E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E84299560D900E1EF9A /* PhoneCertificationNumberInputViewController.swift */; };
-		19345E872995611400E1EF9A /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E862995611400E1EF9A /* PasswordInputViewController.swift */; };
+		19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E822995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift */; };
+		19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E84299560D900E1EF9A /* IdentityVerificationViewController.swift */; };
+		19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E862995611400E1EF9A /* NewPasswordInputViewController.swift */; };
 		19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E882995613300E1EF9A /* PolicyAgreementViewController.swift */; };
 		19345E8B2995613B00E1EF9A /* PolicyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8A2995613B00E1EF9A /* PolicyDetailViewController.swift */; };
 		19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8C2995615700E1EF9A /* ProfileSettingViewController.swift */; };
@@ -33,6 +33,7 @@
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
+		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
 		198CA2B12997C8DB000457CE /* RWTextFieldWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B02997C8DB000457CE /* RWTextFieldWithButton.swift */; };
 		198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B229980136000457CE /* RWCheckLabelView.swift */; };
@@ -90,9 +91,9 @@
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
 		19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
-		19345E822995603C00E1EF9A /* IdentityVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationViewController.swift; sourceTree = "<group>"; };
-		19345E84299560D900E1EF9A /* PhoneCertificationNumberInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertificationNumberInputViewController.swift; sourceTree = "<group>"; };
-		19345E862995611400E1EF9A /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
+		19345E822995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertificationNumberInputViewController.swift; sourceTree = "<group>"; };
+		19345E84299560D900E1EF9A /* IdentityVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationViewController.swift; sourceTree = "<group>"; };
+		19345E862995611400E1EF9A /* NewPasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordInputViewController.swift; sourceTree = "<group>"; };
 		19345E882995613300E1EF9A /* PolicyAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyAgreementViewController.swift; sourceTree = "<group>"; };
 		19345E8A2995613B00E1EF9A /* PolicyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyDetailViewController.swift; sourceTree = "<group>"; };
 		19345E8C2995615700E1EF9A /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
+		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
 		198CA2B02997C8DB000457CE /* RWTextFieldWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextFieldWithButton.swift; sourceTree = "<group>"; };
 		198CA2B229980136000457CE /* RWCheckLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWCheckLabelView.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				198CA2B229980136000457CE /* RWCheckLabelView.swift */,
 				19BE015229980ED700E7C35D /* RWAlertViewController.swift */,
 				19BE01542998103200E7C35D /* RWAlertView.swift */,
+				197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -419,9 +422,9 @@
 				19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */,
 				19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */,
 				19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */,
-				19345E822995603C00E1EF9A /* IdentityVerificationViewController.swift */,
-				19345E862995611400E1EF9A /* PasswordInputViewController.swift */,
-				19345E84299560D900E1EF9A /* PhoneCertificationNumberInputViewController.swift */,
+				19345E822995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift */,
+				19345E862995611400E1EF9A /* NewPasswordInputViewController.swift */,
+				19345E84299560D900E1EF9A /* IdentityVerificationViewController.swift */,
 				19345E882995613300E1EF9A /* PolicyAgreementViewController.swift */,
 				19345E8A2995613B00E1EF9A /* PolicyDetailViewController.swift */,
 				19345E8C2995615700E1EF9A /* ProfileSettingViewController.swift */,
@@ -756,19 +759,20 @@
 				19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
-				19345E832995603C00E1EF9A /* IdentityVerificationViewController.swift in Sources */,
+				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
-				19345E85299560D900E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
+				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
+				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */,
-				19345E872995611400E1EF9A /* PasswordInputViewController.swift in Sources */,
+				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,

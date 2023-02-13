@@ -15,45 +15,68 @@ final class IdentityVerificationViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
-        let text = "인증번호를 입력해주세요"
+        let text = "본인 인증이 필요해요"
         let attributedString = NSMutableAttributedString(string: text, attributes: [.font: UIFont.headline3])
-        attributedString.addAttribute(.font, value: UIFont.subheadline1, range: (text as NSString).range(of: "를 입력해주세요"))
+        attributedString.addAttribute(.font, value: UIFont.subheadline1, range: (text as NSString).range(of: "이 필요해요"))
         label.attributedText = attributedString
         return label
     }()
     
-    private let guideTextLabel2: UILabel = {
+    private let nameCaptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.body2
-        label.text = "인증문자가"
+        label.text = "이름"
+        label.font = .caption
         return label
     }()
     
-    let phoneNumberLabel: UILabel = {
-        let label = UILabel()
-        label.font = .body2M
-        label.text = ""
-        return label
-    }()
-    
-    private let guideTextLabel3: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.body2
-        label.text = "으로 발송되었습니다."
-        return label
-    }()
-    
-    private let verificationNumberInputField: RWTextFieldWithButton = {
-        let field = RWTextFieldWithButton()
-        field.placeholder = "숫자 6자리 입력"
-        field.rightButton.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
-        field.textField.keyboardType = .phonePad
+    private let nameField: RWTextField = {
+        let field = RWTextField()
+        field.placeholder = "이름"
         return field
     }()
     
-    private let confirmButton: RWButton = {
+    private let foreignPicker: RWPicker = RWPicker()
+    
+    private let genderCaptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "성별"
+        label.font = .caption
+        return label
+    }()
+    
+    private let genderRadioSelector: RWRadioSelectorView = RWRadioSelectorView("남", "여")
+    
+    private let birthDayCaptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "생년월일"
+        label.font = .caption
+        return label
+    }()
+    
+    private let birthDayField: RWTextField = {
+        let field = RWTextField()
+        field.placeholder = "19990101"
+        return field
+    }()
+    
+    private let PhoneVerificationCaptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "휴대폰 인증"
+        label.font = .caption
+        return label
+    }()
+    
+    private let mobileCarrierPicker: RWPicker = RWPicker()
+    
+    private let phoneNumberField: RWTextField = {
+        let field = RWTextField()
+        field.placeholder = "휴대폰 번호 입력(‘-’ 제외)"
+        return field
+    }()
+    
+    private let requestButton: RWButton = {
         let button = RWButton()
-        button.title = "인증 확인"
+        button.title = "인증 문자 요청"
         button.type = .primary
         return button
     }()
@@ -64,60 +87,99 @@ final class IdentityVerificationViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        verificationNumberInputField.startTimer(initialSecond: 180)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     override func configureUI() {
         super.configureUI()
         addBackButton()
-        addNavigationTitleLabel()
-        navigationTitleLabel.text = "비밀번호 찾기"
+        addProgressBar()
+        self.progressBar.setProgress(0.166, animated: false)
         
-        self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
+        self.view.addSubviews([guideTextLabel,
+                               nameCaptionLabel, nameField, foreignPicker,
+                               genderCaptionLabel, genderRadioSelector,
+                              birthDayCaptionLabel, birthDayField,
+                              PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField,
+                               requestButton])
         
         guideTextLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
             $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(40)
-        }
-        
-        guideTextLabel2.snp.makeConstraints {
-            $0.top.equalTo(guideTextLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(28)
         }
         
-        guideTextLabel3.snp.makeConstraints {
-            $0.top.equalTo(guideTextLabel2.snp.top)
-            $0.leading.equalToSuperview().offset(182)
+        nameCaptionLabel.snp.makeConstraints {
+            $0.top.equalTo(guideTextLabel.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(17)
         }
         
-        phoneNumberLabel.snp.makeConstraints {
-            $0.leading.equalTo(guideTextLabel.snp.trailing).offset(4)
-            $0.trailing.equalTo(guideTextLabel3.snp.leading).offset(1)
-            $0.top.equalTo(guideTextLabel)
+        nameField.snp.makeConstraints {
+            $0.top.equalTo(nameCaptionLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(20)
+            $0.width.equalTo(186)
         }
         
-        verificationNumberInputField.snp.makeConstraints {
-            $0.top.equalTo(guideTextLabel2.snp.bottom).offset(30)
+        foreignPicker.snp.makeConstraints {
+            $0.top.equalTo(nameCaptionLabel.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.leading.equalTo(nameField.snp.trailing).offset(14)
+        }
+        
+        genderCaptionLabel.snp.makeConstraints {
+            $0.top.equalTo(nameField.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        genderRadioSelector.snp.makeConstraints {
+            $0.top.equalTo(genderCaptionLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        confirmButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+        birthDayCaptionLabel.snp.makeConstraints {
+            $0.top.equalTo(genderRadioSelector.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        birthDayField.snp.makeConstraints {
+            $0.top.equalTo(birthDayCaptionLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        PhoneVerificationCaptionLabel.snp.makeConstraints {
+            $0.top.equalTo(birthDayField.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        mobileCarrierPicker.snp.makeConstraints {
+            $0.top.equalTo(PhoneVerificationCaptionLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        phoneNumberField.snp.makeConstraints {
+            $0.top.equalTo(mobileCarrierPicker.snp.bottom).offset(9)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        requestButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
         }
         
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
                 guard let self = self else { return }
                 let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
-                self.confirmButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
-                self.confirmButton.snp.updateConstraints {
+                self.requestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
+                self.requestButton.snp.updateConstraints {
                     $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
                     if keyboardHeight > 0 {
                         $0.leading.trailing.equalToSuperview()
@@ -130,5 +192,10 @@ final class IdentityVerificationViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func setViewFrameWhenKeyboardAppeared() {
+        
+    }
+
 }
 

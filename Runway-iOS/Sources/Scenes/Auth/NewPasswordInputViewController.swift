@@ -1,5 +1,5 @@
 //
-//  PasswordInputViewController.swift
+//  NewPasswordInputViewController.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/10.
@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 
-final class PasswordInputViewController: BaseViewController {
+final class NewPasswordInputViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()

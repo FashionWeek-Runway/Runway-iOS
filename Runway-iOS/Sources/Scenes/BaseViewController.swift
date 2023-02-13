@@ -29,6 +29,13 @@ class BaseViewController: UIViewController {
         return button
     }()
     
+    var progressBar: UIProgressView = {
+        let view = UIProgressView(progressViewStyle: .bar)
+        view.trackTintColor = .gray100
+        view.progressTintColor = .point
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -39,11 +46,14 @@ class BaseViewController: UIViewController {
          self.view.endEditing(true)
    }
     
-    func addNavigationTitleLabel() {
+    func addNavigationTitleLabel(_ title: String? = nil) {
         self.navigationBarArea.addSubview(navigationTitleLabel)
         navigationTitleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(44)
             $0.bottom.equalToSuperview().offset(-15)
+        }
+        if let title = title {
+            navigationTitleLabel.text = title
         }
     }
     
@@ -55,12 +65,21 @@ class BaseViewController: UIViewController {
         }
     }
     
+    func addProgressBar() {
+        self.view.addSubview(progressBar)
+        progressBar.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(navigationBarArea.snp.bottom)
+            $0.height.equalTo(4)
+        }
+    }
+    
     func configureUI() {
         self.view.addSubview(self.navigationBarArea)
         self.navigationBarArea.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.height.equalTo(54)
+            $0.height.equalTo(54).priority(.required)
         }
     }
     
