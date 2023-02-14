@@ -9,7 +9,14 @@ import Foundation
 import RxSwift
 import Alamofire
 
-final class NetworkRepository {
+protocol ServiceProviderType {
+    var appSettingService: AppSettingService { get }
+    var networkManager: NetworkReachabilityManager? { get }
+    var loginService: LoginService { get }
+    var appleLoginService: AppleService { get }
+}
+
+final class NetworkRepository: ServiceProviderType {
     static let shared = NetworkRepository()
     
     private init() {
@@ -18,9 +25,13 @@ final class NetworkRepository {
     
     var disposeBag: DisposeBag
     
+    // MARK: - App Setting Service (UserDefaults Value)
+    
+    lazy var appSettingService: AppSettingService = AppSettingService.shared
+    
     // MARK: - Network Manager
     
-    let networkManager: NetworkReachabilityManager? = {
+    lazy var networkManager: NetworkReachabilityManager? = {
         let manager = NetworkReachabilityManager(host: "https://www.google.com/")
         manager?.startListening(onUpdatePerforming: { status in
             switch status {
@@ -36,7 +47,7 @@ final class NetworkRepository {
     
     // MARK: - API Services
     
-    lazy var loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL)
+    lazy var loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
     
     lazy var appleLoginService: AppleService = AppleService.shared
 }

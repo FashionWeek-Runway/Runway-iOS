@@ -7,9 +7,15 @@
 
 import UIKit
 
+import RxSwift
+import RxFlow
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let coordinator: FlowCoordinator = FlowCoordinator()
+    private let disposeBag: DisposeBag = DisposeBag()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -17,10 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        self.window = window
-        self.window?.rootViewController = MainLoginViewController()
-        self.window?.makeKeyAndVisible()
+//        let window = UIWindow(windowScene: windowScene)
+//        self.window = window
+//        self.window?.rootViewController = MainLoginViewController()
+//        self.window?.makeKeyAndVisible()
+        coordinatorLogStart()
+        coordinateToAppFlow(with: windowScene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -50,7 +58,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
+    
+    private func coordinateToAppFlow(with windowScene: UIWindowScene) {
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
+        
+        let provider: ServiceProviderType = NetworkRepository.shared
+        let appFlow = AppFlow(with: window, provider: provider)
+        let appStepper = AppStepper(provider: provider)
+        
+        coordinator.coordinate(flow: appFlow, with: appStepper)
+        
+        // TODO: 일단 무조건 로그인으로 진입하도록 설정
+        appStepper.steps.accept(AppStep.loginRequired)
+        
+        window.makeKeyAndVisible()
+    }
+    
+    private func coordinatorLogStart() {
+        coordinator.rx.willNavigate
+            .subscribe(onNext: { flow, step in
+                let currentFlow = "\(flow)".split(separator: ".").last ?? "no flow"
+                print("➡️ will navigate to flow = \(currentFlow) and step = \(step)")
+            })
+            .disposed(by: disposeBag)
+        
+        // didNavigate
+    }
 }
 

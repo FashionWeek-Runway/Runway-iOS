@@ -9,16 +9,17 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import ReactorKit
 import RxDataSources
 
 final class CategorySettingViewController: BaseViewController {
     
     private lazy var guideTextLabel: UILabel = {
         let label = UILabel()
-        let text = "\(self.userName ?? "")님의 옷 스타일을\n선택해주세요"
+        let text = "\(self.userName)님의 옷 스타일을\n선택해주세요"
         let attributedString = NSMutableAttributedString(string: text, attributes: [.font: UIFont.subheadline1])
         attributedString.addAttributes([.font: UIFont.headline3,
-            .foregroundColor: UIColor.primary], range: (text as NSString).range(of: "\(self.userName ?? "")"))
+                                        .foregroundColor: UIColor.primary], range: (text as NSString).range(of: "\(self.userName)"))
         label.attributedText = attributedString
         label.numberOfLines = 2
         return label
@@ -50,15 +51,31 @@ final class CategorySettingViewController: BaseViewController {
         return button
     }()
     
-    var userName: String? = nil
+    var userName: String
     
-    let dataSource = RxCollectionViewSectionedReloadDataSource<FashionStyleCollectionViewSectionModel> { dataSource, collectionView, indexPath, item -> UICollectionViewCell in
-        switch item {
-        case .defaultCell(let reactor):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FashionStyleCollectionViewCell.identifier, for: indexPath) as? FashionStyleCollectionViewCell else { return UICollectionViewCell() }
-            cell.reactor = reactor
-            return cell
-        }
+//    let dataSource = RxCollectionViewSectionedReloadDataSource<FashionStyleCollectionViewSectionModel> { dataSource, collectionView, indexPath, item -> UICollectionViewCell in
+//        switch item {
+//        case .defaultCell(let reactor):
+//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FashionStyleCollectionViewCell.identifier, for: indexPath) as? FashionStyleCollectionViewCell else { return UICollectionViewCell() }
+//            cell.reactor = reactor
+//            return cell
+//        }
+//    }
+    
+    private let dataSource = PublishRelay<[(String, Bool)]>()
+    
+    var disposeBag: DisposeBag = DisposeBag()
+    
+    // MARK: - initializer
+    
+    init(with reactor: CategorySettingReactor) {
+        self.userName = reactor.currentState.nickname ?? ""
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Life Cycle
@@ -92,6 +109,34 @@ final class CategorySettingViewController: BaseViewController {
         }
     }
 
+}
+
+extension CategorySettingViewController: View {
+    
+    func bind(reactor: CategorySettingReactor) {
+        fashionStyleCollectionView.dataSource = nil
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: CategorySettingReactor) {
+        fashionStyleCollectionView.rx.modelSelected(FashionStyleCollectionViewCellModel.self)
+            .map { Reactor.Action.selectCategory($0.title) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: CategorySettingReactor) {
+        reactor.state.map { $0.categories }
+            .bind(to: fashionStyleCollectionView.rx.items(cellIdentifier: FashionStyleCollectionViewCell.identifier, cellType: FashionStyleCollectionViewCell.self)) { indexPath, item, cell in
+                cell.titleLabel.text = item
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.selectedItems}
+            .bind(to: fashionStyleCollectionView.rx.items(cellIdentifier: FashionStyleCollectionViewCell.identifier, cellType: FashionStyleCollectionViewCell.self)) { indexPath, item, cell in
+                cell.isSelected = cell.titleLabel.text == item
+            }.disposed(by: disposeBag)
+    }
 }
 
 

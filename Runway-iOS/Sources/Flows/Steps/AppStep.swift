@@ -12,6 +12,7 @@ enum AppStep: Step {
     
     // Global
     case alert(String)
+    case actionSheet(String, String)
     
     // Login
     case loginRequired
@@ -26,8 +27,10 @@ enum AppStep: Step {
     case passwordInputRequired
     case policyAgreementIsRequired
     case policyDetailNeedToShow
-    case profileSettingIsRequired
-    case categorySettingIsRequired
+    case profileSettingIsRequired(profileImageURL: String?, nickname: String?)
+    case categorySettingIsRequired(profileImageURL: String?, nickname: String?)
     case SignUpIsCompleted
+    
+    
     
 }

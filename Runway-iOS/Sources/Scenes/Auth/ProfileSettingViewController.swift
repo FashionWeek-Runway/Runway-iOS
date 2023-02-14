@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import ReactorKit
 
 final class ProfileSettingViewController: BaseViewController {
     
@@ -38,7 +39,18 @@ final class ProfileSettingViewController: BaseViewController {
         return button
     }()
     
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+    
+    // MARK: - initializer
+    
+    init(with reactor: ProfileSettingReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -95,7 +107,37 @@ final class ProfileSettingViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
     }
-
 }
 
-
+extension ProfileSettingViewController: View {
+    func bind(reactor: ProfileSettingReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: ProfileSettingReactor) {
+        profileSettingView.rx.tap
+            .map { Reactor.Action.profileImageButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        nickNameField.textField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .map { Reactor.Action.enterNickname($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: ProfileSettingReactor) {
+        reactor.state.map { $0.profileImageData }
+            .compactMap { $0 }
+            .map { UIImage(data: $0) }
+            .bind(to: profileSettingView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.nextButtonEnabled }
+            .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+}

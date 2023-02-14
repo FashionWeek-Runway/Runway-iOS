@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import RxFlow
+import ReactorKit
 
 final class IdentityVerificationViewController: BaseViewController {
     
@@ -198,4 +200,14 @@ final class IdentityVerificationViewController: BaseViewController {
     }
 
 }
-
+//
+//extension IdentityVerificationViewController: View {
+//    func bind(reactor: Reactor) {
+//        bindAc
+//    }
+//
+//    func bindAction(reactor: Reactor) {
+//        self.rx.viewDidAppear
+//            .map {  }
+//    }
+//}

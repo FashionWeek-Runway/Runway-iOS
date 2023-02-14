@@ -22,7 +22,6 @@
 		193EEB042996C4B50093831A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EEB032996C4B50093831A /* BaseViewController.swift */; };
 		194F95452993B7890016DDFF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95442993B7890016DDFF /* LoginService.swift */; };
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
-		194F954E2993C4610016DDFF /* LoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954D2993C4610016DDFF /* LoginRequestable.swift */; };
 		194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* NetworkRepository.swift */; };
 		194F95532993CE480016DDFF /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95522993CE480016DDFF /* ServiceError.swift */; };
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
@@ -50,6 +49,9 @@
 		199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */; };
 		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
+		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
+		199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C59299BEBAC00877AAE /* SignUpService.swift */; };
+		199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -69,8 +71,6 @@
 		19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE015229980ED700E7C35D /* RWAlertViewController.swift */; };
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
-		19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C782994029600F1134D /* AppleLoginRequestable.swift */; };
-		19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
@@ -112,7 +112,6 @@
 		193EEB032996C4B50093831A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		194F95442993B7890016DDFF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		194F954D2993C4610016DDFF /* LoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestable.swift; sourceTree = "<group>"; };
 		194F954F2993C63F0016DDFF /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
 		194F95522993CE480016DDFF /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
@@ -144,6 +143,9 @@
 		199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
+		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
+		199B9C59299BEBAC00877AAE /* SignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpService.swift; sourceTree = "<group>"; };
+		199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsKakaoData.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -163,8 +165,6 @@
 		19BE015229980ED700E7C35D /* RWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertViewController.swift; sourceTree = "<group>"; };
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
-		19BF2C782994029600F1134D /* AppleLoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginRequestable.swift; sourceTree = "<group>"; };
-		19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestable.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -209,17 +209,9 @@
 			isa = PBXGroup;
 			children = (
 				19917EF32994DFC40016A175 /* AppFlow.swift */,
-				19345E9729956BF600E1EF9A /* Auth */,
-			);
-			path = Flows;
-			sourceTree = "<group>";
-		};
-		19345E9729956BF600E1EF9A /* Auth */ = {
-			isa = PBXGroup;
-			children = (
 				19917EF52994E34F0016A175 /* LoginFlow.swift */,
 			);
-			path = Auth;
+			path = Flows;
 			sourceTree = "<group>";
 		};
 		19345E9929956C1D00E1EF9A /* Steps */ = {
@@ -228,16 +220,6 @@
 				19917EF02994DC440016A175 /* AppStep.swift */,
 			);
 			path = Steps;
-			sourceTree = "<group>";
-		};
-		194F95432993B74C0016DDFF /* Requestable */ = {
-			isa = PBXGroup;
-			children = (
-				194F954D2993C4610016DDFF /* LoginRequestable.swift */,
-				19BF2C782994029600F1134D /* AppleLoginRequestable.swift */,
-				19BF2C7C299409CD00F1134D /* KakaoLoginRequestable.swift */,
-			);
-			path = Requestable;
 			sourceTree = "<group>";
 		};
 		194F95462993BD060016DDFF /* Responses */ = {
@@ -251,6 +233,7 @@
 		194F954C2993C1F60016DDFF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -391,7 +374,6 @@
 				194F95512993CE390016DDFF /* Errors */,
 				194F954C2993C1F60016DDFF /* Models */,
 				194F95462993BD060016DDFF /* Responses */,
-				194F95432993B74C0016DDFF /* Requestable */,
 				1979591329939DC3009A4DDE /* Constant */,
 				19A962532991785D00F952DA /* Interceptor */,
 				19A9623F29915D7700F952DA /* Services */,
@@ -474,6 +456,7 @@
 				19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */,
 				19345E942995686300E1EF9A /* MainLoginReactor.swift */,
 				196662BC299B73F400BD0897 /* CategorySettingReactor.swift */,
+				199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -485,6 +468,7 @@
 				19A9624329915F5600F952DA /* APIEventLogger.swift */,
 				194F95442993B7890016DDFF /* LoginService.swift */,
 				19BF2C762993FC4200F1134D /* AppleService.swift */,
+				199B9C59299BEBAC00877AAE /* SignUpService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -787,6 +771,7 @@
 				198CA2B12997C8DB000457CE /* RWTextFieldWithButton.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
+				199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */,
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
 				199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
@@ -805,11 +790,9 @@
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
-				19BF2C7D299409CD00F1134D /* KakaoLoginRequestable.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
-				19BF2C792994029600F1134D /* AppleLoginRequestable.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
@@ -824,10 +807,11 @@
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
+				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
+				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,
 				196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */,
-				194F954E2993C4610016DDFF /* LoginRequestable.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
 				199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */,

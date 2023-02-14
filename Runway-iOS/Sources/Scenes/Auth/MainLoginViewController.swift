@@ -52,14 +52,14 @@ final class MainLoginViewController: BaseViewController {
     
     // MARK: - initializer
     
-//    init(with reactor: MainLoginReactor) {
-//        super.init(nibName: nil, bundle: nil)
-//        self.reactor = reactor
-//    }
+    init(with reactor: MainLoginReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life cycle
     
@@ -97,5 +97,24 @@ final class MainLoginViewController: BaseViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(guideTextLabel.snp.bottom).offset(20)
         }
+    }
+}
+
+extension MainLoginViewController: View {
+    func bind(reactor: MainLoginReactor) {
+        kakaoLoginButton.rx.tap
+            .map { Reactor.Action.kakaoLoginButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        appleLoginButton.rx.tap
+            .map { Reactor.Action.appleLoginButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        phoneLoginButton.rx.tap
+            .map { Reactor.Action.phoneLoginButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
