@@ -128,6 +128,7 @@ final class PolicyAgreementViewController: BaseViewController {
         let button = RWButton()
         button.title = "다음"
         button.type = .primary
+        button.isEnabled = false
         return button
     }()
     
