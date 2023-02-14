@@ -13,6 +13,7 @@ enum FontName: String {
     case spoqaHanSansNeoMedium = "SpoqaHanSansNeo-Medium"
     case spoqaHanSansNeoRegular = "SpoqaHanSansNeo-Regular"
     case spoqaHanSansNeoThin = "SpoqaHanSansNeo-Thin"
+    case helvetica93ExtendedBlack = "Helvetica93-ExtendedBlack"
 }
 
 extension UIFont {

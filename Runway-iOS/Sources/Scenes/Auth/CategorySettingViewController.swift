@@ -13,8 +13,6 @@ import RxDataSources
 
 final class CategorySettingViewController: BaseViewController {
     
-    var userName: String? = nil
-    
     private lazy var guideTextLabel: UILabel = {
         let label = UILabel()
         let text = "\(self.userName ?? "")님의 옷 스타일을\n선택해주세요"
@@ -51,6 +49,8 @@ final class CategorySettingViewController: BaseViewController {
         button.isEnabled = false
         return button
     }()
+    
+    var userName: String? = nil
     
     let dataSource = RxCollectionViewSectionedReloadDataSource<FashionStyleCollectionViewSectionModel> { dataSource, collectionView, indexPath, item -> UICollectionViewCell in
         switch item {

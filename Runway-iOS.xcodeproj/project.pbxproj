@@ -48,6 +48,8 @@
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
 		199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */; };
 		199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */; };
+		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
+		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -140,6 +142,8 @@
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
 		199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
+		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -376,6 +380,7 @@
 				197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */,
 				196662B1299A6AE200BD0897 /* RWToastView.swift */,
 				196662B7299B561900BD0897 /* RWProfileSettingButton.swift */,
+				199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 		19A9622B2991529600F952DA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */,
 				19A9622D2991566A00F952DA /* SpoqaHanSansNeo-Bold.otf */,
 				19A9622C2991566900F952DA /* SpoqaHanSansNeo-Light.otf */,
 				19A962302991566A00F952DA /* SpoqaHanSansNeo-Medium.otf */,
@@ -646,6 +652,7 @@
 				19A962352991566A00F952DA /* SpoqaHanSansNeo-Medium.otf in Resources */,
 				196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */,
 				19A962322991566A00F952DA /* SpoqaHanSansNeo-Bold.otf in Resources */,
+				199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */,
 				19A962332991566A00F952DA /* SpoqaHanSansNeo-Regular.otf in Resources */,
 				19A962342991566A00F952DA /* SpoqaHanSansNeo-Thin.otf in Resources */,
 			);
@@ -793,6 +800,7 @@
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
 				196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */,
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
+				199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */,
 				194F95532993CE480016DDFF /* ServiceError.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,

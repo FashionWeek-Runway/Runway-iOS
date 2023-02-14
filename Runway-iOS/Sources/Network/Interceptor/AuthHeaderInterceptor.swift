@@ -10,7 +10,7 @@ import Alamofire
 class AuthHeaderInterceptor: HeaderInterceptor, AuthTokenHost {
     func intercept(headers: inout HTTPHeaders) {
         if authToken != "" {
-            headers.add(name: "Authorization", value: authToken)
+            headers.add(name: "X-AUTH-TOKEN", value: authToken)
         }
     }
 }
