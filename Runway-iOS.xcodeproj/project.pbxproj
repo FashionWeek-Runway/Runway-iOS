@@ -28,6 +28,8 @@
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
 		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
 		196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B7299B561900BD0897 /* RWProfileSettingButton.swift */; };
+		196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */; };
+		196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BC299B73F400BD0897 /* CategorySettingReactor.swift */; };
 		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
@@ -44,6 +46,8 @@
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
+		199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */; };
+		199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -112,6 +116,8 @@
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
+		196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCell.swift; sourceTree = "<group>"; };
+		196662BC299B73F400BD0897 /* CategorySettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingReactor.swift; sourceTree = "<group>"; };
 		196AED3C298E5C16007A9E23 /* Runway-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runway-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +138,8 @@
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
+		199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellReactor.swift; sourceTree = "<group>"; };
+		199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -251,6 +259,15 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		196662B9299B6C0D00BD0897 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */,
+				199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		196AED33298E5C16007A9E23 = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +331,14 @@
 				19345E9629956BEA00E1EF9A /* Flows */,
 			);
 			path = Flows;
+			sourceTree = "<group>";
+		};
+		199B9C50299BA39F00877AAE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
@@ -428,6 +453,8 @@
 		19A9623A29915B2100F952DA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C50299BA39F00877AAE /* Models */,
+				196662B9299B6C0D00BD0897 /* Cells */,
 				19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */,
 				19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */,
 				19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */,
@@ -440,6 +467,7 @@
 				19345E8E2995617100E1EF9A /* CategorySettingViewController.swift */,
 				19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */,
 				19345E942995686300E1EF9A /* MainLoginReactor.swift */,
+				196662BC299B73F400BD0897 /* CategorySettingReactor.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -753,8 +781,10 @@
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
+				199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
+				196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */,
 				19BE01552998103200E7C35D /* RWAlertView.swift in Sources */,
 				198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */,
 				19917EF12994DC440016A175 /* AppStep.swift in Sources */,
@@ -792,7 +822,9 @@
 				194F954E2993C4610016DDFF /* LoginRequestable.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
+				199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
+				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
