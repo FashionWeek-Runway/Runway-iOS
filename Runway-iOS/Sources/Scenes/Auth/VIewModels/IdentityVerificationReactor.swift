@@ -24,6 +24,7 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case birthDayInput(String)
         case mobileCarrierInput(String)
         case phoneNumberInput(String)
+        case requestButtonDidTap
     }
     
     enum Mutation {
@@ -92,6 +93,9 @@ final class IdentityVerificationReactor: Reactor, Stepper {
             return .just(.setMobileCarrier(mobileCarrier))
         case .phoneNumberInput(let phoneNumber):
             return .just(.setMobileCarrier(phoneNumber))
+        case .requestButtonDidTap:
+            
+            return .empty()
         }
     }
     
@@ -105,9 +109,9 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case .setGender(let gender):
             state.gender = state.gender != gender ? gender : nil
         case .setBirthDay(let birthDay):
-            state.birthDay = birthDay
+            state.birthDay = limitedLengthString(birthDay, length: 8)
         case .setMobileCarrier(let mobileCarrier):
-            state.mobileCarrier = mobileCarrier
+            state.mobileCarrier = limitedLengthString(mobileCarrier, length: 11)
         case .setPhoneNumber(let phoneNumber):
             state.phoneNumber = phoneNumber
         }
@@ -125,6 +129,15 @@ final class IdentityVerificationReactor: Reactor, Stepper {
             return true
         } else {
             return false
+        }
+    }
+    
+    private func limitedLengthString(_ str: String, length: Int) -> String { // limit
+        if str.count > length {
+            let index = str.index(str.startIndex, offsetBy: length)
+            return String(str[..<index])
+        } else {
+            return str
         }
     }
     

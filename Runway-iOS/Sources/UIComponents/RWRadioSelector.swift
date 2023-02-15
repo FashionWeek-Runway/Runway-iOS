@@ -12,7 +12,7 @@ import RxCocoa
 
 final class RWRadioSelectorView: UIView {
     
-    var currentOption: String? = nil
+    var selectedOption = PublishRelay<String?>()
     
     private let disposeBag = DisposeBag()
     
@@ -84,11 +84,11 @@ final class RWRadioSelectorView: UIView {
         leadingOptionButton.rx.tap.asDriver()
             .drive(onNext: { [weak self] in
                 if (self?.leadingOptionButton.isSelected == true) {
-                    self?.currentOption = nil
+                    self?.selectedOption.accept(nil)
                     self?.leadingOptionButton.isSelected = false
                 } else {
                     self?.leadingOptionButton.isSelected = true
-                    self?.currentOption = self?.leadingOptionButton.attributedTitle(for: .normal)?.string
+                    self?.selectedOption.accept(self?.leadingOptionButton.attributedTitle(for: .normal)?.string ?? "")
                     self?.trailingOptionButton.isSelected = false
                 }
             }).disposed(by: disposeBag)
@@ -96,11 +96,11 @@ final class RWRadioSelectorView: UIView {
         trailingOptionButton.rx.tap.asDriver()
             .drive(onNext: { [weak self] in
                 if (self?.trailingOptionButton.isSelected == true) {
-                    self?.currentOption = nil
+                    self?.selectedOption.accept(nil)
                     self?.trailingOptionButton.isSelected = false
                 } else {
                     self?.trailingOptionButton.isSelected = true
-                    self?.currentOption = self?.leadingOptionButton.attributedTitle(for: .normal)?.string
+                    self?.selectedOption.accept(self?.trailingOptionButton.attributedTitle(for: .normal)?.string ?? "")
                     self?.leadingOptionButton.isSelected = false
                 }
             }).disposed(by: disposeBag)

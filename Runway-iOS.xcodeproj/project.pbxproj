@@ -60,6 +60,8 @@
 		199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */; };
 		199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */; };
 		199B9C73299D061800877AAE /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C72299D061800877AAE /* PassThroughView.swift */; };
+		199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */; };
+		199B9C77299D1E2400877AAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C76299D1E2400877AAE /* GoogleService-Info.plist */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -162,6 +164,8 @@
 		199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
 		199B9C71299D031900877AAE /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		199B9C72299D061800877AAE /* PassThroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughView.swift; sourceTree = "<group>"; };
+		199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertificationReactor.swift; sourceTree = "<group>"; };
+		199B9C76299D1E2400877AAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -297,6 +301,7 @@
 		196AED3E298E5C16007A9E23 /* Runway-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C76299D1E2400877AAE /* GoogleService-Info.plist */,
 				19A9622A2991527F00F952DA /* Sources */,
 				19A962292991527500F952DA /* Resources */,
 			);
@@ -356,6 +361,7 @@
 				199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */,
 				199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */,
 				199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */,
+				199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -672,6 +678,7 @@
 			files = (
 				196AED4C298E5C16007A9E23 /* LaunchScreen.storyboard in Resources */,
 				19A962312991566A00F952DA /* SpoqaHanSansNeo-Light.otf in Resources */,
+				199B9C77299D1E2400877AAE /* GoogleService-Info.plist in Resources */,
 				19A962352991566A00F952DA /* SpoqaHanSansNeo-Medium.otf in Resources */,
 				196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */,
 				19A962322991566A00F952DA /* SpoqaHanSansNeo-Bold.otf in Resources */,
@@ -835,6 +842,7 @@
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
+				199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */,
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,

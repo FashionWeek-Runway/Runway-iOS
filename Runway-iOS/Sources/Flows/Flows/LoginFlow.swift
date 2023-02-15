@@ -31,6 +31,8 @@ final class LoginFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
+        case .toast(let message):
+            return makeToastMessage(message)
         case .back:
             return backScreen()
         case .dismiss:
@@ -58,6 +60,11 @@ final class LoginFlow: Flow {
         default:
             return .none
         }
+    }
+    
+    private func makeToastMessage(_ message: String) -> FlowContributors {
+        UIWindow.makeToastAnimation(message: message)
+        return .none
     }
     
     private func backScreen() -> FlowContributors {

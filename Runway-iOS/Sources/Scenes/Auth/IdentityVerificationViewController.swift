@@ -61,6 +61,7 @@ final class IdentityVerificationViewController: BaseViewController {
     
     private let birthDayField: RWTextField = {
         let field = RWTextField()
+        field.textField.keyboardType = .numberPad
         field.placeholder = "19990101"
         return field
     }()
@@ -81,6 +82,7 @@ final class IdentityVerificationViewController: BaseViewController {
     private let phoneNumberField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "휴대폰 번호 입력(‘-’ 제외)"
+        field.textField.keyboardType = .numberPad
         return field
     }()
     
@@ -197,7 +199,6 @@ final class IdentityVerificationViewController: BaseViewController {
         
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
-                self?.view.frame.origin.y -= keyboardHeight
                 guard let self = self else { return }
                 let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
                 self.requestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
@@ -232,9 +233,49 @@ extension IdentityVerificationViewController: View {
             .map { Reactor.Action.viewDidLoad }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        nameField.textField.rx.value
+            .orEmpty
+            .compactMap { Reactor.Action.nameInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        genderRadioSelector.selectedOption
+            .compactMap  { Reactor.Action.genderInput($0 ?? "") }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        birthDayField.textField.rx.value
+            .orEmpty
+            .compactMap  { Reactor.Action.birthDayInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mobileCarrierPicker.textField.rx.value
+            .orEmpty
+            .compactMap { Reactor.Action.mobileCarrierInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        phoneNumberField.textField.rx.value
+            .orEmpty
+            .compactMap { Reactor.Action.phoneNumberInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        requestButton.rx.tap
+            .map { Reactor.Action.requestButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: IdentityVerificationReactor) {
+        reactor.state.map { $0.birthDay }
+            .bind(to: birthDayField.textField.rx.value)
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.isMessageRequestEnabled }
+            .bind(to: requestButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import ReactorKit
 
 final class PhoneCertificationNumberInputViewController: BaseViewController {
     
@@ -46,6 +47,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     private let verificationNumberInputField: RWTextFieldWithButton = {
         let field = RWTextFieldWithButton()
         field.placeholder = "숫자 6자리 입력"
+        field.textField.textContentType = .oneTimeCode
         field.rightButton.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
         field.textField.keyboardType = .phonePad
         return field
@@ -55,8 +57,20 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         let button = RWButton()
         button.title = "인증 확인"
         button.type = .primary
+        button.isEnabled = false
         return button
     }()
+    
+    // MARK: - intializer
+    
+    init(with reactor: PhoneCertificationReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -130,3 +144,33 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     }
 }
 
+extension PhoneCertificationNumberInputViewController: View {
+    func bind(reactor: PhoneCertificationReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: PhoneCertificationReactor) {
+        rx.viewDidLoad
+            .map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        verificationNumberInputField.textField.rx.value
+            .orEmpty
+            .map { Reactor.Action.verificationNumberInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        confirmButton.rx.tap
+            .map { Reactor.Action.confirmButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: PhoneCertificationReactor) {
+        reactor.state.map { $0.isRequestEnabled }
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+}

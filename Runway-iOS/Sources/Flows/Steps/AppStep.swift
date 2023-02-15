@@ -14,6 +14,7 @@ enum AppStep: Step {
     case alert(String, String, [String], (UIAlertAction) -> Void)
     case actionSheet(String, String)
     case dismiss
+    case toast(String)
     
     case back
     

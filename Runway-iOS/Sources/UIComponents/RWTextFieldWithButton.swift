@@ -101,6 +101,7 @@ final class RWTextFieldWithButton: UIView {
     }
     
     // MARK: - timer
+    // TODO: - 나중에 viewModel로 옮길것...
     
     func startTimer(initialSecond: Int) {
         if let timer = self.timer, timer.isValid {
