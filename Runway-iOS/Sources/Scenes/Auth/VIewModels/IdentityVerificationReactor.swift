@@ -151,7 +151,12 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         guard let phoneNumber = currentState.phoneNumber else { return }
         provider.signUpService.checkPhoneNumberDuplicate(phoneNumber: phoneNumber).subscribe(onNext: { [weak self] (response, data) in
             if 200...299 ~= response.statusCode {
-                self?.steps.accept(AppStep.phoneCertificationNumberIsRequired)
+                guard let gender = self?.currentState.gender,
+                      let name = self?.currentState.name,
+                      let phone = self?.currentState.phoneNumber else { return }
+                self?.steps.accept(AppStep.phoneCertificationNumberIsRequired(gender: gender,
+                                                                              name: name,
+                                                                              phoneNumber: phone))
             } else {
                 print("error", data)
             }

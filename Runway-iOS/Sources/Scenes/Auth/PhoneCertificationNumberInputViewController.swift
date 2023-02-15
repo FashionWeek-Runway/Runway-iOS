@@ -88,6 +88,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         addBackButton()
         addNavigationTitleLabel()
         navigationTitleLabel.text = "비밀번호 찾기"
+        phoneNumberLabel.text = reactor?.initialState.phoneNumber ?? ""
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
         
@@ -107,9 +108,9 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         }
         
         phoneNumberLabel.snp.makeConstraints {
-            $0.leading.equalTo(guideTextLabel.snp.trailing).offset(4)
-            $0.trailing.equalTo(guideTextLabel3.snp.leading).offset(1)
-            $0.top.equalTo(guideTextLabel)
+            $0.leading.equalTo(guideTextLabel2.snp.trailing).offset(4)
+            $0.trailing.equalTo(guideTextLabel3.snp.leading).offset(-1)
+            $0.top.equalTo(guideTextLabel2)
         }
         
         verificationNumberInputField.snp.makeConstraints {

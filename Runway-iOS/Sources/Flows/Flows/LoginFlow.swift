@@ -21,6 +21,9 @@ final class LoginFlow: Flow {
         return navigationController
     }()
     
+    
+    private var signUpAsPhone: SignUpAsPhone?
+    
     // MARK: - initializer
     
     init(with provider: ServiceProviderType) {
@@ -39,19 +42,37 @@ final class LoginFlow: Flow {
             return dismissScreen()
         case .alert(let title, let message, let actions, let handler):
             return showAlertSheet(title: title, message: message, actions: actions, handler: handler)
+            
         case .loginRequired:
+            signUpAsPhone = nil
             return coordinateToMainLoginScreen()
+            
         case .phoneNumberLogin:
             return coordinateToPhoneLoginScreen()
+            
         case .identityVerificationIsRequired:
+            signUpAsPhone = SignUpAsPhone()
             return coordinateToIdentityVerificationScreen()
+            
+        case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
+            self.signUpAsPhone?.gender = gender
+            self.signUpAsPhone?.name = name
+            self.signUpAsPhone?.phone = phoneNumber
+            return coordinateToPhoneCertificationScreen()
+            
+        case .passwordInputRequired:
+            
+            
+            
         case .forgotPassword:
             return coordinateToForgotPasswordScreen()
+            
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
             return .none
         case .profileSettingIsRequired(let profileImageURL, let socialID):
             return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, socialID: socialID)
+            
         case .categorySettingIsRequired(let profileImageURL,
                                         let profileImageData,
                                         let socialID,
@@ -111,6 +132,13 @@ final class LoginFlow: Flow {
     private func coordinateToIdentityVerificationScreen() -> FlowContributors {
         let reactor = IdentityVerificationReactor(provider: provider)
         let viewController = IdentityVerificationViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToPhoneCertificationScreen() -> FlowContributors {
+        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhone?.phone ?? "")
+        let viewController = PhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }

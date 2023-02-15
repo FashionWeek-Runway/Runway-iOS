@@ -63,6 +63,7 @@
 		199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */; };
 		199B9C77299D1E2400877AAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C76299D1E2400877AAE /* GoogleService-Info.plist */; };
 		199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C78299D1F0500877AAE /* BaseResponse.swift */; };
+		199B9C7B299D28A900877AAE /* SignUpAsPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7A299D28A900877AAE /* SignUpAsPhone.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -168,6 +169,7 @@
 		199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCertificationReactor.swift; sourceTree = "<group>"; };
 		199B9C76299D1E2400877AAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		199B9C78299D1F0500877AAE /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		199B9C7A299D28A900877AAE /* SignUpAsPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhone.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
 				199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */,
+				199B9C7A299D28A900877AAE /* SignUpAsPhone.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
+				199B9C7B299D28A900877AAE /* SignUpAsPhone.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,

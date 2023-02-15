@@ -91,6 +91,6 @@ final class SignUpService: APIService {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "to")
         
-        return request(.get, "login/send", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
+        return request(.post, "login/send", useAuthHeader: false, parameters: params)
     }
 }

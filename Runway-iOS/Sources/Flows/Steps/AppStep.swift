@@ -27,7 +27,7 @@ enum AppStep: Step {
     
     // Sign Up
     case identityVerificationIsRequired
-    case phoneCertificationNumberIsRequired
+    case phoneCertificationNumberIsRequired(gender: String, name: String, phoneNumber: String)
     case passwordInputRequired
     case policyAgreementIsRequired
     case policyDetailNeedToShow

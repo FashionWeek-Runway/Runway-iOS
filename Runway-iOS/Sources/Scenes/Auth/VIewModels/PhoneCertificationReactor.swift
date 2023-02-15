@@ -28,7 +28,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     }
     
     struct State{
-        var phoneNumber: String
+        let phoneNumber: String
         var verificationNumber: String?
         var isRequestEnabled: Bool = false
     }
@@ -70,7 +70,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         case .setVerificationNumber(let string):
             state.verificationNumber = limitedLengthString(string, length: 6)
         }
-        state.isRequestEnabled = currentState.phoneNumber.count == 6
+        state.isRequestEnabled = state.verificationNumber?.count == 6
         return state
     }
     
@@ -95,7 +95,9 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     }
     
     private func checkVerification() {
-        provider.signUpService.checkVerificationNumber(verificationNumber: currentState.phoneNumber, phoneNumber: initialState.phoneNumber)
+        guard let verificationNumber = currentState.verificationNumber else { return }
+        provider.signUpService.checkVerificationNumber(verificationNumber: verificationNumber,
+                                                       phoneNumber: initialState.phoneNumber)
             .subscribe(onNext: { [weak self] (response, data) in
                 if 200...299 ~= response.statusCode {
                     self?.steps.accept(AppStep.passwordInputRequired)
