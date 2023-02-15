@@ -58,6 +58,7 @@
 		199B9C67299CE85000877AAE /* PolicyAgreementReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */; };
 		199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */; };
 		199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */; };
+		199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -157,6 +158,7 @@
 		199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyAgreementReactor.swift; sourceTree = "<group>"; };
 		199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompleteReactor.swift; sourceTree = "<group>"; };
 		199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneData.swift; sourceTree = "<group>"; };
+		199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -354,6 +356,14 @@
 			path = VIewModels;
 			sourceTree = "<group>";
 		};
+		199B9C6C299D00CC00877AAE /* Traits */ = {
+			isa = PBXGroup;
+			children = (
+				199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */,
+			);
+			path = Traits;
+			sourceTree = "<group>";
+		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +407,7 @@
 		19A96222299131A900F952DA /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C6C299D00CC00877AAE /* Traits */,
 				194F95512993CE390016DDFF /* Errors */,
 				194F954C2993C1F60016DDFF /* Models */,
 				194F95462993BD060016DDFF /* Responses */,
@@ -792,6 +803,7 @@
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
 				199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
+				199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */,
 				196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */,
 				19BE01552998103200E7C35D /* RWAlertView.swift in Sources */,
 				198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */,

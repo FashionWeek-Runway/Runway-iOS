@@ -37,7 +37,11 @@ final class IdentityVerificationViewController: BaseViewController {
         return field
     }()
     
-    private let foreignPicker: RWPicker = RWPicker(pickerData: ["내국인", "외국인"])
+    private let foreignPicker: RWPicker = {
+        let picker = RWPicker()
+        picker.pickerData = ["내국인", "외국인"]
+        return picker
+    }()
     
     private let genderCaptionLabel: UILabel = {
         let label = UILabel()
@@ -68,7 +72,11 @@ final class IdentityVerificationViewController: BaseViewController {
         return label
     }()
     
-    private let mobileCarrierPicker: RWPicker = RWPicker(pickerData: ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"])
+    private let mobileCarrierPicker: RWPicker = {
+        let picker = RWPicker()
+        picker.pickerData = ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"]
+        return picker
+    }()
     
     private let phoneNumberField: RWTextField = {
         let field = RWTextField()

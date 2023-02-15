@@ -11,10 +11,11 @@ import RxCocoa
 
 final class RWPicker: UIView {
     
-    private let disposeBag = DisposeBag()
+    private var disposeBag: DisposeBag? = DisposeBag()
     
-    let textField: UITextField = {
+    lazy var textField: UITextField = {
         let field = UITextField()
+        field.font = UIFont.body2
         field.textColor = .runwayBlack
         field.backgroundColor = .clear
         return field
@@ -25,7 +26,14 @@ final class RWPicker: UIView {
     let doneBarButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: nil)
         
     
-    var pickerData: [String] = ["가", "나", "다", "라", "마"]
+    var pickerData: [String] = [] {
+        didSet {
+            disposeBag = nil
+            disposeBag = DisposeBag()
+            setRx()
+            textField.text = pickerData.first
+        }
+    }
     
     var bottomLine = UIView()
     var focusColor: UIColor = .black
@@ -41,11 +49,6 @@ final class RWPicker: UIView {
     }()
     
     // MARK: - intializer
-    
-    convenience init(pickerData: [String]) {
-        self.init(frame: .zero)
-        self.pickerData = pickerData
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,6 +84,7 @@ final class RWPicker: UIView {
     }
     
     private func setRx() {
+        guard let disposeBag = disposeBag else { return }
         Observable.of(pickerData).bind(to: self.picker.rx.itemTitles) {
             _, item in
             return "\(item)"
