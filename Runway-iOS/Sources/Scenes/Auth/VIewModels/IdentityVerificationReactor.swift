@@ -18,13 +18,32 @@ final class IdentityVerificationReactor: Reactor, Stepper {
     
     enum Action {
         case viewDidLoad
+        case nameInput(String)
+        case isForeignInput(Bool)
+        case genderInput(String)
+        case birthDayInput(String)
+        case mobileCarrierInput(String)
+        case phoneNumberInput(String)
     }
     
     enum Mutation {
-        
+        case setName(String)
+        case setIsForeign(Bool)
+        case setGender(String)
+        case setBirthDay(String)
+        case setMobileCarrier(String)
+        case setPhoneNumber(String)
     }
     
     struct State{
+        var name: String? = nil
+        var isForeign: Bool = false
+        var gender: String? = nil
+        var birthDay: String? = nil
+        var mobileCarrier: String? = nil
+        var phoneNumber: String? = nil
+        
+        var isMessageRequestEnabled: Bool = false
     }
     
     private let disposeBag = DisposeBag()
@@ -61,6 +80,51 @@ final class IdentityVerificationReactor: Reactor, Stepper {
                 }
             })
             return .empty()
+        case .nameInput(let name):
+            return .just(.setName(name))
+        case .isForeignInput(let isForeign):
+            return .just(.setIsForeign(isForeign))
+        case .genderInput(let gender):
+            return .just(.setGender(gender))
+        case .birthDayInput(let birthDay):
+            return .just(.setBirthDay(birthDay))
+        case .mobileCarrierInput(let mobileCarrier):
+            return .just(.setMobileCarrier(mobileCarrier))
+        case .phoneNumberInput(let phoneNumber):
+            return .just(.setMobileCarrier(phoneNumber))
+        }
+    }
+    
+    func reduce(state: State, mutation: Mutation) -> State {
+        var state = state
+        switch mutation {
+        case .setName(let name):
+            state.name = name
+        case .setIsForeign(let isForeign):
+            state.isForeign = isForeign
+        case .setGender(let gender):
+            state.gender = state.gender != gender ? gender : nil
+        case .setBirthDay(let birthDay):
+            state.birthDay = birthDay
+        case .setMobileCarrier(let mobileCarrier):
+            state.mobileCarrier = mobileCarrier
+        case .setPhoneNumber(let phoneNumber):
+            state.phoneNumber = phoneNumber
+        }
+        
+        state.isMessageRequestEnabled = canRequest()
+        return state
+    }
+    
+    private func canRequest() -> Bool {
+        if currentState.name != nil
+            && currentState.gender != nil
+            && currentState.birthDay != nil
+            && currentState.mobileCarrier != nil
+            && currentState.phoneNumber != nil {
+            return true
+        } else {
+            return false
         }
     }
     

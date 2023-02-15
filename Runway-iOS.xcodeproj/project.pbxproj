@@ -57,6 +57,7 @@
 		199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */; };
 		199B9C67299CE85000877AAE /* PolicyAgreementReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */; };
 		199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */; };
+		199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -156,6 +157,7 @@
 		199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationReactor.swift; sourceTree = "<group>"; };
 		199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyAgreementReactor.swift; sourceTree = "<group>"; };
 		199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompleteReactor.swift; sourceTree = "<group>"; };
+		199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneData.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
+				199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
+				199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */,

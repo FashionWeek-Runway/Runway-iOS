@@ -18,7 +18,7 @@ final class LoginService: APIService {
         params.updateValue(password, forKey: "password")
         params.updateValue(phone, forKey: "phone")
         
-        return request(.get, "login", parameters: params)
+        return request(.get, "login", useAuthHeader:  false,parameters: params)
     }
     
     func loginAsKakao() -> Observable<(HTTPURLResponse, Data)> {

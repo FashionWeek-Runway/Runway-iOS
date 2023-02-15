@@ -80,6 +80,7 @@ final class IdentityVerificationViewController: BaseViewController {
         let button = RWButton()
         button.title = "인증 문자 요청"
         button.type = .primary
+        button.isEnabled = false
         return button
     }()
     
