@@ -92,8 +92,6 @@ final class IdentityVerificationViewController: BaseViewController {
         return button
     }()
     
-    var disposeBag = DisposeBag()
-
     // MARK: - initializer
     
     init(with reactor: IdentityVerificationReactor) {
@@ -117,15 +115,16 @@ final class IdentityVerificationViewController: BaseViewController {
         addProgressBar()
         self.progressBar.setProgress(0.166, animated: false)
         
-        self.view.addSubviews([guideTextLabel,
-                               nameCaptionLabel, nameField, foreignPicker,
-                               genderCaptionLabel, genderRadioSelector,
-                              birthDayCaptionLabel, birthDayField,
-                              PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField,
-                               requestButton])
+        self.view.addSubviews([requestButton])
+        self.keyboardSafeAreaView.addSubviews([guideTextLabel,
+                                               nameCaptionLabel, nameField, foreignPicker,
+                                               genderCaptionLabel, genderRadioSelector,
+                                              birthDayCaptionLabel, birthDayField,
+                                              PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField])
         
         guideTextLabel.snp.makeConstraints {
-            $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(40)
+            $0.top.equalToSuperview().offset(154)
+//            $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(28)
         }
@@ -198,6 +197,7 @@ final class IdentityVerificationViewController: BaseViewController {
         
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
+                self?.view.frame.origin.y -= keyboardHeight
                 guard let self = self else { return }
                 let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
                 self.requestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0

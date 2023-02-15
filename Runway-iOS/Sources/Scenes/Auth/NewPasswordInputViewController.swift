@@ -73,9 +73,7 @@ final class NewPasswordInputViewController: BaseViewController {
         button.isEnabled = false
         return button
     }()
-    
-    private let disposeBag = DisposeBag()
-    
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {

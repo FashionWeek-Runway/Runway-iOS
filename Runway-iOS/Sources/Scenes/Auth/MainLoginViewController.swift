@@ -47,8 +47,6 @@ final class MainLoginViewController: BaseViewController {
         return button
     }()
     
-    var disposeBag: DisposeBag = DisposeBag()
-    
     
     // MARK: - initializer
     

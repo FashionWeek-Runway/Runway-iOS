@@ -59,6 +59,7 @@
 		199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */; };
 		199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */; };
 		199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */; };
+		199B9C73299D061800877AAE /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C72299D061800877AAE /* PassThroughView.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -160,6 +161,7 @@
 		199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneData.swift; sourceTree = "<group>"; };
 		199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
 		199B9C71299D031900877AAE /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		199B9C72299D061800877AAE /* PassThroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassThroughView.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				196662B1299A6AE200BD0897 /* RWToastView.swift */,
 				196662B7299B561900BD0897 /* RWProfileSettingButton.swift */,
 				199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */,
+				199B9C72299D061800877AAE /* PassThroughView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
+				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,

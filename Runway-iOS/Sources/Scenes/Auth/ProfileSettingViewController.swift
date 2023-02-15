@@ -39,8 +39,6 @@ final class ProfileSettingViewController: BaseViewController {
         return button
     }()
     
-    var disposeBag = DisposeBag()
-    
     // MARK: - initializer
     
     init(with reactor: ProfileSettingReactor) {

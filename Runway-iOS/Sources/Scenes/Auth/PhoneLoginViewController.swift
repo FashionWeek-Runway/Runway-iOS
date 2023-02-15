@@ -48,8 +48,6 @@ final class PhoneLoginViewController: BaseViewController {
         return button
     }()
     
-    var disposeBag = DisposeBag()
-    
     // MARK: - intiailizer
     
     init(with reactor: PhoneLoginReactor) {

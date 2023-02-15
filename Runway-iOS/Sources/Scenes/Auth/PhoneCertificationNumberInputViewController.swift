@@ -58,8 +58,6 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         return button
     }()
     
-    private let disposeBag = DisposeBag()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {

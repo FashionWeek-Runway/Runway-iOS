@@ -39,8 +39,6 @@ final class ForgotPasswordViewController: BaseViewController {
         return button
     }()
     
-    var disposeBag = DisposeBag()
-    
     // MARK: - initializer
     
     init(with reactor: ForgotPasswordReactor) {

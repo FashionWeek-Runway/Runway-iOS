@@ -63,9 +63,7 @@ final class CategorySettingViewController: BaseViewController {
 //            return cell
 //        }
 //    }
-    
-    var disposeBag: DisposeBag = DisposeBag()
-    
+
     // MARK: - initializer
     
     init(with reactor: CategorySettingReactor) {
