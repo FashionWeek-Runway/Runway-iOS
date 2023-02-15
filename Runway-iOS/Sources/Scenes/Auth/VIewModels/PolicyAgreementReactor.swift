@@ -17,14 +17,35 @@ final class PolicyAgreementReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-
+        case allAgreeButtonDidTap
+        case usagePolicyAgreeButtonDidTap
+        case privacyPolicyAgreeButtonDidTap
+        case locationPolicyAgreeButtonDidTap
+        case marketingPolicyAgreeButtonDidTap
+        
+        case usagePolicyDetailButtonDidTap
+        case privacyPolicyDetailButtonDidTap
+        case locationPolicyDetailButtonDidTap
+        case marketingDetailButtonDidTap
+        case nextButtonDidTap
     }
     
     enum Mutation {
-        
+        case setAllAgree
+        case setUsagePolicyAgree
+        case setPrivacyPolicyAgree
+        case setLocationPolicyAgree
+        case setMarketingPolicyAgree
     }
     
-    struct State{
+    struct State {
+        var isAllAgreePolicy: Bool = false
+        var isAgreeUsagePolicy: Bool = false
+        var isAgreePrivacyPolicy: Bool = false
+        var isAgreeLocationPolicy: Bool = false
+        var isAgreeMarketingPolicy: Bool = false
+        
+        var isNextEnable: Bool = false
     }
     
     private let disposeBag = DisposeBag()
@@ -38,7 +59,75 @@ final class PolicyAgreementReactor: Reactor, Stepper {
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
-
+        switch action {
+            
+        case .allAgreeButtonDidTap:
+            return .just(.setAllAgree)
+        case .usagePolicyAgreeButtonDidTap:
+            return .just(.setUsagePolicyAgree)
+        case .privacyPolicyAgreeButtonDidTap:
+            return .just(.setPrivacyPolicyAgree)
+        case .locationPolicyAgreeButtonDidTap:
+            return .just(.setLocationPolicyAgree)
+        case .marketingPolicyAgreeButtonDidTap:
+            return .just(.setMarketingPolicyAgree)
+            
+            
+        case .usagePolicyDetailButtonDidTap:
+            steps.accept(AppStep.policyDetailNeedToShow)
+            return .empty()
+        case .privacyPolicyDetailButtonDidTap:
+            steps.accept(AppStep.policyDetailNeedToShow)
+            return .empty()
+        case .locationPolicyDetailButtonDidTap:
+            steps.accept(AppStep.policyDetailNeedToShow)
+            return .empty()
+        case .marketingDetailButtonDidTap:
+            steps.accept(AppStep.policyDetailNeedToShow)
+            return .empty()
+            
+        case .nextButtonDidTap:
+            steps.accept(AppStep.profileSettingIsRequired(profileImageURL: nil, kakaoID: nil))
+            return .empty()
+        }
+    }
+    
+    func reduce(state: State, mutation: Mutation) -> State {
+        var state = state
+        
+        switch mutation {
+        case .setAllAgree:
+            if state.isAllAgreePolicy == true {
+                state.isAllAgreePolicy = false
+                state.isAgreeUsagePolicy = false
+                state.isAgreePrivacyPolicy = false
+                state.isAgreeLocationPolicy = false
+                state.isAgreeMarketingPolicy = false
+            } else {
+                state.isAllAgreePolicy = true
+                state.isAgreeUsagePolicy = true
+                state.isAgreePrivacyPolicy = true
+                state.isAgreeLocationPolicy = true
+                state.isAgreeMarketingPolicy = true
+            }
+        case .setUsagePolicyAgree:
+            state.isAgreeUsagePolicy.toggle()
+        case .setPrivacyPolicyAgree:
+            state.isAgreePrivacyPolicy.toggle()
+        case .setLocationPolicyAgree:
+            state.isAgreeLocationPolicy.toggle()
+        case .setMarketingPolicyAgree:
+            state.isAgreeMarketingPolicy.toggle()
+        }
+        
+        if state.isAgreeUsagePolicy
+            && state.isAgreePrivacyPolicy
+            && state.isAgreeLocationPolicy {
+            state.isNextEnable = true
+        } else {
+            state.isNextEnable = false
+        }
+        return state
     }
     
 }

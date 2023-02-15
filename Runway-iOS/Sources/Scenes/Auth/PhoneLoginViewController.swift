@@ -20,11 +20,12 @@ final class PhoneLoginViewController: BaseViewController {
         return label
     }()
     
-    private let phoneNumberField: RWTextField {
+    private let phoneNumberField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "전화번호 입력"
         return field
     }()
+    
     private let passwordField: RWTextField = {
         let field = RWTextField()
         field.secureToggleButton.isHidden = false

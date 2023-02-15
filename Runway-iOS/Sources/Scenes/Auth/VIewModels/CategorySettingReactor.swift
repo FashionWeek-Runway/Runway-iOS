@@ -77,43 +77,43 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .nextButtonDidTap:
             // kakao login의 경우
             
-            guard let nickname = currentState.nickname,
-                  let imageUrl = initialState.profileImageURL,
-                  let kakaoID = initialState.socialID else { return .empty() }
-            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
+//            guard let nickname = currentState.nickname,
+//                  let imageUrl = initialState.profileImageURL,
+//                  let kakaoID = initialState.socialID else { return .empty() }
+//            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
+//            
+//            let requestDTO = SignUpAsKakaoData(categoryList: selectedCategoryIndex,
+//                                               profileImageData: initialState.profileImageData,
+//                                               nickname: nickname,
+//                                               profileImageURL: imageUrl,
+//                                               socialID: kakaoID,
+//                                               type: "KAKAO")
             
-            let requestDTO = SignUpAsKakaoData(categoryList: selectedCategoryIndex,
-                                               profileImageData: initialState.profileImageData,
-                                               nickname: nickname,
-                                               profileImageURL: imageUrl,
-                                               socialID: kakaoID,
-                                               type: "KAKAO")
-            
-            provider.signUpService.signUpAsKakao(requestDTO)
-                .subscribe(onNext: { [weak self] uploadResponse in
-                    print(uploadResponse)
-                    guard let statusCode = uploadResponse.response?.statusCode else {
-                        print(uploadResponse)
-                        return
-                    }
-                    switch statusCode {
-                    case 200...299:
-                        do {
-                            guard let data = uploadResponse.data else { return }
-                            let responseData = try JSONDecoder().decode(SocialSignUpResult.self, from: data)
-                            self?.provider.appSettingService.isKakaoLoggedIn = true
-                            self?.provider.appSettingService.lastLoginType = "kakao"
-                            self?.provider.appSettingService.isLoggedIn = true
-                            self?.provider.appSettingService.authToken = responseData.accessToken
-                            self?.provider.appSettingService.refreshToken = responseData.refreshToken
-                        } catch let error {
-                            print(error)
-                        }
-                    default:
-                        print(uploadResponse.response?.statusCode)
-                        break
-                    }
-                }).disposed(by: disposeBag)
+//            provider.signUpService.signUpAsKakao(requestDTO)
+//                .subscribe(onNext: { [weak self] uploadResponse in
+//                    print(uploadResponse)
+//                    guard let statusCode = uploadResponse.response?.statusCode else {
+//                        print(uploadResponse)
+//                        return
+//                    }
+//                    switch statusCode {
+//                    case 200...299:
+//                        do {
+//                            guard let data = uploadResponse.data else { return }
+//                            let responseData = try JSONDecoder().decode(SocialSignUpResult.self, from: data)
+//                            self?.provider.appSettingService.isKakaoLoggedIn = true
+//                            self?.provider.appSettingService.lastLoginType = "kakao"
+//                            self?.provider.appSettingService.isLoggedIn = true
+//                            self?.provider.appSettingService.authToken = responseData.accessToken
+//                            self?.provider.appSettingService.refreshToken = responseData.refreshToken
+//                        } catch let error {
+//                            print(error)
+//                        }
+//                    default:
+//                        print(uploadResponse.response?.statusCode)
+//                        break
+//                    }
+//                }).disposed(by: disposeBag)
             
             return .just(.tryLogin)
         }

@@ -8,10 +8,10 @@
 import Foundation
 
 struct SignUpAsKakaoData: Encodable {
-    let categoryList: [String]
-    let profileImageData: Data
-    let nickname: String
-    let profileImageURL: String
-    let socialID: String
-    let type: String
+    var categoryList: [String]? = nil
+    var profileImageData: Data? = nil
+    var nickname: String? = nil
+    var profileImageURL: String? = nil
+    var socialID: String? = nil
+    var type: String? = nil
 }

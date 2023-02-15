@@ -236,10 +236,60 @@ extension PolicyAgreementViewController: View {
     }
     
     private func bindAction(reactor: PolicyAgreementReactor) {
-
+        allAgreeButton.rx.tap
+            .map { Reactor.Action.allAgreeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        usagePolicyAgreeButton.rx.tap
+            .map { Reactor.Action.usagePolicyAgreeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        privacyPolicyAgreeButton.rx.tap
+            .map { Reactor.Action.privacyPolicyAgreeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        locationPolicyAgreeButton.rx.tap
+            .map { Reactor.Action.locationPolicyAgreeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        marketingAgreeButton.rx.tap
+            .map { Reactor.Action.marketingPolicyAgreeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        nextButton.rx.tap
+            .map { Reactor.Action.nextButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: PolicyAgreementReactor) {
-
+        reactor.state.map { $0.isAllAgreePolicy }
+            .bind(to: allAgreeButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAgreeUsagePolicy }
+            .bind(to: usagePolicyAgreeButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAgreePrivacyPolicy }
+            .bind(to: privacyPolicyAgreeButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAgreeLocationPolicy }
+            .bind(to: locationPolicyAgreeButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAgreeMarketingPolicy }
+            .bind(to: marketingAgreeButton.rx.isSelected)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isNextEnable }
+            .bind(to: nextButton.rx.isSelected)
+            .disposed(by: disposeBag)
     }
 }

@@ -36,6 +36,4 @@ enum AppStep: Step {
     case categorySettingIsRequired(profileImageURL: String?, profileImageData: Data, socialID: String?, nickname: String)
     case SignUpIsCompleted
     
-    
-    
 }

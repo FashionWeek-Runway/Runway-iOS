@@ -22,7 +22,9 @@ final class LoginFlow: Flow {
     }()
     
     
-    private var signUpAsPhone: SignUpAsPhone?
+    // MARK: - DTO
+    private var signUpASKakaoData: SignUpAsKakaoData?
+    private var signUpAsPhoneData: SignUpAsPhoneData?
     
     // MARK: - initializer
     
@@ -44,29 +46,30 @@ final class LoginFlow: Flow {
             return showAlertSheet(title: title, message: message, actions: actions, handler: handler)
             
         case .loginRequired:
-            signUpAsPhone = nil
+            signUpAsPhoneData = nil
             return coordinateToMainLoginScreen()
             
         case .phoneNumberLogin:
             return coordinateToPhoneLoginScreen()
             
         case .identityVerificationIsRequired:
-            signUpAsPhone = SignUpAsPhone()
+            signUpAsPhoneData = SignUpAsPhoneData()
             return coordinateToIdentityVerificationScreen()
             
         case .newPasswordInputRequired:
             return coordinateToNewPasswordInputScreen()
             
         case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
-            self.signUpAsPhone?.gender = gender
-            self.signUpAsPhone?.name = name
-            self.signUpAsPhone?.phone = phoneNumber
+            self.signUpAsPhoneData?.gender = gender
+            self.signUpAsPhoneData?.name = name
+            self.signUpAsPhoneData?.phone = phoneNumber
             return coordinateToPhoneCertificationScreen()
             
         case .passwordInputRequired:
             return coordinateToPasswordInputScreen()
             
-        case .policyAgreementIsRequired:
+        case .policyAgreementIsRequired(let password):
+            self.signUpAsPhoneData?.password = password
             return coordinateToPolicyAgreeScreen()
             
         case .forgotPassword:
@@ -149,7 +152,7 @@ final class LoginFlow: Flow {
     }
     
     private func coordinateToPhoneCertificationScreen() -> FlowContributors {
-        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhone?.phone ?? "")
+        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhoneData?.phone ?? "")
         let viewController = PhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

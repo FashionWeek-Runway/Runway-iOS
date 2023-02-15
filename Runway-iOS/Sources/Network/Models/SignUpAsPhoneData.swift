@@ -1,5 +1,5 @@
 //
-//  SignUpAsPhoneData.swift
+//  SignUpAsPhone.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/15.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SignUpAsPhoneData: Encodable {
-    let categoryList: [String]
-    let gender: [String]
-    let profileImageData: Data
-    let nickname: String
-    let name: String
-    let password: String
-    let phoneNumber: String
+struct SignUpAsPhoneData {
+    var categoryList: String? = nil
+    var gender: String? = nil
+    var profileImageData: Data? = nil
+    var name: String? = nil
+    var nickname: String? = nil
+    var password: String? = nil
+    var phone: String? = nil
 }
