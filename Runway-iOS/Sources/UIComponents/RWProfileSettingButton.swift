@@ -11,7 +11,7 @@ final class RWProfileSettingButton: UIButton {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "icon_my_large"))
-        imageView.contentMode = .scaleAspectFill
+        
         return imageView
     }()
     
@@ -55,6 +55,7 @@ final class RWProfileSettingButton: UIButton {
         bottomView.addSubview(bottomLabel)
         profileImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
+            $0.width.height.equalToSuperview()
         }
         
         bottomView.snp.makeConstraints {

@@ -98,7 +98,7 @@ final class MainLoginReactor: Reactor, Stepper {
     private func loginKakao() {
         self.provider.loginService.loginAsKakao()
             .subscribe { (response, data) in
-                if response.statusCode == 404 { // 가입 필요
+                if response.statusCode == 400 { // 가입 필요
                     do {
                         let responseData = try JSONDecoder().decode(LoginResponse.self, from: data)
                         self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL, kakaoID: responseData.result.kakaoID))

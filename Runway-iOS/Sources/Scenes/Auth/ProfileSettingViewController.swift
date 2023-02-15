@@ -116,6 +116,10 @@ extension ProfileSettingViewController: View {
     }
     
     private func bindAction(reactor: ProfileSettingReactor) {
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         profileSettingView.rx.tap
             .map { Reactor.Action.profileImageButtonDidTap }
             .bind(to: reactor.action)
