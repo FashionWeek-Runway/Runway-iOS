@@ -77,12 +77,13 @@ final class LoginFlow: Flow {
         }
 
         self.rootViewController.present(alert, animated: true)
+        return .none
     }
     
     private func coordinateToMainLoginScreen() -> FlowContributors {
         let reactor = MainLoginReactor(provider: provider)
         let viewController = MainLoginViewController(with: reactor)
-        self.rootViewController.setViewControllers([viewController], animated: false)
+        self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
