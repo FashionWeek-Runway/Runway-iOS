@@ -159,6 +159,7 @@
 		199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompleteReactor.swift; sourceTree = "<group>"; };
 		199B9C6A299CF70000877AAE /* SignUpAsPhoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneData.swift; sourceTree = "<group>"; };
 		199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
+		199B9C71299D031900877AAE /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		196AED33298E5C16007A9E23 = {
 			isa = PBXGroup;
 			children = (
+				199B9C6F299D02FA00877AAE /* ci_scripts */,
 				196AED3E298E5C16007A9E23 /* Runway-iOS */,
 				196AED55298E5C17007A9E23 /* Runway-iOSTests */,
 				196AED5F298E5C17007A9E23 /* Runway-iOSUITests */,
@@ -362,6 +364,14 @@
 				199B9C6D299D00CC00877AAE /* AuthTokenHost.swift */,
 			);
 			path = Traits;
+			sourceTree = "<group>";
+		};
+		199B9C6F299D02FA00877AAE /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				199B9C71299D031900877AAE /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
 			sourceTree = "<group>";
 		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
