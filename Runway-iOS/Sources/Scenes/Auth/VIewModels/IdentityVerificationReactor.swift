@@ -41,7 +41,7 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         var isForeign: Bool = false
         var gender: String? = nil
         var birthDay: String? = nil
-        var mobileCarrier: String? = nil
+        var mobileCarrier: String? = "SKT"
         var phoneNumber: String? = nil
         
         var isMessageRequestEnabled: Bool = false
@@ -92,9 +92,9 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case .mobileCarrierInput(let mobileCarrier):
             return .just(.setMobileCarrier(mobileCarrier))
         case .phoneNumberInput(let phoneNumber):
-            return .just(.setMobileCarrier(phoneNumber))
+            return .just(.setPhoneNumber(phoneNumber))
         case .requestButtonDidTap:
-            
+            checkNumberIsDuplicate()
             return .empty()
         }
     }
@@ -111,9 +111,9 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case .setBirthDay(let birthDay):
             state.birthDay = limitedLengthString(birthDay, length: 8)
         case .setMobileCarrier(let mobileCarrier):
-            state.mobileCarrier = limitedLengthString(mobileCarrier, length: 11)
+            state.mobileCarrier = mobileCarrier
         case .setPhoneNumber(let phoneNumber):
-            state.phoneNumber = phoneNumber
+            state.phoneNumber = limitedLengthString(phoneNumber, length: 11)
         }
         
         state.isMessageRequestEnabled = canRequest()
@@ -121,11 +121,17 @@ final class IdentityVerificationReactor: Reactor, Stepper {
     }
     
     private func canRequest() -> Bool {
-        if currentState.name != nil
-            && currentState.gender != nil
-            && currentState.birthDay != nil
-            && currentState.mobileCarrier != nil
-            && currentState.phoneNumber != nil {
+        guard let name = currentState.name,
+              let gender = currentState.gender,
+              let birthDay = currentState.birthDay,
+              let mobileCarrier = currentState.mobileCarrier,
+              let phoneNumber = currentState.phoneNumber else { return false }
+        
+        if !name.isEmpty
+            && !gender.isEmpty
+            && birthDay.count == 8
+            && !mobileCarrier.isEmpty
+            && 8...12 ~= phoneNumber.count {
             return true
         } else {
             return false
@@ -139,6 +145,18 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         } else {
             return str
         }
+    }
+    
+    private func checkNumberIsDuplicate() {
+        guard let phoneNumber = currentState.phoneNumber else { return }
+        provider.signUpService.checkPhoneNumberDuplicate(phoneNumber: phoneNumber).subscribe(onNext: { [weak self] (response, data) in
+            if 200...299 ~= response.statusCode {
+                self?.steps.accept(AppStep.phoneCertificationNumberIsRequired)
+            } else {
+                print("error", data)
+            }
+            
+        }).disposed(by: disposeBag)
     }
     
 }

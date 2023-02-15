@@ -50,11 +50,8 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).subscribe(onNext: { [weak self] (response, data) in
-                
-            })
-            .disposed(by: disposeBag)
-            
+            sendMessage()
+            return .empty()
         case .verificationNumberInput(let string):
             return .just(.setVerificationNumber(string))
         case .resendButtonDidTap:
@@ -62,18 +59,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
 //            return .just(.initializeTime)
             return .empty()
         case .confirmButtonDidTap:
-            
-            provider.signUpService.checkVerificationNumber(verificationNumber: currentState.phoneNumber)
-                .subscribe(onNext: { [weak self] (response, data) in
-                    if 200...299 ~= response.statusCode {
-                        
-                    } else {
-                        
-                    }
-                })
-                .disposed(by: disposeBag)
-            
-            steps.accept(AppStep.passwordInputRequired)
+            checkVerification()
             return .empty()
         }
     }
@@ -95,6 +81,29 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         } else {
             return str
         }
+    }
+    
+    private func sendMessage() {
+        provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).subscribe(onNext: { [weak self] (response, data) in
+            if 200...299 ~= response.statusCode {
+                print("good")
+            } else {
+                print("error", data)
+            }
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private func checkVerification() {
+        provider.signUpService.checkVerificationNumber(verificationNumber: currentState.phoneNumber, phoneNumber: initialState.phoneNumber)
+            .subscribe(onNext: { [weak self] (response, data) in
+                if 200...299 ~= response.statusCode {
+                    self?.steps.accept(AppStep.passwordInputRequired)
+                } else {
+                    print("error")
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 

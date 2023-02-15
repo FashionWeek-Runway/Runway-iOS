@@ -57,9 +57,10 @@ final class SignUpService: APIService {
         }, to: baseURL + "login/signup", method: .post, headers: headers)
     }
     
-    func checkVerificationNumber(verificationNumber: String) -> Observable<(HTTPURLResponse, Data)> {
+    func checkVerificationNumber(verificationNumber: String, phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
         var params = Parameters()
-        params.updateValue(verificationNumber, forKey: "phone")
+        params.updateValue(phoneNumber, forKey: "to")
+        params.updateValue(verificationNumber, forKey: "confirmNum")
         
         return request(.post, "login/check", useAuthHeader: false, parameters: params)
     }
@@ -68,14 +69,14 @@ final class SignUpService: APIService {
         var params = Parameters()
         params.updateValue(nickname, forKey: "nickname")
         
-        return request(.get, "login/check/nickname", useAuthHeader: false, parameters: params)
+        return request(.get, "login/check/nickname", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
     }
     
     func checkPhoneNumberDuplicate(phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "phone")
         
-        return request(.get, "login/check/phone", useAuthHeader: false, parameters: params)
+        return request(.get, "login/check/phone", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
     }
     
     func setUserPassword(phoneNumber: String, password: String) -> Observable<(HTTPURLResponse, Data)> {
@@ -90,6 +91,6 @@ final class SignUpService: APIService {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "to")
         
-        return request(.get, "login/send", useAuthHeader: false, parameters: params)
+        return request(.get, "login/send", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
     }
 }
