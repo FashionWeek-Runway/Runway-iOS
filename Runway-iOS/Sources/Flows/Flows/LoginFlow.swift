@@ -33,10 +33,16 @@ final class LoginFlow: Flow {
         switch step {
         case .back:
             return backScreen()
+        case .dismiss:
+            return dismissScreen()
+        case .alert(let title, let message, let actions, let handler):
+            return showAlertSheet(title: title, message: message, actions: actions, handler: handler)
         case .loginRequired:
             return coordinateToMainLoginScreen()
         case .phoneNumberLogin:
             return coordinateToPhoneLoginScreen()
+        case .identityVerificationIsRequired:
+            return coordinateToIdentityVerificationScreen()
         case .forgotPassword:
             return coordinateToForgotPasswordScreen()
         case .userIsLoggedIn:
@@ -59,6 +65,20 @@ final class LoginFlow: Flow {
         return .none
     }
     
+    private func dismissScreen() -> FlowContributors {
+        self.rootViewController.dismiss(animated: true)
+        return .none
+    }
+    
+    private func showAlertSheet(title: String, message: String, actions: [String], handler: @escaping ((UIAlertAction) -> Void)) -> FlowContributors {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        for action in actions {
+            alert.addAction(UIAlertAction(title: action, style: .default, handler: handler))
+        }
+
+        self.rootViewController.present(alert, animated: true)
+    }
+    
     private func coordinateToMainLoginScreen() -> FlowContributors {
         let reactor = MainLoginReactor(provider: provider)
         let viewController = MainLoginViewController(with: reactor)
@@ -76,6 +96,13 @@ final class LoginFlow: Flow {
     private func coordinateToForgotPasswordScreen() -> FlowContributors {
         let reactor = ForgotPasswordReactor(provider: provider)
         let viewController = ForgotPasswordViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToIdentityVerificationScreen() -> FlowContributors {
+        let reactor = IdentityVerificationReactor(provider: provider)
+        let viewController = IdentityVerificationViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }

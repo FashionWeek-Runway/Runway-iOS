@@ -1,5 +1,5 @@
 //
-//  PhoneLoginReactor.swift
+//  PolicyAgreementReactor.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/15.
@@ -12,14 +12,12 @@ import RxCocoa
 import RxFlow
 import ReactorKit
 
-final class PhoneLoginReactor: Reactor, Stepper {
+final class PolicyAgreementReactor: Reactor, Stepper {
     
     // MARK: - Events
     
     enum Action {
-        case forgotPasswordButtonDidTap
-        case loginButtonDidTap
-        case signUpButtonDidTap
+
     }
     
     enum Mutation {
@@ -27,7 +25,6 @@ final class PhoneLoginReactor: Reactor, Stepper {
     }
     
     struct State{
-        var isLoginEnable: Bool = false
     }
     
     private let disposeBag = DisposeBag()
@@ -41,16 +38,8 @@ final class PhoneLoginReactor: Reactor, Stepper {
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-        case .forgotPasswordButtonDidTap:
-            steps.accept(AppStep.forgotPassword)
-        case .loginButtonDidTap:
-            break
-        case .signUpButtonDidTap:
-            steps.accept(AppStep.identityVerificationIsRequired)
-            break
-        }
-        return .empty()
+
     }
     
 }
+

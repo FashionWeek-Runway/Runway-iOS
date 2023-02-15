@@ -132,6 +132,11 @@ extension ProfileSettingViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         nextButton.rx.tap
             .map { Reactor.Action.nextButtonDidTap }
             .bind(to: reactor.action)

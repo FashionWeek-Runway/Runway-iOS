@@ -54,6 +54,9 @@
 		199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */; };
 		199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */; };
 		199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */; };
+		199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */; };
+		199B9C67299CE85000877AAE /* PolicyAgreementReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */; };
+		199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -150,6 +153,9 @@
 		199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpResponse.swift; sourceTree = "<group>"; };
 		199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginReactor.swift; sourceTree = "<group>"; };
 		199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordReactor.swift; sourceTree = "<group>"; };
+		199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityVerificationReactor.swift; sourceTree = "<group>"; };
+		199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyAgreementReactor.swift; sourceTree = "<group>"; };
+		199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompleteReactor.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -340,6 +346,9 @@
 				196662BC299B73F400BD0897 /* CategorySettingReactor.swift */,
 				199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */,
 				199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */,
+				199B9C64299CE81C00877AAE /* IdentityVerificationReactor.swift */,
+				199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */,
+				199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -809,6 +818,7 @@
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
+				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
@@ -836,7 +846,9 @@
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
+				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,
+				199B9C67299CE85000877AAE /* PolicyAgreementReactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,6 +37,7 @@ final class PhoneLoginViewController: BaseViewController {
         let button = RWButton()
         button.title = "로그인"
         button.type = .primary
+        button.isEnabled = false
         return button
     }()
     
@@ -135,6 +136,11 @@ extension PhoneLoginViewController: View {
     private func bindAction(reactor: PhoneLoginReactor) {
         forgotPasswordButton.rx.tap
             .map { Reactor.Action.forgotPasswordButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        signUpButton.rx.tap
+            .map { Reactor.Action.signUpButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

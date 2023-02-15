@@ -19,6 +19,7 @@ final class ProfileSettingReactor: Reactor, Stepper {
     
     enum Action {
         case viewDidLoad
+        case backButtonDidTap
         case profileImageButtonDidTap
         case enterNickname(String)
         case nextButtonDidTap
@@ -64,8 +65,10 @@ final class ProfileSettingReactor: Reactor, Stepper {
                 .map { data in
                 return Mutation.setProfileImageData(data)
             }
-            
             return imageLoadMutation
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
+            return .empty()
         case .profileImageButtonDidTap:
             steps.accept(AppStep.actionSheet("사진 촬영", "사진 가져오기"))
             return .empty()

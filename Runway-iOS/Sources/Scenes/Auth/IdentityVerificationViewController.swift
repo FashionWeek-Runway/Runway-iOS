@@ -83,7 +83,18 @@ final class IdentityVerificationViewController: BaseViewController {
         return button
     }()
     
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+
+    // MARK: - initializer
+    
+    init(with reactor: IdentityVerificationReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -200,14 +211,21 @@ final class IdentityVerificationViewController: BaseViewController {
     }
 
 }
-//
-//extension IdentityVerificationViewController: View {
-//    func bind(reactor: Reactor) {
-//        bindAc
-//    }
-//
-//    func bindAction(reactor: Reactor) {
-//        self.rx.viewDidAppear
-//            .map {  }
-//    }
-//}
+
+extension IdentityVerificationViewController: View {
+    func bind(reactor: IdentityVerificationReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+
+    private func bindAction(reactor: IdentityVerificationReactor) {
+        self.rx.viewDidAppear
+            .map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: IdentityVerificationReactor) {
+        
+    }
+}

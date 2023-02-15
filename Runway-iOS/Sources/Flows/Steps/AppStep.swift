@@ -11,8 +11,9 @@ import RxFlow
 enum AppStep: Step {
     
     // Global
-    case alert(String)
+    case alert(String, String, [String], (UIAlertAction) -> Void)
     case actionSheet(String, String)
+    case dismiss
     
     case back
     
