@@ -69,7 +69,7 @@ final class PasswordInputViewController: BaseViewController {
     
     private let confirmButton: RWButton = {
         let button = RWButton()
-        button.title = "비밀번호 변경"
+        button.title = "다음"
         button.type = .primary
         button.isEnabled = false
         return button
@@ -178,6 +178,11 @@ extension PasswordInputViewController: View {
         passwordConfirmField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.passwordValidationFieldInput($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        confirmButton.rx.tap
+            .map { Reactor.Action.nextButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

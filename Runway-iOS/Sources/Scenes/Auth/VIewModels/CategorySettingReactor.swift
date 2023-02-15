@@ -30,16 +30,19 @@ final class CategorySettingReactor: Reactor, Stepper {
     }
     
     struct State {
-        var profileImageData: Data
-        var profileImageURL: String?
-        var nickname: String?
-        var socialID: String?
+//        var profileImageData: Data
+//        var profileImageURL: String?
+        var nickname: String? = nil
+//        var socialID: String?
         
         var isNextButtonEnabled: Bool = false
 
         
         var isSelected: [String: Bool]
         var categories: [String]
+        
+        var signUpAsKakaoData: SignUpAsKakaoData?
+        var signUpAsPhoneData: SignUpAsPhoneData?
     }
     
     // MARK: - Properties
@@ -55,14 +58,14 @@ final class CategorySettingReactor: Reactor, Stepper {
     
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
     let categoryForRequestId = ["미니멀": "1", "캐주얼": "2", "시티보이": "3", "스트릿": "4", "빈티지": "5", "페미닌": "6"]
-    init(provider: ServiceProviderType, _ profileImageUrl: String?, _ profileImageData: Data, _ nickname: String?, _ socialID: String?) {
+    init(provider: ServiceProviderType,
+         signUpAsKakaoData: SignUpAsKakaoData?,
+         signUpAsPhoneData: SignUpAsPhoneData?) {
         self.provider = provider
-        self.initialState = State(profileImageData: profileImageData,
-                                  profileImageURL: profileImageUrl,
-                                  nickname: nickname,
-                                  socialID: socialID,
+        self.initialState = State(nickname: signUpAsPhoneData?.nickname,
                                   isSelected: Dictionary(uniqueKeysWithValues: categories.map{ ($0, false) }),
-                                  categories: categories)
+                                  categories: categories,
+                                  signUpAsKakaoData: signUpAsKakaoData, signUpAsPhoneData: signUpAsPhoneData)
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -75,46 +78,49 @@ final class CategorySettingReactor: Reactor, Stepper {
             steps.accept(AppStep.back)
             return .empty()
         case .nextButtonDidTap:
-            // kakao login의 경우
-            
-//            guard let nickname = currentState.nickname,
-//                  let imageUrl = initialState.profileImageURL,
-//                  let kakaoID = initialState.socialID else { return .empty() }
-//            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
-//            
-//            let requestDTO = SignUpAsKakaoData(categoryList: selectedCategoryIndex,
-//                                               profileImageData: initialState.profileImageData,
-//                                               nickname: nickname,
-//                                               profileImageURL: imageUrl,
-//                                               socialID: kakaoID,
-//                                               type: "KAKAO")
-            
-//            provider.signUpService.signUpAsKakao(requestDTO)
-//                .subscribe(onNext: { [weak self] uploadResponse in
-//                    print(uploadResponse)
-//                    guard let statusCode = uploadResponse.response?.statusCode else {
+            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
+//            guard let nickname = initialState.nickname else { return .empty() }
+//
+//            if let kakaoID = initialState.socialID,
+//                let imageUrl = initialState.profileImageURL { // kakao login의 경우
+//                let requestDTO = SignUpAsKakaoData(categoryList: selectedCategoryIndex,
+//                                                   profileImageData: initialState.profileImageData,
+//                                                   nickname: nickname,
+//                                                   profileImageURL: imageUrl,
+//                                                   socialID: kakaoID,
+//                                                   type: "KAKAO")
+                
+//                provider.signUpService.signUpAsKakao(requestDTO)
+//                    .subscribe(onNext: { [weak self] uploadResponse in
 //                        print(uploadResponse)
-//                        return
-//                    }
-//                    switch statusCode {
-//                    case 200...299:
-//                        do {
-//                            guard let data = uploadResponse.data else { return }
-//                            let responseData = try JSONDecoder().decode(SocialSignUpResult.self, from: data)
-//                            self?.provider.appSettingService.isKakaoLoggedIn = true
-//                            self?.provider.appSettingService.lastLoginType = "kakao"
-//                            self?.provider.appSettingService.isLoggedIn = true
-//                            self?.provider.appSettingService.authToken = responseData.accessToken
-//                            self?.provider.appSettingService.refreshToken = responseData.refreshToken
-//                        } catch let error {
-//                            print(error)
+//                        guard let statusCode = uploadResponse.response?.statusCode else {
+//                            print(uploadResponse)
+//                            return
 //                        }
-//                    default:
-//                        print(uploadResponse.response?.statusCode)
-//                        break
-//                    }
-//                }).disposed(by: disposeBag)
+//                        switch statusCode {
+//                        case 200...299:
+//                            do {
+//                                guard let data = uploadResponse.data else { return }
+//                                let responseData = try JSONDecoder().decode(SocialSignUpResult.self, from: data)
+//                                self?.provider.appSettingService.isKakaoLoggedIn = true
+//                                self?.provider.appSettingService.lastLoginType = "kakao"
+//                                self?.provider.appSettingService.isLoggedIn = true
+//                                self?.provider.appSettingService.authToken = responseData.accessToken
+//                                self?.provider.appSettingService.refreshToken = responseData.refreshToken
+//                            } catch let error {
+//                                print(error)
+//                            }
+//                        default:
+//                            print(uploadResponse.response?.statusCode)
+//                            break
+//                        }
+//                    }).disposed(by: disposeBag)
+//            } else { // 핸드폰 로그인
+            guard let signUpAsPhoneData = currentState.signUpAsPhoneData else { return .empty() }
             
+            provider.signUpService.signUpAsPhone(userData: signUpAsPhoneData).subscribe(onNext: { [weak self] (request) in
+                print(request)
+            })            
             return .just(.tryLogin)
         }
     }
@@ -129,6 +135,10 @@ final class CategorySettingReactor: Reactor, Stepper {
             newState.isNextButtonEnabled = newState.isSelected.contains(where: { $0.value == true })
         case .tryLogin:
             break
+        }
+        
+        if let phoneData = newState.signUpAsPhoneData {
+            newState.signUpAsPhoneData?.categoryList = newState.categories
         }
         
         return newState

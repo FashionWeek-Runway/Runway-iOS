@@ -289,7 +289,7 @@ extension PolicyAgreementViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.isNextEnable }
-            .bind(to: nextButton.rx.isSelected)
+            .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
 }

@@ -24,13 +24,15 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     
     enum Mutation {
         case setVerificationNumber(String)
-//        case initializeTime
+        case setInvalidCertificationNumber
     }
     
     struct State{
         let phoneNumber: String
         var verificationNumber: String?
         var isRequestEnabled: Bool = false
+        
+        var invalidCertification = true
     }
     
     // MARK: - Properties
@@ -69,6 +71,8 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         switch mutation {
         case .setVerificationNumber(let string):
             state.verificationNumber = limitedLengthString(string, length: 6)
+        case .setInvalidCertificationNumber:
+            state.invalidCertification = true
         }
         state.isRequestEnabled = state.verificationNumber?.count == 6
         return state
@@ -96,6 +100,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     
     private func checkVerification() {
         guard let verificationNumber = currentState.verificationNumber else { return }
+        
         provider.signUpService.checkVerificationNumber(verificationNumber: verificationNumber,
                                                        phoneNumber: initialState.phoneNumber)
             .subscribe(onNext: { [weak self] (response, data) in

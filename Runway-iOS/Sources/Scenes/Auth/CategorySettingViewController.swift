@@ -67,7 +67,7 @@ final class CategorySettingViewController: BaseViewController {
     // MARK: - initializer
     
     init(with reactor: CategorySettingReactor) {
-        self.userName = reactor.currentState.nickname ?? ""
+        self.userName = reactor.initialState.nickname ?? ""
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }

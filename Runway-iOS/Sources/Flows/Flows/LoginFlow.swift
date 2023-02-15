@@ -85,6 +85,8 @@ final class LoginFlow: Flow {
                                         let profileImageData,
                                         let socialID,
                                         let nickname):
+            self.signUpAsPhoneData?.profileImageData = profileImageData
+            self.signUpAsPhoneData?.nickname = nickname
             return coordinateToCategorySettingScreen(profileImageURL: profileImageURL, profileImageData, nickname, socialID: socialID)
         default:
             return .none
@@ -181,7 +183,7 @@ final class LoginFlow: Flow {
     }
     
     private func coordinateToCategorySettingScreen(profileImageURL: String?, _ profileImageData: Data, _ nickname: String, socialID: String?) -> FlowContributors {
-        let reactor = CategorySettingReactor(provider: provider, profileImageURL, profileImageData, nickname, socialID)
+        let reactor = CategorySettingReactor(provider: provider, signUpAsKakaoData: self.signUpASKakaoData, signUpAsPhoneData: self.signUpAsPhoneData)
         let viewController = CategorySettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

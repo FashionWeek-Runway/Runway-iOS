@@ -112,12 +112,24 @@ final class PolicyAgreementReactor: Reactor, Stepper {
             }
         case .setUsagePolicyAgree:
             state.isAgreeUsagePolicy.toggle()
+            if state.isAgreeUsagePolicy == false {
+                state.isAllAgreePolicy = false
+            }
         case .setPrivacyPolicyAgree:
             state.isAgreePrivacyPolicy.toggle()
+            if state.isAgreePrivacyPolicy == false {
+                state.isAllAgreePolicy = false
+            }
         case .setLocationPolicyAgree:
             state.isAgreeLocationPolicy.toggle()
+            if state.isAgreeLocationPolicy == false {
+                state.isAllAgreePolicy = false
+            }
         case .setMarketingPolicyAgree:
             state.isAgreeMarketingPolicy.toggle()
+            if state.isAgreeMarketingPolicy == false {
+                state.isAllAgreePolicy = false
+            }
         }
         
         if state.isAgreeUsagePolicy

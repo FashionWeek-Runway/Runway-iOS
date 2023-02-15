@@ -35,27 +35,37 @@ final class SignUpService: APIService {
 //        }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
 //    }
 //
-//    func signUpAsPhone(userData: SignUpAsPhoneData) -> Observable<(UploadRequest)> {
-//        var params = Parameters()
-//        params.updateValue(userData.categoryList, forKey: "categoryList")
-//        params.updateValue(userData.gender, forKey: "gender")
-//        params.updateValue(userData.name, forKey: "name")
-//        params.updateValue(userData.nickname, forKey: "nickname")
-//        params.updateValue(userData.phoneNumber, forKey: "phone")
-//        params.updateValue(userData.password, forKey: "password")
-//
-//        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
-//
-//        return self.session.rx.upload(multipartFormData: { data in
-//            for (key, value) in params {
-//                data.append("\(value)".data(using: .utf8)!, withName: key)
-//            }
-//            data.append(userData.profileImageData,
-//                        withName: "multipartFile",
-//                        fileName: userData.nickname + ".png",
-//                        mimeType: "image/png")
-//        }, to: baseURL + "login/signup", method: .post, headers: headers)
-//    }
+    func signUpAsPhone(userData: SignUpAsPhoneData) -> Observable<(UploadRequest)> {
+        
+        guard let categoryList = userData.categoryList,
+              let gender = userData.gender,
+              let name = userData.name,
+              let nickname = userData.nickname,
+              let phoneNumber = userData.phone,
+              let password = userData.password,
+              let imageData = userData.profileImageData
+        else { return .empty() }
+        
+        var params = Parameters()
+        params.updateValue(categoryList, forKey: "categoryList")
+        params.updateValue(gender, forKey: "gender")
+        params.updateValue(name, forKey: "name")
+        params.updateValue(nickname, forKey: "nickname")
+        params.updateValue(phoneNumber, forKey: "phone")
+        params.updateValue(password, forKey: "password")
+
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+
+        return self.session.rx.upload(multipartFormData: { data in
+            for (key, value) in params {
+                data.append("\(value)".data(using: .utf8)!, withName: key)
+            }
+            data.append(imageData,
+                        withName: "multipartFile",
+                        fileName: nickname + ".png",
+                        mimeType: "image/png")
+        }, to: baseURL + "login/signup", method: .post, headers: headers)
+    }
     
     func checkVerificationNumber(verificationNumber: String, phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
         var params = Parameters()

@@ -8,7 +8,7 @@
 import Foundation
 
 struct SignUpAsPhoneData {
-    var categoryList: String? = nil
+    var categoryList: [String]? = nil
     var gender: String? = nil
     var profileImageData: Data? = nil
     var name: String? = nil

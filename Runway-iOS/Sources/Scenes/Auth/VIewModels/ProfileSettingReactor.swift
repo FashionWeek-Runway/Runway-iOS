@@ -60,12 +60,28 @@ final class ProfileSettingReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            guard let urlString = initialState.profileImageURL, let url = URL(string: urlString) else { return .empty() }
-            let imageLoadMutation = URLSession.shared.rx.data(request: URLRequest(url: url))
-                .map { data in
-                return Mutation.setProfileImageData(data)
+            
+            if let urlString = initialState.profileImageURL, // 이미지 URL이 있는 경우
+               let url = URL(string: urlString) {
+                let imageLoadMutation = URLSession.shared.rx.data(request: URLRequest(url: url))
+                    .map { data in
+                        return Mutation.setProfileImageData(data)
+                    }
+                return imageLoadMutation
+            } else { // 이미지 URL이 없는 경우(기본이미지)
+                do {
+                    if let imagePath = Bundle.main.path(forResource: "icon_my_large", ofType: "png") {
+                      let imageData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
+                      // Use imageData as needed
+                        return Observable.just(Mutation.setProfileImageData(imageData))
+                    } else {
+                      // Image not found in bundle
+                        return .empty()
+                    }
+                } catch {
+                    return .empty()
+                }
             }
-            return imageLoadMutation
         case .backButtonDidTap:
             steps.accept(AppStep.back)
             return .empty()

@@ -66,6 +66,7 @@
 		199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7C299D319E00877AAE /* NewPasswordInputReactor.swift */; };
 		199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */; };
 		199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */; };
+		199B9C83299D579400877AAE /* icon_my_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C82299D579400877AAE /* icon_my_large.png */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -174,6 +175,7 @@
 		199B9C7C299D319E00877AAE /* NewPasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordInputReactor.swift; sourceTree = "<group>"; };
 		199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
 		199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputReactor.swift; sourceTree = "<group>"; };
+		199B9C82299D579400877AAE /* icon_my_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_my_large.png; path = "Runway-iOS/Resources/Assets/Assets.xcassets/icon_my_large.imageset/icon_my_large.png"; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		196AED33298E5C16007A9E23 = {
 			isa = PBXGroup;
 			children = (
+				199B9C82299D579400877AAE /* icon_my_large.png */,
 				199B9C6F299D02FA00877AAE /* ci_scripts */,
 				196AED3E298E5C16007A9E23 /* Runway-iOS */,
 				196AED55298E5C17007A9E23 /* Runway-iOSTests */,
@@ -688,6 +691,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				199B9C83299D579400877AAE /* icon_my_large.png in Resources */,
 				196AED4C298E5C16007A9E23 /* LaunchScreen.storyboard in Resources */,
 				19A962312991566A00F952DA /* SpoqaHanSansNeo-Light.otf in Resources */,
 				199B9C77299D1E2400877AAE /* GoogleService-Info.plist in Resources */,
