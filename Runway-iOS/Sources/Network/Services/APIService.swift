@@ -39,6 +39,6 @@ public class APIService {
             authInterceptor.intercept(headers: &httpHeaders)
         }
         
-        return self.session.rx.responseData(method, url, parameters: parameters, encoding: encoding, headers: httpHeaders)
+        return self.session.rx.responseData(method, baseURL + url, parameters: parameters, encoding: encoding, headers: httpHeaders)
     }
 }

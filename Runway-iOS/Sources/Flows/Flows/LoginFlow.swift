@@ -21,13 +21,6 @@ final class LoginFlow: Flow {
         return navigationController
     }()
     
-    
-//    let categoryList: [String]?
-//    let nickname: String?
-//    let profileImageURL: String?
-//    let socialID: String?
-//    let type: String?
-    
     // MARK: - initializer
     
     init(with provider: ServiceProviderType) {
@@ -46,9 +39,10 @@ final class LoginFlow: Flow {
         case .profileSettingIsRequired(let profileImageURL, let nickname):
             return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, nickname: nickname)
         case .categorySettingIsRequired(let profileImageURL,
+                                        let profileImageData,
+                                        let socialID,
                                         let nickname):
-            return coordinateToCategorySettingScreen(profileImageURL: profileImageURL,
-                                                     nickname: nickname)
+            return coordinateToCategorySettingScreen(profileImageURL: profileImageURL, profileImageData, nickname, socialID: socialID)
         default:
             return .none
         }
@@ -69,8 +63,8 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToCategorySettingScreen(profileImageURL: String?, nickname: String?) -> FlowContributors {
-        let reactor = CategorySettingReactor(provider: provider, nickname)
+    private func coordinateToCategorySettingScreen(profileImageURL: String?, _ profileImageData: Data, _ nickname: String, socialID: String?) -> FlowContributors {
+        let reactor = CategorySettingReactor(provider: provider, profileImageURL, profileImageData, nickname, socialID)
         let viewController = CategorySettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

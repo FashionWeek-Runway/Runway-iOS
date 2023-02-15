@@ -13,6 +13,7 @@ protocol ServiceProviderType {
     var appSettingService: AppSettingService { get }
     var networkManager: NetworkReachabilityManager? { get }
     var loginService: LoginService { get }
+    var signUpService: SignUpService { get }
     var appleLoginService: AppleService { get }
 }
 
@@ -48,6 +49,8 @@ final class NetworkRepository: ServiceProviderType {
     // MARK: - API Services
     
     lazy var loginService: LoginService = LoginService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
+    
+    lazy var signUpService: SignUpService = SignUpService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
     
     lazy var appleLoginService: AppleService = AppleService.shared
 }

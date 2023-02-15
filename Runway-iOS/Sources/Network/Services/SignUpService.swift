@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-final class SignInService: APIService {
+final class SignUpService: APIService {
     
     func signUpAsKakao(_ userData: SignUpAsKakaoData) -> Observable<(HTTPURLResponse, Data)> {
         

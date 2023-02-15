@@ -27,8 +27,8 @@ enum AppStep: Step {
     case passwordInputRequired
     case policyAgreementIsRequired
     case policyDetailNeedToShow
-    case profileSettingIsRequired(profileImageURL: String?, nickname: String?)
-    case categorySettingIsRequired(profileImageURL: String?, nickname: String?)
+    case profileSettingIsRequired(profileImageURL: String?, kakaoID: String?)
+    case categorySettingIsRequired(profileImageURL: String?, profileImageData: Data, socialID: String?, nickname: String)
     case SignUpIsCompleted
     
     

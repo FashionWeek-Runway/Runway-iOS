@@ -10,6 +10,7 @@ import Alamofire
 
 struct SignUpAsKakaoData: Encodable {
     let categoryList: [String]
+    let profileImageData: Data
     let nickname: String
     let profileImageURL: String
     let socialID: String

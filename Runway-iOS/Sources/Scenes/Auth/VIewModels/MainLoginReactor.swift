@@ -101,14 +101,14 @@ final class MainLoginReactor: Reactor, Stepper {
                 if response.statusCode == 404 { // 가입 필요
                     do {
                         let responseData = try JSONDecoder().decode(LoginResponse.self, from: data)
-                        self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL, nickname: responseData.result.kakaoID))
+                        self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL, kakaoID: responseData.result.kakaoID))
                     } catch {
                         print(error)
                     }
                 } else if response.statusCode == 403 { // 카카오 서버 에러
                     print("kakao에러")
                 } else { // 로그인 완료
-                    
+                    print(response ,data)
                 }
             }
             .disposed(by: self.disposeBag)

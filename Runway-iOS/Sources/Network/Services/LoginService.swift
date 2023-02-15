@@ -25,6 +25,6 @@ final class LoginService: APIService {
         
         var params = Parameters()
         params.updateValue(AppSettingService.shared.kakaoAccessToken, forKey: "accessToken")
-        return request(.post, "login/kakao", parameters: params)
+        return request(.post, "login/kakao", useAuthHeader: false, parameters: params)
     }
 }

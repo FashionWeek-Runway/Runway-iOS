@@ -11,12 +11,14 @@ import RxSwift
 import RxCocoa
 import RxFlow
 import ReactorKit
+import Kingfisher
 
 final class ProfileSettingReactor: Reactor, Stepper {
     
     // MARK: - Events
     
     enum Action {
+        case viewDidLoad
         case profileImageButtonDidTap
         case enterNickname(String)
         case nextButtonDidTap
@@ -29,8 +31,10 @@ final class ProfileSettingReactor: Reactor, Stepper {
     
     struct State {
         var profileImageURL: String?
-        var profileImageData: Data?
+        var kakaoID: String?
+        
         var nickname: String?
+        var profileImageData: Data?
         var nextButtonEnabled: Bool = false
     }
     
@@ -45,21 +49,34 @@ final class ProfileSettingReactor: Reactor, Stepper {
 
     // MARK: - initializer
     
-    init(provider: ServiceProviderType, _ profileImageURL: String?, _ nickname: String?) {
-        self.initialState = State(profileImageURL: profileImageURL,
-                                  nickname: nickname)
+    init(provider: ServiceProviderType, _ profileImageURL: String?, _ kakaoID: String?) {
+        let state = State(profileImageURL: profileImageURL,
+                          kakaoID: kakaoID)
+        self.initialState = state
         self.provider = provider
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .viewDidLoad:
+            guard let urlString = initialState.profileImageURL, let url = URL(string: urlString) else { return .empty() }
+            let imageLoadMutation = URLSession.shared.rx.data(request: URLRequest(url: url))
+                .map { data in
+                return Mutation.setProfileImageData(data)
+            }
+            
+            return imageLoadMutation
         case .profileImageButtonDidTap:
             steps.accept(AppStep.actionSheet("사진 촬영", "사진 가져오기"))
             return .empty()
         case .enterNickname(let nickname):
             return .just(.setNickname(nickname))
         case .nextButtonDidTap:
-            steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL, nickname: currentState.nickname))
+            guard let imageData = currentState.profileImageData,
+                  let nickname = currentState.nickname else { return .empty() }
+            
+            steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL, profileImageData: imageData, socialID: currentState.kakaoID, nickname: nickname))
+
             return .empty()
         }
     }

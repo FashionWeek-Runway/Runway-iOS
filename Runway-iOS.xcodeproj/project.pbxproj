@@ -52,6 +52,7 @@
 		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
 		199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C59299BEBAC00877AAE /* SignUpService.swift */; };
 		199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */; };
+		199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -146,6 +147,7 @@
 		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
 		199B9C59299BEBAC00877AAE /* SignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpService.swift; sourceTree = "<group>"; };
 		199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsKakaoData.swift; sourceTree = "<group>"; };
+		199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpResponse.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				194F954A2993BFCB0016DDFF /* LoginResponse.swift */,
+				199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -326,6 +329,16 @@
 				199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		199B9C5D299C8B2C00877AAE /* VIewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19345E942995686300E1EF9A /* MainLoginReactor.swift */,
+				199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */,
+				196662BC299B73F400BD0897 /* CategorySettingReactor.swift */,
+			);
+			path = VIewModels;
 			sourceTree = "<group>";
 		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
@@ -441,6 +454,7 @@
 		19A9623A29915B2100F952DA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				199B9C5D299C8B2C00877AAE /* VIewModels */,
 				199B9C50299BA39F00877AAE /* Models */,
 				196662B9299B6C0D00BD0897 /* Cells */,
 				19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */,
@@ -454,9 +468,6 @@
 				19345E8C2995615700E1EF9A /* ProfileSettingViewController.swift */,
 				19345E8E2995617100E1EF9A /* CategorySettingViewController.swift */,
 				19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */,
-				19345E942995686300E1EF9A /* MainLoginReactor.swift */,
-				196662BC299B73F400BD0897 /* CategorySettingReactor.swift */,
-				199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -819,6 +830,7 @@
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
+				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,
 			);

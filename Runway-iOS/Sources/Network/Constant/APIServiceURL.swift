@@ -8,5 +8,5 @@
 import Foundation
 
 class APIServiceURL {
-    static let RUNWAY_BASEURL = "https://dev.runwayserver.shop/v3/"
+    static let RUNWAY_BASEURL = "https://dev.runwayserver.shop/"
 }
