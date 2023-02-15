@@ -11,24 +11,20 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 import RxFlow
-import RxDataSources
-
-typealias FashionStyleCollectionViewSectionModel = SectionModel<Int, FashionStyleCategoryCollectionViewSection>
-
-enum FashionStyleCategoryCollectionViewSection {
-    case defaultCell(FashionStyleCollectionViewCellReactor)
-}
 
 final class CategorySettingReactor: Reactor, Stepper {
     
     // MARK: - Events
     
     enum Action {
+        case viewDidLoad
         case selectCategory(String)
+        case backButtonDidTap
         case nextButtonDidTap
     }
     
     enum Mutation {
+        case emitIntialCategory
         case selectCategory(String)
         case tryLogin
     }
@@ -39,7 +35,10 @@ final class CategorySettingReactor: Reactor, Stepper {
         var nickname: String?
         var socialID: String?
         
-        var selectedItems: [String] = []
+        var isNextButtonEnabled: Bool = false
+
+        
+        var isSelected: [String: Bool]
         var categories: [String]
     }
     
@@ -55,32 +54,52 @@ final class CategorySettingReactor: Reactor, Stepper {
     // MARK: - initializer
     
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
-    
+    let categoryForRequestId = ["미니멀": "1", "캐주얼": "2", "시티보이": "3", "스트릿": "4", "빈티지": "5", "페미닌": "6"]
     init(provider: ServiceProviderType, _ profileImageUrl: String?, _ profileImageData: Data, _ nickname: String?, _ socialID: String?) {
         self.provider = provider
         self.initialState = State(profileImageData: profileImageData,
                                   profileImageURL: profileImageUrl,
                                   nickname: nickname,
                                   socialID: socialID,
+                                  isSelected: Dictionary(uniqueKeysWithValues: categories.map{ ($0, false) }),
                                   categories: categories)
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .viewDidLoad:
+            return .just(.emitIntialCategory)
         case .selectCategory(let category):
             return .just(.selectCategory(category))
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
+            return .empty()
         case .nextButtonDidTap:
+            // kakao login의 경우
+            
             guard let nickname = currentState.nickname,
                   let imageUrl = initialState.profileImageURL,
                   let kakaoID = initialState.socialID else { return .empty() }
-            // kakao login의 경우
-            let requestDTO = SignUpAsKakaoData(categoryList: currentState.selectedItems, profileImageData: initialState.profileImageData, nickname: nickname, profileImageURL: imageUrl, socialID: kakaoID, type: "KAKAO")
+            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
+            
+            let requestDTO = SignUpAsKakaoData(categoryList: selectedCategoryIndex,
+                                               profileImageData: initialState.profileImageData,
+                                               nickname: nickname,
+                                               profileImageURL: imageUrl,
+                                               socialID: kakaoID,
+                                               type: "KAKAO")
             
             provider.signUpService.signUpAsKakao(requestDTO)
-                .subscribe(onNext: { [weak self] (response, data) in
-                    switch response.statusCode {
+                .subscribe(onNext: { [weak self] uploadResponse in
+                    print(uploadResponse)
+                    guard let statusCode = uploadResponse.response?.statusCode else {
+                        print(uploadResponse)
+                        return
+                    }
+                    switch statusCode {
                     case 200...299:
                         do {
+                            guard let data = uploadResponse.data else { return }
                             let responseData = try JSONDecoder().decode(SocialSignUpResult.self, from: data)
                             self?.provider.appSettingService.isKakaoLoggedIn = true
                             self?.provider.appSettingService.lastLoginType = "kakao"
@@ -91,7 +110,7 @@ final class CategorySettingReactor: Reactor, Stepper {
                             print(error)
                         }
                     default:
-                        print(response.statusCode)
+                        print(uploadResponse.response?.statusCode)
                         break
                     }
                 }).disposed(by: disposeBag)
@@ -103,12 +122,11 @@ final class CategorySettingReactor: Reactor, Stepper {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
+        case .emitIntialCategory:
+            newState.categories = initialState.categories
         case .selectCategory(let category):
-            if let itemIndex = state.selectedItems.firstIndex(of: category) {
-                newState.selectedItems.remove(at: itemIndex)
-            } else {
-                newState.selectedItems.append(category)
-            }
+            newState.isSelected[category]?.toggle()
+            newState.isNextButtonEnabled = newState.isSelected.contains(where: { $0.value == true })
         case .tryLogin:
             break
         }

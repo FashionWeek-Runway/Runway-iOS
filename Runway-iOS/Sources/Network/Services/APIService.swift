@@ -31,11 +31,13 @@ public class APIService {
     func request(_ method: HTTPMethod, _ url: String, useAuthHeader: Bool = true, parameters: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, headers: [String: String]? = nil) -> Observable<(HTTPURLResponse, Data)> {
         
         var httpHeaders = HTTPHeaders()
-        if let headers = headers {
-            httpHeaders = HTTPHeaders(headers)
-        }
         httpHeaders.add(name: "Content-Type", value: "application/json")
         httpHeaders.add(name: "accept", value: "*/*")
+        if let headers = headers {
+            for (key, value) in headers {
+                httpHeaders.update(name: key, value: value)
+            }
+        }
         
         if useAuthHeader {
             authInterceptor.intercept(headers: &httpHeaders)

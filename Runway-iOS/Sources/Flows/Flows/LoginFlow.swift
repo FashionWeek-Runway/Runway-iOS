@@ -31,6 +31,8 @@ final class LoginFlow: Flow {
         guard let step = step as? AppStep else { return .none }
         
         switch step {
+        case .back:
+            return backScreen()
         case .loginRequired:
             return coordinateToMainLoginScreen()
         case .phoneNumberLogin:
@@ -40,8 +42,8 @@ final class LoginFlow: Flow {
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
             return .none
-        case .profileSettingIsRequired(let profileImageURL, let nickname):
-            return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, nickname: nickname)
+        case .profileSettingIsRequired(let profileImageURL, let socialID):
+            return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, socialID: socialID)
         case .categorySettingIsRequired(let profileImageURL,
                                         let profileImageData,
                                         let socialID,
@@ -50,6 +52,11 @@ final class LoginFlow: Flow {
         default:
             return .none
         }
+    }
+    
+    private func backScreen() -> FlowContributors {
+        self.rootViewController.popViewController(animated: true)
+        return .none
     }
     
     private func coordinateToMainLoginScreen() -> FlowContributors {
@@ -73,8 +80,8 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToProfileSettingScreen(profileImageURL: String?, nickname: String?) -> FlowContributors {
-        let reactor = ProfileSettingReactor(provider: provider, profileImageURL, nickname)
+    private func coordinateToProfileSettingScreen(profileImageURL: String?, socialID: String?) -> FlowContributors {
+        let reactor = ProfileSettingReactor(provider: provider, profileImageURL, socialID)
         
         let viewController = ProfileSettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)

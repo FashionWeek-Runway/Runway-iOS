@@ -7,12 +7,7 @@
 
 import UIKit
 
-import ReactorKit
-import RxDataSources
-
-final class FashionStyleCollectionViewCell: UICollectionViewCell, View {
-    
-    typealias reactor = FashionStyleCollectionViewCellReactor
+final class FashionStyleCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FashionStyleCollectionViewCell"
     
@@ -28,26 +23,6 @@ final class FashionStyleCollectionViewCell: UICollectionViewCell, View {
         return label
     }()
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                checkImage.image = UIImage(named: "check_point")
-                self.layer.borderWidth = 0
-                self.backgroundColor = .primary
-                self.titleLabel.font = .body1B
-                self.titleLabel.textColor = .white
-            } else {
-                checkImage.image = UIImage(named: "check_off")
-                self.layer.borderWidth = 1
-                self.backgroundColor = .white
-                self.titleLabel.font = .body1
-                self.titleLabel.textColor = .gray600
-            }
-        }
-    }
-    
-    var disposeBag = DisposeBag()
-    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -59,19 +34,16 @@ final class FashionStyleCollectionViewCell: UICollectionViewCell, View {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(reactor: FashionStyleCollectionViewCellReactor) {
-        titleLabel.text = reactor.currentState.title
-        isSelected = reactor.currentState.isSelected
-    }
-    
     private func configureUI() {
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
+        self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.gray300.cgColor
         
         self.addSubviews([checkImage, titleLabel])
         checkImage.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(14)
+            $0.width.height.equalTo(18)
             $0.centerY.equalToSuperview()
         }
         
@@ -83,6 +55,22 @@ final class FashionStyleCollectionViewCell: UICollectionViewCell, View {
         self.snp.makeConstraints {
             $0.height.equalTo(42)
             $0.trailing.equalTo(titleLabel.snp.trailing).offset(14)
+        }
+    }
+    
+    func setSelectedLayout(_ isSelected: Bool) {
+        if isSelected {
+            checkImage.image = UIImage(named: "check_point")
+            self.layer.borderWidth = 0
+            self.backgroundColor = .primary
+            self.titleLabel.font = .body1B
+            self.titleLabel.textColor = .white
+        } else {
+            checkImage.image = UIImage(named: "check_off")
+            self.layer.borderWidth = 1
+            self.backgroundColor = .white
+            self.titleLabel.font = .body1
+            self.titleLabel.textColor = .gray600
         }
     }
 }

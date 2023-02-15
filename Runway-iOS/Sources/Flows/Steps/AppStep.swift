@@ -14,6 +14,8 @@ enum AppStep: Step {
     case alert(String)
     case actionSheet(String, String)
     
+    case back
+    
     // Login
     case loginRequired
     case userIsLoggedIn

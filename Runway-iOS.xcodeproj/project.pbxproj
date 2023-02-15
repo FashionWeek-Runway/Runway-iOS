@@ -45,7 +45,6 @@
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
-		199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */; };
 		199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */; };
 		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
@@ -142,7 +141,6 @@
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
-		199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
@@ -257,7 +255,6 @@
 			isa = PBXGroup;
 			children = (
 				196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */,
-				199B9C4E299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -790,7 +787,6 @@
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
 				199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */,
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
-				199B9C4F299BA2DD00877AAE /* FashionStyleCollectionViewCellReactor.swift in Sources */,
 				199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
 				199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */,

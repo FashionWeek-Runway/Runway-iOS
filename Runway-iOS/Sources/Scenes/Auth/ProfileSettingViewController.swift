@@ -131,6 +131,11 @@ extension ProfileSettingViewController: View {
             .map { Reactor.Action.enterNickname($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        nextButton.rx.tap
+            .map { Reactor.Action.nextButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ProfileSettingReactor) {

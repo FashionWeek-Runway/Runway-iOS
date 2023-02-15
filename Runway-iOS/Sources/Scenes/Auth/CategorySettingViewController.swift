@@ -33,13 +33,15 @@ final class CategorySettingViewController: BaseViewController {
         return label
     }()
     
-    private let fashionStyleCollectionView: UICollectionView = {
+    private lazy var fashionStyleCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 14
         layout.minimumLineSpacing = 14
+        layout.estimatedItemSize = CGSize(width: 101, height: 42)
         view.collectionViewLayout = layout
+        view.register(FashionStyleCollectionViewCell.self, forCellWithReuseIdentifier: FashionStyleCollectionViewCell.identifier)
         return view
     }()
     
@@ -61,8 +63,6 @@ final class CategorySettingViewController: BaseViewController {
 //            return cell
 //        }
 //    }
-    
-    private let dataSource = PublishRelay<[(String, Bool)]>()
     
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -102,6 +102,13 @@ final class CategorySettingViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(20)
         }
         
+        fashionStyleCollectionView.snp.makeConstraints {
+            $0.top.equalTo(captionLabel.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+            $0.width.equalTo(230)
+            $0.height.equalTo(154)
+        }
+        
         nextButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -120,22 +127,39 @@ extension CategorySettingViewController: View {
     }
     
     private func bindAction(reactor: CategorySettingReactor) {
-        fashionStyleCollectionView.rx.modelSelected(FashionStyleCollectionViewCellModel.self)
-            .map { Reactor.Action.selectCategory($0.title) }
+        
+        rx.viewDidLoad
+            .map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        fashionStyleCollectionView.rx.modelSelected(String.self)
+            .map { Reactor.Action.selectCategory($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        nextButton.rx.tap
+            .map { Reactor.Action.nextButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: CategorySettingReactor) {
+        
         reactor.state.map { $0.categories }
             .bind(to: fashionStyleCollectionView.rx.items(cellIdentifier: FashionStyleCollectionViewCell.identifier, cellType: FashionStyleCollectionViewCell.self)) { indexPath, item, cell in
-                cell.titleLabel.text = item
+                cell.titleLabel.text = reactor.currentState.categories[indexPath]
+                cell.setSelectedLayout(reactor.currentState.isSelected[item] ?? false)
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.selectedItems}
-            .bind(to: fashionStyleCollectionView.rx.items(cellIdentifier: FashionStyleCollectionViewCell.identifier, cellType: FashionStyleCollectionViewCell.self)) { indexPath, item, cell in
-                cell.isSelected = cell.titleLabel.text == item
-            }.disposed(by: disposeBag)
+        reactor.state.map { $0.isNextButtonEnabled }
+            .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
 }
 

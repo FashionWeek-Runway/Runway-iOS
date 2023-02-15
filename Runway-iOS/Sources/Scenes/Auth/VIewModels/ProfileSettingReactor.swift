@@ -75,7 +75,10 @@ final class ProfileSettingReactor: Reactor, Stepper {
             guard let imageData = currentState.profileImageData,
                   let nickname = currentState.nickname else { return .empty() }
             
-            steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL, profileImageData: imageData, socialID: currentState.kakaoID, nickname: nickname))
+            steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL,
+                                                           profileImageData: imageData,
+                                                           socialID: currentState.kakaoID,
+                                                           nickname: nickname))
 
             return .empty()
         }
