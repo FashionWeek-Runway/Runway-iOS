@@ -33,6 +33,10 @@ final class LoginFlow: Flow {
         switch step {
         case .loginRequired:
             return coordinateToMainLoginScreen()
+        case .phoneNumberLogin:
+            return coordinateToPhoneLoginScreen()
+        case .forgotPassword:
+            return coordinateToForgotPasswordScreen()
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
             return .none
@@ -52,6 +56,20 @@ final class LoginFlow: Flow {
         let reactor = MainLoginReactor(provider: provider)
         let viewController = MainLoginViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: false)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToPhoneLoginScreen() -> FlowContributors {
+        let reactor = PhoneLoginReactor(provider: provider)
+        let viewController = PhoneLoginViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToForgotPasswordScreen() -> FlowContributors {
+        let reactor = ForgotPasswordReactor(provider: provider)
+        let viewController = ForgotPasswordViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     

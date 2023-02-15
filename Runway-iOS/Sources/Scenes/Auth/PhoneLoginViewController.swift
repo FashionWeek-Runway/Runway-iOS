@@ -9,10 +9,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import ReactorKit
 
 final class PhoneLoginViewController: BaseViewController {
-    
-    private let disposeBag = DisposeBag()
     
     private let loginLabel: UILabel = {
         let label = UILabel()
@@ -47,6 +46,19 @@ final class PhoneLoginViewController: BaseViewController {
         button.type = .secondary
         return button
     }()
+    
+    var disposeBag = DisposeBag()
+    
+    // MARK: - intiailizer
+    
+    init(with reactor: PhoneLoginReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -112,4 +124,22 @@ final class PhoneLoginViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension PhoneLoginViewController: View {
+    func bind(reactor: PhoneLoginReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: PhoneLoginReactor) {
+        forgotPasswordButton.rx.tap
+            .map { Reactor.Action.forgotPasswordButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: PhoneLoginReactor) {
+        
+    }
 }

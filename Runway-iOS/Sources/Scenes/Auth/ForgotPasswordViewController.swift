@@ -10,10 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import ReactorKit
 
 final class ForgotPasswordViewController: BaseViewController {
-    
-    private let disposeBag = DisposeBag()
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
@@ -39,6 +38,20 @@ final class ForgotPasswordViewController: BaseViewController {
         button.type = .primary
         return button
     }()
+    
+    var disposeBag = DisposeBag()
+    
+    // MARK: - initializer
+    
+    init(with reactor: ForgotPasswordReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -101,3 +114,17 @@ final class ForgotPasswordViewController: BaseViewController {
 
 }
 
+extension ForgotPasswordViewController: View {
+    func bind(reactor: ForgotPasswordReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: ForgotPasswordReactor) {
+        
+    }
+    
+    private func bindState(reactor: ForgotPasswordReactor) {
+        
+    }
+}
