@@ -24,12 +24,13 @@ enum AppStep: Step {
     
     case phoneNumberLogin
     case forgotPassword
+    case newPasswordInputRequired
     
     // Sign Up
     case identityVerificationIsRequired
     case phoneCertificationNumberIsRequired(gender: String, name: String, phoneNumber: String)
     case passwordInputRequired
-    case policyAgreementIsRequired
+    case policyAgreementIsRequired(password: String)
     case policyDetailNeedToShow
     case profileSettingIsRequired(profileImageURL: String?, kakaoID: String?)
     case categorySettingIsRequired(profileImageURL: String?, profileImageData: Data, socialID: String?, nickname: String)

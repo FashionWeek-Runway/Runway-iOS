@@ -1,5 +1,5 @@
 //
-//  NewPasswordInputViewController.swift
+//  PasswordInputViewController.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/10.
@@ -12,20 +12,20 @@ import RxCocoa
 import RxKeyboard
 import ReactorKit
 
-final class NewPasswordInputViewController: BaseViewController {
+final class PasswordInputViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
-        let text = "새로운 비밀번호를 입력해주세요"
+        let text = "비밀번호를 입력해주세요"
         let attributedString = NSMutableAttributedString(string: text, attributes: [.font: UIFont.headline3])
         attributedString.addAttribute(.font, value: UIFont.subheadline1, range: (text as NSString).range(of: "를 입력해주세요"))
         label.attributedText = attributedString
         return label
     }()
     
-    private let newPasswordField: RWTextField = {
+    private let passwordField: RWTextField = {
         let field = RWTextField()
-        field.placeholder = "새로운 비밀번호 입력"
+        field.placeholder = "비밀번호 입력"
         field.secureToggleButton.isHidden = false
         field.textField.isSecureTextEntry = true
         field.textField.keyboardType = .asciiCapable
@@ -51,9 +51,9 @@ final class NewPasswordInputViewController: BaseViewController {
         return view
     }()
     
-    private let newPasswordConfirmField: RWTextField = {
+    private let passwordConfirmField: RWTextField = {
         let field = RWTextField()
-        field.placeholder = "새로운 비밀번호 확인"
+        field.placeholder = "비밀번호 확인"
         field.secureToggleButton.isHidden = false
         field.textField.keyboardType = .asciiCapable
         field.textField.isSecureTextEntry = true
@@ -77,7 +77,7 @@ final class NewPasswordInputViewController: BaseViewController {
     
     // MARK: - intializer
     
-    init(with reactor: NewPasswordInputReactor) {
+    init(with reactor: PasswordInputReactor) {
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -96,42 +96,42 @@ final class NewPasswordInputViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         addBackButton()
-        addNavigationTitleLabel()
-        navigationTitleLabel.text = "비밀번호 찾기"
+        addProgressBar()
+        self.progressBar.setProgress(0.5, animated: false)
         
         let firstStackView = UIStackView(arrangedSubviews: [englishValidationLabel, numberValidationLabel, lengthValidationLabel])
         firstStackView.axis = .horizontal
         firstStackView.distribution = .fillProportionally
         firstStackView.spacing = 14
         
-        self.view.addSubviews([guideTextLabel, newPasswordField, firstStackView, newPasswordConfirmField, passwordEqualValidationLabel,confirmButton])
+        self.view.addSubviews([guideTextLabel, passwordField, firstStackView, passwordConfirmField, passwordEqualValidationLabel,confirmButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(40)
         }
         
-        newPasswordField.snp.makeConstraints {
+        passwordField.snp.makeConstraints {
             $0.top.equalTo(guideTextLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
         firstStackView.snp.makeConstraints {
-            $0.top.equalTo(newPasswordField.snp.bottom).offset(8)
+            $0.top.equalTo(passwordField.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(20)
             $0.width.equalTo(204)
         }
         
-        newPasswordConfirmField.snp.makeConstraints {
+        passwordConfirmField.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(newPasswordField.snp.bottom).offset(58)
+            $0.top.equalTo(passwordField.snp.bottom).offset(58)
         }
         
         passwordEqualValidationLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(newPasswordConfirmField.snp.bottom).offset(8)
+            $0.top.equalTo(passwordConfirmField.snp.bottom).offset(8)
         }
         
         confirmButton.snp.makeConstraints {
@@ -161,28 +161,28 @@ final class NewPasswordInputViewController: BaseViewController {
 }
 
 
-extension NewPasswordInputViewController: View {
+extension PasswordInputViewController: View {
     
-    func bind(reactor: NewPasswordInputReactor) {
+    func bind(reactor: PasswordInputReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
 
-    private func bindAction(reactor: NewPasswordInputReactor) {
-        newPasswordField.textField.rx.value
+    private func bindAction(reactor: PasswordInputReactor) {
+        passwordField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.passwordFieldInput($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        newPasswordConfirmField.textField.rx.value
+        passwordConfirmField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.passwordValidationFieldInput($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    private func bindState(reactor: NewPasswordInputReactor) {
+    private func bindState(reactor: PasswordInputReactor) {
         reactor.state.map { $0.isPasswordContainEnglish }
             .bind(to: englishValidationLabel.isEnabled)
             .disposed(by: disposeBag)

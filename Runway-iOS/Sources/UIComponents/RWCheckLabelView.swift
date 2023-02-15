@@ -7,13 +7,14 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class RWCheckLabelView: UIView {
     
-    var isEnabled: Bool = false {
-        didSet {
-            checkImage.image = isEnabled ? UIImage(named: "check_on") : UIImage(named: "check_off")
-        }
-    }
+    var isEnabled = BehaviorRelay(value: false)
+    
+    let disposeBag = DisposeBag()
     
     let checkImage = UIImageView(image: UIImage(named: "check_off"))
     
@@ -27,6 +28,7 @@ final class RWCheckLabelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        setRx()
     }
     
     required init?(coder: NSCoder) {
@@ -48,5 +50,14 @@ final class RWCheckLabelView: UIView {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalTo(checkImage.snp.trailing).offset(8)
         }
+    }
+    
+    private func setRx() {
+        isEnabled.asDriver()
+            .drive(onNext: { [weak self] value in
+                self?.checkImage.image = value ? UIImage(named: "check_on") : UIImage(named: "check_off")
+                self?.textLabel.textColor = value ? .primary : .gray500
+            })
+            .disposed(by: disposeBag)
     }
 }

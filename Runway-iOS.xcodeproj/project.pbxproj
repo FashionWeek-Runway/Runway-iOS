@@ -64,6 +64,9 @@
 		199B9C77299D1E2400877AAE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C76299D1E2400877AAE /* GoogleService-Info.plist */; };
 		199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C78299D1F0500877AAE /* BaseResponse.swift */; };
 		199B9C7B299D28A900877AAE /* SignUpAsPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7A299D28A900877AAE /* SignUpAsPhone.swift */; };
+		199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7C299D319E00877AAE /* NewPasswordInputReactor.swift */; };
+		199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */; };
+		199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -170,6 +173,9 @@
 		199B9C76299D1E2400877AAE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		199B9C78299D1F0500877AAE /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		199B9C7A299D28A900877AAE /* SignUpAsPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhone.swift; sourceTree = "<group>"; };
+		199B9C7C299D319E00877AAE /* NewPasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordInputReactor.swift; sourceTree = "<group>"; };
+		199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
+		199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputReactor.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -368,6 +374,8 @@
 				199B9C66299CE85000877AAE /* PolicyAgreementReactor.swift */,
 				199B9C68299CE88400877AAE /* SignUpCompleteReactor.swift */,
 				199B9C74299D153B00877AAE /* PhoneCertificationReactor.swift */,
+				199B9C7C299D319E00877AAE /* NewPasswordInputReactor.swift */,
+				199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */,
 			);
 			path = VIewModels;
 			sourceTree = "<group>";
@@ -516,6 +524,7 @@
 				19345E8C2995615700E1EF9A /* ProfileSettingViewController.swift */,
 				19345E8E2995617100E1EF9A /* CategorySettingViewController.swift */,
 				19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */,
+				199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -841,6 +850,7 @@
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
 				199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */,
 				194F95532993CE480016DDFF /* ServiceError.swift in Sources */,
+				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
@@ -853,6 +863,7 @@
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
+				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
@@ -866,6 +877,7 @@
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
+				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,

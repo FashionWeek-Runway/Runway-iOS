@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxKeyboard
+import ReactorKit
 
 final class PolicyAgreementViewController: BaseViewController {
     
@@ -132,6 +133,17 @@ final class PolicyAgreementViewController: BaseViewController {
         return button
     }()
     
+    // MARK: - initializer
+    
+    init(with reactor: PolicyAgreementReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -217,3 +229,17 @@ final class PolicyAgreementViewController: BaseViewController {
 }
 
 
+extension PolicyAgreementViewController: View {
+    func bind(reactor: PolicyAgreementReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: PolicyAgreementReactor) {
+
+    }
+    
+    private func bindState(reactor: PolicyAgreementReactor) {
+
+    }
+}

@@ -54,6 +54,9 @@ final class LoginFlow: Flow {
             signUpAsPhone = SignUpAsPhone()
             return coordinateToIdentityVerificationScreen()
             
+        case .newPasswordInputRequired:
+            return coordinateToNewPasswordInputScreen()
+            
         case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
             self.signUpAsPhone?.gender = gender
             self.signUpAsPhone?.name = name
@@ -61,8 +64,10 @@ final class LoginFlow: Flow {
             return coordinateToPhoneCertificationScreen()
             
         case .passwordInputRequired:
+            return coordinateToPasswordInputScreen()
             
-            
+        case .policyAgreementIsRequired:
+            return coordinateToPolicyAgreeScreen()
             
         case .forgotPassword:
             return coordinateToForgotPasswordScreen()
@@ -129,6 +134,13 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
+    private func coordinateToNewPasswordInputScreen() -> FlowContributors {
+        let reactor = NewPasswordInputReactor(provider: provider)
+        let viewController = NewPasswordInputViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
     private func coordinateToIdentityVerificationScreen() -> FlowContributors {
         let reactor = IdentityVerificationReactor(provider: provider)
         let viewController = IdentityVerificationViewController(with: reactor)
@@ -139,6 +151,20 @@ final class LoginFlow: Flow {
     private func coordinateToPhoneCertificationScreen() -> FlowContributors {
         let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhone?.phone ?? "")
         let viewController = PhoneCertificationNumberInputViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToPasswordInputScreen() -> FlowContributors {
+        let reactor = PasswordInputReactor(provider: provider)
+        let viewController = PasswordInputViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToPolicyAgreeScreen() -> FlowContributors {
+        let reactor = PolicyAgreementReactor(provider: provider)
+        let viewController = PolicyAgreementViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
