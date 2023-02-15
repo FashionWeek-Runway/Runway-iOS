@@ -9,20 +9,23 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RWPicker: UIView {
+final class RWPicker: UIView {
     
     private let disposeBag = DisposeBag()
     
-    lazy var labelButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .clear
-        button.setTitleColor(.runwayBlack, for: .normal)
-        return button
+    let textField: UITextField = {
+        let field = UITextField()
+        field.textColor = .runwayBlack
+        field.backgroundColor = .clear
+        return field
     }()
     
     let picker: UIPickerView = UIPickerView()
+    let doneToolBar = UIToolbar()
+    let doneBarButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: nil)
+        
     
-    var pickerData:[String] = ["1", "2", "3", "4", "5"]
+    var pickerData: [String] = ["가", "나", "다", "라", "마"]
     
     var bottomLine = UIView()
     var focusColor: UIColor = .black
@@ -39,10 +42,15 @@ class RWPicker: UIView {
     
     // MARK: - intializer
     
+    convenience init(pickerData: [String]) {
+        self.init(frame: .zero)
+        self.pickerData = pickerData
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        setButtonEvent()
+        setRx()
     }
     
     required init?(coder: NSCoder) {
@@ -54,8 +62,8 @@ class RWPicker: UIView {
             $0.height.equalTo(48)
         }
         
-        self.addSubview(labelButton)
-        labelButton.snp.makeConstraints {
+        self.addSubview(textField)
+        textField.snp.makeConstraints {
             $0.leading.trailing.top.bottom.equalToSuperview()
         }
 
@@ -72,11 +80,20 @@ class RWPicker: UIView {
         }
     }
     
-    private func setButtonEvent() {
-        labelButton.rx.tap.asDriver()
-            .drive(onNext: { [weak self] in
-                self?.picker.becomeFirstResponder()
-            })
-            .disposed(by: disposeBag)
+    private func setRx() {
+        Observable.of(pickerData).bind(to: self.picker.rx.itemTitles) {
+            _, item in
+            return "\(item)"
+        }.disposed(by: disposeBag)
+        
+        doneToolBar.sizeToFit()
+        doneToolBar.items = [doneBarButton]
+        
+        textField.inputView = self.picker
+        
+        picker.rx.itemSelected.asDriver()
+            .drive(onNext: { [weak self] row, component in
+                self?.textField.text = "\(self?.pickerData[row] ?? "")"
+            }).disposed(by: disposeBag)
     }
 }

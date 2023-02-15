@@ -102,6 +102,7 @@ final class MainLoginViewController: BaseViewController {
 
 extension MainLoginViewController: View {
     func bind(reactor: MainLoginReactor) {
+        
         kakaoLoginButton.rx.tap
             .map { Reactor.Action.kakaoLoginButtonDidTap }
             .bind(to: reactor.action)

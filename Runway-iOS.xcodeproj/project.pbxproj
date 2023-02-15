@@ -72,7 +72,6 @@
 		19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9624329915F5600F952DA /* APIEventLogger.swift */; };
 		19A96247299165B500F952DA /* AppSettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A96246299165B500F952DA /* AppSettingService.swift */; };
 		19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962482991666D00F952DA /* HeaderInterceptor.swift */; };
-		19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9624F299171AC00F952DA /* AuthTokenHost.swift */; };
 		19A962522991735300F952DA /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962512991735300F952DA /* UserDefault.swift */; };
 		19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE015229980ED700E7C35D /* RWAlertViewController.swift */; };
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
@@ -172,7 +171,6 @@
 		19A9624329915F5600F952DA /* APIEventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventLogger.swift; sourceTree = "<group>"; };
 		19A96246299165B500F952DA /* AppSettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingService.swift; sourceTree = "<group>"; };
 		19A962482991666D00F952DA /* HeaderInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderInterceptor.swift; sourceTree = "<group>"; };
-		19A9624F299171AC00F952DA /* AuthTokenHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenHost.swift; sourceTree = "<group>"; };
 		19A962512991735300F952DA /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		19BE015229980ED700E7C35D /* RWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertViewController.swift; sourceTree = "<group>"; };
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
@@ -424,7 +422,6 @@
 		19A9622A2991527F00F952DA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				19A9624C29916B1600F952DA /* Traits */,
 				19A96245299165AB00F952DA /* Utils */,
 				19A96222299131A900F952DA /* Network */,
 				19A962212991305D00F952DA /* UIComponents */,
@@ -506,14 +503,6 @@
 				19A962512991735300F952DA /* UserDefault.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		19A9624C29916B1600F952DA /* Traits */ = {
-			isa = PBXGroup;
-			children = (
-				19A9624F299171AC00F952DA /* AuthTokenHost.swift */,
-			);
-			path = Traits;
 			sourceTree = "<group>";
 		};
 		19A962532991785D00F952DA /* Interceptor */ = {
@@ -832,7 +821,6 @@
 				199B9C6B299CF70000877AAE /* SignUpAsPhoneData.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
-				19A96250299171AC00F952DA /* AuthTokenHost.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
