@@ -12,6 +12,7 @@ import RxCocoa
 import RxKeyboard
 import RxFlow
 import ReactorKit
+import RxGesture
 
 final class IdentityVerificationViewController: BaseViewController {
     
@@ -95,6 +96,16 @@ final class IdentityVerificationViewController: BaseViewController {
         return button
     }()
     
+    private let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        return view
+    }()
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     // MARK: - initializer
     
     init(with reactor: IdentityVerificationReactor) {
@@ -118,15 +129,27 @@ final class IdentityVerificationViewController: BaseViewController {
         addProgressBar()
         self.progressBar.setProgress(0.166, animated: false)
         
-        self.view.addSubviews([requestButton])
-        self.keyboardSafeAreaView.addSubviews([guideTextLabel,
+        self.view.addSubviews([scrollView, requestButton])
+        
+        scrollView.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(navigationBarArea.snp.bottom)
+        }
+        scrollView.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalToSuperview().priority(.high)
+        }
+        
+        scrollView.addSubviews([guideTextLabel,
                                                nameCaptionLabel, nameField, foreignPicker,
                                                genderCaptionLabel, genderRadioSelector,
                                               birthDayCaptionLabel, birthDayField,
                                               PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField])
         
         guideTextLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(154)
+            $0.top.equalToSuperview().offset(60)
 //            $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(28)
@@ -212,6 +235,11 @@ final class IdentityVerificationViewController: BaseViewController {
                         $0.trailing.equalToSuperview().offset(-20)
                     }
                 }
+                
+                let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+                self.scrollView.contentInset = contentInset
+                self.scrollView.scrollIndicatorInsets = contentInset
+                
                 self.view.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
@@ -273,6 +301,13 @@ extension IdentityVerificationViewController: View {
             .map { Reactor.Action.requestButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        scrollView.rx.tapGesture()
+            .when(.recognized)
+            .withUnretained(self)
+            .bind(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: IdentityVerificationReactor) {

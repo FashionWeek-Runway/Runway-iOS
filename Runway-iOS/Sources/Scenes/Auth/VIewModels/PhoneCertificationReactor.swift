@@ -70,13 +70,16 @@ final class PhoneCertificationReactor: Reactor, Stepper {
             return .empty()
         case .confirmButtonDidTap:
             guard let number = currentState.verificationNumber else { return .empty() }
-            provider.signUpService.checkVerificationNumber(verificationNumber: number,
-                                                           phoneNumber: initialState.phoneNumber).data()
-            .subscribe { [weak self] data in
-                self?.steps.accept(AppStep.passwordInputRequired)
-            }
-            .disposed(by: disposeBag)
-            return .empty()
+            return provider.signUpService.checkVerificationNumber(verificationNumber: number,
+                                                           phoneNumber: initialState.phoneNumber).responseData()
+                .flatMap { [weak self] (response, data) -> Observable<Mutation> in
+                    if 200...299 ~= response.statusCode {
+                        self?.steps.accept(AppStep.passwordInputRequired)
+                        return .empty()
+                    } else {
+                        return .empty()
+                    }
+                }
         }
     }
     
