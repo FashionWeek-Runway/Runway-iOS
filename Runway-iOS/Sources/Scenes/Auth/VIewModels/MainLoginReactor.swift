@@ -81,6 +81,9 @@ final class MainLoginReactor: Reactor, Stepper {
                     }
             }
         case .appleLoginButtonDidTap:
+            provider.appleLoginService.login(with: [.email, .fullName]) { result, error in
+                print(result)
+            }
             return .just(.setAppleLogin)
         case .phoneLoginButtonDidTap:
             steps.accept(AppStep.phoneNumberLogin)

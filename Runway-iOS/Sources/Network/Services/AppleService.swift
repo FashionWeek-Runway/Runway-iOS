@@ -31,6 +31,7 @@ final class AppleService: NSObject {
     func login(with scopes: [ASAuthorization.Scope]?, completion: @escaping (AppleLoginResult?, Error?) -> Void) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = scopes
+        self.completion = completion
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self

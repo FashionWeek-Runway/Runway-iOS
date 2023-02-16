@@ -157,19 +157,19 @@ class BaseViewController: UIViewController {
         self.view.viewWithTag(0)?.removeFromSuperview()
     }
     
-    func hideTabBar() {
-        var frame = self.tabBarController?.tabBar.frame
-        frame?.origin.y = self.view.frame.size.height + (frame?.size.height)!
-        UIView.animate(withDuration: 0.5, animations: {
-            self.tabBarController?.tabBar.frame = frame!
-        })
-    }
-
-    func showTabBar() {
-        var frame = self.tabBarController?.tabBar.frame
-        frame?.origin.y = self.view.frame.size.height - (frame?.size.height)!
-        UIView.animate(withDuration: 0.5, animations: {
-            self.tabBarController?.tabBar.frame = frame!
-        })
-    }
+//    func hideTabBar() {
+//        var tabBarframe = self.tabBarController?.tabBar.frame
+//        tabBarframe?.origin.y = self.view.frame.size.height + (tabBarframe?.size.height)!
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.tabBarController?.tabBar.frame = tabBarframe!
+//        })
+//    }
+//
+//    func showTabBar() {
+//        var tabBarframe = self.tabBarController?.tabBar.frame
+//        tabBarframe?.origin.y = self.view.frame.size.height - (tabBarframe?.size.height)!
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.tabBarController?.tabBar.frame = tabBarframe!
+//        })
+//    }
 }
