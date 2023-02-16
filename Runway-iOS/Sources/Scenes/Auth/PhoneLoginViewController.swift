@@ -29,6 +29,8 @@ final class PhoneLoginViewController: BaseViewController {
     private let passwordField: RWTextField = {
         let field = RWTextField()
         field.secureToggleButton.isHidden = false
+        field.secureToggleButton.isSelected = true
+        field.textField.isSecureTextEntry = true
         field.placeholder = "비밀번호 입력"
         return field
     }()

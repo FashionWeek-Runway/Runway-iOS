@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RxFlow
 import ReactorKit
-import Kingfisher
 
 final class ProfileSettingReactor: Reactor, Stepper {
     
