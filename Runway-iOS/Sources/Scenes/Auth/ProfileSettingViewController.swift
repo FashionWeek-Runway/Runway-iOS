@@ -133,16 +133,21 @@ final class ProfileSettingViewController: BaseViewController {
             
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
-                    self.present(self.cameraPickerController, animated: true)
+                    DispatchQueue.main.async {
+                        self.present(self.cameraPickerController, animated: true)
+                    }
                 }
             }
         }))
         alertController.addAction(UIAlertAction(title: "사진 가져오기", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                print(status)
                 switch status {
-                case .authorized:
-                    self.present(self.albumPickerController, animated: true)
+                case .authorized, .limited:
+                    DispatchQueue.main.async {
+                        self.present(self.albumPickerController, animated: true)
+                    }
                 default:
                     break
                 }
@@ -219,6 +224,7 @@ extension ProfileSettingViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.showActionSheet }
+            .subscribe(on: MainScheduler.instance)
             .bind { [weak self] isShow in
                 if isShow {
                     self?.presentActionSheet()
@@ -227,7 +233,7 @@ extension ProfileSettingViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.profileImageData }
-            .subscribe(on: MainScheduler.instance)
+            .subscribe(on: MainScheduler.asyncInstance)
             .map { UIImage(data: $0) }
             .bind(to: profileSettingView.profileImageView.rx.image)
             .disposed(by: disposeBag)
