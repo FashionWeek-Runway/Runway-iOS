@@ -21,11 +21,15 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         case verificationNumberInput(String)
         case resendButtonDidTap
         case confirmButtonDidTap
+        
+        
+        case setTimer(String)
     }
     
     enum Mutation {
         case setVerificationNumber(String)
         case setInvalidCertificationNumber
+        case setTimerText(String)
     }
     
     struct State{
@@ -34,6 +38,8 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         var isRequestEnabled: Bool = false
         
         var invalidCertification = true
+        
+        var timerText: String? = nil
     }
     
     // MARK: - Properties
@@ -42,6 +48,10 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
     let initialState: State
     let provider: ServiceProviderType
     let steps = PublishRelay<Step>()
+    
+    private var timeSecond = 0
+    private var timerText = ""
+    var timer: Timer?
     
     // MARK: - initializer
     
@@ -53,8 +63,15 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber)
+            startTimer(initialSecond: 180)
+            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
+                .subscribe(onNext: { (response, data) in
+                    print(response)
+                })
+                .disposed(by: disposeBag)
             return .empty()
+        case .setTimer(let string):
+            return .just(.setTimerText(string))
         case .backButtonDidTap:
             steps.accept(AppStep.back)
             return .empty()
@@ -76,20 +93,35 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         var state = state
         switch mutation {
         case .setVerificationNumber(let string):
-            state.verificationNumber = limitedLengthString(string, length: 6)
+            state.verificationNumber = String.limitedLengthString(string, length: 6)
         case .setInvalidCertificationNumber:
             state.invalidCertification = true
+        case .setTimerText(let timerText):
+            state.timerText = timerText
         }
         state.isRequestEnabled = state.verificationNumber?.count == 6
         return state
     }
     
-    private func limitedLengthString(_ str: String, length: Int) -> String { // limit
-        if str.count > length {
-            let index = str.index(str.startIndex, offsetBy: length)
-            return String(str[..<index])
+    private func startTimer(initialSecond: Int) {
+        if let timer = self.timer, timer.isValid {
+            timer.invalidate()
+        }
+        timeSecond = initialSecond
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callBackTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func callBackTimer() {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        guard let timeString = formatter.string(from: TimeInterval(timeSecond)) else { return }
+        action.onNext(.setTimer(timeString))
+        
+        if timeSecond == 0 {
+            timer?.invalidate()
+            timer = nil
         } else {
-            return str
+            timeSecond -= 1
         }
     }
 }

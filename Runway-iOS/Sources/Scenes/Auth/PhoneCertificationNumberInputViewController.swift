@@ -44,13 +44,30 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         return label
     }()
     
-    private let verificationNumberInputField: RWTextFieldWithButton = {
-        let field = RWTextFieldWithButton()
+    private let verificationNumberInputField: RWTextField = {
+        let field = RWTextField()
         field.placeholder = "숫자 6자리 입력"
         field.textField.textContentType = .oneTimeCode
-        field.rightButton.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
         field.textField.keyboardType = .phonePad
         return field
+    }()
+    
+    private let timerLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .error
+        label.font = .body2
+        return label
+    }()
+    
+    private let reSendButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .primary
+        button.layer.cornerRadius = 4
+        button.clipsToBounds = true
+        button.setBackgroundColor(.blue100, for: .normal)
+        button.setTitleColor(.primary, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
+        return button
     }()
     
     private let confirmButton: RWButton = {
@@ -76,7 +93,6 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        verificationNumberInputField.startTimer(initialSecond: 180)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +106,8 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         phoneNumberLabel.text = reactor?.initialState.phoneNumber ?? ""
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
+        
+        verificationNumberInputField.addSubviews([timerLabel, reSendButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -122,6 +140,18 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        reSendButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-6)
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(67)
+        }
+        
+        timerLabel.snp.makeConstraints {
+            $0.trailing.equalTo(reSendButton.snp.leading).offset(-14)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(29)
         }
         
         RxKeyboard.instance.visibleHeight
@@ -167,6 +197,11 @@ extension PhoneCertificationNumberInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        reSendButton.rx.tap
+            .map { Reactor.Action.resendButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         confirmButton.rx.tap
             .map { Reactor.Action.confirmButtonDidTap }
             .bind(to: reactor.action)
@@ -176,6 +211,10 @@ extension PhoneCertificationNumberInputViewController: View {
     private func bindState(reactor: PhoneCertificationReactor) {
         reactor.state.map { $0.isRequestEnabled }
             .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.timerText }
+            .bind(to: timerLabel.rx.text)
             .disposed(by: disposeBag)
     }
 }

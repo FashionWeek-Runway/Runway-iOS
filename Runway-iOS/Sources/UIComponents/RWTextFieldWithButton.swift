@@ -44,9 +44,6 @@ final class RWTextFieldWithButton: UIView {
         }
     }
     
-    private var timeSecond = 0
-    var timer: Timer?
-    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -103,27 +100,27 @@ final class RWTextFieldWithButton: UIView {
     // MARK: - timer
     // TODO: - 나중에 viewModel로 옮길것...
     
-    func startTimer(initialSecond: Int) {
-        if let timer = self.timer, timer.isValid {
-            timer.invalidate()
-        }
-        timeSecond = initialSecond
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callBackTimer), userInfo: nil, repeats: true)
-    }
-    
-    @objc private func callBackTimer() {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute, .second]
-        guard let timeString = formatter.string(from: TimeInterval(timeSecond)) else { return }
-        timerLabel.text = "\(timeString)"
-        
-        if timeSecond == 0 {
-            timer?.invalidate()
-            timer = nil
-        } else {
-            timeSecond -= 1
-        }
-    }
+//    func startTimer(initialSecond: Int) {
+//        if let timer = self.timer, timer.isValid {
+//            timer.invalidate()
+//        }
+//        timeSecond = initialSecond
+//        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callBackTimer), userInfo: nil, repeats: true)
+//    }
+//    
+//    @objc private func callBackTimer() {
+//        let formatter = DateComponentsFormatter()
+//        formatter.allowedUnits = [.minute, .second]
+//        guard let timeString = formatter.string(from: TimeInterval(timeSecond)) else { return }
+//        timerLabel.text = "\(timeString)"
+//        
+//        if timeSecond == 0 {
+//            timer?.invalidate()
+//            timer = nil
+//        } else {
+//            timeSecond -= 1
+//        }
+//    }
 }
 
 extension RWTextFieldWithButton: UITextFieldDelegate {

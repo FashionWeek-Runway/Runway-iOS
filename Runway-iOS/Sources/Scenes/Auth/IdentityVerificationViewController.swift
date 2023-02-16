@@ -127,6 +127,7 @@ final class IdentityVerificationViewController: BaseViewController {
         super.configureUI()
         addBackButton()
         addProgressBar()
+        addNavigationTitleLabel("본인인증")
         self.progressBar.setProgress(0.166, animated: false)
         
         self.view.addSubviews([scrollView, requestButton])
@@ -307,6 +308,12 @@ extension IdentityVerificationViewController: View {
             .withUnretained(self)
             .bind(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
+        
+        scrollView.rx.contentOffset
+            .asDriver()
+            .drive(onNext: { [weak self] point in
+                self?.navigationTitleLabel.isHidden = point.y < 94
             }).disposed(by: disposeBag)
     }
     

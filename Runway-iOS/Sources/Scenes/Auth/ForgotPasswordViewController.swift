@@ -140,6 +140,11 @@ extension ForgotPasswordViewController: View {
             .map { Reactor.Action.enterMobileCarrier($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        verificationMessageRequestButton.rx.tap
+            .map { Reactor.Action.requestButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ForgotPasswordReactor) {
