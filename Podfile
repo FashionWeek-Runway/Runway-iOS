@@ -18,7 +18,7 @@ target 'Runway-iOS' do
   pod 'RxKakaoSDKAuth'
   pod 'RxKakaoSDKUser'
 
-  pod 'Kingfisher', '~> 7.0'
+#  pod 'Kingfisher', '~> 7.0'
   pod 'SnapKit', '~> 5.6.0'
   pod 'lottie-ios'
 
