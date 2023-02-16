@@ -211,6 +211,12 @@ extension ProfileSettingViewController: View {
             }
             .disposed(by: disposeBag)
         
+        reactor.state.compactMap { $0.profileImageData }
+            .subscribe(on: MainScheduler.instance)
+            .map { UIImage(data: $0) }
+            .bind(to: profileSettingView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.isNickNameDuplicate }
             .subscribe(on: MainScheduler.instance)
             .bind { [weak self] isShow in

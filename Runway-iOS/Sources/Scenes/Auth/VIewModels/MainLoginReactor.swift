@@ -97,23 +97,21 @@ final class MainLoginReactor: Reactor, Stepper {
         return state
     }
     
-    private func loginKakao() -> Observable<Mutation> {
+    private func loginKakao() {
         return provider.loginService.loginAsKakao()
             .responseData()
-            .flatMap { (response, data) -> Observable<Mutation> in
+            .subscribe(onNext: { (response, data) in
                 if response.statusCode == 400 {
                     do {
                         let responseData = try JSONDecoder().decode(LoginAsKakaoResponse.self, from: data)
                         self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL,
                                                                            kakaoID: responseData.result.kakaoID))
-                        return .empty()
                     } catch {
                         print(error)
                     }
-                    return .empty()
                 } else {
-                    return .empty()
+                    print(data)
                 }
-            }
+            }).disposed(by: disposeBag)
     }
 }

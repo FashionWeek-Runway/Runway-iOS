@@ -83,7 +83,6 @@ final class LoginFlow: Flow {
             return .none
         case .profileSettingIsRequired(let profileImageURL, let socialID):
             if let socialID = socialID {
-                self.signUpASKakaoData = SignUpAsKakaoData()
                 signUpASKakaoData.socialID = socialID
                 signUpASKakaoData.profileImageURL = profileImageURL
             }
