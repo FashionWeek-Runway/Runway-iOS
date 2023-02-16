@@ -53,7 +53,8 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            sendMessage()
+            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber)
+                .validate(statusCode: 200...299)
             return .empty()
         case .backButtonDidTap:
             steps.accept(AppStep.back)
@@ -65,7 +66,15 @@ final class PhoneCertificationReactor: Reactor, Stepper {
 //            return .just(.initializeTime)
             return .empty()
         case .confirmButtonDidTap:
-            checkVerification()
+            guard let number = currentState.verificationNumber else { return .empty() }
+            provider.signUpService.checkVerificationNumber(verificationNumber: number,
+                                                           phoneNumber: initialState.phoneNumber).validate(statusCode: 200...299).data()
+            .map { [weak self] request in
+                self?.steps.accept(AppStep.passwordInputRequired)
+            }.catch { error in
+                print(error)
+                return .empty()
+            }
             return .empty()
         }
     }
@@ -89,32 +98,6 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         } else {
             return str
         }
-    }
-    
-    private func sendMessage() {
-        provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).subscribe(onNext: { [weak self] (response, data) in
-            if 200...299 ~= response.statusCode {
-                print("good")
-            } else {
-                print("error", data)
-            }
-        })
-        .disposed(by: disposeBag)
-    }
-    
-    private func checkVerification() {
-        guard let verificationNumber = currentState.verificationNumber else { return }
-        
-        provider.signUpService.checkVerificationNumber(verificationNumber: verificationNumber,
-                                                       phoneNumber: initialState.phoneNumber)
-            .subscribe(onNext: { [weak self] (response, data) in
-                if 200...299 ~= response.statusCode {
-                    self?.steps.accept(AppStep.passwordInputRequired)
-                } else {
-                    print("error")
-                }
-            })
-            .disposed(by: disposeBag)
     }
 }
 

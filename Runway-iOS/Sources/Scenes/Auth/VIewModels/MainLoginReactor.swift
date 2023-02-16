@@ -97,7 +97,8 @@ final class MainLoginReactor: Reactor, Stepper {
     
     private func loginKakao() {
         self.provider.loginService.loginAsKakao()
-            .subscribe { (response, data) in
+            .responseData()
+            .subscribe(onNext: { response, data in
                 if response.statusCode == 400 { // 가입 필요
                     do {
                         let responseData = try JSONDecoder().decode(LoginResponse.self, from: data)
@@ -110,7 +111,7 @@ final class MainLoginReactor: Reactor, Stepper {
                 } else { // 로그인 완료
                     print(response ,data)
                 }
-            }
-            .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
 }

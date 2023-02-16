@@ -77,6 +77,7 @@ final class AppFlow: Flow {
     }
     
     private func coordinateToMainVC() -> FlowContributors {
+        print("main")
         return .none
     }
 }

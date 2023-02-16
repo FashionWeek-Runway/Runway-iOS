@@ -17,7 +17,8 @@ struct LoginResponse: Decodable {
 
 // MARK: - Result
 struct Result: Decodable {
-    let accessToken, refreshToken, profileImageURL, kakaoID: String?
+    let accessToken, refreshToken: String
+    let profileImageURL, kakaoID: String?
     let userID: Int?
 
     enum CodingKeys: String, CodingKey {
