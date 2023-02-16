@@ -234,6 +234,11 @@ extension IdentityVerificationViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         nameField.textField.rx.value
             .orEmpty
             .compactMap { Reactor.Action.nameInput($0) }

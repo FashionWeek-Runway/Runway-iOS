@@ -67,6 +67,9 @@
 		199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */; };
 		199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */; };
 		199B9C83299D579400877AAE /* icon_my_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C82299D579400877AAE /* icon_my_large.png */; };
+		199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */; };
+		199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */; };
+		199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -176,6 +179,9 @@
 		199B9C7E299D3F3800877AAE /* PasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputViewController.swift; sourceTree = "<group>"; };
 		199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputReactor.swift; sourceTree = "<group>"; };
 		199B9C82299D579400877AAE /* icon_my_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_my_large.png; path = "Runway-iOS/Resources/Assets/Assets.xcassets/icon_my_large.imageset/icon_my_large.png"; sourceTree = "<group>"; };
+		199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
+		199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
+		199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -405,6 +411,9 @@
 				19BF2C822994153C00F1134D /* UIButton+.swift */,
 				19A3112D2996D23C0068FF41 /* UIView+.swift */,
 				196662AF299A69BD00BD0897 /* UIWindow+.swift */,
+				199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */,
+				199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */,
+				199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -840,6 +849,7 @@
 				199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */,
+				199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */,
 				196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */,
 				19BE01552998103200E7C35D /* RWAlertView.swift in Sources */,
 				198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */,
@@ -860,8 +870,10 @@
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
+				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
 				199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */,
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
+				199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
@@ -1080,6 +1092,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1110,6 +1125,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

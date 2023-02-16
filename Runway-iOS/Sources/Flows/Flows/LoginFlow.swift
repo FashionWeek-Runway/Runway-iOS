@@ -6,6 +6,7 @@
 //
 
 import RxFlow
+import UIKit
 
 final class LoginFlow: Flow {
     
@@ -71,9 +72,6 @@ final class LoginFlow: Flow {
         case .policyAgreementIsRequired(let password):
             self.signUpAsPhoneData?.password = password
             return coordinateToPolicyAgreeScreen()
-            
-        case .forgotPassword:
-            return coordinateToForgotPasswordScreen()
             
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...

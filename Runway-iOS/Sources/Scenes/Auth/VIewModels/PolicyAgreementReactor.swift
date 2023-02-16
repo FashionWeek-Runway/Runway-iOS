@@ -17,6 +17,7 @@ final class PolicyAgreementReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
+        case backButtonDidTap
         case allAgreeButtonDidTap
         case usagePolicyAgreeButtonDidTap
         case privacyPolicyAgreeButtonDidTap
@@ -60,7 +61,9 @@ final class PolicyAgreementReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-            
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
+            return .empty()
         case .allAgreeButtonDidTap:
             return .just(.setAllAgree)
         case .usagePolicyAgreeButtonDidTap:
@@ -74,16 +77,16 @@ final class PolicyAgreementReactor: Reactor, Stepper {
             
             
         case .usagePolicyDetailButtonDidTap:
-            steps.accept(AppStep.policyDetailNeedToShow)
+            steps.accept(AppStep.usagePolicyDetailNeedToShow)
             return .empty()
         case .privacyPolicyDetailButtonDidTap:
-            steps.accept(AppStep.policyDetailNeedToShow)
+            steps.accept(AppStep.privacyPolicyDetailNeedToShow)
             return .empty()
         case .locationPolicyDetailButtonDidTap:
-            steps.accept(AppStep.policyDetailNeedToShow)
+            steps.accept(AppStep.locationPolicyDetailNeedToShow)
             return .empty()
         case .marketingDetailButtonDidTap:
-            steps.accept(AppStep.policyDetailNeedToShow)
+            steps.accept(AppStep.marketingPolicyDetailNeedToShow)
             return .empty()
             
         case .nextButtonDidTap:

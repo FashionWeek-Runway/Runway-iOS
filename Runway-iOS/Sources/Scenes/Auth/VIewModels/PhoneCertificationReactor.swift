@@ -17,6 +17,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     
     enum Action {
         case viewDidLoad
+        case backButtonDidTap
         case verificationNumberInput(String)
         case resendButtonDidTap
         case confirmButtonDidTap
@@ -53,6 +54,9 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         switch action {
         case .viewDidLoad:
             sendMessage()
+            return .empty()
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
             return .empty()
         case .verificationNumberInput(let string):
             return .just(.setVerificationNumber(string))

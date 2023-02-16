@@ -54,10 +54,11 @@ final class CategorySettingReactor: Reactor, Stepper {
     
     let initialState: State
     
-    // MARK: - initializer
-    
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
     let categoryForRequestId = ["미니멀": "1", "캐주얼": "2", "시티보이": "3", "스트릿": "4", "빈티지": "5", "페미닌": "6"]
+    
+    // MARK: - initializer
+    
     init(provider: ServiceProviderType,
          signUpAsKakaoData: SignUpAsKakaoData?,
          signUpAsPhoneData: SignUpAsPhoneData?) {
@@ -78,7 +79,8 @@ final class CategorySettingReactor: Reactor, Stepper {
             steps.accept(AppStep.back)
             return .empty()
         case .nextButtonDidTap:
-            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true }).map { categoryForRequestId[$0]! }
+            let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true })
+                .map { categoryForRequestId[$0] }.compactMap { $0 }
 //            guard let nickname = initialState.nickname else { return .empty() }
 //
 //            if let kakaoID = initialState.socialID,
@@ -120,7 +122,7 @@ final class CategorySettingReactor: Reactor, Stepper {
             
             provider.signUpService.signUpAsPhone(userData: signUpAsPhoneData).subscribe(onNext: { [weak self] (request) in
                 print(request)
-            })            
+            })
             return .just(.tryLogin)
         }
     }

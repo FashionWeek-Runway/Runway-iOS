@@ -20,11 +20,13 @@ final class ProfileSettingReactor: Reactor, Stepper {
         case viewDidLoad
         case backButtonDidTap
         case profileImageButtonDidTap
+        case setImage(Data?)
         case enterNickname(String)
         case nextButtonDidTap
     }
     
     enum Mutation {
+        case showActionSheet
         case setProfileImageData(Data?)
         case setNickname(String?)
     }
@@ -32,6 +34,8 @@ final class ProfileSettingReactor: Reactor, Stepper {
     struct State {
         var profileImageURL: String?
         var kakaoID: String?
+        
+        var showActionSheet: Bool = false
         
         var nickname: String?
         var profileImageData: Data?
@@ -59,7 +63,6 @@ final class ProfileSettingReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            
             if let urlString = initialState.profileImageURL, // 이미지 URL이 있는 경우
                let url = URL(string: urlString) {
                 let imageLoadMutation = URLSession.shared.rx.data(request: URLRequest(url: url))
@@ -70,11 +73,11 @@ final class ProfileSettingReactor: Reactor, Stepper {
             } else { // 이미지 URL이 없는 경우(기본이미지)
                 do {
                     if let imagePath = Bundle.main.path(forResource: "icon_my_large", ofType: "png") {
-                      let imageData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
-                      // Use imageData as needed
-                        return Observable.just(Mutation.setProfileImageData(imageData))
+                        let imageData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
+                        // Use imageData as needed
+                        return .just(Mutation.setProfileImageData(imageData))
                     } else {
-                      // Image not found in bundle
+                        // Image not found in bundle
                         return .empty()
                     }
                 } catch {
@@ -85,19 +88,18 @@ final class ProfileSettingReactor: Reactor, Stepper {
             steps.accept(AppStep.back)
             return .empty()
         case .profileImageButtonDidTap:
-            steps.accept(AppStep.actionSheet("사진 촬영", "사진 가져오기"))
-            return .empty()
+            return .just(.showActionSheet)
+        case .setImage(let data):
+            return .just(.setProfileImageData(data))
         case .enterNickname(let nickname):
             return .just(.setNickname(nickname))
         case .nextButtonDidTap:
             guard let imageData = currentState.profileImageData,
                   let nickname = currentState.nickname else { return .empty() }
-            
             steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL,
                                                            profileImageData: imageData,
                                                            socialID: currentState.kakaoID,
                                                            nickname: nickname))
-
             return .empty()
         }
     }
@@ -123,8 +125,11 @@ final class ProfileSettingReactor: Reactor, Stepper {
             } else {
                 state.nextButtonEnabled = false
             }
+        case .showActionSheet:
+            state.showActionSheet = true
         case .setProfileImageData(let data):
             state.profileImageData = data
+            state.showActionSheet = false
         }
         return state
     }

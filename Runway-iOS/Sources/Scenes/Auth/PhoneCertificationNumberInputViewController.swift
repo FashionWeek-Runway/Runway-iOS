@@ -157,6 +157,11 @@ extension PhoneCertificationNumberInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         verificationNumberInputField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.verificationNumberInput($0) }

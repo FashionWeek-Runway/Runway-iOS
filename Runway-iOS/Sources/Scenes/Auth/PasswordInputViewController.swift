@@ -169,6 +169,11 @@ extension PasswordInputViewController: View {
     }
 
     private func bindAction(reactor: PasswordInputReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         passwordField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.passwordFieldInput($0) }

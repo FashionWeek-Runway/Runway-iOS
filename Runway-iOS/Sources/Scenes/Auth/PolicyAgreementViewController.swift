@@ -236,6 +236,11 @@ extension PolicyAgreementViewController: View {
     }
     
     private func bindAction(reactor: PolicyAgreementReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         allAgreeButton.rx.tap
             .map { Reactor.Action.allAgreeButtonDidTap }
             .bind(to: reactor.action)

@@ -18,6 +18,7 @@ final class IdentityVerificationReactor: Reactor, Stepper {
     
     enum Action {
         case viewDidLoad
+        case backButtonDidTap
         case nameInput(String)
         case isForeignInput(Bool)
         case genderInput(String)
@@ -80,6 +81,9 @@ final class IdentityVerificationReactor: Reactor, Stepper {
                     break
                 }
             })
+            return .empty()
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
             return .empty()
         case .nameInput(let name):
             return .just(.setName(name))

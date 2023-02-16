@@ -140,6 +140,12 @@ extension PhoneLoginViewController: View {
     }
     
     private func bindAction(reactor: PhoneLoginReactor) {
+        backButton.rx.tap
+            .debug()
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         forgotPasswordButton.rx.tap
             .map { Reactor.Action.forgotPasswordButtonDidTap }
             .bind(to: reactor.action)

@@ -17,6 +17,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
+        case backButtonDidTap
         case forgotPasswordButtonDidTap
         case loginButtonDidTap
         case signUpButtonDidTap
@@ -42,6 +43,8 @@ final class PhoneLoginReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
         case .forgotPasswordButtonDidTap:
             steps.accept(AppStep.forgotPassword)
         case .loginButtonDidTap:

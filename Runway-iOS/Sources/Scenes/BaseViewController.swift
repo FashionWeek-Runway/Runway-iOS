@@ -25,7 +25,6 @@ class BaseViewController: UIViewController {
     let navigationBarArea: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -100,7 +99,8 @@ class BaseViewController: UIViewController {
     }
     
     func configureUI() {
-        self.view.addSubviews([self.navigationBarArea, self.keyboardWrapperView, self.keyboardSafeAreaView])
+        self.view.addSubviews([self.keyboardWrapperView, self.keyboardSafeAreaView])
+        self.keyboardSafeAreaView.addSubview(self.navigationBarArea)
         self.navigationBarArea.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)

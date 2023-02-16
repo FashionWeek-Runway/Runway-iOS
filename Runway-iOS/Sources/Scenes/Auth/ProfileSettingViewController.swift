@@ -31,6 +31,22 @@ final class ProfileSettingViewController: BaseViewController {
         return field
     }()
     
+    private let cameraPickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = nil
+        picker.allowsEditing = true
+        picker.sourceType = .camera
+        return picker
+    }()
+    
+    private let albumPickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = nil
+        picker.allowsEditing = true
+        picker.sourceType = .photoLibrary
+        return picker
+    }()
+    
     private let nextButton: RWButton = {
         let button = RWButton()
         button.title = "다음"
@@ -105,6 +121,19 @@ final class ProfileSettingViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func presentActionSheet() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.present(self.cameraPickerController, animated: true)
+        }))
+        alertController.addAction(UIAlertAction(title: "사진 가져오기", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.present(self.albumPickerController, animated: true)
+        }))
+        present(alertController, animated: true)
+    }
 }
 
 extension ProfileSettingViewController: View {
@@ -115,6 +144,11 @@ extension ProfileSettingViewController: View {
     
     private func bindAction(reactor: ProfileSettingReactor) {
         rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -139,17 +173,41 @@ extension ProfileSettingViewController: View {
             .map { Reactor.Action.nextButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
+            .bind(onNext: { _ in self.dismiss(animated: true) })
+            .disposed(by: disposeBag)
+        
+        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
+            .bind(onNext: { _ in self.dismiss(animated: true)})
+            .disposed(by: disposeBag)
+        
+        // set profile image
+        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
+            .map { $0[.originalImage] as? UIImage }
+            .bind(to: profileSettingView.profileImageView.rx.image )
+            .disposed(by: disposeBag)
+        
+        // bind action
+        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
+            .map { $0[.originalImage] as? UIImage ?? UIImage() }
+            .map { Reactor.Action.setImage($0.pngData()) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ProfileSettingReactor) {
-        reactor.state.map { $0.profileImageData }
-            .compactMap { $0 }
-            .map { UIImage(data: $0) }
-            .bind(to: profileSettingView.profileImageView.rx.image)
-            .disposed(by: disposeBag)
         
         reactor.state.map { $0.nextButtonEnabled }
             .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.showActionSheet }
+            .bind { [weak self] isShow in
+                if isShow {
+                    self?.presentActionSheet()
+                }
+            }
             .disposed(by: disposeBag)
     }
 }

@@ -12,7 +12,6 @@ enum AppStep: Step {
     
     // Global
     case alert(String, String, [String], (UIAlertAction) -> Void)
-    case actionSheet(String, String)
     case dismiss
     case toast(String)
     
@@ -31,8 +30,14 @@ enum AppStep: Step {
     case phoneCertificationNumberIsRequired(gender: String, name: String, phoneNumber: String)
     case passwordInputRequired
     case policyAgreementIsRequired(password: String)
-    case policyDetailNeedToShow
+    
+    case usagePolicyDetailNeedToShow
+    case privacyPolicyDetailNeedToShow
+    case locationPolicyDetailNeedToShow
+    case marketingPolicyDetailNeedToShow
+    
     case profileSettingIsRequired(profileImageURL: String?, kakaoID: String?)
+    case profileImageNeedToSet(((UIAlertAction) -> Void), ((UIAlertAction) -> Void))
     case categorySettingIsRequired(profileImageURL: String?, profileImageData: Data, socialID: String?, nickname: String)
     case SignUpIsCompleted
     
