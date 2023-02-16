@@ -27,7 +27,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     
     enum Mutation {
         case setVerificationNumber(String)
-        case setInvalidCertificationNumber
+        case setInvalidCertification
         case setTimerText(String)
     }
     
@@ -79,12 +79,14 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         case .resendButtonDidTap:
             steps.accept(AppStep.toast("인증번호를 다시 보냈습니다."))
             startTimer(initialSecond: 180)
-            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
-                .subscribe(onNext: { (response, data) in
-                    print(response)
+            return provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
+                .flatMap({ (response, data) -> Observable<Mutation> in
+                    if 200...299 ~= response.statusCode {
+                        return .empty()
+                    } else {
+                        return .empty()
+                    }
                 })
-                .disposed(by: disposeBag)
-            return .empty()
         case .confirmButtonDidTap:
             guard let number = currentState.verificationNumber else { return .empty() }
             return provider.signUpService.checkVerificationNumber(verificationNumber: number,
@@ -94,7 +96,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
                         self?.steps.accept(AppStep.passwordInputRequired)
                         return .empty()
                     } else {
-                        return .empty()
+                        return .just(.setInvalidCertification)
                     }
                 }
         }
@@ -104,8 +106,9 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         var state = state
         switch mutation {
         case .setVerificationNumber(let string):
+            state.invalidCertification = false
             state.verificationNumber = String.limitedLengthString(string, length: 6)
-        case .setInvalidCertificationNumber:
+        case .setInvalidCertification:
             state.invalidCertification = true
         case .setTimerText(let timerText):
             state.timerText = timerText

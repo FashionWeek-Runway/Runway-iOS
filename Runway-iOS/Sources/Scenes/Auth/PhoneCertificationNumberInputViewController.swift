@@ -47,6 +47,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     private let verificationNumberInputField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "숫자 6자리 입력"
+        field.errorText = "인증번호가 일치하지 않습니다."
         field.textField.textContentType = .oneTimeCode
         field.textField.keyboardType = .phonePad
         return field
@@ -103,6 +104,8 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         super.configureUI()
         addBackButton()
         addNavigationTitleLabel()
+        addProgressBar()
+        progressBar.setProgress(0.33, animated: false)
         phoneNumberLabel.text = reactor?.initialState.phoneNumber ?? ""
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
@@ -146,6 +149,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-6)
             $0.trailing.equalToSuperview()
             $0.width.equalTo(67)
+            $0.height.equalTo(36)
         }
         
         timerLabel.snp.makeConstraints {
@@ -215,6 +219,10 @@ extension PhoneCertificationNumberInputViewController: View {
         
         reactor.state.compactMap { $0.timerText }
             .bind(to: timerLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.invalidCertification }
+            .bind(to: verificationNumberInputField.isError)
             .disposed(by: disposeBag)
     }
 }

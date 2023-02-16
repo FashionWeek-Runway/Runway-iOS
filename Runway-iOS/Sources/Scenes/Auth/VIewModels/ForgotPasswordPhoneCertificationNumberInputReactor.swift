@@ -28,7 +28,7 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
     
     enum Mutation {
         case setVerificationNumber(String)
-        case setInvalidCertificationNumber
+        case setInvalidCertification
         case setTimerText(String)
     }
     
@@ -79,13 +79,26 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
             return .just(.setVerificationNumber(string))
         case .resendButtonDidTap:
             steps.accept(AppStep.toast("인증번호를 다시 보냈습니다."))
-            //            return .just(.initializeTime)
-            return .empty()
+            return provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
+                .flatMap({ (response, data) -> Observable<Mutation> in
+                    if 200...299 ~= response.statusCode {
+                        return .empty()
+                    } else {
+                        return .empty()
+                    }
+                })
         case .confirmButtonDidTap:
-            guard let verificationNumber = currentState.verificationNumber else { return .empty() }
-            provider.signUpService.checkVerificationNumber(verificationNumber: verificationNumber,
-                                                           phoneNumber: initialState.phoneNumber)
-            return .empty()
+            guard let number = currentState.verificationNumber else { return .empty() }
+            return provider.signUpService.checkVerificationNumber(verificationNumber: number,
+                                                           phoneNumber: initialState.phoneNumber).responseData()
+                .flatMap { [weak self] (response, data) -> Observable<Mutation> in
+                    if 200...299 ~= response.statusCode {
+                        self?.steps.accept(AppStep.passwordInputRequired)
+                        return .empty()
+                    } else {
+                        return .just(.setInvalidCertification)
+                    }
+                }
         }
     }
     
@@ -93,8 +106,9 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         var state = state
         switch mutation {
         case .setVerificationNumber(let string):
+            state.invalidCertification = false
             state.verificationNumber = String.limitedLengthString(string, length: 6)
-        case .setInvalidCertificationNumber:
+        case .setInvalidCertification:
             state.invalidCertification = true
         case .setTimerText(let timerText):
             state.timerText = timerText
