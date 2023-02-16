@@ -35,7 +35,7 @@ final class SignUpService: APIService {
 //        }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
 //    }
 //
-    func signUpAsPhone(userData: SignUpAsPhoneData) -> Observable<(UploadRequest)> {
+    func signUpAsPhone(userData: SignUpAsPhoneData) -> Observable<UploadRequest> {
         
         guard let categoryList = userData.categoryList,
               let gender = userData.gender,
