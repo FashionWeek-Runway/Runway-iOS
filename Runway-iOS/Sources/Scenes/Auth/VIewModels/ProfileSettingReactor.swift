@@ -23,12 +23,15 @@ final class ProfileSettingReactor: Reactor, Stepper {
         case setImage(Data?)
         case enterNickname(String)
         case nextButtonDidTap
+        
+        case setNicknameDuplicate
     }
     
     enum Mutation {
         case showActionSheet
         case setProfileImageData(Data?)
         case setNickname(String?)
+        case setNickNameDuplicate
     }
     
     struct State {
@@ -40,6 +43,9 @@ final class ProfileSettingReactor: Reactor, Stepper {
         var nickname: String?
         var profileImageData: Data?
         var nextButtonEnabled: Bool = false
+        
+        var isNickNameDuplicate = false
+        var isNickNameValidate = true
     }
     
     // MARK: - Properties
@@ -96,16 +102,29 @@ final class ProfileSettingReactor: Reactor, Stepper {
         case .nextButtonDidTap:
             guard let imageData = currentState.profileImageData,
                   let nickname = currentState.nickname else { return .empty() }
-            steps.accept(AppStep.categorySettingIsRequired(profileImageURL: currentState.profileImageURL,
-                                                           profileImageData: imageData,
-                                                           socialID: currentState.kakaoID,
-                                                           nickname: nickname))
+            
+            provider.signUpService.checkNicknameDuplicate(nickname: nickname)
+                .responseData()
+                .subscribe(onNext: { [weak self] response, data in
+                    if 200...299 ~= response.statusCode {
+                        self?.steps.accept(AppStep.categorySettingIsRequired(profileImageURL: self?.currentState.profileImageURL,
+                                                                       profileImageData: imageData,
+                                                                       socialID: self?.currentState.kakaoID,
+                                                                       nickname: nickname))
+                    } else {
+                        self?.action.onNext(.setNicknameDuplicate)
+                    }
+                })
+                .disposed(by: disposeBag)
             return .empty()
+        case .setNicknameDuplicate:
+            return .just(.setNickNameDuplicate)
         }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
+        state.isNickNameDuplicate = false
         
         switch mutation {
         case .setNickname(let nickname): // nickname validation
@@ -113,6 +132,7 @@ final class ProfileSettingReactor: Reactor, Stepper {
             if let nickname = nickname {
                 if nickname == "" {
                     state.nextButtonEnabled = false
+                    state.isNickNameValidate = false
                 }
                 
                 do {
@@ -125,12 +145,32 @@ final class ProfileSettingReactor: Reactor, Stepper {
             } else {
                 state.nextButtonEnabled = false
             }
+            
+            if let nickname = nickname {
+                if nickname.count == 0 {
+                    state.isNickNameValidate = false
+                } else {
+                    do {
+                        let regex = try NSRegularExpression(pattern: "^[a-zA-Z가-힣]{2,10}$")
+                        let range = NSRange(location: 0, length: nickname.utf16.count)
+                        state.isNickNameValidate = regex.firstMatch(in: nickname, range: range) == nil
+                    } catch let error {
+                        print("Invalid regex", error)
+                    }
+                }
+            } else {
+                state.isNickNameValidate = true
+            }
+            
         case .showActionSheet:
             state.showActionSheet = true
         case .setProfileImageData(let data):
             state.profileImageData = data
             state.showActionSheet = false
+        case .setNickNameDuplicate:
+            state.isNickNameDuplicate = true
         }
+        
         return state
     }
     

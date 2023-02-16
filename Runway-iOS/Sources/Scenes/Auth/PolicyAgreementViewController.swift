@@ -154,7 +154,7 @@ final class PolicyAgreementViewController: BaseViewController {
         super.configureUI()
         addBackButton()
         addProgressBar()
-        self.progressBar.setProgress(0.66, animated: true)
+        self.progressBar.setProgress(0.66, animated: false)
         
         let bottomPolicyButtonStackView = UIStackView(arrangedSubviews: [usagePolicyAgreeButton,
                                                                         privacyPolicyAgreeButton,

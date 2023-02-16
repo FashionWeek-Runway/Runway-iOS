@@ -28,6 +28,7 @@ final class ProfileSettingViewController: BaseViewController {
     private let nickNameField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "닉네임 입력"
+        field.errorText = "한글, 영어 혼합 2~10글자 입니다."
         return field
     }()
     
@@ -208,6 +209,23 @@ extension ProfileSettingViewController: View {
                     self?.presentActionSheet()
                 }
             }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isNickNameDuplicate }
+            .subscribe(on: MainScheduler.instance)
+            .bind { [weak self] isShow in
+                if isShow {
+                    self?.nickNameField.errorText = "이미 존재하는 닉네임입니다."
+                    self?.nickNameField.isError.accept(true)
+                } else {
+                    self?.nickNameField.errorText = "한글, 영어 혼합 2~10글자 입니다."
+                    self?.nickNameField.isError.accept(false)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isNickNameValidate }
+            .bind(to: nickNameField.isError)
             .disposed(by: disposeBag)
     }
 }
