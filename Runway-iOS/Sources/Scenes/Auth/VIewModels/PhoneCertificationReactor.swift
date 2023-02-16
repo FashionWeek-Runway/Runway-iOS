@@ -53,8 +53,11 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber)
-                .validate(statusCode: 200...299)
+            provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
+                .subscribe(onNext: { (response, data) in
+                    print(response)
+                })
+                .disposed(by: disposeBag)
             return .empty()
         case .backButtonDidTap:
             steps.accept(AppStep.back)
@@ -68,13 +71,11 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         case .confirmButtonDidTap:
             guard let number = currentState.verificationNumber else { return .empty() }
             provider.signUpService.checkVerificationNumber(verificationNumber: number,
-                                                           phoneNumber: initialState.phoneNumber).validate(statusCode: 200...299).data()
-            .map { [weak self] request in
+                                                           phoneNumber: initialState.phoneNumber).data()
+            .subscribe { [weak self] data in
                 self?.steps.accept(AppStep.passwordInputRequired)
-            }.catch { error in
-                print(error)
-                return .empty()
             }
+            .disposed(by: disposeBag)
             return .empty()
         }
     }

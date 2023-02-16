@@ -18,6 +18,13 @@ import RxKakaoSDKAuth
 import KakaoSDKUser
 import RxKakaoSDKUser
 
+import Alamofire
+
+enum LoginError: Error {
+    case notRegistered
+    case serverError
+}
+
 final class MainLoginReactor: Reactor, Stepper {
     // MARK: - Events
     
@@ -28,6 +35,9 @@ final class MainLoginReactor: Reactor, Stepper {
         case kakaoLoginButtonDidTap
         case appleLoginButtonDidTap
         case phoneLoginButtonDidTap
+        
+        case requestkakaoLogin
+        case requestAppleLogin
     }
     
     enum Mutation {
@@ -55,39 +65,31 @@ final class MainLoginReactor: Reactor, Stepper {
         switch action {
         case .kakaoLoginButtonDidTap:
             if UserApi.isKakaoTalkLoginAvailable() {
-                UserApi.shared.rx.loginWithKakaoTalk()
-                    .subscribe { [weak self] event in
-                        guard let self = self else { return }
-                        switch event {
-                        case .next(let oauthToken):
-                            self.provider.appSettingService.kakaoAccessToken = oauthToken.accessToken
-                            self.loginKakao()
-                        case .error(let error):
-                            print(error)
-                        case .completed:
-                            break
-                        }
-                    }.disposed(by: disposeBag)
-            } else {
-                UserApi.shared.rx.loginWithKakaoAccount()
-                    .subscribe { event in
-                        switch event {
-                        case .next(let oauthToken):
-                            self.provider.appSettingService.kakaoAccessToken = oauthToken.accessToken
-                            self.loginKakao()
-                        case .error(let error):
-                            print(error)
-                        case .completed:
-                            break
-                        }
-                    }.disposed(by: disposeBag)
+                return UserApi.shared.rx.loginWithKakaoTalk()
+                    .flatMap { [weak self] token -> Observable<Mutation> in
+                        self?.provider.appSettingService.kakaoAccessToken = token.accessToken
+                        self?.loginKakao()
+                        return .empty()
+                    }
             }
-            return .just(.setKakaoLogin)
+            else {
+                return UserApi.shared.rx.loginWithKakaoAccount()
+                    .flatMap { [weak self] token -> Observable<Mutation> in
+                        self?.provider.appSettingService.kakaoAccessToken = token.accessToken
+                        self?.loginKakao()
+                        return .empty()
+                    }
+            }
         case .appleLoginButtonDidTap:
             return .just(.setAppleLogin)
         case .phoneLoginButtonDidTap:
             steps.accept(AppStep.phoneNumberLogin)
             return .just(.setPhoneLogin)
+        case .requestkakaoLogin:
+            return .empty()
+        case .requestAppleLogin:
+            // TODO: -
+            return .empty()
         }
     }
     
@@ -95,23 +97,23 @@ final class MainLoginReactor: Reactor, Stepper {
         return state
     }
     
-    private func loginKakao() {
-        self.provider.loginService.loginAsKakao()
+    private func loginKakao() -> Observable<Mutation> {
+        return provider.loginService.loginAsKakao()
             .responseData()
-            .subscribe(onNext: { response, data in
-                if response.statusCode == 400 { // 가입 필요
+            .flatMap { (response, data) -> Observable<Mutation> in
+                if response.statusCode == 400 {
                     do {
                         let responseData = try JSONDecoder().decode(LoginAsKakaoResponse.self, from: data)
-                        self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL, kakaoID: responseData.result.kakaoID))
+                        self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL,
+                                                                           kakaoID: responseData.result.kakaoID))
+                        return .empty()
                     } catch {
                         print(error)
                     }
-                } else if response.statusCode == 403 { // 카카오 서버 에러
-                    print("kakao에러")
-                } else { // 로그인 완료
-                    print(response ,data)
+                    return .empty()
+                } else {
+                    return .empty()
                 }
-            })
-            .disposed(by: disposeBag)
+            }
     }
 }

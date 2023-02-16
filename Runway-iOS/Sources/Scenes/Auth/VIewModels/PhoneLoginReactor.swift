@@ -64,7 +64,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
             guard let password = currentState.password,
                   let phoneNumber = currentState.phoneNumber else { return .empty() }
             
-            return provider.loginService.login(password: password, phone: phoneNumber).validate(statusCode: 200...299).data().map { [weak self] data in
+            return provider.loginService.login(password: password, phone: phoneNumber).data().map { [weak self] data -> Mutation in
                 do {
                     let responseData = try JSONDecoder().decode(LoginResponse.self, from: data) as LoginResponse
                     self?.provider.appSettingService.isLoggedIn = true
