@@ -64,7 +64,7 @@ final class CategorySettingReactor: Reactor, Stepper {
     init(provider: ServiceProviderType,
          signUpAsKakaoData: SignUpAsKakaoData) {
         self.provider = provider
-        self.initialState = State(nickname: signUpAsPhoneData?.nickname,
+        self.initialState = State(nickname: signUpAsKakaoData.nickname,
                                   isSelected: Dictionary(uniqueKeysWithValues: categories.map{ ($0, false) }),
                                   categories: categories)
         self.signUpAsKakaoData = signUpAsKakaoData

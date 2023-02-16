@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SignUpAsKakaoData: Encodable {
+class SignUpAsKakaoData {
     var categoryList: [String]? = nil
     var profileImageData: Data? = nil
     var nickname: String? = nil

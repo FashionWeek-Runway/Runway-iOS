@@ -70,6 +70,7 @@
 		199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */; };
 		199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */; };
 		199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */; };
+		19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -185,6 +186,7 @@
 		199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
+		19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAsKakaoResponse.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				194F954A2993BFCB0016DDFF /* LoginResponse.swift */,
 				199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */,
 				199B9C78299D1F0500877AAE /* BaseResponse.swift */,
+				19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
+				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,

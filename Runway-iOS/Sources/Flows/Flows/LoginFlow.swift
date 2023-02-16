@@ -24,8 +24,8 @@ final class LoginFlow: Flow {
     
     
     // MARK: - DTO
-    private var signUpASKakaoData: SignUpAsKakaoData?
-    private var signUpAsPhoneData: SignUpAsPhoneData?
+    private var signUpASKakaoData = SignUpAsKakaoData()
+    private var signUpAsPhoneData = SignUpAsPhoneData()
     
     // MARK: - initializer
     
@@ -47,7 +47,6 @@ final class LoginFlow: Flow {
             return showAlertSheet(title: title, message: message, actions: actions, handler: handler)
             
         case .loginRequired:
-            signUpAsPhoneData = nil
             return coordinateToMainLoginScreen()
             
         case .phoneNumberLogin:
@@ -67,30 +66,39 @@ final class LoginFlow: Flow {
             return coordinateToNewPasswordInputScreen(phoneNumber: phoneNumber)
             
         case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
-            self.signUpAsPhoneData?.gender = gender
-            self.signUpAsPhoneData?.name = name
-            self.signUpAsPhoneData?.phone = phoneNumber
+            self.signUpAsPhoneData.gender = gender
+            self.signUpAsPhoneData.name = name
+            self.signUpAsPhoneData.phone = phoneNumber
             return coordinateToPhoneCertificationScreen()
             
         case .passwordInputRequired:
             return coordinateToPasswordInputScreen()
             
         case .policyAgreementIsRequired(let password):
-            self.signUpAsPhoneData?.password = password
+            self.signUpAsPhoneData.password = password
             return coordinateToPolicyAgreeScreen()
             
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
             return .none
         case .profileSettingIsRequired(let profileImageURL, let socialID):
+            if let socialID = socialID {
+                self.signUpASKakaoData = SignUpAsKakaoData()
+                signUpASKakaoData.socialID = socialID
+                signUpASKakaoData.profileImageURL = profileImageURL
+            }
             return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, socialID: socialID)
             
         case .categorySettingIsRequired(let profileImageURL,
                                         let profileImageData,
                                         let socialID,
                                         let nickname):
-            self.signUpAsPhoneData?.profileImageData = profileImageData
-            self.signUpAsPhoneData?.nickname = nickname
+            self.signUpASKakaoData.profileImageURL = profileImageURL
+            self.signUpASKakaoData.profileImageData = profileImageData
+            self.signUpASKakaoData.nickname = nickname
+            self.signUpASKakaoData.socialID = socialID
+            self.signUpAsPhoneData.profileImageData = profileImageData
+            self.signUpAsPhoneData.nickname = nickname
             return coordinateToCategorySettingScreen(profileImageURL: profileImageURL, profileImageData, nickname, socialID: socialID)
         default:
             return .none
@@ -167,7 +175,7 @@ final class LoginFlow: Flow {
     }
     
     private func coordinateToPhoneCertificationScreen() -> FlowContributors {
-        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhoneData?.phone ?? "")
+        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhoneData.phone ?? "")
         let viewController = PhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
@@ -196,7 +204,12 @@ final class LoginFlow: Flow {
     }
     
     private func coordinateToCategorySettingScreen(profileImageURL: String?, _ profileImageData: Data, _ nickname: String, socialID: String?) -> FlowContributors {
-        let reactor = CategorySettingReactor(provider: provider, signUpAsPhoneData: self.signUpAsPhoneData ?? SignUpAsPhoneData())
+        var reactor: CategorySettingReactor
+        if socialID != nil { // 카카오의 경우
+            reactor = CategorySettingReactor(provider: provider, signUpAsKakaoData: signUpASKakaoData)
+        } else { // phone 로그인
+            reactor = CategorySettingReactor(provider: provider, signUpAsPhoneData: self.signUpAsPhoneData)
+        }
         let viewController = CategorySettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
