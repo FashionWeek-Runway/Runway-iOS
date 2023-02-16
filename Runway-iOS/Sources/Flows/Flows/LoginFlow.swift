@@ -53,6 +53,12 @@ final class LoginFlow: Flow {
         case .phoneNumberLogin:
             return coordinateToPhoneLoginScreen()
             
+        case .forgotPassword:
+            return coordinateToForgotPasswordScreen()
+            
+        case .forgotPasswordCertificationIsRequired:
+            return coordinateToForgotPasswordPhoneCertificationScreen()
+            
         case .identityVerificationIsRequired:
             signUpAsPhoneData = SignUpAsPhoneData()
             return coordinateToIdentityVerificationScreen()
@@ -133,6 +139,13 @@ final class LoginFlow: Flow {
     private func coordinateToForgotPasswordScreen() -> FlowContributors {
         let reactor = ForgotPasswordReactor(provider: provider)
         let viewController = ForgotPasswordViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToForgotPasswordPhoneCertificationScreen() -> FlowContributors {
+        let reactor = ForgotPasswordPhoneCertificationNumberInputReactor(provider: provider, phoneNumber: <#String#>)
+        let viewController = ForgotPasswordPhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }

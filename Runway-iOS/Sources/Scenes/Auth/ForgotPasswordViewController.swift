@@ -23,7 +23,11 @@ final class ForgotPasswordViewController: BaseViewController {
         return label
     }()
     
-    private let mobileCarrierPicker: RWPicker = RWPicker()
+    private let mobileCarrierPicker: RWPicker = {
+        let picker = RWPicker()
+        picker.pickerData = ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"]
+        return picker
+    }()
     
     private let phoneNumberTextField: RWTextField = {
         let field = RWTextField()
@@ -36,6 +40,7 @@ final class ForgotPasswordViewController: BaseViewController {
         let button = RWButton()
         button.title = "인증 문자 요청"
         button.type = .primary
+        button.isEnabled = false
         return button
     }()
     
@@ -119,10 +124,31 @@ extension ForgotPasswordViewController: View {
     }
     
     private func bindAction(reactor: ForgotPasswordReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        phoneNumberTextField.textField.rx.text
+            .orEmpty
+            .map { Reactor.Action.enterPhoneNumber($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mobileCarrierPicker.textField.rx.text
+            .orEmpty
+            .map { Reactor.Action.enterMobileCarrier($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ForgotPasswordReactor) {
+        reactor.state.map {$0.phoneNumber}
+            .bind(to: phoneNumberTextField.textField.rx.text)
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.isRequestEnable }
+            .bind(to: verificationMessageRequestButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
 }

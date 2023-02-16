@@ -23,6 +23,7 @@ enum AppStep: Step {
     
     case phoneNumberLogin
     case forgotPassword
+    case forgotPasswordCertificationIsRequired(String?)
     case newPasswordInputRequired
     
     // Sign Up
