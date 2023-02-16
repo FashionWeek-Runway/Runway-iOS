@@ -12,6 +12,9 @@ import RxCocoa
 import RxKeyboard
 import ReactorKit
 
+import AVFoundation
+import Photos
+
 final class ProfileSettingViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -127,11 +130,23 @@ final class ProfileSettingViewController: BaseViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
-            self.present(self.cameraPickerController, animated: true)
+            
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    self.present(self.cameraPickerController, animated: true)
+                }
+            }
         }))
         alertController.addAction(UIAlertAction(title: "사진 가져오기", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
-            self.present(self.albumPickerController, animated: true)
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                switch status {
+                case .authorized:
+                    self.present(self.albumPickerController, animated: true)
+                default:
+                    break
+                }
+            }
         }))
         present(alertController, animated: true)
     }
