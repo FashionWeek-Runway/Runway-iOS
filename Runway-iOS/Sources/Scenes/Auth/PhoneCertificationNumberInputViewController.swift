@@ -87,7 +87,6 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         super.configureUI()
         addBackButton()
         addNavigationTitleLabel()
-        navigationTitleLabel.text = "비밀번호 찾기"
         phoneNumberLabel.text = reactor?.initialState.phoneNumber ?? ""
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])

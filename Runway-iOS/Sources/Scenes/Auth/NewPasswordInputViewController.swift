@@ -75,6 +75,8 @@ final class NewPasswordInputViewController: BaseViewController {
         return button
     }()
     
+    private let alertViewController = RWAlertViewController()
+    
     // MARK: - intializer
     
     init(with reactor: NewPasswordInputReactor) {
@@ -180,6 +182,11 @@ extension NewPasswordInputViewController: View {
             .map { Reactor.Action.passwordValidationFieldInput($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        alertViewController.alertView.button.rx.tap
+            .map { Reactor.Action.alertConfirmButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: NewPasswordInputReactor) {
@@ -203,5 +210,13 @@ extension NewPasswordInputViewController: View {
         reactor.state.map { $0.isNextEnable }
             .bind(to: confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.shouldShowAlert }
+            .bind { [weak self] isShow in
+                guard let self = self else { return }
+                if isShow {
+                    self.present(self.alertViewController, animated: true)
+                }
+            }.disposed(by: disposeBag)
     }
 }

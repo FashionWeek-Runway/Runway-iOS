@@ -28,7 +28,7 @@ public class APIService {
         self.session = Session(configuration: configuration, eventMonitors: isLogging ? [self.eventLogger] : [])
     }
     
-    func request(_ method: HTTPMethod, _ url: String, useAuthHeader: Bool = true, parameters: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, headers: [String: String]? = nil) -> Observable<(HTTPURLResponse, Data)> {
+    func request(_ method: HTTPMethod, _ url: String, useAuthHeader: Bool = true, parameters: Parameters? = nil, encoding: ParameterEncoding = JSONEncoding.default, headers: [String: String]? = nil) -> Observable<DataRequest> {
         
         var httpHeaders = HTTPHeaders()
         httpHeaders.add(name: "Content-Type", value: "application/json")
@@ -43,6 +43,6 @@ public class APIService {
             authInterceptor.intercept(headers: &httpHeaders)
         }
         
-        return self.session.rx.responseData(method, baseURL + url, parameters: parameters, encoding: encoding, headers: httpHeaders)
+        return self.session.rx.request(method, baseURL + url, parameters: parameters, encoding: encoding, headers: httpHeaders)
     }
 }

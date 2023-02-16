@@ -56,15 +56,15 @@ final class LoginFlow: Flow {
         case .forgotPassword:
             return coordinateToForgotPasswordScreen()
             
-        case .forgotPasswordCertificationIsRequired:
-            return coordinateToForgotPasswordPhoneCertificationScreen()
+        case .forgotPasswordCertificationIsRequired(let phoneNumber):
+            return coordinateToForgotPasswordPhoneCertificationScreen(phoneNumber: phoneNumber)
             
         case .identityVerificationIsRequired:
             signUpAsPhoneData = SignUpAsPhoneData()
             return coordinateToIdentityVerificationScreen()
             
-        case .newPasswordInputRequired:
-            return coordinateToNewPasswordInputScreen()
+        case .newPasswordInputRequired(let phoneNumber):
+            return coordinateToNewPasswordInputScreen(phoneNumber: phoneNumber)
             
         case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
             self.signUpAsPhoneData?.gender = gender
@@ -143,15 +143,17 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToForgotPasswordPhoneCertificationScreen() -> FlowContributors {
-        let reactor = ForgotPasswordPhoneCertificationNumberInputReactor(provider: provider, phoneNumber: <#String#>)
+    private func coordinateToForgotPasswordPhoneCertificationScreen(phoneNumber: String?) -> FlowContributors {
+        guard let phoneNumber = phoneNumber else { return .none }
+        let reactor = ForgotPasswordPhoneCertificationNumberInputReactor(provider: provider, phoneNumber: phoneNumber)
         let viewController = ForgotPasswordPhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToNewPasswordInputScreen() -> FlowContributors {
-        let reactor = NewPasswordInputReactor(provider: provider)
+    private func coordinateToNewPasswordInputScreen(phoneNumber: String?) -> FlowContributors {
+        guard let phoneNumber = phoneNumber else { return .none }
+        let reactor = NewPasswordInputReactor(provider: provider, phoneNumber: phoneNumber)
         let viewController = NewPasswordInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

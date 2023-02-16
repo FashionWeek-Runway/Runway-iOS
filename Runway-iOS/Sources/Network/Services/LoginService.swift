@@ -12,7 +12,7 @@ import RxAlamofire
 
 final class LoginService: APIService {
     
-    func login(password: String, phone: String) -> Observable<(HTTPURLResponse, Data)>{
+    func login(password: String, phone: String) -> Observable<DataRequest> {
         
         var params = Parameters()
         params.updateValue(password, forKey: "password")
@@ -21,7 +21,7 @@ final class LoginService: APIService {
         return request(.get, "login", useAuthHeader:  false,parameters: params)
     }
     
-    func loginAsKakao() -> Observable<(HTTPURLResponse, Data)> {
+    func loginAsKakao() -> Observable<DataRequest> {
         
         var params = Parameters()
         params.updateValue(AppSettingService.shared.kakaoAccessToken, forKey: "accessToken")

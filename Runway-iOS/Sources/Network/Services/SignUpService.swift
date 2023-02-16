@@ -67,7 +67,7 @@ final class SignUpService: APIService {
         }, to: baseURL + "login/signup", method: .post, headers: headers)
     }
     
-    func checkVerificationNumber(verificationNumber: String, phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
+    func checkVerificationNumber(verificationNumber: String, phoneNumber: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "to")
         params.updateValue(verificationNumber, forKey: "confirmNum")
@@ -75,21 +75,21 @@ final class SignUpService: APIService {
         return request(.post, "login/check", useAuthHeader: false, parameters: params)
     }
     
-    func checkNicknameDuplicate(nickname: String) -> Observable<(HTTPURLResponse, Data)> {
+    func checkNicknameDuplicate(nickname: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(nickname, forKey: "nickname")
         
         return request(.get, "login/check/nickname", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
     }
     
-    func checkPhoneNumberDuplicate(phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
+    func checkPhoneNumberDuplicate(phoneNumber: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "phone")
         
         return request(.get, "login/check/phone", useAuthHeader: false, parameters: params, encoding: URLEncoding.default)
     }
     
-    func setUserPassword(phoneNumber: String, password: String) -> Observable<(HTTPURLResponse, Data)> {
+    func setUserPassword(phoneNumber: String, password: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "phone")
         params.updateValue(password, forKey: "password")
@@ -97,7 +97,7 @@ final class SignUpService: APIService {
         return request(.post, "login/phone", useAuthHeader: false, parameters: params)
     }
     
-    func sendVerificationMessage(phoneNumber: String) -> Observable<(HTTPURLResponse, Data)> {
+    func sendVerificationMessage(phoneNumber: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(phoneNumber, forKey: "to")
         
