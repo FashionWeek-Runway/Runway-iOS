@@ -64,7 +64,8 @@ final class PhoneLoginReactor: Reactor, Stepper {
             guard let password = currentState.password,
                   let phoneNumber = currentState.phoneNumber else { return .empty() }
             
-            return provider.loginService.login(password: password, phone: phoneNumber).data().map { [weak self] data -> Mutation in
+            return provider.loginService.login(password: password, phone: phoneNumber).responseData().map { [weak self] response, data -> Mutation in
+                print(response)
                 do {
                     let responseData = try JSONDecoder().decode(LoginResponse.self, from: data) as LoginResponse
                     self?.provider.appSettingService.isLoggedIn = true
@@ -77,8 +78,6 @@ final class PhoneLoginReactor: Reactor, Stepper {
                     print(error)
                     return .setUserLogIn
                 }
-            } .catch { error in
-                return .just(.setAccoutNotExist)
             }
         case .signUpButtonDidTap:
             steps.accept(AppStep.identityVerificationIsRequired)
