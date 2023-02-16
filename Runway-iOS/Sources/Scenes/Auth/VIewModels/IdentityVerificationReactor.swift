@@ -26,6 +26,8 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case mobileCarrierInput(String)
         case phoneNumberInput(String)
         case requestButtonDidTap
+        
+        case isDuplicatePhoneNumber
     }
     
     enum Mutation {
@@ -35,6 +37,7 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         case setBirthDay(String)
         case setMobileCarrier(String)
         case setPhoneNumber(String)
+        case setShouldDuplicateLabel
     }
     
     struct State{
@@ -46,6 +49,8 @@ final class IdentityVerificationReactor: Reactor, Stepper {
         var phoneNumber: String? = nil
         
         var isMessageRequestEnabled: Bool = false
+        
+        var shouldShowDuplicateError: Bool = false
     }
     
     private let disposeBag = DisposeBag()
@@ -97,14 +102,32 @@ final class IdentityVerificationReactor: Reactor, Stepper {
             return .just(.setMobileCarrier(mobileCarrier))
         case .phoneNumberInput(let phoneNumber):
             return .just(.setPhoneNumber(phoneNumber))
+        case .isDuplicatePhoneNumber:
+            return .just(.setShouldDuplicateLabel)
         case .requestButtonDidTap:
-            checkNumberIsDuplicate()
-            return .empty()
+            guard let phoneNumber = currentState.phoneNumber else { return .empty() }
+            
+            provider.signUpService.checkPhoneNumberDuplicate(phoneNumber: phoneNumber).responseData()
+                .subscribe(onNext: { [weak self] response, data in
+                    
+                    if response.statusCode >= 400 {
+                        self?.action.onNext(.isDuplicatePhoneNumber)
+                    } else {
+                        guard let gender = self?.currentState.gender,
+                              let name = self?.currentState.name,
+                              let phone = self?.currentState.phoneNumber else { return }
+                        self?.steps.accept(AppStep.phoneCertificationNumberIsRequired(gender: gender,
+                                                                                      name: name,
+                                                                                      phoneNumber: phone))
+                    }
+            }).disposed(by: disposeBag)
         }
+        return .empty()
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
+        state.shouldShowDuplicateError = false
         switch mutation {
         case .setName(let name):
             state.name = name
@@ -118,6 +141,8 @@ final class IdentityVerificationReactor: Reactor, Stepper {
             state.mobileCarrier = mobileCarrier
         case .setPhoneNumber(let phoneNumber):
             state.phoneNumber = limitedLengthString(phoneNumber, length: 11)
+        case .setShouldDuplicateLabel:
+            state.shouldShowDuplicateError = true
         }
         
         state.isMessageRequestEnabled = canRequest()

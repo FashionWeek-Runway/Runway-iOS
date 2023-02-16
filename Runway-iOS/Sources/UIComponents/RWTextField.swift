@@ -12,6 +12,8 @@ import RxCocoa
 
 final class RWTextField: UIView {
     
+    var isError = BehaviorRelay(value: false)
+    
     private let disposeBag: DisposeBag = DisposeBag()
     
     let textField = UITextField()
@@ -40,10 +42,26 @@ final class RWTextField: UIView {
         }
     }
     
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .body2
+        label.textColor = .error
+        label.textAlignment = .left
+        label.isHidden = true
+        return label
+    }()
+    
+    var errorText: String? = nil {
+        didSet {
+            errorLabel.text = errorText
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         textField.delegate = self
         configureUI()
+        setupError()
     }
     
     required init?(coder: NSCoder) {
@@ -79,6 +97,12 @@ final class RWTextField: UIView {
             $0.trailing.equalTo(secureToggleButton.snp.leading)
         }
         
+        self.addSubview(errorLabel)
+        errorLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.top.equalTo(self.snp.bottom).offset(8)
+        }
+        
         setupSecureButtonEvent()
     }
     
@@ -87,6 +111,20 @@ final class RWTextField: UIView {
             .drive(onNext: { [weak self] in
                 self?.textField.isSecureTextEntry.toggle()
                 self?.secureToggleButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupError() {
+        isError.asDriver()
+            .drive(onNext: { [weak self] error in
+                if error {
+                    self?.bottomLine.backgroundColor = .error
+                    self?.errorLabel.isHidden = false
+                } else {
+                    self?.bottomLine.backgroundColor = .gray300
+                    self?.errorLabel.isHidden = true
+                }
             })
             .disposed(by: disposeBag)
     }

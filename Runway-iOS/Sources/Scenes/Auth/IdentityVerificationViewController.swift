@@ -82,6 +82,7 @@ final class IdentityVerificationViewController: BaseViewController {
     private let phoneNumberField: RWTextField = {
         let field = RWTextField()
         field.placeholder = "휴대폰 번호 입력(‘-’ 제외)"
+        field.errorText = "이미 가입된 번호입니다."
         field.textField.keyboardType = .numberPad
         return field
     }()
@@ -281,6 +282,10 @@ extension IdentityVerificationViewController: View {
         
         reactor.state.map { $0.isMessageRequestEnabled }
             .bind(to: requestButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.shouldShowDuplicateError }
+            .bind(to: phoneNumberField.isError)
             .disposed(by: disposeBag)
     }
 }
