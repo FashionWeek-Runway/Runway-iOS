@@ -54,7 +54,7 @@ final class CategorySettingReactor: Reactor, Stepper {
     let initialState: State
     
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
-    let categoryForRequestId = ["미니멀": "1", "캐주얼": "2", "시티보이": "3", "스트릿": "4", "빈티지": "5", "페미닌": "6"]
+    let categoryForRequestId = ["미니멀": 1, "캐주얼": 2, "시티보이": 3, "스트릿": 4, "빈티지": 5, "페미닌": 6]
     
     var signUpAsKakaoData: SignUpAsKakaoData?
     var signUpAsPhoneData: SignUpAsPhoneData?
@@ -95,47 +95,52 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .nextButtonDidTap:
             let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true })
                 .map { categoryForRequestId[$0] }.compactMap { $0 }
+            signUpAsPhoneData?.categoryList = selectedCategoryIndex
             if let signUpAsKakaoData = signUpAsKakaoData {
                 
             }
             else if let signUpAsPhoneData = signUpAsPhoneData { // 폰으로 로그인
-//                provider.signUpService.signUpAsPhone(userData: signUpAsPhoneData)
-//                    .subscribe(onNext: { request in
-//                        print(request.response)
-//                    })
+                provider.signUpService.signUpAsPhone(userData: signUpAsPhoneData)
+                    .subscribe(onNext: { request in
+                        print(request.response)
+                        do {
+                        } catch {
+                            print(error)
+                        }
+                    }).disposed(by: disposeBag)
                 
-                var request = URLRequest(url: URL(string: "https://dev.runwayserver.shop/login/signup")!)
-                request.httpMethod = "POST"
-
-                // Header
-                request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-                request.setValue("*/*", forHTTPHeaderField: "Accept")
-
-                var parameters = Parameters()
-                var params = Parameters()
-                params.updateValue(signUpAsPhoneData.categoryList!, forKey: "categoryList")
-                params.updateValue(signUpAsPhoneData.gender!, forKey: "gender")
-                params.updateValue(signUpAsPhoneData.name!, forKey: "name")
-                params.updateValue(signUpAsPhoneData.nickname!, forKey: "nickname")
-                params.updateValue(signUpAsPhoneData.phone!, forKey: "phone")
-                params.updateValue(signUpAsPhoneData.password!, forKey: "password")
-
-                // Body
-                request.httpBody = createBody(parameters: params, boundary: "bounds", data: signUpAsPhoneData.profileImageData!)
-                dump(request)
-//                URLSession.shared.upload
-                URLSession.shared.dataTask(with: request) { data, response, error in
-                    print(error)
-                    print(data)
-                    print(response)
-                    
-                    guard let object = try? JSONSerialization.jsonObject(with: data!, options: []),
-                          let datas = try? JSONSerialization.data(
-                            withJSONObject: object, options: [.prettyPrinted]
-                          ),
-                          let prettyPrintedString = NSString(data: datas, encoding: String.Encoding.utf8.rawValue) else { return }
-                    print(prettyPrintedString as String)
-                }.resume()
+//                var request = URLRequest(url: URL(string: "https://dev.runwayserver.shop/login/signup")!)
+//                request.httpMethod = "POST"
+//
+//                // Header
+//                request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+//                request.setValue("*/*", forHTTPHeaderField: "Accept")
+//
+//                var parameters = Parameters()
+//                var params = Parameters()
+//                params.updateValue(signUpAsPhoneData.categoryList!, forKey: "categoryList")
+//                params.updateValue(signUpAsPhoneData.gender!, forKey: "gender")
+//                params.updateValue(signUpAsPhoneData.name!, forKey: "name")
+//                params.updateValue(signUpAsPhoneData.nickname!, forKey: "nickname")
+//                params.updateValue(signUpAsPhoneData.phone!, forKey: "phone")
+//                params.updateValue(signUpAsPhoneData.password!, forKey: "password")
+//
+//                // Body
+//                request.httpBody = createBody(parameters: params, boundary: "bounds", data: UIImage(data: signUpAsPhoneData.profileImageData!)!.jpegData(compressionQuality: 0.5)!)
+//                dump(request)
+////                URLSession.shared.upload
+//                URLSession.shared.dataTask(with: request) { data, response, error in
+//                    print(error)
+//                    print(try! JSONDecoder().decode(BaseResponse.self, from: data!))
+//                    print(response)
+//
+//                    guard let object = try? JSONSerialization.jsonObject(with: data!, options: []),
+//                          let datas = try? JSONSerialization.data(
+//                            withJSONObject: object, options: [.prettyPrinted]
+//                          ),
+//                          let prettyPrintedString = NSString(data: datas, encoding: String.Encoding.utf8.rawValue) else { return }
+//                    print(prettyPrintedString as String)
+//                }.resume()
             }
             return .just(.tryLogin)
         }
@@ -151,10 +156,6 @@ final class CategorySettingReactor: Reactor, Stepper {
             newState.isNextButtonEnabled = newState.isSelected.contains(where: { $0.value == true })
         case .tryLogin:
             break
-        }
-        
-        if signUpAsPhoneData != nil {
-            signUpAsPhoneData?.categoryList = newState.categories.joined(separator: ",")
         }
         
         return newState

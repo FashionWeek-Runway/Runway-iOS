@@ -45,9 +45,10 @@ final class SignUpService: APIService {
               let password = userData.password,
               let imageData = userData.profileImageData
         else { return .empty() }
-        
+
         var params = Parameters()
-        params.updateValue(categoryList, forKey: "categoryList")
+        let categori = categoryList.map { String($0) }.joined(separator: ",")
+        params.updateValue(categori, forKey: "categoryList")
         params.updateValue(gender, forKey: "gender")
         params.updateValue(name, forKey: "name")
         params.updateValue(nickname, forKey: "nickname")
@@ -60,10 +61,11 @@ final class SignUpService: APIService {
             for (key, value) in params {
                 data.append("\(value)".data(using: .utf8)!, withName: key)
             }
-            data.append(imageData,
+            
+            data.append(UIImage(data: imageData)!.jpegData(compressionQuality: 0.5)!,
                         withName: "multipartFile",
-                        fileName: nickname + ".png",
-                        mimeType: "image/png")
+                        fileName: nickname + ".jpg",
+                        mimeType: "image/jpg")
         }, to: baseURL + "login/signup", method: .post, headers: headers)
     }
     
