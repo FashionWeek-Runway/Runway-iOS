@@ -70,6 +70,9 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.kakaoAccessToken = token.accessToken
                         self?.loginKakao()
                         return .empty()
+                    }.catch { error in
+                        print(error as NSError)
+                        return .empty()
                     }
             }
             else {
@@ -78,13 +81,13 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.kakaoAccessToken = token.accessToken
                         self?.loginKakao()
                         return .empty()
+                    }.catch { error in
+                        print(error as NSError)
                     }
             }
         case .appleLoginButtonDidTap:
-            provider.appleLoginService.login(with: [.email, .fullName]) { result, error in
-                print(result)
-            }
-            return .just(.setAppleLogin)
+            return .empty()
+
         case .phoneLoginButtonDidTap:
             steps.accept(AppStep.phoneNumberLogin)
             return .just(.setPhoneLogin)
@@ -101,7 +104,7 @@ final class MainLoginReactor: Reactor, Stepper {
     }
     
     private func loginKakao() {
-        return provider.loginService.loginAsKakao()
+        return provider.loginService.loginAsKakao() // 서버에서 400으로 데이터를 주기때문에...
             .responseData()
             .subscribe(onNext: { (response, data) in
                 if response.statusCode == 400 {

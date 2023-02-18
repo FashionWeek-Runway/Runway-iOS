@@ -27,4 +27,11 @@ final class LoginService: APIService {
         params.updateValue(AppSettingService.shared.kakaoAccessToken, forKey: "accessToken")
         return request(.post, "login/kakao", useAuthHeader: false, parameters: params)
     }
+    
+    func loginAsApple() -> Observable<DataRequest> {
+        
+        var params = Parameters()
+        params.updateValue(AppSettingService.shared.self, forKey: "accessToken")
+        return request(.post, "login/apple", useAuthHeader: false, parameters: params)
+    }
 }

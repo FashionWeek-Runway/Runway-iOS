@@ -24,6 +24,7 @@ final class PhoneLoginViewController: BaseViewController {
         let field = RWTextField()
         field.placeholder = "전화번호 입력"
         field.textField.keyboardType = .phonePad
+//        field.textField.key
         return field
     }()
     
