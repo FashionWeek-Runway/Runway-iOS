@@ -121,6 +121,7 @@ final class IdentityVerificationViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showUserAgeCheckModal()
     }
     
     override func configureUI() {
@@ -246,10 +247,33 @@ final class IdentityVerificationViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setViewFrameWhenKeyboardAppeared() {
+    private func showUserAgeCheckModal() {
+        let title = "만 14세 이상인가요?"
+        let message = "RUNWAY는 만 14세 이상 사용 가능합니다.\n해당 데이터는 저장되지 않으며,\n만 14세 이상임을 증명하는데만 사용됩니다."
+        let action1 = "네, 만 14세 이상입니다"
+        let action2 = "아니요, 만 14세이하입니다"
         
+        let limitTitle = "만 14세 이상 사용 가능합니다"
+        let limitDesc = "죄송합니다. RUNWAY는 만 14세 이상 사용\n가능합니다. 우리 나중에 다시 만나요:)"
+        let limitAction = "안녕, 또 만나요!"
+        
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: action1, style: .default, handler: { _ in
+                self.dismiss(animated: true)
+            }))
+            alert.addAction(UIAlertAction(title: action2, style: .default, handler: { action in
+                let nextAlert = UIAlertController(title: limitTitle, message: limitDesc, preferredStyle: .alert)
+                nextAlert.addAction(UIAlertAction(title: limitAction, style: .default, handler: { _ in
+                    self.dismiss(animated: true)
+                    self.reactor?.action.onNext(Reactor.Action.userAgeIsUnderFourteen)
+                }))
+                self.present(nextAlert, animated: true)
+            }))
+            self.present(alert, animated: true)
+        }
     }
-
+    
 }
 
 extension IdentityVerificationViewController: View {
@@ -259,10 +283,6 @@ extension IdentityVerificationViewController: View {
     }
 
     private func bindAction(reactor: IdentityVerificationReactor) {
-        self.rx.viewDidAppear
-            .map { Reactor.Action.viewDidLoad }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
         
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidTap }

@@ -22,11 +22,6 @@ final class LoginFlow: Flow {
         return navigationController
     }()
     
-    
-    // MARK: - DTO
-    private var signUpASKakaoData = SignUpAsKakaoData()
-    private var signUpAsPhoneData = SignUpAsPhoneData()
-    
     // MARK: - initializer
     
     init(with provider: ServiceProviderType) {
@@ -43,8 +38,6 @@ final class LoginFlow: Flow {
             return backScreen()
         case .dismiss:
             return dismissScreen()
-        case .alert(let title, let message, let actions, let handler):
-            return showAlertSheet(title: title, message: message, actions: actions, handler: handler)
             
         case .loginRequired:
             return coordinateToMainLoginScreen()
@@ -59,46 +52,28 @@ final class LoginFlow: Flow {
             return coordinateToForgotPasswordPhoneCertificationScreen(phoneNumber: phoneNumber)
             
         case .identityVerificationIsRequired:
-            signUpAsPhoneData = SignUpAsPhoneData()
             return coordinateToIdentityVerificationScreen()
             
         case .newPasswordInputRequired(let phoneNumber):
             return coordinateToNewPasswordInputScreen(phoneNumber: phoneNumber)
             
-        case .phoneCertificationNumberIsRequired(let gender, let name, let phoneNumber):
-            self.signUpAsPhoneData.gender = gender
-            self.signUpAsPhoneData.name = name
-            self.signUpAsPhoneData.phone = phoneNumber
+        case .phoneCertificationNumberIsRequired:
             return coordinateToPhoneCertificationScreen()
             
         case .passwordInputRequired:
             return coordinateToPasswordInputScreen()
             
-        case .policyAgreementIsRequired(let password):
-            self.signUpAsPhoneData.password = password
+        case .policyAgreementIsRequired:
             return coordinateToPolicyAgreeScreen()
             
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
             return .none
-        case .profileSettingIsRequired(let profileImageURL, let socialID):
-            if let socialID = socialID {
-                signUpASKakaoData.socialID = socialID
-                signUpASKakaoData.profileImageURL = profileImageURL
-            }
-            return coordinateToProfileSettingScreen(profileImageURL: profileImageURL, socialID: socialID)
+        case .profileSettingIsRequired:
+            return coordinateToProfileSettingScreen()
             
-        case .categorySettingIsRequired(let profileImageURL,
-                                        let profileImageData,
-                                        let socialID,
-                                        let nickname):
-            self.signUpASKakaoData.profileImageURL = profileImageURL
-            self.signUpASKakaoData.profileImageData = profileImageData
-            self.signUpASKakaoData.nickname = nickname
-            self.signUpASKakaoData.socialID = socialID
-            self.signUpAsPhoneData.profileImageData = profileImageData
-            self.signUpAsPhoneData.nickname = nickname
-            return coordinateToCategorySettingScreen(profileImageURL: profileImageURL, profileImageData, nickname, socialID: socialID)
+        case .categorySettingIsRequired:
+            return coordinateToCategorySettingScreen()
         default:
             return .none
         }
@@ -116,16 +91,6 @@ final class LoginFlow: Flow {
     
     private func dismissScreen() -> FlowContributors {
         self.rootViewController.dismiss(animated: true)
-        return .none
-    }
-    
-    private func showAlertSheet(title: String, message: String, actions: [String], handler: @escaping ((UIAlertAction) -> Void)) -> FlowContributors {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        for action in actions {
-            alert.addAction(UIAlertAction(title: action, style: .default, handler: handler))
-        }
-
-        self.rootViewController.present(alert, animated: true)
         return .none
     }
     
@@ -174,7 +139,7 @@ final class LoginFlow: Flow {
     }
     
     private func coordinateToPhoneCertificationScreen() -> FlowContributors {
-        let reactor = PhoneCertificationReactor(provider: provider, phoneNumber: self.signUpAsPhoneData.phone ?? "")
+        let reactor = PhoneCertificationReactor(provider: provider)
         let viewController = PhoneCertificationNumberInputViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
@@ -194,21 +159,15 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToProfileSettingScreen(profileImageURL: String?, socialID: String?) -> FlowContributors {
-        let reactor = ProfileSettingReactor(provider: provider, profileImageURL, socialID)
-        
+    private func coordinateToProfileSettingScreen() -> FlowContributors {
+        let reactor = ProfileSettingReactor(provider: provider)
         let viewController = ProfileSettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToCategorySettingScreen(profileImageURL: String?, _ profileImageData: Data, _ nickname: String, socialID: String?) -> FlowContributors {
-        var reactor: CategorySettingReactor
-        if socialID != nil { // 카카오의 경우
-            reactor = CategorySettingReactor(provider: provider, signUpAsKakaoData: signUpASKakaoData)
-        } else { // phone 로그인
-            reactor = CategorySettingReactor(provider: provider, signUpAsPhoneData: self.signUpAsPhoneData)
-        }
+    private func coordinateToCategorySettingScreen() -> FlowContributors {
+        let reactor = CategorySettingReactor(provider: provider)
         let viewController = CategorySettingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

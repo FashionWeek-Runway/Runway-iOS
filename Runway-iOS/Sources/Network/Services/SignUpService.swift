@@ -11,40 +11,62 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
+import RxRelay
+
 final class SignUpService: APIService {
     
-//    func signUpAsKakao(_ userData: SignUpAsKakaoData) -> Observable<UploadRequest> {
-//
-//        var params = Parameters()
-//        params.updateValue(userData.categoryList, forKey: "categoryList")
-//        params.updateValue(userData.nickname, forKey: "nickname")
-//        params.updateValue("", forKey: "profileImgUrl")
-//        params.updateValue(userData.socialID, forKey: "socialId")
-//        params.updateValue(userData.type, forKey: "type")
-//
-//        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
-//
-//        return self.session.rx.upload(multipartFormData: { data in
-//            for (key, value) in params {
-//                data.append("\(value)".data(using: .utf8)!, withName: key)
-//            }
-//            data.append(userData.profileImageData,
-//                        withName: "multipartFile",
-//                        fileName: userData.nickname + ".png",
-//                        mimeType: "image/png")
-//        }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
-//    }
-//
-    func signUpAsPhone(userData: SignUpAsPhoneData) -> Observable<UploadRequest> {
+    var signUpAsKakaoData: SignUpAsKakaoData? = SignUpAsKakaoData()
+    var signUpAsPhoneData: SignUpAsPhoneData? = SignUpAsPhoneData()
+    
+    func removeAllSignUpDatas() {
+        signUpAsPhoneData = nil
+        signUpAsPhoneData = SignUpAsPhoneData()
         
-        guard let categoryList = userData.categoryList,
-              let gender = userData.gender,
-              let name = userData.name,
-              let nickname = userData.nickname,
-              let phoneNumber = userData.phone,
-              let password = userData.password,
-              let imageData = userData.profileImageData
-        else { return .empty() }
+        signUpAsKakaoData = nil
+        signUpAsKakaoData = SignUpAsKakaoData()
+        
+        // TODO: - apple
+    }
+    
+    func signUpAsKakao() -> Observable<UploadRequest> {
+        
+        guard let categoryList = signUpAsKakaoData?.categoryList,
+              let nickname = signUpAsKakaoData?.nickname,
+              let socialID = signUpAsKakaoData?.socialID,
+              let type = signUpAsKakaoData?.type,
+              let imageData = signUpAsKakaoData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+
+        var params = Parameters()
+        params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
+        params.updateValue(nickname, forKey: "nickname")
+        params.updateValue("", forKey: "profileImgUrl")
+        params.updateValue(socialID, forKey: "socialId")
+        params.updateValue(type, forKey: "type")
+
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+
+        return self.session.rx.upload(multipartFormData: { data in
+            for (key, value) in params {
+                data.append("\(value)".data(using: .utf8)!, withName: key)
+            }
+            data.append(imageData,
+                        withName: "multipartFile",
+                        fileName: nickname + ".png",
+                        mimeType: "image/png")
+        }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
+    }
+
+    func signUpAsPhone() -> Observable<UploadRequest> {
+        
+        guard let categoryList = signUpAsPhoneData?.categoryList,
+              let gender = signUpAsPhoneData?.gender,
+              let name = signUpAsPhoneData?.name,
+              let nickname = signUpAsPhoneData?.nickname,
+              let phoneNumber = signUpAsPhoneData?.phone,
+              let password = signUpAsPhoneData?.password,
+              let imageData = signUpAsPhoneData?.profileImageData
+                
+        else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         let categori = categoryList.map { String($0) }.joined(separator: ",")

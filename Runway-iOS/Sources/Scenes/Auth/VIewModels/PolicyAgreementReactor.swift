@@ -90,7 +90,7 @@ final class PolicyAgreementReactor: Reactor, Stepper {
             return .empty()
             
         case .nextButtonDidTap:
-            steps.accept(AppStep.profileSettingIsRequired(profileImageURL: nil, kakaoID: nil))
+            steps.accept(AppStep.profileSettingIsRequired)
             return .empty()
         }
     }

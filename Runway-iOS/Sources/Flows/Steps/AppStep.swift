@@ -23,23 +23,23 @@ enum AppStep: Step {
     
     case phoneNumberLogin
     case forgotPassword
-    case forgotPasswordCertificationIsRequired(String?)
+    case forgotPasswordCertificationIsRequired(String)
     case newPasswordInputRequired(String)
     
     // Sign Up
     case identityVerificationIsRequired
-    case phoneCertificationNumberIsRequired(gender: String, name: String, phoneNumber: String)
+    case phoneCertificationNumberIsRequired
     case passwordInputRequired
-    case policyAgreementIsRequired(password: String)
+    case policyAgreementIsRequired
     
     case usagePolicyDetailNeedToShow
     case privacyPolicyDetailNeedToShow
     case locationPolicyDetailNeedToShow
     case marketingPolicyDetailNeedToShow
     
-    case profileSettingIsRequired(profileImageURL: String?, kakaoID: String?)
+    case profileSettingIsRequired
     case profileImageNeedToSet(((UIAlertAction) -> Void), ((UIAlertAction) -> Void))
-    case categorySettingIsRequired(profileImageURL: String?, profileImageData: Data, socialID: String?, nickname: String)
+    case categorySettingIsRequired
     case SignUpIsCompleted
     
 }

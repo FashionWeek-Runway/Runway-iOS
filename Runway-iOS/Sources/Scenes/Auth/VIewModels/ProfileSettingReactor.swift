@@ -23,8 +23,6 @@ final class ProfileSettingReactor: Reactor, Stepper {
         case setImage(Data?)
         case enterNickname(String)
         case nextButtonDidTap
-        
-        case setNicknameDuplicate
     }
     
     enum Mutation {
@@ -36,7 +34,6 @@ final class ProfileSettingReactor: Reactor, Stepper {
     
     struct State {
         var profileImageURL: String?
-        var kakaoID: String?
         
         var showActionSheet: Bool = false
         
@@ -56,12 +53,11 @@ final class ProfileSettingReactor: Reactor, Stepper {
     let provider: ServiceProviderType
     
     private let disposeBag = DisposeBag()
-
+    
     // MARK: - initializer
     
-    init(provider: ServiceProviderType, _ profileImageURL: String?, _ kakaoID: String?) {
-        let state = State(profileImageURL: profileImageURL,
-                          kakaoID: kakaoID)
+    init(provider: ServiceProviderType) {
+        let state = State(profileImageURL: provider.signUpService.signUpAsKakaoData?.profileImageURL)
         self.initialState = state
         self.provider = provider
     }
@@ -103,22 +99,21 @@ final class ProfileSettingReactor: Reactor, Stepper {
             guard let imageData = currentState.profileImageData,
                   let nickname = currentState.nickname else { return .empty() }
             
-            provider.signUpService.checkNicknameDuplicate(nickname: nickname)
-                .responseData()
-                .subscribe(onNext: { [weak self] response, data in
+            provider.signUpService.signUpAsPhoneData?.profileImageData = imageData
+            provider.signUpService.signUpAsPhoneData?.nickname = nickname
+            provider.signUpService.signUpAsKakaoData?.profileImageData = imageData
+            provider.signUpService.signUpAsKakaoData?.nickname = nickname
+            // TODO: - Apple
+            
+            return provider.signUpService.checkNicknameDuplicate(nickname: nickname).response()
+                .flatMap { response -> Observable<Mutation> in
                     if 200...299 ~= response.statusCode {
-                        self?.steps.accept(AppStep.categorySettingIsRequired(profileImageURL: self?.currentState.profileImageURL,
-                                                                       profileImageData: imageData,
-                                                                       socialID: self?.currentState.kakaoID,
-                                                                       nickname: nickname))
+                        self.steps.accept(AppStep.categorySettingIsRequired)
+                        return .empty()
                     } else {
-                        self?.action.onNext(.setNicknameDuplicate)
+                        return .just(.setNickNameDuplicate)
                     }
-                })
-                .disposed(by: disposeBag)
-            return .empty()
-        case .setNicknameDuplicate:
-            return .just(.setNickNameDuplicate)
+                }
         }
     }
     

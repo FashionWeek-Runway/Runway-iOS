@@ -8,7 +8,7 @@
 import Foundation
 
 class SignUpAsKakaoData {
-    var categoryList: [String]? = nil
+    var categoryList: [Int]? = nil
     var profileImageData: Data? = nil
     var nickname: String? = nil
     var profileImageURL: String? = nil

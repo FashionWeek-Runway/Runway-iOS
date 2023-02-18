@@ -61,7 +61,8 @@ final class PasswordInputReactor: Reactor, Stepper {
             
         case .nextButtonDidTap:
             guard let password = currentState.password else { return .empty() }
-            steps.accept(AppStep.policyAgreementIsRequired(password: password))
+            provider.signUpService.signUpAsPhoneData?.password = password
+            steps.accept(AppStep.policyAgreementIsRequired)
             return .empty()
         }
     }

@@ -9,6 +9,7 @@ import Foundation
 
 import ReactorKit
 import RxFlow
+import RxSwift
 import RxCocoa
 
 import KakaoSDKCommon
@@ -68,7 +69,7 @@ final class MainLoginReactor: Reactor, Stepper {
                 return UserApi.shared.rx.loginWithKakaoTalk()
                     .flatMap { [weak self] token -> Observable<Mutation> in
                         self?.provider.appSettingService.kakaoAccessToken = token.accessToken
-                        self?.loginKakao()
+                        self?.loginKakao(kakaoOauthToken: token.accessToken)
                         return .empty()
                     }.catch { error in
                         print(error as NSError)
@@ -79,13 +80,33 @@ final class MainLoginReactor: Reactor, Stepper {
                 return UserApi.shared.rx.loginWithKakaoAccount()
                     .flatMap { [weak self] token -> Observable<Mutation> in
                         self?.provider.appSettingService.kakaoAccessToken = token.accessToken
-                        self?.loginKakao()
+                        self?.loginKakao(kakaoOauthToken: token.accessToken)
                         return .empty()
                     }
             }
         case .appleLoginButtonDidTap:
+            provider.appleLoginService.login(with: [.fullName, .email]) { loginResult, error in
+                if let error = error {
+                    print(error)
+                }
+                guard let identityToken = loginResult?.identityToken,
+                      let oauthToken = String(data: identityToken, encoding: .utf8) else { return }
+                self.provider.loginService.loginAsApple(oAuthToken: oauthToken).validate(statusCode: 200...299).data().decode(type: AppleLoginResponse.self, decoder: JSONDecoder())
+                    .subscribe(onNext: { [weak self] response in
+                        if response.result.checkUser {
+                            self?.provider.appSettingService.authToken = response.result.accessToken
+                            self?.provider.appSettingService.refreshToken = response.result.refreshToken
+                            self?.steps.accept(AppStep.userIsLoggedIn)
+                        } else {
+                            // TODO: - Apple Login flow
+//                            self?.provider.signUpService.signUpAs
+                            self?.steps.accept(AppStep.profileSettingIsRequired)
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+            }
             return .empty()
-
+            
         case .phoneLoginButtonDidTap:
             steps.accept(AppStep.phoneNumberLogin)
             return .just(.setPhoneLogin)
@@ -101,15 +122,16 @@ final class MainLoginReactor: Reactor, Stepper {
         return state
     }
     
-    private func loginKakao() {
-        return provider.loginService.loginAsKakao() // 서버에서 400으로 데이터를 주기때문에...
+    private func loginKakao(kakaoOauthToken: String) {
+        return provider.loginService.loginAsKakao(oAuthToken: kakaoOauthToken) // 서버에서 400으로 데이터를 주기때문에...
             .responseData()
-            .subscribe(onNext: { (response, data) in
+            .subscribe(onNext: { [weak self] (response, data) in
                 if response.statusCode == 400 {
                     do {
                         let responseData = try JSONDecoder().decode(LoginAsKakaoResponse.self, from: data)
-                        self.steps.accept(AppStep.profileSettingIsRequired(profileImageURL: responseData.result.profileImageURL,
-                                                                           kakaoID: responseData.result.kakaoID))
+                        self?.provider.signUpService.signUpAsKakaoData?.profileImageURL = responseData.result.profileImageURL
+                        self?.provider.signUpService.signUpAsKakaoData?.socialID = responseData.result.kakaoID
+                        self?.steps.accept(AppStep.profileSettingIsRequired)
                     } catch {
                         print(error)
                     }

@@ -79,6 +79,9 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         return button
     }()
     
+    private let timerObservable: Observable<Int>? = Observable<Int>
+        .interval(.seconds(1), scheduler: MainScheduler.instance)
+    
     // MARK: - intializer
     
     init(with reactor: PhoneCertificationReactor) {
@@ -185,6 +188,11 @@ extension PhoneCertificationNumberInputViewController: View {
     }
     
     private func bindAction(reactor: PhoneCertificationReactor) {
+        
+        timerObservable?.map { Reactor.Action.timer($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rx.viewDidLoad
             .map { Reactor.Action.viewDidLoad }
             .bind(to: reactor.action)

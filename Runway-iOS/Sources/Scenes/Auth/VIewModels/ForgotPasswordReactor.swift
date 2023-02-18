@@ -59,7 +59,8 @@ final class ForgotPasswordReactor: Reactor, Stepper {
         case .enterMobileCarrier(let carrier):
             return  .just(.setMobileCarrier(carrier))
         case .requestButtonDidTap:
-            steps.accept(AppStep.forgotPasswordCertificationIsRequired(currentState.phoneNumber))
+            guard let phoneNumber = currentState.phoneNumber else { return .empty() }
+            steps.accept(AppStep.forgotPasswordCertificationIsRequired(phoneNumber))
             return .empty()
         }
     }

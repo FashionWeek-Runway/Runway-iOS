@@ -28,20 +28,21 @@ final class CategorySettingReactor: Reactor, Stepper {
     enum Mutation {
         case emitIntialCategory
         case selectCategory(String)
-        case tryLogin
     }
     
     struct State {
-//        var profileImageData: Data
-//        var profileImageURL: String?
         var nickname: String? = nil
-//        var socialID: String?
-        
         var isNextButtonEnabled: Bool = false
 
         
         var isSelected: [String: Bool]
         var categories: [String]
+    }
+    
+    enum SignUpAs {
+        case kakao
+        case apple
+        case phone
     }
     
     // MARK: - Properties
@@ -52,33 +53,33 @@ final class CategorySettingReactor: Reactor, Stepper {
     private let disposeBag = DisposeBag()
     
     let initialState: State
+    let signUpAs: SignUpAs
     
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
     let categoryForRequestId = ["미니멀": 1, "캐주얼": 2, "시티보이": 3, "스트릿": 4, "빈티지": 5, "페미닌": 6]
     
-    var signUpAsKakaoData: SignUpAsKakaoData?
-    var signUpAsPhoneData: SignUpAsPhoneData?
-    
     // MARK: - initializer
     
-    init(provider: ServiceProviderType,
-         signUpAsKakaoData: SignUpAsKakaoData) {
+    init(provider: ServiceProviderType) {
         self.provider = provider
-        self.initialState = State(nickname: signUpAsKakaoData.nickname,
-                                  isSelected: Dictionary(uniqueKeysWithValues: categories.map{ ($0, false) }),
-                                  categories: categories)
-        self.signUpAsKakaoData = signUpAsKakaoData
-        self.signUpAsPhoneData = nil
-    }
-    
-    init(provider: ServiceProviderType,
-         signUpAsPhoneData: SignUpAsPhoneData) {
-        self.provider = provider
-        self.initialState = State(nickname: signUpAsPhoneData.nickname,
-                                  isSelected: Dictionary(uniqueKeysWithValues: categories.map{ ($0, false) }),
-                                  categories: categories)
-        self.signUpAsKakaoData = nil
-        self.signUpAsPhoneData = signUpAsPhoneData
+        
+        if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
+            self.initialState = State(nickname: nickname,
+                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
+                                      categories: categories)
+            self.signUpAs = .kakao
+        } else if let nickname = provider.signUpService.signUpAsPhoneData?.nickname { // phone
+            self.initialState = State(nickname: nickname,
+                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
+                                      categories: categories)
+            self.signUpAs = .phone
+        } else { // apple
+            self.initialState = State(nickname: "",
+                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
+                                      categories: categories)
+            self.signUpAs = .apple
+        }
+        // TODO: - Apple
     }
     
     // MARK: - Reactor
@@ -95,54 +96,43 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .nextButtonDidTap:
             let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true })
                 .map { categoryForRequestId[$0] }.compactMap { $0 }
-            signUpAsPhoneData?.categoryList = selectedCategoryIndex
-            if let signUpAsKakaoData = signUpAsKakaoData {
+            
+            switch signUpAs {
+            case .kakao:
+                provider.signUpService.signUpAsKakaoData?.categoryList = selectedCategoryIndex
+                provider.signUpService.signUpAsKakao().subscribe(onNext: { [weak self] request in
+                    do {
+                        guard let requestData = request.data else { return }
+                        let data = try JSONDecoder().decode(SocialSignUpResponse.self, from: requestData)
+                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
+                        self?.provider.appSettingService.authToken = data.result.accessToken
+                        self?.provider.appSettingService.isKakaoLoggedIn = true
+                        self?.provider.appSettingService.isLoggedIn = true
+                    } catch {
+                        print(error)
+                    }
+                }).disposed(by: disposeBag)
+                
+            case .apple:
+                break
+            case .phone:
+                provider.signUpService.signUpAsPhoneData?.categoryList = selectedCategoryIndex
+                provider.signUpService.signUpAsPhone().subscribe(onNext: { [weak self] request in
+                    do {
+                        guard let requestData = request.data else { return }
+                        let data = try JSONDecoder().decode(SignUpAsPhoneResponse.self, from: requestData)
+                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
+                        self?.provider.appSettingService.authToken = data.result.accessToken
+                        self?.provider.appSettingService.isLoggedIn = true
+                    } catch {
+                        print(error)
+                    }
+                }).disposed(by: disposeBag)
                 
             }
-            else if let signUpAsPhoneData = signUpAsPhoneData { // 폰으로 로그인
-                provider.signUpService.signUpAsPhone(userData: signUpAsPhoneData)
-                    .subscribe(onNext: { request in
-                        print(request.response)
-                        do {
-                        } catch {
-                            print(error)
-                        }
-                    }).disposed(by: disposeBag)
-                
-//                var request = URLRequest(url: URL(string: "https://dev.runwayserver.shop/login/signup")!)
-//                request.httpMethod = "POST"
-//
-//                // Header
-//                request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-//                request.setValue("*/*", forHTTPHeaderField: "Accept")
-//
-//                var parameters = Parameters()
-//                var params = Parameters()
-//                params.updateValue(signUpAsPhoneData.categoryList!, forKey: "categoryList")
-//                params.updateValue(signUpAsPhoneData.gender!, forKey: "gender")
-//                params.updateValue(signUpAsPhoneData.name!, forKey: "name")
-//                params.updateValue(signUpAsPhoneData.nickname!, forKey: "nickname")
-//                params.updateValue(signUpAsPhoneData.phone!, forKey: "phone")
-//                params.updateValue(signUpAsPhoneData.password!, forKey: "password")
-//
-//                // Body
-//                request.httpBody = createBody(parameters: params, boundary: "bounds", data: UIImage(data: signUpAsPhoneData.profileImageData!)!.jpegData(compressionQuality: 0.5)!)
-//                dump(request)
-////                URLSession.shared.upload
-//                URLSession.shared.dataTask(with: request) { data, response, error in
-//                    print(error)
-//                    print(try! JSONDecoder().decode(BaseResponse.self, from: data!))
-//                    print(response)
-//
-//                    guard let object = try? JSONSerialization.jsonObject(with: data!, options: []),
-//                          let datas = try? JSONSerialization.data(
-//                            withJSONObject: object, options: [.prettyPrinted]
-//                          ),
-//                          let prettyPrintedString = NSString(data: datas, encoding: String.Encoding.utf8.rawValue) else { return }
-//                    print(prettyPrintedString as String)
-//                }.resume()
-            }
-            return .just(.tryLogin)
+            
+            self.provider.signUpService.removeAllSignUpDatas()
+            return .empty()
         }
     }
     
@@ -154,8 +144,6 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .selectCategory(let category):
             newState.isSelected[category]?.toggle()
             newState.isNextButtonEnabled = newState.isSelected.contains(where: { $0.value == true })
-        case .tryLogin:
-            break
         }
         
         return newState

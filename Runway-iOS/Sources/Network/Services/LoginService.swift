@@ -21,17 +21,17 @@ final class LoginService: APIService {
         return request(.post, "login", useAuthHeader: false, parameters: params)
     }
     
-    func loginAsKakao() -> Observable<DataRequest> {
+    func loginAsKakao(oAuthToken: String) -> Observable<DataRequest> {
         
         var params = Parameters()
-        params.updateValue(AppSettingService.shared.kakaoAccessToken, forKey: "accessToken")
+        params.updateValue(oAuthToken, forKey: "accessToken")
         return request(.post, "login/kakao", useAuthHeader: false, parameters: params)
     }
     
-    func loginAsApple() -> Observable<DataRequest> {
+    func loginAsApple(oAuthToken: String) -> Observable<DataRequest> {
         
         var params = Parameters()
-        params.updateValue(AppSettingService.shared.self, forKey: "accessToken")
+        params.updateValue(oAuthToken, forKey: "accessToken")
         return request(.post, "login/apple", useAuthHeader: false, parameters: params)
     }
 }

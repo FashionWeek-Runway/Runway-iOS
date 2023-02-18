@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ServiceError: Error {
-    
+enum RequestError: Error {
+    case requestFieldIsNil
 }
