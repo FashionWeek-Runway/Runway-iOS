@@ -187,6 +187,11 @@ extension NewPasswordInputViewController: View {
             .map { Reactor.Action.alertConfirmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        confirmButton.rx.tap
+            .map { Reactor.Action.nextButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: NewPasswordInputReactor) {

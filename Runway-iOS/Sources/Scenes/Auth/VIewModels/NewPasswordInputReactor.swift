@@ -72,13 +72,13 @@ final class NewPasswordInputReactor: Reactor, Stepper {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
+        state.shouldShowAlert = false
         switch mutation {
         case .setPassword(let password):
             state.password = password
             state.isPasswordContainEnglish = checkStringContainsEnglishExceptNumber(password)
             state.isPasswordContainNumber = checkStringContainsNumberExceptEnglish(password)
             state.isPasswordLengthIsSuit = 8...16 ~= password.count
-            state.shouldShowAlert = false
         case .setValidationPassword(let password):
             state.validationPassword = password
             if let currentPassword = state.password,
@@ -97,7 +97,6 @@ final class NewPasswordInputReactor: Reactor, Stepper {
             } else {
                 state.isNextEnable = false
             }
-            state.shouldShowAlert = false
         case .showChangedAlert:
             state.shouldShowAlert = true
         }

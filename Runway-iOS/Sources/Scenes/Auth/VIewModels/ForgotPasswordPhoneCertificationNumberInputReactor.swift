@@ -93,7 +93,8 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
                                                            phoneNumber: initialState.phoneNumber).responseData()
                 .flatMap { [weak self] (response, data) -> Observable<Mutation> in
                     if 200...299 ~= response.statusCode {
-                        self?.steps.accept(AppStep.passwordInputRequired)
+                        guard let phoneNumber = self?.initialState.phoneNumber else { return .empty() }
+                        self?.steps.accept(AppStep.newPasswordInputRequired(phoneNumber))
                         return .empty()
                     } else {
                         return .just(.setInvalidCertification)
