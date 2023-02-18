@@ -81,8 +81,6 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.kakaoAccessToken = token.accessToken
                         self?.loginKakao()
                         return .empty()
-                    }.catch { error in
-                        print(error as NSError)
                     }
             }
         case .appleLoginButtonDidTap:

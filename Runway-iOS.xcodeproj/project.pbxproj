@@ -19,6 +19,7 @@
 		19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8E2995617100E1EF9A /* CategorySettingViewController.swift */; };
 		19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */; };
 		19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E942995686300E1EF9A /* MainLoginReactor.swift */; };
+		1939390229A0D12A0037810A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939390129A0D12A0037810A /* MapViewController.swift */; };
 		193EEB042996C4B50093831A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EEB032996C4B50093831A /* BaseViewController.swift */; };
 		194F95452993B7890016DDFF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95442993B7890016DDFF /* LoginService.swift */; };
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
@@ -129,6 +130,7 @@
 		19345E8E2995617100E1EF9A /* CategorySettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingViewController.swift; sourceTree = "<group>"; };
 		19345E90299561CA00E1EF9A /* SignUpCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewController.swift; sourceTree = "<group>"; };
 		19345E942995686300E1EF9A /* MainLoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginReactor.swift; sourceTree = "<group>"; };
+		1939390129A0D12A0037810A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		193EEB032996C4B50093831A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		194F95442993B7890016DDFF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -262,6 +264,14 @@
 				19917EF02994DC440016A175 /* AppStep.swift */,
 			);
 			path = Steps;
+			sourceTree = "<group>";
+		};
+		193938FF29A0D1090037810A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				1939390129A0D12A0037810A /* MapViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		194F95462993BD060016DDFF /* Responses */ = {
@@ -432,6 +442,7 @@
 		19A9621F2991303B00F952DA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				193938FF29A0D1090037810A /* Main */,
 				193EEB032996C4B50093831A /* BaseViewController.swift */,
 				19A9623A29915B2100F952DA /* Auth */,
 			);
@@ -875,6 +886,7 @@
 				194F95532993CE480016DDFF /* ServiceError.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
+				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				199B9C7B299D28A900877AAE /* SignUpAsPhoneData.swift in Sources */,
