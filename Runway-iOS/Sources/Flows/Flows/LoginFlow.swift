@@ -51,6 +51,9 @@ final class LoginFlow: Flow {
         case .forgotPasswordCertificationIsRequired(let phoneNumber):
             return coordinateToForgotPasswordPhoneCertificationScreen(phoneNumber: phoneNumber)
             
+        case .userChangedPassword:
+            return backToPhoneLogin()
+            
         case .identityVerificationIsRequired:
             return coordinateToIdentityVerificationScreen()
             
@@ -86,6 +89,11 @@ final class LoginFlow: Flow {
     
     private func backScreen() -> FlowContributors {
         self.rootViewController.popViewController(animated: true)
+        return .none
+    }
+    
+    private func backToPhoneLogin() -> FlowContributors {
+        self.rootViewController.popToViewController(rootViewController.viewControllers[1], animated: true)
         return .none
     }
     

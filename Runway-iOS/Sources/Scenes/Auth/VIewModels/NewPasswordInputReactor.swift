@@ -56,7 +56,8 @@ final class NewPasswordInputReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .alertConfirmButtonDidTap:
-            steps.accept(AppStep.phoneNumberLogin)
+            steps.accept(AppStep.dismiss)
+            steps.accept(AppStep.userChangedPassword)
             return .empty()
         case .passwordFieldInput(let password):
             return .just(.setPassword(password))
