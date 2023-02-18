@@ -13,5 +13,5 @@ class SignUpAsKakaoData {
     var nickname: String? = nil
     var profileImageURL: String? = nil
     var socialID: String? = nil
-    var type: String? = nil
+    let type: String = "KAKAO"
 }

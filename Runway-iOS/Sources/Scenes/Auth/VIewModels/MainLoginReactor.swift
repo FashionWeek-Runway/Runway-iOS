@@ -136,7 +136,15 @@ final class MainLoginReactor: Reactor, Stepper {
                         print(error)
                     }
                 } else {
-                    print(data)
+                    do {
+                        let responseData = try JSONDecoder().decode(SocialSignUpResponse.self, from: data)
+                        self?.provider.appSettingService.isKakaoLoggedIn = true
+                        self?.provider.appSettingService.isLoggedIn = true
+                        self?.provider.appSettingService.authToken = responseData.result.accessToken
+                        self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
+                    } catch {
+                        print(data)
+                    }
                 }
             }).disposed(by: disposeBag)
     }
