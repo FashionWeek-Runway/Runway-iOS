@@ -64,7 +64,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
             guard let password = currentState.password,
                   let phoneNumber = currentState.phoneNumber else { return .empty() }
             
-            return provider.loginService.login(password: password, phone: phoneNumber).responseData().map { [weak self] response, data -> Mutation in
+            return provider.loginService.login(password: password, phone: phoneNumber).responseData().flatMap { [weak self] response, data -> Observable<Mutation> in
                 print(response)
                 do {
                     let responseData = try JSONDecoder().decode(LoginResponse.self, from: data) as LoginResponse
@@ -73,10 +73,10 @@ final class PhoneLoginReactor: Reactor, Stepper {
                     self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
                     
                     self?.steps.accept(AppStep.userIsLoggedIn)
-                    return .setUserLogIn
+                    return .empty()
                 } catch {
                     print(error)
-                    return .setUserLogIn
+                    return .empty()
                 }
             }
         case .signUpButtonDidTap:

@@ -57,7 +57,7 @@ final class ProfileSettingReactor: Reactor, Stepper {
     // MARK: - initializer
     
     init(provider: ServiceProviderType) {
-        let state = State(profileImageURL: provider.signUpService.signUpAsKakaoData?.profileImageURL)
+        let state = State(profileImageURL: provider.signUpService.signUpAsSocialData?.profileImageURL)
         self.initialState = state
         self.provider = provider
     }
@@ -101,8 +101,8 @@ final class ProfileSettingReactor: Reactor, Stepper {
             
             provider.signUpService.signUpAsPhoneData?.profileImageData = imageData
             provider.signUpService.signUpAsPhoneData?.nickname = nickname
-            provider.signUpService.signUpAsKakaoData?.profileImageData = imageData
-            provider.signUpService.signUpAsKakaoData?.nickname = nickname
+            provider.signUpService.signUpAsSocialData?.profileImageData = imageData
+            provider.signUpService.signUpAsSocialData?.nickname = nickname
             // TODO: - Apple
             
             return provider.signUpService.checkNicknameDuplicate(nickname: nickname).response()

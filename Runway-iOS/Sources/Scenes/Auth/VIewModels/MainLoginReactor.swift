@@ -94,12 +94,14 @@ final class MainLoginReactor: Reactor, Stepper {
                 self.provider.loginService.loginAsApple(oAuthToken: oauthToken).validate(statusCode: 200...299).data().decode(type: AppleLoginResponse.self, decoder: JSONDecoder())
                     .subscribe(onNext: { [weak self] response in
                         if response.result.checkUser {
-                            self?.provider.appSettingService.authToken = response.result.accessToken
-                            self?.provider.appSettingService.refreshToken = response.result.refreshToken
+                            guard let authToken = response.result.accessToken,
+                                  let refreshToken = response.result.refreshToken else { return }
+                            self?.provider.appSettingService.authToken = authToken
+                            self?.provider.appSettingService.refreshToken = refreshToken
                             self?.steps.accept(AppStep.userIsLoggedIn)
                         } else {
                             // TODO: - Apple Login flow
-//                            self?.provider.signUpService.signUpAs
+                            self?.provider.signUpService.signUpAsSocialData?.socialID = response.result.appleID
                             self?.steps.accept(AppStep.profileSettingIsRequired)
                         }
                     })
@@ -129,8 +131,8 @@ final class MainLoginReactor: Reactor, Stepper {
                 if response.statusCode == 400 {
                     do {
                         let responseData = try JSONDecoder().decode(LoginAsKakaoResponse.self, from: data)
-                        self?.provider.signUpService.signUpAsKakaoData?.profileImageURL = responseData.result.profileImageURL
-                        self?.provider.signUpService.signUpAsKakaoData?.socialID = responseData.result.kakaoID
+                        self?.provider.signUpService.signUpAsSocialData?.profileImageURL = responseData.result.profileImageURL
+                        self?.provider.signUpService.signUpAsSocialData?.socialID = responseData.result.kakaoID
                         self?.steps.accept(AppStep.profileSettingIsRequired)
                     } catch {
                         print(error)

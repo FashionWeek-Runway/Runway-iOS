@@ -15,33 +15,57 @@ import RxRelay
 
 final class SignUpService: APIService {
     
-    var signUpAsKakaoData: SignUpAsKakaoData? = SignUpAsKakaoData()
+    var signUpAsSocialData: SignUpAsSocialData? = SignUpAsSocialData()
     var signUpAsPhoneData: SignUpAsPhoneData? = SignUpAsPhoneData()
     
     func removeAllSignUpDatas() {
         signUpAsPhoneData = nil
         signUpAsPhoneData = SignUpAsPhoneData()
         
-        signUpAsKakaoData = nil
-        signUpAsKakaoData = SignUpAsKakaoData()
-        
-        // TODO: - apple
+        signUpAsSocialData = nil
+        signUpAsSocialData = SignUpAsSocialData()
     }
     
     func signUpAsKakao() -> Observable<UploadRequest> {
         
-        guard let categoryList = signUpAsKakaoData?.categoryList,
-              let nickname = signUpAsKakaoData?.nickname,
-              let socialID = signUpAsKakaoData?.socialID,
-              let type = signUpAsKakaoData?.type,
-              let imageData = signUpAsKakaoData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+        guard let categoryList = signUpAsSocialData?.categoryList,
+              let nickname = signUpAsSocialData?.nickname,
+              let socialID = signUpAsSocialData?.socialID,
+              let imageData = signUpAsSocialData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
         params.updateValue(nickname, forKey: "nickname")
         params.updateValue("", forKey: "profileImgUrl")
         params.updateValue(socialID, forKey: "socialId")
-        params.updateValue(type, forKey: "type")
+        params.updateValue("KAKAO", forKey: "type")
+
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+
+        return self.session.rx.upload(multipartFormData: { data in
+            for (key, value) in params {
+                data.append("\(value)".data(using: .utf8)!, withName: key)
+            }
+            data.append(imageData,
+                        withName: "multipartFile",
+                        fileName: nickname + ".png",
+                        mimeType: "image/png")
+        }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
+    }
+    
+    func signUpAsApple() -> Observable<UploadRequest> {
+        
+        guard let categoryList = signUpAsSocialData?.categoryList,
+              let nickname = signUpAsSocialData?.nickname,
+              let socialID = signUpAsSocialData?.socialID,
+              let imageData = signUpAsSocialData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+
+        var params = Parameters()
+        params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
+        params.updateValue(nickname, forKey: "nickname")
+        params.updateValue("", forKey: "profileImgUrl")
+        params.updateValue(socialID, forKey: "socialId")
+        params.updateValue("APPLE", forKey: "type")
 
         let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
 

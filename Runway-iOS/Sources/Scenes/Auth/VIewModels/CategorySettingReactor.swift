@@ -63,7 +63,7 @@ final class CategorySettingReactor: Reactor, Stepper {
     init(provider: ServiceProviderType) {
         self.provider = provider
         
-        if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
+        if let nickname = provider.signUpService.signUpAsSocialData?.nickname { // kakao
             self.initialState = State(nickname: nickname,
                                       isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
                                       categories: categories)
@@ -99,7 +99,7 @@ final class CategorySettingReactor: Reactor, Stepper {
             
             switch signUpAs {
             case .kakao:
-                provider.signUpService.signUpAsKakaoData?.categoryList = selectedCategoryIndex
+                provider.signUpService.signUpAsSocialData?.categoryList = selectedCategoryIndex
                 provider.signUpService.signUpAsKakao().subscribe(onNext: { [weak self] request in
                     do {
                         guard let requestData = request.data else { return }

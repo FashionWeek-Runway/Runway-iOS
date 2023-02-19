@@ -52,7 +52,7 @@
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
 		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
 		199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C59299BEBAC00877AAE /* SignUpService.swift */; };
-		199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */; };
+		199B9C5C299BECD800877AAE /* SignUpAsSocialData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */; };
 		199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */; };
 		199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */; };
 		199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */; };
@@ -169,7 +169,7 @@
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
 		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
 		199B9C59299BEBAC00877AAE /* SignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpService.swift; sourceTree = "<group>"; };
-		199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsKakaoData.swift; sourceTree = "<group>"; };
+		199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsSocialData.swift; sourceTree = "<group>"; };
 		199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpResponse.swift; sourceTree = "<group>"; };
 		199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginReactor.swift; sourceTree = "<group>"; };
 		199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordReactor.swift; sourceTree = "<group>"; };
@@ -294,7 +294,7 @@
 		194F954C2993C1F60016DDFF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
+				199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */,
 				199B9C7A299D28A900877AAE /* SignUpAsPhoneData.swift */,
 			);
 			path = Models;
@@ -919,7 +919,7 @@
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
-				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
+				199B9C5C299BECD800877AAE /* SignUpAsSocialData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,

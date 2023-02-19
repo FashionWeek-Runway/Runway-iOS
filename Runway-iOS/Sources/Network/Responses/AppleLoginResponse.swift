@@ -17,10 +17,10 @@ struct AppleLoginResponse: Decodable {
 
 // MARK: - Result
 struct AppleLoginResponseResult: Decodable {
-    let accessToken, appleID: String
+    let accessToken, refreshToken: String?
     let checkUser: Bool
-    let refreshToken: String
-    let userID: Int
+    let appleID: String
+    let userID: Int?
 
     enum CodingKeys: String, CodingKey {
         case accessToken
