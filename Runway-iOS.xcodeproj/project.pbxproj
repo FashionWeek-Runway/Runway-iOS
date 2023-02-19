@@ -52,7 +52,7 @@
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
 		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
 		199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C59299BEBAC00877AAE /* SignUpService.swift */; };
-		199B9C5C299BECD800877AAE /* SignUpAsSocialData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */; };
+		199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */; };
 		199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */; };
 		199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */; };
 		199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */; };
@@ -96,6 +96,8 @@
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
+		19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */; };
+		19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -169,7 +171,7 @@
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
 		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
 		199B9C59299BEBAC00877AAE /* SignUpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpService.swift; sourceTree = "<group>"; };
-		199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsSocialData.swift; sourceTree = "<group>"; };
+		199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsKakaoData.swift; sourceTree = "<group>"; };
 		199B9C5E299C92DB00877AAE /* SocialSignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpResponse.swift; sourceTree = "<group>"; };
 		199B9C60299CA21600877AAE /* PhoneLoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginReactor.swift; sourceTree = "<group>"; };
 		199B9C62299CA53200877AAE /* ForgotPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordReactor.swift; sourceTree = "<group>"; };
@@ -214,6 +216,8 @@
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsAppleData.swift; sourceTree = "<group>"; };
+		19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,8 +298,9 @@
 		194F954C2993C1F60016DDFF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				199B9C5B299BECD800877AAE /* SignUpAsSocialData.swift */,
+				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
 				199B9C7A299D28A900877AAE /* SignUpAsPhoneData.swift */,
+				19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -583,6 +588,7 @@
 			children = (
 				19A96246299165B500F952DA /* AppSettingService.swift */,
 				19A962512991735300F952DA /* UserDefault.swift */,
+				19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -874,6 +880,7 @@
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
 				199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
+				19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */,
 				199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */,
@@ -919,7 +926,7 @@
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
-				199B9C5C299BECD800877AAE /* SignUpAsSocialData.swift in Sources */,
+				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
@@ -935,6 +942,7 @@
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
+				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,

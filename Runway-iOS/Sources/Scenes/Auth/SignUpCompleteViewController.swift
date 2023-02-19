@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import ReactorKit
+import RxSwift
+import RxCocoa
 
 final class SignUpCompleteViewController: BaseViewController {
     
@@ -36,11 +39,29 @@ final class SignUpCompleteViewController: BaseViewController {
         return button
     }()
     
+    // MARK: - initializer
+    
+    init(with reactor: SignUpCompleteReactor) {
+        self.profileCard.nicknameLabel.text = reactor.initialState.nickname
+        self.profileCard.styles = reactor.initialState.styles
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .runwayBlack
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileCardScaleAnimation()
     }
     
     override func configureUI() {
@@ -68,7 +89,47 @@ final class SignUpCompleteViewController: BaseViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
         }
     }
+    
+    private func profileCardScaleAnimation() {
+//        let x = self.profileCard.bounds.midX
+//        let y = self.profileCard.bounds.maxY
+//        let width = profileCard.frame.width
+//        let height = profileCard.frame.height
+        
+        self.profileCard.layer.anchorPoint = CGPoint(x: 0.5, y: 0.4)
+        self.profileCard.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        
+        UIView.animate(withDuration: 1.0, delay: 0.6, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.3) {
+//            self.profileCard.layer.anchorPoint = CGPoint(x: x, y: y)
+            self.profileCard.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
+    }
+    
+    func scaleTransform(for view: UIView, scaledBy scale: CGPoint, aroundAnchorPoint relativeAnchorPoint: CGPoint) -> CGAffineTransform {
+        let bounds = view.bounds
+        let anchorPoint = CGPoint(x: bounds.width * relativeAnchorPoint.x, y: bounds.height * relativeAnchorPoint.y)
+        return CGAffineTransform.identity
+            .translatedBy(x: anchorPoint.x, y: anchorPoint.y)
+            .scaledBy(x: scale.x, y: scale.y)
+            .translatedBy(x: -anchorPoint.x, y: -anchorPoint.y)
+    }
 
 }
 
+extension SignUpCompleteViewController: View {
+    func bind(reactor: SignUpCompleteReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: SignUpCompleteReactor) {
+        homeButton.rx.tap
+            .map { Reactor.Action.homeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(reactor: SignUpCompleteReactor) {
 
+    }
+}

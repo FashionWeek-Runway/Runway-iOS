@@ -39,8 +39,7 @@ enum AppStep: Step {
     case marketingPolicyDetailNeedToShow
     
     case profileSettingIsRequired
-    case profileImageNeedToSet(((UIAlertAction) -> Void), ((UIAlertAction) -> Void))
     case categorySettingIsRequired
-    case SignUpIsCompleted
+    case signUpIsCompleted
     
 }

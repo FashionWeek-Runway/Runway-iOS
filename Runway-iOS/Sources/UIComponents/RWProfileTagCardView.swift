@@ -72,6 +72,15 @@ final class RWProfileTagCardView: UIView {
         return label
     }()
     
+    let styleStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 4
+        view.alignment = .fill
+        view.distribution = .fill
+        return view
+    }()
+    
     private let divider3: UIView = {
         let view = UIView()
         view.backgroundColor = .primary
@@ -85,7 +94,47 @@ final class RWProfileTagCardView: UIView {
     
     // MARK: - Properties
 
-    var styles: [String] = []
+    var styles: [String] = [] {
+        didSet {
+            let labels = styles.map {
+                let label = UIButton()
+                label.setBackgroundColor(.primary, for: .normal)
+                label.setAttributedTitle(NSAttributedString(string: $0, attributes: [.font: UIFont.body2, .foregroundColor: UIColor.white]), for: .normal)
+                label.isUserInteractionEnabled = false
+                label.contentHorizontalAlignment = .center
+                label.contentVerticalAlignment = .center
+                label.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+                return label
+            }
+            
+            let lastLabel = UIButton()
+            lastLabel.setBackgroundColor(.primary, for: .normal)
+            lastLabel.isUserInteractionEnabled = false
+            lastLabel.contentHorizontalAlignment = .center
+            lastLabel.contentVerticalAlignment = .center
+            lastLabel.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+            
+            switch labels.count {
+            case 1, 2:
+                for _ in 1...4-labels.count {
+                    styleStackView.addArrangedSubview(UIView())
+                }
+                
+                for label in labels {
+                    styleStackView.addArrangedSubview(label)
+                }
+            case 3...:
+                styleStackView.addArrangedSubview(UIView())
+                for idx in 0..<2 {
+                    styleStackView.addArrangedSubview(labels[idx])
+                }
+                lastLabel.setAttributedTitle(NSAttributedString(string: "+" + "\(labels.count - 2)", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.white]), for: .normal)
+                styleStackView.addArrangedSubview(lastLabel)
+            default:
+                break
+            }
+        }
+    }
     
     
     // MARK: - initializer
@@ -108,6 +157,7 @@ final class RWProfileTagCardView: UIView {
                           divider2,
                          styleLabel,
                          divider3,
+                          styleStackView,
                          bardCodeImageView])
         self.snp.makeConstraints {
             $0.width.equalTo(256)
@@ -170,6 +220,13 @@ final class RWProfileTagCardView: UIView {
         styleLabel.snp.makeConstraints {
             $0.top.equalTo(self.divider2.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(18)
+        }
+        
+        styleStackView.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-18)
+            $0.bottom.equalTo(divider3.snp.top).offset(-8)
+            $0.height.equalTo(28)
+            $0.leading.equalTo(styleLabel.snp.leading)
         }
         
         divider3.snp.makeConstraints {

@@ -15,23 +15,27 @@ import RxRelay
 
 final class SignUpService: APIService {
     
-    var signUpAsSocialData: SignUpAsSocialData? = SignUpAsSocialData()
-    var signUpAsPhoneData: SignUpAsPhoneData? = SignUpAsPhoneData()
+    var signUpAsKakaoData: SignUpAsKakaoData? = nil
+    var signUpAsPhoneData: SignUpAsPhoneData? = nil
+    var signUpAsAppleData: SignUpAsAppleData? = nil
     
     func removeAllSignUpDatas() {
         signUpAsPhoneData = nil
         signUpAsPhoneData = SignUpAsPhoneData()
         
-        signUpAsSocialData = nil
-        signUpAsSocialData = SignUpAsSocialData()
+        signUpAsKakaoData = nil
+        signUpAsKakaoData = SignUpAsKakaoData()
+        
+        signUpAsAppleData = nil
+        signUpAsAppleData = SignUpAsAppleData()
     }
     
     func signUpAsKakao() -> Observable<UploadRequest> {
         
-        guard let categoryList = signUpAsSocialData?.categoryList,
-              let nickname = signUpAsSocialData?.nickname,
-              let socialID = signUpAsSocialData?.socialID,
-              let imageData = signUpAsSocialData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+        guard let categoryList = signUpAsKakaoData?.categoryList,
+              let nickname = signUpAsKakaoData?.nickname,
+              let socialID = signUpAsKakaoData?.socialID,
+              let imageData = signUpAsKakaoData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
@@ -55,10 +59,10 @@ final class SignUpService: APIService {
     
     func signUpAsApple() -> Observable<UploadRequest> {
         
-        guard let categoryList = signUpAsSocialData?.categoryList,
-              let nickname = signUpAsSocialData?.nickname,
-              let socialID = signUpAsSocialData?.socialID,
-              let imageData = signUpAsSocialData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+        guard let categoryList = signUpAsAppleData?.categoryList,
+              let nickname = signUpAsAppleData?.nickname,
+              let socialID = signUpAsAppleData?.socialID,
+              let imageData = signUpAsAppleData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")

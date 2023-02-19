@@ -65,6 +65,7 @@ final class MainLoginReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .kakaoLoginButtonDidTap:
+            provider.signUpService.signUpAsKakaoData = SignUpAsKakaoData()
             if UserApi.isKakaoTalkLoginAvailable() {
                 return UserApi.shared.rx.loginWithKakaoTalk()
                     .flatMap { [weak self] token -> Observable<Mutation> in
@@ -85,6 +86,7 @@ final class MainLoginReactor: Reactor, Stepper {
                     }
             }
         case .appleLoginButtonDidTap:
+            provider.signUpService.signUpAsAppleData = SignUpAsAppleData()
             provider.appleLoginService.login(with: [.fullName, .email]) { loginResult, error in
                 if let error = error {
                     print(error)
@@ -100,8 +102,7 @@ final class MainLoginReactor: Reactor, Stepper {
                             self?.provider.appSettingService.refreshToken = refreshToken
                             self?.steps.accept(AppStep.userIsLoggedIn)
                         } else {
-                            // TODO: - Apple Login flow
-                            self?.provider.signUpService.signUpAsSocialData?.socialID = response.result.appleID
+                            self?.provider.signUpService.signUpAsAppleData?.socialID = response.result.appleID
                             self?.steps.accept(AppStep.profileSettingIsRequired)
                         }
                     })
@@ -110,6 +111,7 @@ final class MainLoginReactor: Reactor, Stepper {
             return .empty()
             
         case .phoneLoginButtonDidTap:
+            provider.signUpService.signUpAsPhoneData = SignUpAsPhoneData()
             steps.accept(AppStep.phoneNumberLogin)
             return .just(.setPhoneLogin)
         case .requestkakaoLogin:
@@ -131,8 +133,8 @@ final class MainLoginReactor: Reactor, Stepper {
                 if response.statusCode == 400 {
                     do {
                         let responseData = try JSONDecoder().decode(LoginAsKakaoResponse.self, from: data)
-                        self?.provider.signUpService.signUpAsSocialData?.profileImageURL = responseData.result.profileImageURL
-                        self?.provider.signUpService.signUpAsSocialData?.socialID = responseData.result.kakaoID
+                        self?.provider.signUpService.signUpAsKakaoData?.profileImageURL = responseData.result.profileImageURL
+                        self?.provider.signUpService.signUpAsKakaoData?.socialID = responseData.result.kakaoID
                         self?.steps.accept(AppStep.profileSettingIsRequired)
                     } catch {
                         print(error)
@@ -140,7 +142,6 @@ final class MainLoginReactor: Reactor, Stepper {
                 } else {
                     do {
                         let responseData = try JSONDecoder().decode(SocialSignUpResponse.self, from: data)
-                        self?.provider.appSettingService.isKakaoLoggedIn = true
                         self?.provider.appSettingService.isLoggedIn = true
                         self?.provider.appSettingService.authToken = responseData.result.accessToken
                         self?.provider.appSettingService.refreshToken = responseData.result.refreshToken

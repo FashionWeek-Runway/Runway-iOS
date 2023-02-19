@@ -7,32 +7,50 @@
 
 import Foundation
 
+enum LoginType: String {
+    case kakao
+    case apple
+    case phone
+}
+
 final class AppSettingService {
     
     static let shared = AppSettingService()
     
     private init() { }
     
-    @UserDefault(key: "authToken", defaultValue: "")
-    var authToken: String
+    var authToken: String {
+        get {
+            return TokenUtils.shared.read(account: "authToken") ?? ""
+        }
+        set {
+            return TokenUtils.shared.create(account: "authToken", value: newValue)
+        }
+    }
     
-    @UserDefault(key: "refreshToken", defaultValue: "")
-    var refreshToken: String
+    var refreshToken: String {
+        get {
+            return TokenUtils.shared.read(account: "refreshToken") ?? ""
+        }
+        set {
+            return TokenUtils.shared.create(account: "refreshToken", value: newValue)
+        }
+    }
     
     @UserDefault(key: "isLoggedIn", defaultValue: false)
     var isLoggedIn: Bool
     
-    @UserDefault(key: "isAppleLoggedIn", defaultValue: false)
-    var isAppleLoggedIn: Bool
-    
-    @UserDefault(key: "isKakaoLoggedIn", defaultValue: false)
-    var isKakaoLoggedIn: Bool
-    
     @UserDefault(key: "kakaoAccessToken", defaultValue: "")
     var kakaoAccessToken: String
-    
-    @UserDefault(key: "lastLoginType", defaultValue: "")
-    var lastLoginType: String
+
+    var lastLoginType: LoginType {
+        get {
+            return LoginType(rawValue: UserDefaults.standard.string(forKey: "lastLoginType") ?? "phone") ?? .phone
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "lastLoginType")
+        }
+    }
     
     var isFirstAppLaunch: Bool {
         get {

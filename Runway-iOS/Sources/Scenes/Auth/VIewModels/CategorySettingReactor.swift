@@ -63,7 +63,7 @@ final class CategorySettingReactor: Reactor, Stepper {
     init(provider: ServiceProviderType) {
         self.provider = provider
         
-        if let nickname = provider.signUpService.signUpAsSocialData?.nickname { // kakao
+        if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
             self.initialState = State(nickname: nickname,
                                       isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
                                       categories: categories)
@@ -73,13 +73,16 @@ final class CategorySettingReactor: Reactor, Stepper {
                                       isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
                                       categories: categories)
             self.signUpAs = .phone
-        } else { // apple
-            self.initialState = State(nickname: "",
+        } else if let nickname = provider.signUpService.signUpAsAppleData?.nickname { // apple
+            self.initialState = State(nickname: nickname,
                                       isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
                                       categories: categories)
             self.signUpAs = .apple
+        } else { // 오류케이스
+            self.signUpAs = .phone
+            self.initialState = State(isSelected: [:], categories: categories)
+            
         }
-        // TODO: - Apple
     }
     
     // MARK: - Reactor
@@ -99,22 +102,33 @@ final class CategorySettingReactor: Reactor, Stepper {
             
             switch signUpAs {
             case .kakao:
-                provider.signUpService.signUpAsSocialData?.categoryList = selectedCategoryIndex
+                provider.signUpService.signUpAsKakaoData?.categoryList = selectedCategoryIndex
                 provider.signUpService.signUpAsKakao().subscribe(onNext: { [weak self] request in
                     do {
                         guard let requestData = request.data else { return }
                         let data = try JSONDecoder().decode(SocialSignUpResponse.self, from: requestData)
                         self?.provider.appSettingService.refreshToken = data.result.refreshToken
                         self?.provider.appSettingService.authToken = data.result.accessToken
-                        self?.provider.appSettingService.isKakaoLoggedIn = true
+                        self?.provider.appSettingService.lastLoginType = .kakao
                         self?.provider.appSettingService.isLoggedIn = true
                     } catch {
                         print(error)
                     }
                 }).disposed(by: disposeBag)
-                
             case .apple:
-                break
+                provider.signUpService.signUpAsAppleData?.categoryList = selectedCategoryIndex
+                provider.signUpService.signUpAsApple().subscribe(onNext: { [weak self] request in
+                    do {
+                        guard let requestData = request.data else { return }
+                        let data = try JSONDecoder().decode(SocialSignUpResponse.self, from: requestData)
+                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
+                        self?.provider.appSettingService.authToken = data.result.accessToken
+                        self?.provider.appSettingService.lastLoginType = .apple
+                        self?.provider.appSettingService.isLoggedIn = true
+                    } catch {
+                        print(error)
+                    }
+                }).disposed(by: disposeBag)
             case .phone:
                 provider.signUpService.signUpAsPhoneData?.categoryList = selectedCategoryIndex
                 provider.signUpService.signUpAsPhone().subscribe(onNext: { [weak self] request in
@@ -123,15 +137,14 @@ final class CategorySettingReactor: Reactor, Stepper {
                         let data = try JSONDecoder().decode(SignUpAsPhoneResponse.self, from: requestData)
                         self?.provider.appSettingService.refreshToken = data.result.refreshToken
                         self?.provider.appSettingService.authToken = data.result.accessToken
+                        self?.provider.appSettingService.lastLoginType = .phone
                         self?.provider.appSettingService.isLoggedIn = true
                     } catch {
                         print(error)
                     }
                 }).disposed(by: disposeBag)
-                
             }
-            
-            self.provider.signUpService.removeAllSignUpDatas()
+            steps.accept(AppStep.signUpIsCompleted)
             return .empty()
         }
     }
