@@ -42,4 +42,8 @@ enum AppStep: Step {
     case categorySettingIsRequired
     case signUpIsCompleted
     
+    // Main
+    case homeTab
+    case mapTab
+    case myPageTab
 }

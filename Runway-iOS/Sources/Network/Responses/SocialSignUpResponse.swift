@@ -18,9 +18,9 @@ struct SocialSignUpResponse: Decodable {
 struct SocialSignUpResult: Decodable {
     let userID: Int
     let accessToken, refreshToken: String
-    let imgURL: String
-    let nickname: String
-    let categoryList: [String]
+    let imgURL: String?
+    let nickname: String?
+    let categoryList: [String]?
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"

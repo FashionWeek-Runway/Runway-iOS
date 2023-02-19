@@ -1,21 +1,21 @@
 //
-//  MapViewController.swift
+//  HomeViewController.swift
 //  Runway-iOS
 //
-//  Created by 김인환 on 2023/02/18.
+//  Created by 김인환 on 2023/02/20.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 import ReactorKit
-import NMapsMap
 
-final class MapViewController: BaseViewController {
-
+final class HomeViewController: BaseViewController {
+    
+    
     // MARK: - initializer
     
-    init(with reactor: MapReactor) {
+    init(with reactor: HomeReactor) {
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -28,23 +28,20 @@ final class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let mapView = NMFMapView(frame: view.frame)
-        view.addSubview(mapView)
     }
 }
 
-extension MapViewController: View {
-    func bind(reactor: MapReactor) {
+extension HomeViewController: View {
+    func bind(reactor: HomeReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
     
-    private func bindAction(reactor: MapReactor) {
+    private func bindAction(reactor: HomeReactor) {
         
     }
     
-    private func bindState(reactor: MapReactor) {
+    private func bindState(reactor: HomeReactor) {
         
     }
 }

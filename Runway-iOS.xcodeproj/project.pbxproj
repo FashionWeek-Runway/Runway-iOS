@@ -98,6 +98,15 @@
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
 		19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */; };
 		19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */; };
+		19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77129A2A673003E1F10 /* MainFlow.swift */; };
+		19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77329A2A82E003E1F10 /* HomeViewController.swift */; };
+		19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77529A2A835003E1F10 /* MyPageViewController.swift */; };
+		19E0C77B29A2ABC0003E1F10 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */; };
+		19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */; };
+		19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77E29A2AC19003E1F10 /* MapReactor.swift */; };
+		19E0C78129A2AF8B003E1F10 /* MapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78029A2AF8B003E1F10 /* MapFlow.swift */; };
+		19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78229A2AF90003E1F10 /* HomeFlow.swift */; };
+		19E0C78529A2AF96003E1F10 /* MyPageFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78429A2AF96003E1F10 /* MyPageFlow.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -218,6 +227,15 @@
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsAppleData.swift; sourceTree = "<group>"; };
 		19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
+		19E0C77129A2A673003E1F10 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
+		19E0C77329A2A82E003E1F10 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		19E0C77529A2A835003E1F10 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
+		19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageReactor.swift; sourceTree = "<group>"; };
+		19E0C77E29A2AC19003E1F10 /* MapReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReactor.swift; sourceTree = "<group>"; };
+		19E0C78029A2AF8B003E1F10 /* MapFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlow.swift; sourceTree = "<group>"; };
+		19E0C78229A2AF90003E1F10 /* HomeFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlow.swift; sourceTree = "<group>"; };
+		19E0C78429A2AF96003E1F10 /* MyPageFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFlow.swift; sourceTree = "<group>"; };
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,6 +280,10 @@
 			children = (
 				19917EF32994DFC40016A175 /* AppFlow.swift */,
 				19917EF52994E34F0016A175 /* LoginFlow.swift */,
+				19E0C77129A2A673003E1F10 /* MainFlow.swift */,
+				19E0C78229A2AF90003E1F10 /* HomeFlow.swift */,
+				19E0C78029A2AF8B003E1F10 /* MapFlow.swift */,
+				19E0C78429A2AF96003E1F10 /* MyPageFlow.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -277,7 +299,10 @@
 		193938FF29A0D1090037810A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				19E0C77929A2ABA6003E1F10 /* ViewModels */,
 				1939390129A0D12A0037810A /* MapViewController.swift */,
+				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
+				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -454,8 +479,8 @@
 			isa = PBXGroup;
 			children = (
 				193938FF29A0D1090037810A /* Main */,
-				193EEB032996C4B50093831A /* BaseViewController.swift */,
 				19A9623A29915B2100F952DA /* Auth */,
+				193EEB032996C4B50093831A /* BaseViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -600,6 +625,16 @@
 				19A9624129915F0300F952DA /* AuthHeaderInterceptor.swift */,
 			);
 			path = Interceptor;
+			sourceTree = "<group>";
+		};
+		19E0C77929A2ABA6003E1F10 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
+				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
+				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		64E03AECFFB4A359DADC4FD1 /* Pods */ = {
@@ -892,6 +927,8 @@
 				19917EF12994DC440016A175 /* AppStep.swift in Sources */,
 				196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */,
 				19345E8B2995613B00E1EF9A /* PolicyDetailViewController.swift in Sources */,
+				19E0C78129A2AF8B003E1F10 /* MapFlow.swift in Sources */,
+				19E0C77B29A2ABC0003E1F10 /* HomeReactor.swift in Sources */,
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
 				196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */,
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
@@ -899,6 +936,7 @@
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
+				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
 				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
@@ -926,6 +964,7 @@
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
+				19E0C78529A2AF96003E1F10 /* MyPageFlow.swift in Sources */,
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
@@ -934,8 +973,11 @@
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,
 				196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
+				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
+				19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */,
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
+				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
 				199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
@@ -945,6 +987,8 @@
 				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
+				19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */,
+				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,

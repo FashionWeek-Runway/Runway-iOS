@@ -147,6 +147,7 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
                     } catch {
                         print(data)
+                        print(error)
                     }
                 }
             }).disposed(by: disposeBag)
