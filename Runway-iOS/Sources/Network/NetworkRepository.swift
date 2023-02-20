@@ -15,6 +15,10 @@ protocol ServiceProviderType {
     var loginService: LoginService { get }
     var signUpService: SignUpService { get }
     var appleLoginService: AppleService { get }
+    
+    var userService: UserService { get }
+    var showRoomService: ShowRoomService { get }
+    var mapService: MapService { get }
 }
 
 final class NetworkRepository: ServiceProviderType {
@@ -53,4 +57,10 @@ final class NetworkRepository: ServiceProviderType {
     lazy var signUpService: SignUpService = SignUpService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
     
     lazy var appleLoginService: AppleService = AppleService.shared
+    
+    lazy var userService: UserService = UserService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
+    
+    lazy var showRoomService: ShowRoomService = ShowRoomService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
+    
+    lazy var mapService: MapService = MapService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
 }

@@ -17,7 +17,7 @@ public class APIService {
     let session: Session
     
     private let eventLogger = APIEventLogger()
-    private let authInterceptor =  AuthHeaderInterceptor()
+    private let authHeaderInterceptor =  AuthHeaderInterceptor()
     
     private let disposeBag: DisposeBag = DisposeBag()
     
@@ -40,7 +40,7 @@ public class APIService {
         }
         
         if useAuthHeader {
-            authInterceptor.intercept(headers: &httpHeaders)
+            authHeaderInterceptor.intercept(headers: &httpHeaders)
         }
         
         return self.session.rx.request(method, baseURL + url, parameters: parameters, encoding: encoding, headers: httpHeaders)

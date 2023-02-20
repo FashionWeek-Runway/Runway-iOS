@@ -107,6 +107,11 @@
 		19E0C78129A2AF8B003E1F10 /* MapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78029A2AF8B003E1F10 /* MapFlow.swift */; };
 		19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78229A2AF90003E1F10 /* HomeFlow.swift */; };
 		19E0C78529A2AF96003E1F10 /* MyPageFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78429A2AF96003E1F10 /* MyPageFlow.swift */; };
+		19E0C78729A36943003E1F10 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78629A36943003E1F10 /* UserService.swift */; };
+		19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78829A36B2F003E1F10 /* ShowRoomService.swift */; };
+		19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78A29A36E3B003E1F10 /* MapService.swift */; };
+		19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78C29A36F8C003E1F10 /* CategoryMapFilterData.swift */; };
+		19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78E29A37352003E1F10 /* MapSearchData.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -236,6 +241,11 @@
 		19E0C78029A2AF8B003E1F10 /* MapFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlow.swift; sourceTree = "<group>"; };
 		19E0C78229A2AF90003E1F10 /* HomeFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlow.swift; sourceTree = "<group>"; };
 		19E0C78429A2AF96003E1F10 /* MyPageFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageFlow.swift; sourceTree = "<group>"; };
+		19E0C78629A36943003E1F10 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		19E0C78829A36B2F003E1F10 /* ShowRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRoomService.swift; sourceTree = "<group>"; };
+		19E0C78A29A36E3B003E1F10 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
+		19E0C78C29A36F8C003E1F10 /* CategoryMapFilterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMapFilterData.swift; sourceTree = "<group>"; };
+		19E0C78E29A37352003E1F10 /* MapSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchData.swift; sourceTree = "<group>"; };
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,6 +336,8 @@
 				199B9C5B299BECD800877AAE /* SignUpAsKakaoData.swift */,
 				199B9C7A299D28A900877AAE /* SignUpAsPhoneData.swift */,
 				19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */,
+				19E0C78C29A36F8C003E1F10 /* CategoryMapFilterData.swift */,
+				19E0C78E29A37352003E1F10 /* MapSearchData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -604,6 +616,9 @@
 				194F95442993B7890016DDFF /* LoginService.swift */,
 				19BF2C762993FC4200F1134D /* AppleService.swift */,
 				199B9C59299BEBAC00877AAE /* SignUpService.swift */,
+				19E0C78629A36943003E1F10 /* UserService.swift */,
+				19E0C78829A36B2F003E1F10 /* ShowRoomService.swift */,
+				19E0C78A29A36E3B003E1F10 /* MapService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -934,6 +949,7 @@
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
 				199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */,
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
+				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
@@ -953,6 +969,7 @@
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
+				19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
@@ -961,6 +978,7 @@
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
+				19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
@@ -975,6 +993,7 @@
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
 				19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */,
+				19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */,
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
@@ -984,6 +1003,7 @@
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
+				19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */,
 				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
