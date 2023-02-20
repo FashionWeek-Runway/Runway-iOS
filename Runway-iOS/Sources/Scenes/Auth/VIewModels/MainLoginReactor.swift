@@ -100,6 +100,7 @@ final class MainLoginReactor: Reactor, Stepper {
                                   let refreshToken = response.result.refreshToken else { return }
                             self?.provider.appSettingService.authToken = authToken
                             self?.provider.appSettingService.refreshToken = refreshToken
+                            self?.provider.appSettingService.isLoggedIn = true
                             self?.steps.accept(AppStep.userIsLoggedIn)
                         } else {
                             self?.provider.signUpService.signUpAsAppleData?.socialID = response.result.appleID

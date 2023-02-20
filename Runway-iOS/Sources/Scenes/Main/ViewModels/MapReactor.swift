@@ -19,15 +19,16 @@ import Alamofire
 final class MapReactor: Reactor, Stepper {
     // MARK: - Events
     
-    struct State {
-    }
-    
     enum Action {
-
+        case mapViewCameraPositionDidChanged((Double, Double))
     }
     
     enum Mutation {
-
+        case setMapLocation((Double, Double))
+    }
+    
+    struct State {
+        var currentLocation: (Double, Double)
     }
     
     // MARK: - Properties
@@ -42,14 +43,24 @@ final class MapReactor: Reactor, Stepper {
     // MARK: - initializer
     init(provider: ServiceProviderType) {
         self.provider = provider
-        self.initialState = State()
+        self.initialState = State(currentLocation: (0.0, 0.0))
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .mapViewCameraPositionDidChanged(let position):
+            return .just(.setMapLocation(position))
+        }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
-
+        var state = state
+        
+        switch mutation {
+        case .setMapLocation(let position):
+            state.currentLocation = position
+        }
+        
+        return state
     }
 }

@@ -13,7 +13,7 @@ PODS:
   - KakaoSDKUser (2.11.1):
     - KakaoSDKAuth (= 2.11.1)
   - lottie-ios (3.4.3)
-  - NMapsMap (3.16.0)
+  - NMapsMap (3.15.0)
   - ReactorKit (3.2.0):
     - RxSwift (~> 6.0)
     - WeakMapTable (~> 1.1)
@@ -63,7 +63,7 @@ PODS:
 
 DEPENDENCIES:
   - lottie-ios
-  - NMapsMap
+  - NMapsMap (~> 3.15.0)
   - ReactorKit
   - RxAlamofire
   - RxDataSources
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 555e1bb46595b842ded01cf7888cc17bbae4e113
   KakaoSDKUser: 08c0a4f40bebdebdf948a9e3d0e44ed5c2754f99
   lottie-ios: 9ae750cdc7820fecbd3c2f0cfc493038208fcdc4
-  NMapsMap: a2593320fca2bb09e521c05b4dffee4da42e96ed
+  NMapsMap: f151761c088d6516064c59da03ab6503769486e6
   ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -122,6 +122,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 24de3f269ecad15ee6866c4277fef087762a1f28
+PODFILE CHECKSUM: c945fad68ef78be5cd41cfab972c1ac966e1cfb0
 
 COCOAPODS: 1.11.3

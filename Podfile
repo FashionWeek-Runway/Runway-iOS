@@ -13,7 +13,7 @@ target 'Runway-iOS' do
   pod 'RxGesture'
   pod 'RxKeyboard'
 
-  pod 'NMapsMap'
+  pod 'NMapsMap', '~> 3.15.0'
   pod 'RxKakaoSDKCommon'
   pod 'RxKakaoSDKAuth'
   pod 'RxKakaoSDKUser'
