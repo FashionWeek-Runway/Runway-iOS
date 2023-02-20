@@ -17,6 +17,7 @@ final class MainFlow: Flow {
     
     private let rootViewController: UITabBarController = {
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
         return tabBarController
     }()
     
@@ -31,21 +32,18 @@ final class MainFlow: Flow {
         switch step {
         case .userIsLoggedIn:
             return coordinateToMainTabScreen()
+//        case .homeTab:
+//            return coordinateToHomeTab()
+//        case .mapTab:
+//            return coordinateToMapTab()
+//        case .myPageTab:
+//            return coordinateToMyPageTab()
         default:
             return .none
         }
     }
     
-    private func coordinateToMainTabScreen() -> FlowContributors {
-        let homeReactor = HomeReactor(provider: provider)
-        let homeViewController = HomeViewController(with: homeReactor)
-        
-        let mapReactor = MapReactor(provider: provider)
-        let mapViewController = MapViewController(with: mapReactor)
-        
-        let myPageReactor = MyPageReactor(provider: provider)
-        let myPageViewController = MyPageViewController(with: myPageReactor)
-        
+    private func coordinateToMainTabScreen() -> FlowContributors {        
         let homeFlow = HomeFlow(with: provider)
         let mapFlow = MapFlow(with: provider)
         let myPageFlow = MyPageFlow(with: provider)
@@ -62,9 +60,28 @@ final class MainFlow: Flow {
             flow3Root.tabBarItem = myPageTabbarItem
             
             self.rootViewController.setViewControllers([flow1Root, flow2Root, flow3Root], animated: false)
+            self.rootViewController.selectedIndex = 1
         }
-        return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: homeReactor),
-                                            .contribute(withNextPresentable: mapFlow, withNextStepper: mapReactor),
-                                            .contribute(withNextPresentable: myPageFlow, withNextStepper: myPageReactor)])
+        return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
+                                            .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),
+                                            .contribute(withNextPresentable: myPageFlow, withNextStepper: OneStepper(withSingleStep: AppStep.myPageTab))])
+    }
+    
+    private func coordinateToHomeTab() -> FlowContributors {
+        self.rootViewController.selectedIndex = 0
+        
+        return .none
+    }
+    
+    private func coordinateToMapTab() -> FlowContributors {
+        self.rootViewController.selectedIndex = 1
+        
+        return .none
+    }
+    
+    private func coordinateToMyPageTab() -> FlowContributors {
+        self.rootViewController.selectedIndex = 2
+        
+        return .none
     }
 }

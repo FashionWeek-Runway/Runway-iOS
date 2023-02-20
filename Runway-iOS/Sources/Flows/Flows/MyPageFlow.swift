@@ -29,7 +29,19 @@ final class MyPageFlow: Flow {
     }
     
     func navigate(to step: Step) -> FlowContributors {
-        // TODO: later
-        return .none
+        guard let step = step as? AppStep else { return .none }
+        switch step {
+        case .myPageTab:
+            return coordinateToMyPageScreen()
+        default:
+            return .none
+        }
+    }
+    
+    private func coordinateToMyPageScreen() -> FlowContributors {
+        let reactor = MyPageReactor(provider: provider)
+        let viewController = MyPageViewController(with: reactor)
+        self.rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
 }

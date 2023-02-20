@@ -145,6 +145,7 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.isLoggedIn = true
                         self?.provider.appSettingService.authToken = responseData.result.accessToken
                         self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
+                        self?.steps.accept(AppStep.userIsLoggedIn)
                     } catch {
                         print(data)
                         print(error)

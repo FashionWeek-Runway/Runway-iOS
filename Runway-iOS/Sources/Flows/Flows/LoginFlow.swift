@@ -71,7 +71,7 @@ final class LoginFlow: Flow {
             
         case .userIsLoggedIn:
             // TODO: 로그인 완료 이후...
-            return .none
+            return .end(forwardToParentFlowWithStep: AppStep.userIsLoggedIn)
         case .profileSettingIsRequired:
             return coordinateToProfileSettingScreen()
             

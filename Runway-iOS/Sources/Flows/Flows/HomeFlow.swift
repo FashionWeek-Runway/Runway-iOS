@@ -29,7 +29,20 @@ final class HomeFlow: Flow {
     }
     
     func navigate(to step: Step) -> FlowContributors {
-        // TODO: later
+        guard let step = step as? AppStep else { return .none }
+        switch step {
+        case .homeTab:
+            return coordinateToHomeTabScreen()
+        default:
+            break
+        }
         return .none
+    }
+    
+    private func coordinateToHomeTabScreen() -> FlowContributors {
+        let reactor = HomeReactor(provider: provider)
+        let viewController = HomeViewController(with: reactor)
+        self.rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
 }

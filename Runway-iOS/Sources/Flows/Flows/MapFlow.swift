@@ -30,6 +30,19 @@ final class MapFlow: Flow {
     
     func navigate(to step: Step) -> FlowContributors {
         // TODO: later
-        return .none
+        guard let step = step as? AppStep else { return .none }
+        switch step {
+        case .mapTab:
+            return coordinateToMapTabScreen()
+        default:
+            return .none
+        }
+    }
+    
+    private func coordinateToMapTabScreen() -> FlowContributors {
+        let reactor = MapReactor(provider: provider)
+        let viewController = MapViewController(with: reactor)
+        self.rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
 }
