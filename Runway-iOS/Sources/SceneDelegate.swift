@@ -80,8 +80,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         coordinator.coordinate(flow: appFlow, with: appStepper)
         
-        // TODO: 일단 무조건 로그인으로 진입하도록 설정
-        appStepper.steps.accept(AppStep.loginRequired)
+        if provider.appSettingService.isLoggedIn == true {
+            appStepper.steps.accept(AppStep.userIsLoggedIn)
+        } else {
+            appStepper.steps.accept(AppStep.loginRequired)
+        }
         
         window.makeKeyAndVisible()
     }

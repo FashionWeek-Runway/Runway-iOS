@@ -47,7 +47,6 @@
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
-		199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */; };
 		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
 		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
@@ -112,6 +111,7 @@
 		19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78A29A36E3B003E1F10 /* MapService.swift */; };
 		19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78C29A36F8C003E1F10 /* CategoryMapFilterData.swift */; };
 		19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C78E29A37352003E1F10 /* MapSearchData.swift */; };
+		19E0C79129A38E45003E1F10 /* NMapView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C79029A38E45003E1F10 /* NMapView+.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -180,7 +180,6 @@
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
-		199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCellModel.swift; sourceTree = "<group>"; };
 		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
 		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
@@ -246,6 +245,7 @@
 		19E0C78A29A36E3B003E1F10 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		19E0C78C29A36F8C003E1F10 /* CategoryMapFilterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMapFilterData.swift; sourceTree = "<group>"; };
 		19E0C78E29A37352003E1F10 /* MapSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchData.swift; sourceTree = "<group>"; };
+		19E0C79029A38E45003E1F10 /* NMapView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMapView+.swift"; sourceTree = "<group>"; };
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,8 +310,8 @@
 			isa = PBXGroup;
 			children = (
 				19E0C77929A2ABA6003E1F10 /* ViewModels */,
-				1939390129A0D12A0037810A /* MapViewController.swift */,
 				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
+				1939390129A0D12A0037810A /* MapViewController.swift */,
 				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
 			);
 			path = Main;
@@ -427,14 +427,6 @@
 			path = Flows;
 			sourceTree = "<group>";
 		};
-		199B9C50299BA39F00877AAE /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				199B9C51299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		199B9C5D299C8B2C00877AAE /* VIewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +475,7 @@
 				199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */,
 				199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */,
 				19AB007E299E36E2006D2FCF /* String+.swift */,
+				19E0C79029A38E45003E1F10 /* NMapView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -589,7 +582,6 @@
 			isa = PBXGroup;
 			children = (
 				199B9C5D299C8B2C00877AAE /* VIewModels */,
-				199B9C50299BA39F00877AAE /* Models */,
 				196662B9299B6C0D00BD0897 /* Cells */,
 				19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */,
 				19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */,
@@ -957,6 +949,7 @@
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				199B9C7B299D28A900877AAE /* SignUpAsPhoneData.swift in Sources */,
+				19E0C79129A38E45003E1F10 /* NMapView+.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
@@ -998,7 +991,6 @@
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
-				199B9C52299BA3A700877AAE /* FashionStyleCollectionViewCellModel.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
@@ -1110,7 +1102,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1164,7 +1156,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

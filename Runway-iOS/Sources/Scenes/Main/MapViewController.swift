@@ -12,6 +12,12 @@ import ReactorKit
 import NMapsMap
 
 final class MapViewController: BaseViewController {
+    
+    private let mapView: NMFMapView = {
+        let view = NMFMapView()
+        
+        return view
+    }()
 
     // MARK: - initializer
     
@@ -31,6 +37,15 @@ final class MapViewController: BaseViewController {
         
         let mapView = NMFMapView(frame: view.frame)
         view.addSubview(mapView)
+    }
+    
+    override func configureUI() {
+        super.configureUI()
+        self.view.addSubviews([mapView])
+        
+        mapView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 
