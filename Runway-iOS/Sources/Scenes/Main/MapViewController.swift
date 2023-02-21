@@ -45,7 +45,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    let locationManager = CLLocationManager()
+    lazy var locationManager: CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManagerDidChangeAuthorization(manager)
+        return manager
+    }()
 
     // MARK: - initializer
     
@@ -63,7 +69,6 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationAuthorization()
-        setUserInitialLocation()
     }
     
     override func configureUI() {
@@ -151,11 +156,15 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }
     
     private func setUserInitialLocation() {
-        locationManager.startUpdatingLocation()
-        
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat:locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-        cameraUpdate.animation = .easeIn
-        mapView.mapView.moveCamera(cameraUpdate)
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat:locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+            cameraUpdate.animation = .easeIn
+            mapView.mapView.moveCamera(cameraUpdate)
+        default:
+            break
+        }
     }
 }
 
@@ -208,5 +217,18 @@ extension MapViewController: NMFMapViewCameraDelegate {
         let lng = mapView.cameraPosition.target.lng
         let action = Reactor.Action.mapViewCameraPositionDidChanged((lat, lng))
         reactor?.action.onNext(action)
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            DispatchQueue.main.async {
+                self.setUserInitialLocation()
+            }
+        default:
+            break
+        }
     }
 }
