@@ -63,8 +63,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationAuthorization()
-//        let userPosition = locationManager.rx.upd
-//        mapView.mapView.cameraPosition = NMFCameraPosition(NMGLatLng(lat: <#T##Double#>, lng: <#T##Double#>), zoom: 1.0)
+        setUserInitialLocation()
     }
     
     override func configureUI() {
@@ -150,6 +149,14 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             break
         }
     }
+    
+    private func setUserInitialLocation() {
+        locationManager.startUpdatingLocation()
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat:locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        cameraUpdate.animation = .easeIn
+        mapView.mapView.moveCamera(cameraUpdate)
+    }
 }
 
 extension MapViewController: View {
@@ -167,13 +174,10 @@ extension MapViewController: View {
             .map { Reactor.Action.selectFilter($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
     }
     
     private func bindState(reactor: MapReactor) {
-//        mapSearchView.categoryCollectionView.rx
-//            .setDelegate(self)
-//            .disposed(by: disposeBag)
         
         reactor.state.map { $0.mapCategoryFilters }
             .bind(to: mapSearchView.categoryCollectionView.rx.items) { collectionView, index, item in

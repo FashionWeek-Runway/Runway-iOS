@@ -27,6 +27,7 @@
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
 		194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* NetworkRepository.swift */; };
 		194F95532993CE480016DDFF /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95522993CE480016DDFF /* RequestError.swift */; };
+		195D2D2629A54AA800589374 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D2D2529A54AA800589374 /* LocationService.swift */; };
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
 		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
 		196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B7299B561900BD0897 /* RWProfileSettingButton.swift */; };
@@ -165,6 +166,7 @@
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		194F954F2993C63F0016DDFF /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
 		194F95522993CE480016DDFF /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		195D2D2529A54AA800589374 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
@@ -503,9 +505,9 @@
 				199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */,
 				19AB007E299E36E2006D2FCF /* String+.swift */,
 				19E0C79429A39A78003E1F10 /* RxCLLocationDelegateProxy.swift */,
+				19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */,
 				19E0C7A229A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift */,
 				19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */,
-				19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */,
 				196D23AF29A5273F00E262FB /* UIScreen+.swift */,
 			);
 			path = Extensions;
@@ -656,6 +658,7 @@
 				19A96246299165B500F952DA /* AppSettingService.swift */,
 				19A962512991735300F952DA /* UserDefault.swift */,
 				19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */,
+				195D2D2529A54AA800589374 /* LocationService.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,
+				195D2D2629A54AA800589374 /* LocationService.swift in Sources */,
 				199B9C67299CE85000877AAE /* PolicyAgreementReactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

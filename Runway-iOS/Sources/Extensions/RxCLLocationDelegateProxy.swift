@@ -1,58 +1,47 @@
+////
+////  RxCLLocationManagerDelegateProxy.swift
+////  RxExample
+////
+////  Created by Carlos García on 8/7/15.
+////  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+////
 //
-//  RxCLLocationDelegateProxy.swift
-//  Runway-iOS
+//import CoreLocation
+//import RxSwift
+//import RxCocoa
 //
-//  Created by 김인환 on 2023/02/20.
+//extension CLLocationManager: HasDelegate {
+//    public typealias Delegate = CLLocationManagerDelegate
+//}
 //
-
-import CoreLocation
-import RxSwift
-import RxCocoa
-
-class RxCLLocationDelegateProxy: DelegateProxy<CLLocationManager, CLLocationManagerDelegate>, DelegateProxyType, CLLocationManagerDelegate {
-    static func registerKnownImplementations() {
-        self.register { manager -> RxCLLocationDelegateProxy in
-            RxCLLocationDelegateProxy(parentObject: manager, delegateProxy: self)
-        }
-    }
-
-    static func currentDelegate(for object: CLLocationManager) -> CLLocationManagerDelegate? {
-        return object.delegate
-    }
-
-    static func setCurrentDelegate(_ delegate: CLLocationManagerDelegate?, to object: CLLocationManager) {
-        object.delegate = delegate
-    }
-}
-
-extension CLLocation {
-    public var isValid: Bool {
-        guard self.coordinate.longitude != 0 && self.coordinate.latitude != 0 else { return false }
-        return CLLocationCoordinate2DIsValid(self.coordinate)
-    }
-}
-
-extension CLLocationCoordinate2D {
-    public var isValid: Bool {
-        guard self.longitude != 0 && self.latitude != 0 else { return false }
-        return CLLocationCoordinate2DIsValid(self)
-    }
-}
-
-extension ObservableType where Element == (CLLocation,CLLocation) {
-    func distance() -> Observable<CLLocationDistance>  {
-        return map { value in
-            let from = value.0
-            let to   = value.1
-            return from.distance(from: to)
-        }
-    }
-}
-
-extension ObservableType where Element == CLLocation {
-    func filterValid() -> Observable<CLLocation> {
-        return filter { value in
-            return value.isValid
-        }
-    }
-}
+//public class RxCLLocationManagerDelegateProxy
+//    : DelegateProxy<CLLocationManager, CLLocationManagerDelegate>
+//    , DelegateProxyType
+//    , CLLocationManagerDelegate {
+//
+//    public init(locationManager: CLLocationManager) {
+//        super.init(parentObject: locationManager, delegateProxy: RxCLLocationManagerDelegateProxy.self)
+//    }
+//
+//    public static func registerKnownImplementations() {
+//        self.register { RxCLLocationManagerDelegateProxy(locationManager: $0) }
+//    }
+//
+//    internal lazy var didUpdateLocationsSubject = PublishSubject<[CLLocation]>()
+//    internal lazy var didFailWithErrorSubject = PublishSubject<Error>()
+//
+//    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        _forwardToDelegate?.locationManager?(manager, didUpdateLocations: locations)
+//        didUpdateLocationsSubject.onNext(locations)
+//    }
+//
+//    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+//        _forwardToDelegate?.locationManager?(manager, didFailWithError: error)
+//        didFailWithErrorSubject.onNext(error)
+//    }
+//
+//    deinit {
+//        self.didUpdateLocationsSubject.on(.completed)
+//        self.didFailWithErrorSubject.on(.completed)
+//    }
+//}
