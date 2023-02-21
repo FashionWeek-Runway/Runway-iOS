@@ -24,6 +24,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         return view
     }()
     
+    private let bottomSheet: RWBottomSheet = RWBottomSheet()
+    
     private lazy var setLocationButton: NMFLocationButton = {
         let button = NMFLocationButton()
         button.clipsToBounds = true
@@ -67,7 +69,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchView, setLocationButton])
+        self.view.addSubviews([mapView, mapSearchView, setLocationButton, bottomSheet])
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -82,6 +84,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalTo(self.view.getSafeArea().bottom).offset(-136)
+        }
+        
+        bottomSheet.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(view.frame.height - view.getSafeArea().top - 135 - 154)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalToSuperview().offset(-view.getSafeArea().top - 135)
         }
     }
     
