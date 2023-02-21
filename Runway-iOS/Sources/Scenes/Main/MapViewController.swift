@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 import NMapsMap
+import CoreLocation
 
 final class MapViewController: BaseViewController { // naver map sdk에서 카메라 delegate 프로퍼티 지원하지 않아 delegate pattern 사용
     
@@ -30,9 +31,9 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         return button
     }()
     
-    private var helpViewToggle: Bool = false {
+    private var isHiddenHelperViews: Bool = false {
         didSet {
-            if helpViewToggle {
+            if isHiddenHelperViews {
                 showTabbar()
                 showSearchView()
             } else {
@@ -41,6 +42,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             }
         }
     }
+    
+    let locationManager = CLLocationManager()
 
     // MARK: - initializer
     
@@ -57,6 +60,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestLocationAuthorization()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
     }
     
     override func configureUI() {
@@ -72,7 +81,6 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(view.getSafeArea().top + 118)
         }
-        mapSearchView.setGradientLayer()
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -114,7 +122,28 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         } completion: { _ in
             self.mapSearchView.isHidden = true
         }
-
+    }
+    
+    private func requestLocationAuthorization() {
+        switch locationManager.authorizationStatus {
+        case .denied:
+            // 거부 상태: alert 필요
+            break
+        case .notDetermined, .restricted:
+            locationManager.requestWhenInUseAuthorization()
+        default:
+            break
+        }
+        
+        switch locationManager.accuracyAuthorization {
+        case .reducedAccuracy:
+            locationManager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: "사용자 위치 주변의 정확한 쇼룸 데이터 표시를 위해 정확한 위치 공유가 필요합니다.")
+        case .fullAccuracy:
+            // 이미 정확한 위치를 공유 중인 경우
+            break
+        @unknown default:
+            break
+        }
     }
 }
 
@@ -133,10 +162,15 @@ extension MapViewController: View {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        helpViewToggle.toggle()
+        isHiddenHelperViews.toggle()
     }
 }
 
 extension MapViewController: NMFMapViewCameraDelegate {
-
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        let lat = mapView.cameraPosition.target.lat
+        let lng = mapView.cameraPosition.target.lng
+        let action = Reactor.Action.mapViewCameraPositionDidChanged((lat, lng))
+        reactor?.action.onNext(action)
+    }
 }

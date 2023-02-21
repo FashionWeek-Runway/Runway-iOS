@@ -36,12 +36,15 @@ final class RWMapSearchView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-//        setGradientLayer()
-        self.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setGradientLayer()
     }
     
     // MARK: - UI
@@ -73,9 +76,9 @@ final class RWMapSearchView: UIView {
     func setGradientLayer() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
-        gradientLayer.colors = [UIColor.white, UIColor.clear]
-//        gradientLayer.locations = [0.932]
-        self.layer.addSublayer(gradientLayer)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.init(white: 1.0, alpha: 0.0).cgColor]
+        gradientLayer.locations = [0.932]
+        self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
 }
