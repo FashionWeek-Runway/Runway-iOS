@@ -13,6 +13,8 @@ import NMapsMap
 
 final class MapViewController: BaseViewController { // naver map sdk에서 카메라 delegate 프로퍼티 지원하지 않아 delegate pattern 사용
     
+    private let mapSearchView: RWMapSearchView = RWMapSearchView()
+    
     private lazy var mapView: NMFNaverMapView = {
         let view = NMFNaverMapView()
         view.mapView.touchDelegate = self
@@ -27,6 +29,18 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         button.mapView = self.mapView.mapView
         return button
     }()
+    
+    private var helpViewToggle: Bool = false {
+        didSet {
+            if helpViewToggle {
+                showTabbar()
+                showSearchView()
+            } else {
+                hideTabbar()
+                hideSearchView()
+            }
+        }
+    }
 
     // MARK: - initializer
     
@@ -47,25 +61,60 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, setLocationButton])
+        self.view.addSubviews([mapView, mapSearchView, setLocationButton])
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
+        mapSearchView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(view.getSafeArea().top + 118)
+        }
+        mapSearchView.setGradientLayer()
+        
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(self.view.safeAreaInsets).offset(-136)
+            $0.bottom.equalTo(self.view.getSafeArea().bottom).offset(-136)
         }
     }
     
-    func toggleTabbar() {
+    private func showTabbar() {
         guard var frame = tabBarController?.tabBar.frame else { return }
-        let hidden = frame.origin.y == view.frame.size.height
-        frame.origin.y = hidden ? view.frame.size.height - frame.size.height : view.frame.size.height
+        frame.origin.y = view.frame.size.height - frame.size.height
         UIView.animate(withDuration: 0.3) {
             self.tabBarController?.tabBar.frame = frame
         }
+    }
+    
+    private func hideTabbar() {
+        guard var frame = tabBarController?.tabBar.frame else { return }
+        frame.origin.y = view.frame.size.height
+        UIView.animate(withDuration: 0.3) {
+            self.tabBarController?.tabBar.frame = frame
+        }
+    }
+    
+    private func showSearchView() {
+        mapSearchView.isHidden = false
+        var frame = mapSearchView.frame
+        frame.origin.y = view.frame.origin.y
+        mapSearchView.frame.origin.y = view.frame.origin.y - mapSearchView.frame.size.height
+        UIView.animate(withDuration: 0.3) {
+            self.mapSearchView.frame = frame
+        }
+    }
+    
+    private func hideSearchView() {
+        var frame = mapSearchView.frame
+        frame.origin.y = view.frame.origin.y - frame.size.height
+        UIView.animate(withDuration: 0.3) {
+            self.mapSearchView.frame = frame
+        } completion: { _ in
+            self.mapSearchView.isHidden = true
+        }
+
     }
 }
 
@@ -84,7 +133,7 @@ extension MapViewController: View {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        toggleTabbar()
+        helpViewToggle.toggle()
     }
 }
 
