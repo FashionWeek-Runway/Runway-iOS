@@ -33,13 +33,16 @@ final class RWMapSearchViewCollectionViewCell: UICollectionViewCell {
     private func configureUI() {
         self.layer.cornerRadius = 4
         self.layer.borderWidth = 1
-        self.clipsToBounds = true
         self.layer.borderColor = UIColor.gray200.cgColor
+        self.layer.masksToBounds = true
         self.backgroundColor = .gray50
         
         addSubviews([titleLabel])
         titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().offset(6)
+            $0.bottom.equalToSuperview().offset(-6)
+            $0.leading.equalToSuperview().offset(12)
+            $0.trailing.equalToSuperview().offset(-12)
         }
     }
     

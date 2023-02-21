@@ -40,6 +40,10 @@ final class RWMapSearchViewCollectionViewBookmarkCell: UICollectionViewCell {
         bookmarkImageView.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        self.snp.makeConstraints {
+            $0.width.height.equalTo(32)
+        }
     }
     
     func setSelectedLayout(_ isSelected: Bool) {

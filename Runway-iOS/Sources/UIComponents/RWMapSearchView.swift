@@ -38,6 +38,7 @@ final class RWMapSearchView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 8
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.scrollDirection = .horizontal
         collectionView.collectionViewLayout = layout
         return collectionView

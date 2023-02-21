@@ -163,13 +163,16 @@ extension MapViewController: View {
     }
     
     private func bindState(reactor: MapReactor) {
+//        mapSearchView.categoryCollectionView.rx
+//            .setDelegate(self)
+//            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.mapCategoryFilters }
             .bind(to: mapSearchView.categoryCollectionView.rx.items) { collectionView, index, item in
                 let indexPath = IndexPath(item: index, section: 0)
                 if index == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewBookmarkCell else { return UICollectionViewCell() }
                     cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
-                    
                     return cell
                 } else {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewCell else { return UICollectionViewCell() }
