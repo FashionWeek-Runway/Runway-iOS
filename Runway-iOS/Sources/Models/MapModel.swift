@@ -21,9 +21,9 @@ enum PointerType {
 
 struct MainMapCategory {
     let categoryName: String
-    let categoryIcon: UIImage
+//    let categoryIcon: UIImage
     
-    static let allCategoryString = "미니멀, 캐주얼, 스트릿, 페미닌, 빈티지, 시티보이"
+    static let allCategoryString = "미니멀,캐주얼,스트릿,페미닌,빈티지,시티보이"
 }
 
 struct Location {

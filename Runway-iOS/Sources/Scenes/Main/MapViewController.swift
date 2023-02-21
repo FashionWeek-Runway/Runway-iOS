@@ -61,11 +61,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationAuthorization()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+//        let userPosition = locationManager.rx.upd
+//        mapView.mapView.cameraPosition = NMFCameraPosition(NMGLatLng(lat: <#T##Double#>, lng: <#T##Double#>), zoom: 1.0)
     }
     
     override func configureUI() {
@@ -154,9 +151,33 @@ extension MapViewController: View {
     }
     
     private func bindAction(reactor: MapReactor) {
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        mapSearchView.categoryCollectionView.rx.modelSelected(String.self)
+            .map { Reactor.Action.selectFilter($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+
     }
     
     private func bindState(reactor: MapReactor) {
+        reactor.state.map { $0.mapCategoryFilters }
+            .bind(to: mapSearchView.categoryCollectionView.rx.items) { collectionView, index, item in
+                let indexPath = IndexPath(item: index, section: 0)
+                if index == 0 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewBookmarkCell else { return UICollectionViewCell() }
+                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
+                    
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewCell else { return UICollectionViewCell() }
+                    cell.titleLabel.text = item
+                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
+                    return cell
+                }
+            }.disposed(by: disposeBag)
     }
 }
 

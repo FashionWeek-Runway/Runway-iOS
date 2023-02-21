@@ -31,6 +31,18 @@ final class RWMapSearchView: UIView {
         return button
     }()
     
+    let categoryCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        collectionView.register(RWMapSearchViewCollectionViewBookmarkCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier)
+        collectionView.register(RWMapSearchViewCollectionViewCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 8
+        layout.scrollDirection = .horizontal
+        collectionView.collectionViewLayout = layout
+        return collectionView
+    }()
+    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -50,7 +62,7 @@ final class RWMapSearchView: UIView {
     // MARK: - UI
     
     private func configureUI() {
-        self.addSubviews([searchView])
+        self.addSubviews([searchView, categoryCollectionView])
         searchView.addSubviews([searchField, searchButton])
         
         searchView.snp.makeConstraints {
@@ -70,6 +82,13 @@ final class RWMapSearchView: UIView {
             $0.leading.equalToSuperview().offset(15)
             $0.top.bottom.equalToSuperview()
             $0.trailing.equalTo(searchButton.snp.leading)
+        }
+        
+        categoryCollectionView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-16)
+            $0.height.equalTo(32)
         }
     }
     

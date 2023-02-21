@@ -39,6 +39,8 @@
 		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
+		196D23AA29A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */; };
+		196D23AC29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
@@ -177,6 +179,8 @@
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewBookmarkCell.swift; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
@@ -420,6 +424,15 @@
 			path = "Runway-iOSUITests";
 			sourceTree = "<group>";
 		};
+		196D23A829A4F7EB00E262FB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */,
+				196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		1979591329939DC3009A4DDE /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -506,6 +519,7 @@
 		19A962212991305D00F952DA /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				196D23A829A4F7EB00E262FB /* Cell */,
 				19BF2C802994100F00F1134D /* RWButton.swift */,
 				1993ACF92994197700BEE983 /* RWTextField.swift */,
 				198CA2AA29976BA3000457CE /* RWPicker.swift */,
@@ -987,6 +1001,7 @@
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */,
+				196D23AA29A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
@@ -1025,6 +1040,7 @@
 				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				19E0C79F29A39F1C003E1F10 /* MapModel.swift in Sources */,
+				196D23AC29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */,
 				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,

@@ -40,6 +40,8 @@ extension UIFont {
 
     static let body2 = UIFont.font(.spoqaHanSansNeoRegular, ofSize: 14)
     
+    static let body2B = UIFont.font(.spoqaHanSansNeoBold, ofSize: 14)
+    
     static let caption = UIFont.font(.spoqaHanSansNeoRegular, ofSize: 12)
     
     static let button1 = UIFont.font(.spoqaHanSansNeoMedium, ofSize: 16)

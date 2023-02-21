@@ -54,15 +54,6 @@ final class CategorySettingViewController: BaseViewController {
     }()
     
     var userName: String
-    
-//    let dataSource = RxCollectionViewSectionedReloadDataSource<FashionStyleCollectionViewSectionModel> { dataSource, collectionView, indexPath, item -> UICollectionViewCell in
-//        switch item {
-//        case .defaultCell(let reactor):
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FashionStyleCollectionViewCell.identifier, for: indexPath) as? FashionStyleCollectionViewCell else { return UICollectionViewCell() }
-//            cell.reactor = reactor
-//            return cell
-//        }
-//    }
 
     // MARK: - initializer
     
