@@ -67,16 +67,29 @@ final class MapReactor: Reactor, Stepper {
         case .viewDidLoad:
             return .empty()
         case .selectFilter(let filter):
-            return .just(.setFilter(filter))
+            var filterDict = currentState.mapFilterSelected
+            filterDict[filter]?.toggle()
+            
+            let selectedCategories = Array(filterDict.filter { $0.value == true }.keys)
+            let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
+                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
+            
+            return Observable.concat([
+                mapDatas.flatMap { datas -> Observable<Mutation> in
+                    return .just(.setMapMarkers(datas))
+                }
+                , .just(.setFilter(filter))
+            ])
         case .userLocationDidChanged(let position):
             return .just(.setUserLocation(position))
         case .mapViewCameraPositionDidChanged(let position):
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
             
-            let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
-                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
-            
+//            let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
+//                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+//                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
+//
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
             return Observable.concat([
                 provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
@@ -93,7 +106,7 @@ final class MapReactor: Reactor, Stepper {
                                                                               }
                                                                               
                                                                               // 모든 데이터가 캐싱 -> empty 방출
-                                                                              return cachedFlag ? .just(.setMapMarkers(data.result)) : .empty()
+                                                                              return .just(.setMapMarkers(data.result))
                                                                           }
                 ,.just(.setMapLocation(position))
             ])

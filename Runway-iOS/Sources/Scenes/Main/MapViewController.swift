@@ -52,6 +52,9 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         locationManagerDidChangeAuthorization(manager)
         return manager
     }()
+    
+    // 표시될 마커들을 담아두기
+    private var markers: [NMFMarker] = []
 
     // MARK: - initializer
     
@@ -206,7 +209,10 @@ extension MapViewController: View {
         reactor.state.map { $0.mapMarkers }
             .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
-                markerData.forEach { data in
+                
+                self?.markers.forEach { $0.mapView = nil }
+                
+                let markers = markerData.map { data in
                     let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
                     marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
                     marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
@@ -216,7 +222,9 @@ extension MapViewController: View {
                     marker.captionColor = .runwayBlack
                     marker.captionHaloColor = .white
                     marker.mapView = self?.mapView.mapView
+                    return marker
                 }
+                self?.markers = markers
             }).disposed(by: disposeBag)
     }
 }
