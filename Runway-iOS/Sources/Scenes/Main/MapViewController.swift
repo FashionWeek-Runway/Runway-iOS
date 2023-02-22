@@ -202,6 +202,21 @@ extension MapViewController: View {
                     return cell
                 }
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.mapMarkers }
+            .subscribe(onNext: { [weak self] markerData in
+                markerData.forEach { data in
+                    let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
+                    marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
+                    marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.captionText = data.storeName
+                    marker.captionTextSize = 10
+                    marker.captionColor = .runwayBlack
+                    marker.captionHaloColor = .white
+                    marker.mapView = self?.mapView.mapView
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -213,6 +228,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapViewCameraIdle(_ mapView: NMFMapView) {
+        
         let lat = mapView.cameraPosition.target.lat
         let lng = mapView.cameraPosition.target.lng
         let action = Reactor.Action.mapViewCameraPositionDidChanged((lat, lng))

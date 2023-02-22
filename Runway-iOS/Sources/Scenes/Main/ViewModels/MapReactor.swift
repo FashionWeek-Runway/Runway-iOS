@@ -30,12 +30,13 @@ final class MapReactor: Reactor, Stepper {
         case setFilter(String)
         case setMapLocation((Double, Double))
         case setUserLocation((Double, Double))
+        case setMapMarkers([MapWithCategorySearchResponseResult])
     }
     
     struct State {
-        var currentMapLocation: (Double, Double)?
-        var currentUserLocation: (Double, Double)?
-        
+        var mapCenterLocation: (Double, Double)?
+        var userLocation: (Double, Double)?
+        var mapMarkers: [MapWithCategorySearchResponseResult] = []
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
     }
@@ -67,7 +68,15 @@ final class MapReactor: Reactor, Stepper {
         case .userLocationDidChanged(let position):
             return .just(.setUserLocation(position))
         case .mapViewCameraPositionDidChanged(let position):
-            return .just(.setMapLocation(position))
+            let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
+            return Observable.concat([
+                provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
+                                                                          latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).flatMap { data -> Observable<Mutation> in
+                                                                              return .just(.setMapMarkers(data.result))
+                                                                          }
+                ,.just(.setMapLocation(position))
+            ])
         }
     }
     
@@ -76,11 +85,13 @@ final class MapReactor: Reactor, Stepper {
         
         switch mutation {
         case .setMapLocation(let position):
-            state.currentMapLocation = position
+            state.mapCenterLocation = position
         case .setUserLocation(let position):
-            state.currentUserLocation = position
+            state.userLocation = position
         case .setFilter(let filter):
             state.mapFilterSelected[filter]?.toggle()
+        case .setMapMarkers(let markers):
+            state.mapMarkers = markers
         }
         
         return state

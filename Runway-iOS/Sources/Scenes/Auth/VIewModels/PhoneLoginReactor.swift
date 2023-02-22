@@ -75,7 +75,10 @@ final class PhoneLoginReactor: Reactor, Stepper {
                     self?.steps.accept(AppStep.userIsLoggedIn)
                     return .empty()
                 } catch {
-                    print(error)
+                    let responseData = try JSONDecoder().decode(BaseResponse.self, from: data) as BaseResponse
+                    if responseData.message?.contains("존재하지 않는") == true {
+                        return .just(.setAccoutNotExist)
+                    }
                     return .empty()
                 }
             }
