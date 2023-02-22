@@ -204,6 +204,7 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
+            .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 markerData.forEach { data in
                     let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))

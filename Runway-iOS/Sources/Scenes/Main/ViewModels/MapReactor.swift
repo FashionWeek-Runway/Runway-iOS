@@ -52,6 +52,9 @@ final class MapReactor: Reactor, Stepper {
     
     let categoryFilterList: [String] = ["bookmark"] + MainMapCategory.allCategoryString.split(separator: ",").map { String($0) }
     
+    // 맵에 표시될 마커들을 캐싱
+    let markerCache = NSCacheManager<MapMarker>()
+    
     // MARK: - initializer
     init(provider: ServiceProviderType) {
         self.provider = provider
@@ -69,11 +72,28 @@ final class MapReactor: Reactor, Stepper {
             return .just(.setUserLocation(position))
         case .mapViewCameraPositionDidChanged(let position):
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
+            
+            let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
+                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
+            
+            // TODO: - 추후 마커단위로 로드할 수 있게 개선
             return Observable.concat([
                 provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
                                                                           latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).flatMap { data -> Observable<Mutation> in
-                                                                              return .just(.setMapMarkers(data.result))
+                                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).flatMap { [weak self] data -> Observable<Mutation> in
+                                                                              
+                                                                              var cachedFlag = false
+                                                                              for markerData in data.result {
+                                                                                  if self?.markerCache.fetchObject(name: String(markerData.storeID)) == nil {
+                                                                                      cachedFlag = true
+                                                                                      let marker = MapMarker(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
+                                                                                      self?.markerCache.saveObject(object: marker, forKey: String(markerData.storeID))
+                                                                                  }
+                                                                              }
+                                                                              
+                                                                              // 모든 데이터가 캐싱 -> empty 방출
+                                                                              return cachedFlag ? .just(.setMapMarkers(data.result)) : .empty()
                                                                           }
                 ,.just(.setMapLocation(position))
             ])
