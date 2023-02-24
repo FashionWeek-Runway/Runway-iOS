@@ -10,6 +10,8 @@ import RxSwift
 import Alamofire
 
 protocol ServiceProviderType {
+    var backgroundScheduler: ConcurrentDispatchQueueScheduler { get }
+    
     var appSettingService: AppSettingService { get }
     var networkManager: NetworkReachabilityManager? { get }
     var loginService: LoginService { get }
@@ -23,6 +25,8 @@ protocol ServiceProviderType {
 
 final class NetworkRepository: ServiceProviderType {
     static let shared = NetworkRepository()
+    
+    let backgroundScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
     
     private init() {
         self.disposeBag = DisposeBag()

@@ -27,6 +27,14 @@ final class RWBottomSheet: UIView {
         return view
     }()
     
+    let aroundView = RWAroundView()
+    
+    let aroundEmptyView: RWAroundEmptyView = {
+        let view = RWAroundEmptyView()
+        view.isHidden = true
+        return view
+    }()
+    
     // MARK: - properties
     
     private let disposeBag = DisposeBag()
@@ -52,7 +60,7 @@ final class RWBottomSheet: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        setupViews()
+        setupPanGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -66,7 +74,7 @@ final class RWBottomSheet: UIView {
         backgroundColor = .white
         layer.cornerRadius = 10
         
-        addSubviews([grabber, touchAreaView])
+        addSubviews([grabber, touchAreaView, aroundView, aroundEmptyView])
         
         grabber.snp.makeConstraints {
             $0.height.equalTo(3)
@@ -80,10 +88,20 @@ final class RWBottomSheet: UIView {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(14)
         }
+        
+        aroundView.snp.makeConstraints {
+            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+//        aroundEmptyView.snp.makeConstraints {
+//            $0.top.equalTo(touchAreaView.snp.bottom)
+//            $0.leading.trailing.bottom.equalToSuperview()
+//        }
     }
     
-    private func setupViews() {
-        rx.panGesture()
+    private func setupPanGesture() {
+        touchAreaView.rx.panGesture()
             .when(.began, .changed, .ended)
             .subscribe(onNext: { [weak self] event in
                 guard let self = self else { return }
@@ -130,13 +148,5 @@ final class RWBottomSheet: UIView {
                 self.frame = CGRect(x: 0, y: self.sheetPanMinTopConstant, width: self.frame.width, height: self.frame.height)
             }
         })
-//        }, completion: { _ in // 바뀐 시트 상태로 오토레이아웃을 업데이트 시킨다. 해주지 않으면 티켓 뷰 추가시 강제로 내려가는 버그 발생.
-//            let currentTop = self.frame.minY
-//            self.snp.remakeConstraints {
-//                $0.top.equalTo(currentTop)
-//                $0.trailing.leading.equalToSuperview()
-//                $0.height.equalTo(482 * heightRatio)
-//            }
-//        })
     }
 }

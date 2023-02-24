@@ -11,6 +11,7 @@ import RxCocoa
 import ReactorKit
 import NMapsMap
 import CoreLocation
+import Kingfisher
 
 final class MapViewController: BaseViewController { // naver map sdk에서 카메라 delegate 프로퍼티 지원하지 않아 delegate pattern 사용
     
@@ -90,11 +91,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             $0.height.equalTo(view.getSafeArea().top + 118)
         }
         
-        bottomSheet.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalToSuperview().offset(-view.getSafeArea().top - 135)
-        }
+//        bottomSheet.snp.makeConstraints {
+//            $0.top.equalToSuperview().offset(UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.height.equalToSuperview().offset(-view.getSafeArea().top - 135)
+//        }
+        
+        bottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -229,6 +232,29 @@ extension MapViewController: View {
                 }
                 self?.markers = markers
             }).disposed(by: disposeBag)
+        
+        reactor.state.map { $0.aroundDatas }
+            .bind(to: bottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
+                cell.imageView.image = nil
+                cell.storeNameLabel.text = item.storeName
+                item.category.forEach {
+                    let label = UIButton(type: .custom)
+                    label.setTitle("# \($0)", for: .normal)
+                    label.setTitleColor(.blue600, for: .normal)
+                    label.setBackgroundColor(.blue200.withAlphaComponent(0.5), for: .normal)
+                    label.layer.borderColor = UIColor.blue200.cgColor
+                    label.layer.borderWidth = 1
+                    label.layer.cornerRadius = 4
+                    label.clipsToBounds = true
+                    label.isUserInteractionEnabled = false
+                    label.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
+                    cell.tagStackView.addArrangedSubview(label)
+                }
+                cell.tagStackView.addArrangedSubview(UIView())
+                guard let url = URL(string: item.storeImageURL) else { return }
+                
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+            }.disposed(by: disposeBag)
     }
 }
 

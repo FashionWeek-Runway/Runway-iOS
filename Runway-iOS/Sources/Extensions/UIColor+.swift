@@ -37,9 +37,15 @@ extension UIColor {
     
     static let error = UIColor(hex: "#EF5B52")
     
-    static let blue900 = UIColor(hex: "#1D47FF")
-    
     static let blue100 = UIColor(hex: "#E6EBFF")
+    
+    static let blue200 = UIColor(hex: "#CDD6FF")
+    
+    static let blue500 = UIColor(hex: "#8199FF")
+    
+    static let blue600 = UIColor(hex: "#6885FF")
+                                 
+    static let blue900 = UIColor(hex: "#1D47FF")
 }
 
 extension UIColor {

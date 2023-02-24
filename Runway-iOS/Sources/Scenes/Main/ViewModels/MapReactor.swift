@@ -31,12 +31,14 @@ final class MapReactor: Reactor, Stepper {
         case setMapLocation((Double, Double))
         case setUserLocation((Double, Double))
         case setMapMarkers([MapWithCategorySearchResponseResult])
+        case setAroundDatas([AroundMapSearchResponseResultContent])
     }
     
     struct State {
         var mapCenterLocation: (Double, Double)?
         var userLocation: (Double, Double)?
         var mapMarkers: [MapWithCategorySearchResponseResult] = []
+        var aroundDatas: [AroundMapSearchResponseResultContent] = []
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
     }
@@ -85,30 +87,36 @@ final class MapReactor: Reactor, Stepper {
             return .just(.setUserLocation(position))
         case .mapViewCameraPositionDidChanged(let position):
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
-            
-//            let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
-//                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-//                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
-//
+            let mapFilterData = CategoryMapFilterData(category: selectedCategories,
+                                                      latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                      longitude: currentState.mapCenterLocation?.1 ?? 0.0)
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
             return Observable.concat([
-                provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
-                                                                          latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).flatMap { [weak self] data -> Observable<Mutation> in
-                                                                              
-                                                                              var cachedFlag = false
-                                                                              for markerData in data.result {
-                                                                                  if self?.markerCache.fetchObject(name: String(markerData.storeID)) == nil {
-                                                                                      cachedFlag = true
-                                                                                      let marker = MapMarker(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
-                                                                                      self?.markerCache.saveObject(object: marker, forKey: String(markerData.storeID))
-                                                                                  }
-                                                                              }
-                                                                              
-                                                                              // 모든 데이터가 캐싱 -> empty 방출
-                                                                              return .just(.setMapMarkers(data.result))
-                                                                          }
-                ,.just(.setMapLocation(position))
+                provider.mapService.filterMap(data: mapFilterData).data()
+                    .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { [weak self] data -> Observable<Mutation> in
+                        var isDatasAllCached = true
+                        for markerData in data.result {
+                            if self?.markerCache.fetchObject(name: String(markerData.storeID)) == nil {
+                                isDatasAllCached = false
+                                let marker = MapMarker(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
+                                self?.markerCache.saveObject(object: marker, forKey: String(markerData.storeID))
+                            }
+                        }
+                        
+                        // 모든 데이터가 캐싱 -> empty 방출
+                        return isDatasAllCached ? .empty() : .just(.setMapMarkers(data.result))
+                    },
+                provider.mapService.mapInfo(data: mapFilterData, page: 0, size: 10).data()
+                    .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { result -> Observable<Mutation> in
+                        if let contents = result.result?.contents {
+                            return .just(.setAroundDatas(contents))
+                        } else {
+                            return .empty()
+                        }
+                    },
+                .just(.setMapLocation(position))
             ])
         }
     }
@@ -125,6 +133,8 @@ final class MapReactor: Reactor, Stepper {
             state.mapFilterSelected[filter]?.toggle()
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
+        case .setAroundDatas(let datas):
+            state.aroundDatas = datas
         }
         
         return state

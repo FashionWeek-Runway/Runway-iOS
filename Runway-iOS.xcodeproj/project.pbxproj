@@ -39,6 +39,7 @@
 		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
+		196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */; };
 		196D23AA29A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */; };
 		196D23AC29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */; };
 		196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AD29A51F4200E262FB /* RWBottomSheet.swift */; };
@@ -124,6 +125,10 @@
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarker.swift */; };
+		19F10C7529A8C7BD0060F0BD /* RWAroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7429A8C7BD0060F0BD /* RWAroundView.swift */; };
+		19F10C7729A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7629A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift */; };
+		19F10C7B29A8D3F90060F0BD /* RWAroundEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */; };
+		19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -184,6 +189,7 @@
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewBookmarkCell.swift; sourceTree = "<group>"; };
 		196D23AD29A51F4200E262FB /* RWBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomSheet.swift; sourceTree = "<group>"; };
@@ -270,6 +276,10 @@
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
+		19F10C7429A8C7BD0060F0BD /* RWAroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundView.swift; sourceTree = "<group>"; };
+		19F10C7629A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundCollectionViewCell.swift; sourceTree = "<group>"; };
+		19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundEmptyView.swift; sourceTree = "<group>"; };
+		19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AroundMapSearchResponse.swift; sourceTree = "<group>"; };
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -351,6 +361,7 @@
 				1939390329A14E3E0037810A /* AppleLoginResponse.swift */,
 				1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */,
 				19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */,
+				19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -440,6 +451,8 @@
 			children = (
 				196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */,
 				196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */,
+				19F10C7629A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift */,
+				196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -545,6 +558,8 @@
 				199B9C72299D061800877AAE /* PassThroughView.swift */,
 				19E0C7AA29A3ED55003E1F10 /* RWMapSearchView.swift */,
 				196D23AD29A51F4200E262FB /* RWBottomSheet.swift */,
+				19F10C7429A8C7BD0060F0BD /* RWAroundView.swift */,
+				19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1010,11 +1025,14 @@
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
 				199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */,
+				19F10C7B29A8D3F90060F0BD /* RWAroundEmptyView.swift in Sources */,
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */,
+				196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */,
 				196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */,
 				19E0C7AB29A3ED55003E1F10 /* RWMapSearchView.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
+				19F10C7529A8C7BD0060F0BD /* RWAroundView.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
@@ -1047,6 +1065,7 @@
 				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
 				19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */,
 				19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */,
+				19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */,
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
@@ -1056,6 +1075,7 @@
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
 				19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */,
+				19F10C7729A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift in Sources */,
 				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				19E0C79F29A39F1C003E1F10 /* MapModel.swift in Sources */,
