@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxRelay
+import RxGesture
 
 final class RWBottomSheet: UIView {
     
@@ -35,19 +35,15 @@ final class RWBottomSheet: UIView {
     enum SheetViewState {
         case expanded // 펼침
         case folded // 접음
+        case cover // 완전히 덮기
     }
     
-    private lazy var panGesture: UIPanGestureRecognizer = {
-        let recognizer = UIPanGestureRecognizer()
-        recognizer.delaysTouchesBegan = false
-        recognizer.delaysTouchesEnded = false
-        return recognizer
-    }()
-    
-    // 퍌친 상태 Top
-    private lazy var sheetPanMinTopConstant: CGFloat = getSafeArea().bottom + 141
+    // 펼친 상태 Top
+    private lazy var sheetPanMinTopConstant: CGFloat = 138 + getSafeArea().top
     // 접힌 상태 Top
-    private lazy var sheetPanMaxTopConstant: CGFloat = UIScreen.getDeviceHeight() - 135 - getSafeArea().top
+    private lazy var sheetPanMaxTopConstant: CGFloat = UIScreen.getDeviceHeight() - getSafeArea().bottom - 121
+    // 덮기 상태 Top
+    private lazy var sheetPanCoverTopConstant: CGFloat = UIScreen.getDeviceHeight() - 118 - getSafeArea().top + 14
     // 드래그 하기 전에 Bottom Sheet의 top Constraint value를 저장하기 위한 프로퍼티
     private lazy var sheetPanStartingTopConstant: CGFloat = frame.origin.y
     
@@ -82,15 +78,14 @@ final class RWBottomSheet: UIView {
         touchAreaView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(62)
+            $0.height.equalTo(14)
         }
     }
     
     private func setupViews() {
-        self.addGestureRecognizer(panGesture)
-        panGesture.rx.event
-            .asDriver()
-            .drive(onNext: { [weak self] event in
+        rx.panGesture()
+            .when(.began, .changed, .ended)
+            .subscribe(onNext: { [weak self] event in
                 guard let self = self else { return }
                 let transition = event.translation(in: self)
                 

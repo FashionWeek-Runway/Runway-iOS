@@ -38,9 +38,11 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             if isHiddenHelperViews {
                 showTabbar()
                 showSearchView()
+                bottomSheet.isHidden = false
             } else {
                 hideTabbar()
                 hideSearchView()
+                bottomSheet.isHidden = true
             }
         }
     }
@@ -88,15 +90,16 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             $0.height.equalTo(view.getSafeArea().top + 118)
         }
         
-        setLocationButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(self.view.getSafeArea().bottom).offset(-136)
-        }
-        
         bottomSheet.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(view.frame.height - view.getSafeArea().top - 135 - 154)
+            $0.top.equalToSuperview().offset(UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalToSuperview().offset(-view.getSafeArea().top - 135)
+        }
+        
+        setLocationButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.width.height.equalTo(42)
+            $0.bottom.equalTo(bottomSheet.snp.top).offset(-19)
         }
     }
     
