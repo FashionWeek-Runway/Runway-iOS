@@ -94,10 +94,10 @@ final class RWBottomSheet: UIView {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
-//        aroundEmptyView.snp.makeConstraints {
-//            $0.top.equalTo(touchAreaView.snp.bottom)
-//            $0.leading.trailing.bottom.equalToSuperview()
-//        }
+        aroundEmptyView.snp.makeConstraints {
+            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     private func setupPanGesture() {

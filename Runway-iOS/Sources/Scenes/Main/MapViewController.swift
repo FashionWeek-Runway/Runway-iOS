@@ -258,11 +258,10 @@ extension MapViewController: View {
             }).disposed(by: disposeBag)
         
         reactor.state.map { $0.aroundDatas }
+            .do(onNext: { [weak self] in self?.bottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
             .bind(to: bottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
                 cell.storeNameLabel.text = item.storeName
-                
                 cell.tagRelay.accept(item.category)
-                
                 guard let url = URL(string: item.storeImageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url),
                                            options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
