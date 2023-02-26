@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
 		19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */; };
@@ -40,6 +41,7 @@
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
 		196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */; };
+		196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */; };
 		196D23AA29A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */; };
 		196D23AC29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */; };
 		196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AD29A51F4200E262FB /* RWBottomSheet.swift */; };
@@ -100,6 +102,7 @@
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
+		19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */; };
 		19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */; };
 		19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */; };
 		19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77129A2A673003E1F10 /* MainFlow.swift */; };
@@ -121,7 +124,7 @@
 		19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7A229A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift */; };
 		19E0C7A529A3B2B7003E1F10 /* Reactive+NMFMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */; };
 		19E0C7A929A3C540003E1F10 /* Reactive+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */; };
-		19E0C7AB29A3ED55003E1F10 /* RWMapSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7AA29A3ED55003E1F10 /* RWMapSearchView.swift */; };
+		19E0C7AB29A3ED55003E1F10 /* RWMapSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */; };
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarker.swift */; };
@@ -153,6 +156,7 @@
 
 /* Begin PBXFileReference section */
 		130599E13CDCA961CB8B53DC /* Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSUITests/Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
 		19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundCollectionViewCellReactor.swift; sourceTree = "<group>"; };
+		196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchView.swift; sourceTree = "<group>"; };
 		196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		196D23AB29A4FB5200E262FB /* RWMapSearchViewCollectionViewBookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchViewCollectionViewBookmarkCell.swift; sourceTree = "<group>"; };
 		196D23AD29A51F4200E262FB /* RWBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomSheet.swift; sourceTree = "<group>"; };
@@ -251,6 +256,7 @@
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsAppleData.swift; sourceTree = "<group>"; };
 		19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
 		19E0C77129A2A673003E1F10 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
@@ -272,7 +278,7 @@
 		19E0C7A229A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNMFMapViewTouchDelegateProxy.swift; sourceTree = "<group>"; };
 		19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+NMFMapView.swift"; sourceTree = "<group>"; };
 		19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+CLLocationManager.swift"; sourceTree = "<group>"; };
-		19E0C7AA29A3ED55003E1F10 /* RWMapSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchView.swift; sourceTree = "<group>"; };
+		19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchBar.swift; sourceTree = "<group>"; };
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
@@ -453,6 +459,7 @@
 				196D23A929A4F80000E262FB /* RWMapSearchViewCollectionViewCell.swift */,
 				19F10C7629A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift */,
 				196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */,
+				19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -527,6 +534,7 @@
 				19E0C7A229A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift */,
 				19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */,
 				196D23AF29A5273F00E262FB /* UIScreen+.swift */,
+				19281D2529AA9CBD0043E565 /* UIImageView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -556,10 +564,11 @@
 				196662B7299B561900BD0897 /* RWProfileSettingButton.swift */,
 				199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */,
 				199B9C72299D061800877AAE /* PassThroughView.swift */,
-				19E0C7AA29A3ED55003E1F10 /* RWMapSearchView.swift */,
+				19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */,
 				196D23AD29A51F4200E262FB /* RWBottomSheet.swift */,
 				19F10C7429A8C7BD0060F0BD /* RWAroundView.swift */,
 				19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */,
+				196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -980,9 +989,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */,
 				194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */,
 				19A962522991735300F952DA /* UserDefault.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
+				19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
 				19AB0083299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift in Sources */,
 				199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */,
@@ -1010,6 +1021,7 @@
 				199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */,
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
 				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
+				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
@@ -1030,7 +1042,7 @@
 				199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */,
 				196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */,
 				196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */,
-				19E0C7AB29A3ED55003E1F10 /* RWMapSearchView.swift in Sources */,
+				19E0C7AB29A3ED55003E1F10 /* RWMapSearchBar.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19F10C7529A8C7BD0060F0BD /* RWAroundView.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,

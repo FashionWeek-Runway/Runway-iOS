@@ -13,7 +13,7 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleToFill
         return view
     }()
     
@@ -26,22 +26,31 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let tagStackView: UIStackView = {
-        let view = UIStackView()
-        view.alignment = .fill
-        view.distribution = .fill
-        view.spacing = 8
+    let tagCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWTagCollectionViewCell.self, forCellWithReuseIdentifier: RWTagCollectionViewCell.identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = CGSize(width: 59, height: 24)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.scrollDirection = .horizontal
+        view.showsHorizontalScrollIndicator = false
+        view.collectionViewLayout = layout
         return view
     }()
     
-    
     static let identifier = "RWAroundCollectionViewCell"
+    
+    let tagRelay = PublishRelay<[String]>()
+    
+    private var disposeBag = DisposeBag()
     
     // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        bindCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -49,11 +58,11 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        addSubviews([imageView, storeNameLabel, tagStackView])
+        addSubviews([imageView, storeNameLabel, tagCollectionView])
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
-            $0.width.equalToSuperview()
+            $0.width.equalTo(320)
             $0.height.equalTo(180)
         }
         
@@ -62,10 +71,18 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
             $0.leading.equalToSuperview()
         }
         
-        tagStackView.snp.makeConstraints {
+        tagCollectionView.snp.makeConstraints {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(24)
         }
+    }
+    
+    private func bindCollectionView() {
+        tagRelay
+            .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
+                cell.label.text = "# " + item
+            }
+            .disposed(by: disposeBag)
     }
 }

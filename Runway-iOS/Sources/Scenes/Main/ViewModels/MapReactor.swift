@@ -22,6 +22,7 @@ final class MapReactor: Reactor, Stepper {
     enum Action {
         case viewDidLoad
         case selectFilter(String)
+        case searchButtonDidTap
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
     }
@@ -83,14 +84,11 @@ final class MapReactor: Reactor, Stepper {
                 }
                 , .just(.setFilter(filter))
             ])
-        case .userLocationDidChanged(let position):
-            return .just(.setUserLocation(position))
-        case .mapViewCameraPositionDidChanged(let position):
+        case .searchButtonDidTap:
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
             let mapFilterData = CategoryMapFilterData(category: selectedCategories,
                                                       latitude: currentState.mapCenterLocation?.0 ?? 0.0,
                                                       longitude: currentState.mapCenterLocation?.1 ?? 0.0)
-            // TODO: - 추후 마커단위로 로드할 수 있게 개선
             return Observable.concat([
                 provider.mapService.filterMap(data: mapFilterData).data()
                     .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
@@ -115,9 +113,13 @@ final class MapReactor: Reactor, Stepper {
                         } else {
                             return .empty()
                         }
-                    },
-                .just(.setMapLocation(position))
+                    }
             ])
+        case .userLocationDidChanged(let position):
+            return .just(.setUserLocation(position))
+        case .mapViewCameraPositionDidChanged(let position):
+            // TODO: - 추후 마커단위로 로드할 수 있게 개선
+            return .just(.setMapLocation(position))
         }
     }
     

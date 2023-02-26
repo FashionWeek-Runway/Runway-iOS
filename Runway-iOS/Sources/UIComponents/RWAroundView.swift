@@ -49,7 +49,7 @@ final class RWAroundView: UIView {
         }
         
         collectionView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-80)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(regionLabel.snp.bottom).offset(20)

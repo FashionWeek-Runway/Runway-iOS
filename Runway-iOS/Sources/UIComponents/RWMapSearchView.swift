@@ -2,49 +2,60 @@
 //  RWMapSearchView.swift
 //  Runway-iOS
 //
-//  Created by 김인환 on 2023/02/21.
+//  Created by 김인환 on 2023/02/25.
 //
 
 import UIKit
 
 final class RWMapSearchView: UIView {
-
-    let searchView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 4
-        view.layer.borderColor = UIColor.gray200.cgColor
-        view.layer.borderWidth = 1
-        view.clipsToBounds = true
-        return view
+    
+    let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(UIImage(named: "icon_back"), for: .normal)
+        return button
     }()
     
     let searchField: UITextField = {
         let field = UITextField()
-        field.attributedPlaceholder = NSAttributedString(string: "지역, 매장명 검색", attributes: [.font: UIFont.body1])
-        field.layer.borderWidth = 0
+        field.clearButtonMode = .whileEditing
         return field
     }()
     
-    let searchButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "icon_search"), for: .normal)
+    private let divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray300
+        return view
+    }()
+    
+    private let emptyImage = UIImageView(image: UIImage(named: "logo"))
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최근 검색어가 없습니다"
+        label.font = .body1
+        label.textColor = .runwayBlack
+        return label
+    }()
+    
+    private let latestLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최근 검색"
+        label.font = .body2M
+        label.textColor = .gray600
+        return label
+    }()
+    
+    private let historyClearButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "전체 삭제", attributes: [.font: UIFont.font(.spoqaHanSansNeoRegular, ofSize: 12.0), .foregroundColor: UIColor.gray700]), for: .normal)
         return button
     }()
     
-    let categoryCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        collectionView.register(RWMapSearchViewCollectionViewBookmarkCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier)
-        collectionView.register(RWMapSearchViewCollectionViewCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier)
-        collectionView.showsHorizontalScrollIndicator = false
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 8
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.scrollDirection = .horizontal
-        collectionView.collectionViewLayout = layout
-        return collectionView
+    private let historyTableView: UITableView = {
+        let view = UITableView()
+        view.showsVerticalScrollIndicator = false
+        
+        return view
     }()
-    
-    // MARK: - initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,50 +66,13 @@ final class RWMapSearchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setGradientLayer()
-    }
-    
-    // MARK: - UI
-    
     private func configureUI() {
-        self.addSubviews([searchView, categoryCollectionView])
-        searchView.addSubviews([searchField, searchButton])
+        self.addSubviews([backButton, searchField, divider,
+                          emptyImage, emptyLabel,
+                          latestLabel, historyClearButton, historyTableView])
         
-        searchView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-60)
-            $0.height.equalTo(48)
-        }
-        
-        searchButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-15)
-            $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(24)
-        }
-        
-        searchField.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(15)
-            $0.top.bottom.equalToSuperview()
-            $0.trailing.equalTo(searchButton.snp.leading)
-        }
-        
-        categoryCollectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-16)
-            $0.height.equalTo(32)
-        }
+//        backButton.snp.makeConstraints {
+//            
+//        }
     }
-    
-    func setGradientLayer() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.bounds
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.init(white: 1.0, alpha: 0.0).cgColor]
-        gradientLayer.locations = [0.932]
-        self.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
 }

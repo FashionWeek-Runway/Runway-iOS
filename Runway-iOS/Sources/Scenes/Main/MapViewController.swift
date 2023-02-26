@@ -15,7 +15,7 @@ import Kingfisher
 
 final class MapViewController: BaseViewController { // naver map sdk에서 카메라 delegate 프로퍼티 지원하지 않아 delegate pattern 사용
     
-    private let mapSearchView: RWMapSearchView = RWMapSearchView()
+    private let mapSearchBar: RWMapSearchBar = RWMapSearchBar()
     
     private lazy var mapView: NMFNaverMapView = {
         let view = NMFNaverMapView()
@@ -34,16 +34,31 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         return button
     }()
     
+    private let searchButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setAttributedTitle(NSAttributedString(string: "현 지도에서 검색",
+                                                     attributes: [.font: UIFont.body2, .foregroundColor: UIColor.blue600]),
+                                  for: .normal)
+        button.setBackgroundColor(.white, for: .normal)
+        button.setImage(UIImage(named: "icon_refresh"), for: .normal)
+        button.imageEdgeInsets.right = 4
+        button.layer.cornerRadius = 18
+        button.clipsToBounds = true
+        return button
+    }()
+    
     private var isHiddenHelperViews: Bool = false {
         didSet {
             if isHiddenHelperViews {
                 showTabbar()
                 showSearchView()
                 bottomSheet.isHidden = false
+                searchButton.isHidden = false
             } else {
                 hideTabbar()
                 hideSearchView()
                 bottomSheet.isHidden = true
+                searchButton.isHidden = true
             }
         }
     }
@@ -79,23 +94,24 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchView, setLocationButton, bottomSheet])
+        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet])
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        mapSearchView.snp.makeConstraints {
+        mapSearchBar.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(view.getSafeArea().top + 118)
         }
         
-//        bottomSheet.snp.makeConstraints {
-//            $0.top.equalToSuperview().offset(UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.height.equalToSuperview().offset(-view.getSafeArea().top - 135)
-//        }
+        searchButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(147)
+            $0.height.equalTo(36)
+            $0.top.equalTo(mapSearchBar.snp.bottom).offset(8)
+        }
         
         bottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
         
@@ -123,22 +139,22 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }
     
     private func showSearchView() {
-        mapSearchView.isHidden = false
-        var frame = mapSearchView.frame
+        mapSearchBar.isHidden = false
+        var frame = mapSearchBar.frame
         frame.origin.y = view.frame.origin.y
-        mapSearchView.frame.origin.y = view.frame.origin.y - mapSearchView.frame.size.height
+        mapSearchBar.frame.origin.y = view.frame.origin.y - mapSearchBar.frame.size.height
         UIView.animate(withDuration: 0.3) {
-            self.mapSearchView.frame = frame
+            self.mapSearchBar.frame = frame
         }
     }
     
     private func hideSearchView() {
-        var frame = mapSearchView.frame
+        var frame = mapSearchBar.frame
         frame.origin.y = view.frame.origin.y - frame.size.height
         UIView.animate(withDuration: 0.3) {
-            self.mapSearchView.frame = frame
+            self.mapSearchBar.frame = frame
         } completion: { _ in
-            self.mapSearchView.isHidden = true
+            self.mapSearchBar.isHidden = true
         }
     }
     
@@ -188,8 +204,16 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        mapSearchView.categoryCollectionView.rx.modelSelected(String.self)
+        mapSearchBar.categoryCollectionView.rx.modelSelected(String.self)
             .map { Reactor.Action.selectFilter($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        searchButton.rx.tap
+            .do(onNext: { [weak self] in
+                self?.searchButton.isHidden = true
+            })
+            .map { Reactor.Action.searchButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -198,7 +222,7 @@ extension MapViewController: View {
     private func bindState(reactor: MapReactor) {
         
         reactor.state.map { $0.mapCategoryFilters }
-            .bind(to: mapSearchView.categoryCollectionView.rx.items) { collectionView, index, item in
+            .bind(to: mapSearchBar.categoryCollectionView.rx.items) { collectionView, index, item in
                 let indexPath = IndexPath(item: index, section: 0)
                 if index == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewBookmarkCell else { return UICollectionViewCell() }
@@ -213,7 +237,7 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
-            .subscribe(on: MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 
                 self?.markers.forEach { $0.mapView = nil }
@@ -235,25 +259,13 @@ extension MapViewController: View {
         
         reactor.state.map { $0.aroundDatas }
             .bind(to: bottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
-                cell.imageView.image = nil
                 cell.storeNameLabel.text = item.storeName
-                item.category.forEach {
-                    let label = UIButton(type: .custom)
-                    label.setTitle("# \($0)", for: .normal)
-                    label.setTitleColor(.blue600, for: .normal)
-                    label.setBackgroundColor(.blue200.withAlphaComponent(0.5), for: .normal)
-                    label.layer.borderColor = UIColor.blue200.cgColor
-                    label.layer.borderWidth = 1
-                    label.layer.cornerRadius = 4
-                    label.clipsToBounds = true
-                    label.isUserInteractionEnabled = false
-                    label.contentEdgeInsets = UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8)
-                    cell.tagStackView.addArrangedSubview(label)
-                }
-                cell.tagStackView.addArrangedSubview(UIView())
-                guard let url = URL(string: item.storeImageURL) else { return }
                 
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.tagRelay.accept(item.category)
+                
+                guard let url = URL(string: item.storeImageURL) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url),
+                                           options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
             }.disposed(by: disposeBag)
     }
 }
@@ -266,7 +278,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        
+        searchButton.isHidden = false
         let lat = mapView.cameraPosition.target.lat
         let lng = mapView.cameraPosition.target.lng
         let action = Reactor.Action.mapViewCameraPositionDidChanged((lat, lng))
