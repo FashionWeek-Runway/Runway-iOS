@@ -106,7 +106,8 @@ final class RWBottomSheet: UIView {
         }
         
         searchResultView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(touchAreaView.snp.bottom)
             $0.bottom.equalToSuperview().offset(-17)
         }

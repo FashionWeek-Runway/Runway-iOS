@@ -35,7 +35,7 @@ final class MapService: APIService {
     }
     
     func mapInfoBottomSheet(storeId: Int) -> Observable<DataRequest> {
-        return request(.post, "maps/info/\(storeId)")
+        return request(.get, "maps/info/\(storeId)")
     }
     
     func searchMapInfoRegion(regionId: Int, page: Int, size: Int) -> Observable<DataRequest> {

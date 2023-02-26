@@ -28,8 +28,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     private let bottomSheet: RWBottomSheet = RWBottomSheet()
     private lazy var searchResultBottomSheet: RWBottomSheet = {
         let sheet = RWBottomSheet()
-        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
-        sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0.0)
+        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0.0)
+        sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
         sheet.searchResultView.isHidden = false
         sheet.aroundView.isHidden = true
         sheet.aroundEmptyView.isHidden = true
@@ -125,7 +125,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
         
         bottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
-        searchResultBottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0), width: UIScreen.getDeviceWidth(), height: 276)
+        searchResultBottomSheet.frame = CGRect(x: 0,
+                                               y: UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0),
+                                               width: UIScreen.getDeviceWidth(),
+                                               height: 276 + (self.tabBarController?.tabBar.frame.height ?? 0))
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -262,6 +265,12 @@ extension MapViewController: View {
                         marker.captionTextSize = 10
                         marker.captionColor = .runwayBlack
                         marker.captionHaloColor = .white
+                        marker.touchHandler = { [weak self] (overlay) -> Bool in
+                            let action = Reactor.Action.selectMapMarker(data.storeID)
+                            self?.reactor?.action.onNext(action)
+                            self?.searchResultBottomSheet.showSheet(atState: .expanded)
+                            return true
+                        }
                         DispatchQueue.main.async {
                             marker.mapView = self?.mapView.mapView
                         }
@@ -288,8 +297,6 @@ extension MapViewController: View {
                 self?.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url),
                                                                                      options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
-            }, onCompleted: { [weak self] in
-                self?.searchResultBottomSheet.showSheet()
             })
             .disposed(by: disposeBag)
     }
@@ -298,12 +305,6 @@ extension MapViewController: View {
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         isHiddenHelperViews.toggle()
-    }
-    
-    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
-        let action = Reactor.Action.selectMapMarker(symbol.caption)
-        reactor?.action.onNext(action)
-        return false
     }
 }
 

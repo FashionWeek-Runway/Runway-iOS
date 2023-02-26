@@ -25,7 +25,7 @@ final class MapReactor: Reactor, Stepper {
         case searchButtonDidTap
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
-        case selectMapMarker(String)
+        case selectMapMarker(Int)
     }
     
     enum Mutation {
@@ -118,8 +118,7 @@ final class MapReactor: Reactor, Stepper {
                         }
                     }
             ])
-        case .selectMapMarker(let storeName):
-            guard let storeId = currentState.mapMarkers.filter({ $0.storeName == storeName }).first?.storeID else { return .empty() }
+        case .selectMapMarker(let storeId):
             return provider.mapService
                 .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
                 .flatMap { data -> Observable<Mutation> in

@@ -60,7 +60,6 @@ final class RWMapMarkerSelectView: UIView {
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
-            $0.width.equalTo(320)
             $0.height.equalTo(180)
         }
         
@@ -72,7 +71,7 @@ final class RWMapMarkerSelectView: UIView {
         tagCollectionView.snp.makeConstraints {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(56)
+            $0.height.equalTo(24)
         }
     }
     
