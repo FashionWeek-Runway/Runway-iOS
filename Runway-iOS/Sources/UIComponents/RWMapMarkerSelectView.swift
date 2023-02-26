@@ -1,15 +1,15 @@
 //
-//  RWAroundCollectionViewCell.swift
+//  RWMapMarkerSelectView.swift
 //  Runway-iOS
 //
-//  Created by 김인환 on 2023/02/24.
+//  Created by 김인환 on 2023/02/27.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-final class RWAroundCollectionViewCell: UICollectionViewCell {
+final class RWMapMarkerSelectView: UIView {
     
     let imageView: UIImageView = {
         let view = UIImageView()
@@ -39,13 +39,11 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    static let identifier = "RWAroundCollectionViewCell"
-    
     let tagRelay = PublishRelay<[String]>()
     
     private var disposeBag = DisposeBag()
     
-    // MARK: - Initializer
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,7 +72,7 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
         tagCollectionView.snp.makeConstraints {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(24) // TODO: - 추후 2줄 변경 가능성
+            $0.height.equalTo(56)
         }
     }
     

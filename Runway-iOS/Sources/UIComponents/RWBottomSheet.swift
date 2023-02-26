@@ -35,6 +35,12 @@ final class RWBottomSheet: UIView {
         return view
     }()
     
+    let searchResultView: RWMapMarkerSelectView = {
+        let view = RWMapMarkerSelectView()
+        view.isHidden = true
+        return view
+    }()
+    
     // MARK: - properties
     
     private let disposeBag = DisposeBag()
@@ -47,11 +53,11 @@ final class RWBottomSheet: UIView {
     }
     
     // 펼친 상태 Top
-    private lazy var sheetPanMinTopConstant: CGFloat = 138 + getSafeArea().top
+    lazy var sheetPanMinTopConstant: CGFloat = 138 + getSafeArea().top
     // 접힌 상태 Top
-    private lazy var sheetPanMaxTopConstant: CGFloat = UIScreen.getDeviceHeight() - getSafeArea().bottom - 121
+    lazy var sheetPanMaxTopConstant: CGFloat = UIScreen.getDeviceHeight() - getSafeArea().bottom - 121
     // 덮기 상태 Top
-    private lazy var sheetPanCoverTopConstant: CGFloat = UIScreen.getDeviceHeight() - 118 - getSafeArea().top + 14
+    lazy var sheetPanCoverTopConstant: CGFloat = UIScreen.getDeviceHeight() - 118 - getSafeArea().top + 14
     // 드래그 하기 전에 Bottom Sheet의 top Constraint value를 저장하기 위한 프로퍼티
     private lazy var sheetPanStartingTopConstant: CGFloat = frame.origin.y
     
@@ -74,7 +80,7 @@ final class RWBottomSheet: UIView {
         backgroundColor = .white
         layer.cornerRadius = 10
         
-        addSubviews([grabber, touchAreaView, aroundView, aroundEmptyView])
+        addSubviews([grabber, touchAreaView, aroundView, aroundEmptyView, searchResultView])
         
         grabber.snp.makeConstraints {
             $0.height.equalTo(3)
@@ -97,6 +103,12 @@ final class RWBottomSheet: UIView {
         aroundEmptyView.snp.makeConstraints {
             $0.top.equalTo(touchAreaView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchResultView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.bottom.equalToSuperview().offset(-17)
         }
     }
     

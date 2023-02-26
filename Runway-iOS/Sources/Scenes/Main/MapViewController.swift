@@ -26,6 +26,15 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }()
     
     private let bottomSheet: RWBottomSheet = RWBottomSheet()
+    private lazy var searchResultBottomSheet: RWBottomSheet = {
+        let sheet = RWBottomSheet()
+        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
+        sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0.0)
+        sheet.searchResultView.isHidden = false
+        sheet.aroundView.isHidden = true
+        sheet.aroundEmptyView.isHidden = true
+        return sheet
+    }()
     
     private lazy var setLocationButton: NMFLocationButton = {
         let button = NMFLocationButton()
@@ -54,11 +63,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 showSearchView()
                 bottomSheet.isHidden = false
                 searchButton.isHidden = false
+                searchResultBottomSheet.isHidden = false
             } else {
                 hideTabbar()
                 hideSearchView()
                 bottomSheet.isHidden = true
                 searchButton.isHidden = true
+                searchResultBottomSheet.isHidden = true
             }
         }
     }
@@ -94,7 +105,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet])
+        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchResultBottomSheet])
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -114,6 +125,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
         
         bottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
+        searchResultBottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0), width: UIScreen.getDeviceWidth(), height: 276)
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -237,24 +249,26 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 
                 self?.markers.forEach { $0.mapView = nil }
-                
-                let markers = markerData.map { data in
-                    let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
-                    marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
-                    marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
-                    marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
-                    marker.captionText = data.storeName
-                    marker.captionTextSize = 10
-                    marker.captionColor = .runwayBlack
-                    marker.captionHaloColor = .white
-                    marker.mapView = self?.mapView.mapView
-                    return marker
+                DispatchQueue.global(qos: .default).async {
+                    let markers = markerData.map { data in
+                        let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
+                        marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
+                        marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+                        marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+                        marker.captionText = data.storeName
+                        marker.captionTextSize = 10
+                        marker.captionColor = .runwayBlack
+                        marker.captionHaloColor = .white
+                        DispatchQueue.main.async {
+                            marker.mapView = self?.mapView.mapView
+                        }
+                        return marker
+                    }
+                    self?.markers = markers
                 }
-                self?.markers = markers
             }).disposed(by: disposeBag)
         
         reactor.state.map { $0.aroundDatas }
@@ -266,12 +280,30 @@ extension MapViewController: View {
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url),
                                            options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
             }.disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.mapMarkerSelectData }
+            .subscribe(onNext: { [weak self] data in
+                guard let url = URL(string: data.storeImage) else { return }
+                self?.searchResultBottomSheet.searchResultView.tagRelay.accept(data.category)
+                self?.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url),
+                                                                                     options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
+            }, onCompleted: { [weak self] in
+                self?.searchResultBottomSheet.showSheet()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         isHiddenHelperViews.toggle()
+    }
+    
+    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
+        let action = Reactor.Action.selectMapMarker(symbol.caption)
+        reactor?.action.onNext(action)
+        return false
     }
 }
 

@@ -25,6 +25,7 @@ final class MapReactor: Reactor, Stepper {
         case searchButtonDidTap
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
+        case selectMapMarker(String)
     }
     
     enum Mutation {
@@ -33,12 +34,14 @@ final class MapReactor: Reactor, Stepper {
         case setUserLocation((Double, Double))
         case setMapMarkers([MapWithCategorySearchResponseResult])
         case setAroundDatas([AroundMapSearchResponseResultContent])
+        case setMapMarkerSelectData(MapMarkerSelectResponseResult)
     }
     
     struct State {
         var mapCenterLocation: (Double, Double)?
         var userLocation: (Double, Double)?
         var mapMarkers: [MapWithCategorySearchResponseResult] = []
+        var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
@@ -115,6 +118,13 @@ final class MapReactor: Reactor, Stepper {
                         }
                     }
             ])
+        case .selectMapMarker(let storeName):
+            guard let storeId = currentState.mapMarkers.filter({ $0.storeName == storeName }).first?.storeID else { return .empty() }
+            return provider.mapService
+                .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
+                .flatMap { data -> Observable<Mutation> in
+                    return .just(.setMapMarkerSelectData(data.result))
+                }
         case .userLocationDidChanged(let position):
             return .just(.setUserLocation(position))
         case .mapViewCameraPositionDidChanged(let position):
@@ -137,6 +147,8 @@ final class MapReactor: Reactor, Stepper {
             state.mapMarkers = markers
         case .setAroundDatas(let datas):
             state.aroundDatas = datas
+        case .setMapMarkerSelectData(let data):
+            state.mapMarkerSelectData = data
         }
         
         return state

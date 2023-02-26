@@ -103,6 +103,8 @@
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
 		19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */; };
+		19CA8D7429ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */; };
+		19CA8D7629ABE15300FE18E3 /* RWMapMarkerSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */; };
 		19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */; };
 		19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */; };
 		19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77129A2A673003E1F10 /* MainFlow.swift */; };
@@ -257,6 +259,8 @@
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerSelectResponse.swift; sourceTree = "<group>"; };
+		19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapMarkerSelectView.swift; sourceTree = "<group>"; };
 		19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsAppleData.swift; sourceTree = "<group>"; };
 		19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
 		19E0C77129A2A673003E1F10 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 				1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */,
 				19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */,
 				19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */,
+				19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 				19F10C7429A8C7BD0060F0BD /* RWAroundView.swift */,
 				19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */,
 				196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */,
+				19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1019,6 +1025,8 @@
 				196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */,
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
 				199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */,
+				19CA8D7629ABE15300FE18E3 /* RWMapMarkerSelectView.swift in Sources */,
+				19CA8D7429ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift in Sources */,
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
 				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
 				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
