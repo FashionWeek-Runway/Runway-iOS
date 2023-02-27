@@ -26,6 +26,7 @@ final class MapReactor: Reactor, Stepper {
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarker(Int)
+        case bottomSheetScrollReachesBottom
     }
     
     enum Mutation {
@@ -33,7 +34,7 @@ final class MapReactor: Reactor, Stepper {
         case setMapLocation((Double, Double))
         case setUserLocation((Double, Double))
         case setMapMarkers([MapWithCategorySearchResponseResult])
-        case setAroundDatas([AroundMapSearchResponseResultContent])
+        case setAroundDatas([AroundMapSearchResponseResultContent], isLast: Bool)
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
     }
     
@@ -45,6 +46,9 @@ final class MapReactor: Reactor, Stepper {
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
+        
+        var mapInfoIsLast: Bool = false
+        var mapInfoPage: Int = 0
     }
     
     // MARK: - Properties
@@ -111,13 +115,32 @@ final class MapReactor: Reactor, Stepper {
                 provider.mapService.mapInfo(data: mapFilterData, page: 0, size: 10).data()
                     .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
                     .flatMap { result -> Observable<Mutation> in
-                        if let contents = result.result?.contents {
-                            return .just(.setAroundDatas(contents))
+                        if let contents = result.result?.contents, let isLast = result.result?.isLast {
+                            return .just(.setAroundDatas(contents, isLast: isLast))
                         } else {
                             return .empty()
                         }
                     }
             ])
+        case .bottomSheetScrollReachesBottom:
+            if currentState.mapInfoIsLast {
+                return .empty()
+            } else {
+                let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
+                let mapFilterData = CategoryMapFilterData(category: selectedCategories,
+                                                          latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)
+                return provider.mapService.mapInfo(data: mapFilterData, page: currentState.mapInfoPage, size: 10).data()
+                    .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { result -> Observable<Mutation> in
+                        if let contents = result.result?.contents, let isLast = result.result?.isLast {
+                            return .just(.setAroundDatas(contents, isLast: isLast))
+                        } else {
+                            return .empty()
+                        }
+                    }
+            }
+            
         case .selectMapMarker(let storeId):
             return provider.mapService
                 .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
@@ -144,8 +167,12 @@ final class MapReactor: Reactor, Stepper {
             state.mapFilterSelected[filter]?.toggle()
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
-        case .setAroundDatas(let datas):
-            state.aroundDatas = datas
+        case .setAroundDatas(let datas, let isLast):
+            state.aroundDatas += datas
+            state.mapInfoIsLast = isLast
+            if !isLast {
+                state.mapInfoPage += 1
+            }
         case .setMapMarkerSelectData(let data):
             state.mapMarkerSelectData = data
         }

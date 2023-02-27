@@ -84,6 +84,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     // 표시될 마커들을 담아두기
     private var markers: [NMFMarker] = []
+    private var isFetchingMore = false
 
     // MARK: - initializer
     
@@ -232,6 +233,18 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        bottomSheet.aroundView.collectionView.rx.didEndDecelerating // infiniteScrolling
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                let height = self.bottomSheet.aroundView.collectionView.frame.height
+                let contentHeight = self.bottomSheet.aroundView.collectionView.contentSize.height
+                let reachesBottom = (self.bottomSheet.aroundView.collectionView.contentOffset.y > contentHeight - height)
+                
+                if reachesBottom && !self.isFetchingMore {
+                    self.reactor?.action.onNext(.bottomSheetScrollReachesBottom)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: MapReactor) {
@@ -286,8 +299,7 @@ extension MapViewController: View {
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImageURL) else { return }
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url),
-                                           options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             }.disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.mapMarkerSelectData }
@@ -295,8 +307,7 @@ extension MapViewController: View {
                 guard let url = URL(string: data.storeImage) else { return }
                 self?.searchResultBottomSheet.searchResultView.tagRelay.accept(data.category)
                 self?.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
-                self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url),
-                                                                                     options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 320, height: 180), mode: .aspectFit))])
+                self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             })
             .disposed(by: disposeBag)
     }

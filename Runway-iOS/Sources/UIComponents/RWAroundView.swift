@@ -23,7 +23,7 @@ final class RWAroundView: UIView {
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20
         layout.estimatedItemSize = CGSize(width: 320, height: 245)
-        view.showsVerticalScrollIndicator = false
+//        view.showsVerticalScrollIndicator = false
         view.collectionViewLayout = layout
         view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier)
         return view

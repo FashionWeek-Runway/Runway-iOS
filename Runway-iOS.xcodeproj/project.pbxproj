@@ -127,6 +127,8 @@
 		19E0C7A529A3B2B7003E1F10 /* Reactive+NMFMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */; };
 		19E0C7A929A3C540003E1F10 /* Reactive+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */; };
 		19E0C7AB29A3ED55003E1F10 /* RWMapSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */; };
+		19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */; };
+		19E88C3A29ACAF7500B111CE /* ShowRoomDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */; };
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarker.swift */; };
@@ -283,6 +285,8 @@
 		19E0C7A429A3B2B7003E1F10 /* Reactive+NMFMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+NMFMapView.swift"; sourceTree = "<group>"; };
 		19E0C7A829A3C540003E1F10 /* Reactive+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+CLLocationManager.swift"; sourceTree = "<group>"; };
 		19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchBar.swift; sourceTree = "<group>"; };
+		19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailViewController.swift; sourceTree = "<group>"; };
+		19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailReactor.swift; sourceTree = "<group>"; };
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
 				1939390129A0D12A0037810A /* MapViewController.swift */,
 				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
+				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -710,6 +715,7 @@
 		19E0C77929A2ABA6003E1F10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */,
 				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
 				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
 				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
@@ -1054,6 +1060,7 @@
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
 				19F10C7529A8C7BD0060F0BD /* RWAroundView.swift in Sources */,
 				19BF2C832994153C00F1134D /* UIButton+.swift in Sources */,
+				19E88C3A29ACAF7500B111CE /* ShowRoomDetailReactor.swift in Sources */,
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */,
@@ -1105,6 +1112,7 @@
 				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
+				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,
