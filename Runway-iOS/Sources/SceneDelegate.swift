@@ -74,7 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        let provider: ServiceProviderType = NetworkRepository.shared
+        let provider: ServiceProviderType = DataRepository.shared
         let appFlow = AppFlow(with: window, provider: provider)
         let appStepper = AppStepper(provider: provider)
         

@@ -57,6 +57,6 @@ final class MapService: APIService {
         params.updateValue(data.content, forKey: "content")
         params.updateValue(data.latitude, forKey: "latitude")
         params.updateValue(data.longitude, forKey: "longitude")
-        return request(.get, "maps/search", parameters: params, encoding: URLEncoding.default)
+        return request(.post, "maps/search", parameters: params)
     }
 }

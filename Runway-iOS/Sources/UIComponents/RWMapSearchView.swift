@@ -48,6 +48,32 @@ final class RWMapSearchView: UIView {
         return label
     }()
     
+    private let resultEmptyImageView = UIImageView(image: UIImage(named: "icon_empty_search_map"))
+    private let resultEmptyWordLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .primary
+        label.font = UIFont.headline4
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    private let resultEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "에 대한 검색결과가 없습니다."
+        label.font = .body1
+        label.textColor = .runwayBlack
+        label.textAlignment = .center
+        return label
+    }()
+    private let resultEmptyCaptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "다른 검색어를 입력해보세요."
+        label.font = .body2
+        label.textColor = .gray500
+        label.textAlignment = .center
+        return label
+    }()
+    
     private let latestLabel: UILabel = {
         let label = UILabel()
         label.text = "최근 검색"
@@ -64,7 +90,7 @@ final class RWMapSearchView: UIView {
         return button
     }()
     
-    private let historyTableView: UITableView = {
+    let historyTableView: UITableView = {
         let view = UITableView()
         view.showsVerticalScrollIndicator = false
         view.register(RWMapSearchHistoryTableViewCell.self, forCellReuseIdentifier: RWMapSearchHistoryTableViewCell.identifier)
@@ -72,17 +98,47 @@ final class RWMapSearchView: UIView {
         return view
     }()
     
-    private let searchTableView: UITableView = {
-        let view = UITableView()
-        view.showsVerticalScrollIndicator = false
-        view.register(RWMapSearchTableViewCell.self, forCellReuseIdentifier: RWMapSearchTableViewCell.identifier)
-        view.isHidden = true
-        return view
+    let searchTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 66
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(RWMapSearchTableViewCell.self, forCellReuseIdentifier: RWMapSearchTableViewCell.identifier)
+        tableView.isHidden = true
+        return tableView
     }()
+    
+    enum LayoutMode {
+        case IsHistoryExists
+        case IsHistoryEmpty
+        case IsSearchResultExists
+        case IsSearchResultEmpty
+    }
+    
+    var layoutMode: LayoutMode = .IsHistoryEmpty {
+        didSet {
+            switch layoutMode {
+            case .IsHistoryEmpty:
+                setLayoutIfHistoryIsEmpty()
+            case .IsSearchResultEmpty:
+                setLayoutIfSearchResultIsEmpty()
+            case .IsHistoryExists:
+                setLayoutIfHistoryIsExists()
+            case .IsSearchResultExists:
+                setLayoutIfSearchResultIsExists()
+            }
+        }
+    }
+    
+    
+    let disposeBag = DisposeBag()
+    
+    // MARK: - initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        setRx()
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +147,7 @@ final class RWMapSearchView: UIView {
     
     private func configureUI() {
         self.addSubviews([navigationBarArea,
-                          emptyImageView, emptyLabel,
+                          emptyImageView, emptyLabel, resultEmptyImageView, resultEmptyWordLabel, resultEmptyLabel, resultEmptyCaptionLabel,
                           latestLabel, historyClearButton, historyTableView, searchTableView])
         self.backgroundColor = .white
         
@@ -108,6 +164,26 @@ final class RWMapSearchView: UIView {
         
         emptyLabel.snp.makeConstraints {
             $0.top.equalTo(emptyImageView.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+        }
+        
+        resultEmptyImageView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarArea.snp.bottom).offset(60)
+            $0.centerX.equalToSuperview()
+        }
+        
+        resultEmptyWordLabel.snp.makeConstraints {
+            $0.top.equalTo(resultEmptyImageView.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+        }
+        
+        resultEmptyLabel.snp.makeConstraints {
+            $0.top.equalTo(resultEmptyImageView.snp.bottom).offset(45)
+            $0.centerX.equalToSuperview()
+        }
+        
+        resultEmptyCaptionLabel.snp.makeConstraints {
+            $0.top.equalTo(resultEmptyLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         
@@ -154,6 +230,76 @@ final class RWMapSearchView: UIView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    private func setRx() {
+        self.searchField.rx.value
+            .bind(to: self.resultEmptyWordLabel.rx.text)
+            .disposed(by: disposeBag)
         
+        self.searchField.rx.controlEvent(.editingDidEndOnExit)
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                if self?.searchTableView.numberOfRows(inSection: 0) == 0 {
+                    self?.layoutMode = .IsSearchResultEmpty
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func setLayoutIfHistoryIsEmpty() {
+        self.historyTableView.isHidden = true
+        self.searchTableView.isHidden = true
+        self.emptyLabel.isHidden = false
+        self.emptyImageView.isHidden = false
+        self.latestLabel.isHidden = true
+        self.historyClearButton.isHidden = true
+        
+        self.resultEmptyLabel.isHidden = true
+        self.resultEmptyImageView.isHidden = true
+        self.resultEmptyCaptionLabel.isHidden = true
+        self.resultEmptyWordLabel.isHidden = true
+    }
+    
+    func setLayoutIfHistoryIsExists() {
+        self.historyTableView.isHidden = false
+        self.searchTableView.isHidden = true
+        self.emptyLabel.isHidden = true
+        self.emptyImageView.isHidden = true
+        self.latestLabel.isHidden = false
+        self.historyClearButton.isHidden = false
+        
+        self.resultEmptyLabel.isHidden = true
+        self.resultEmptyImageView.isHidden = true
+        self.resultEmptyCaptionLabel.isHidden = true
+        self.resultEmptyWordLabel.isHidden = true
+    }
+    
+    func setLayoutIfSearchResultIsExists() {
+        self.historyTableView.isHidden = true
+        self.searchTableView.isHidden = false
+        self.emptyLabel.isHidden = true
+        self.emptyImageView.isHidden = true
+        self.latestLabel.isHidden = true
+        self.historyClearButton.isHidden = true
+        
+        self.resultEmptyLabel.isHidden = true
+        self.resultEmptyImageView.isHidden = true
+        self.resultEmptyCaptionLabel.isHidden = true
+        self.resultEmptyWordLabel.isHidden = true
+    }
+    
+    func setLayoutIfSearchResultIsEmpty() {
+        self.historyTableView.isHidden = true
+        self.searchTableView.isHidden = true
+        self.emptyImageView.isHidden = true
+        self.emptyLabel.isHidden = true
+        self.latestLabel.isHidden = true
+        self.historyClearButton.isHidden = true
+        
+        self.resultEmptyLabel.isHidden = false
+        self.resultEmptyImageView.isHidden = false
+        self.resultEmptyCaptionLabel.isHidden = false
+        self.resultEmptyWordLabel.isHidden = false
     }
 }

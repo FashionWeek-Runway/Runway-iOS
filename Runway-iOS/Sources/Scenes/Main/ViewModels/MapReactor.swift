@@ -23,6 +23,8 @@ final class MapReactor: Reactor, Stepper {
         case viewDidLoad
         case selectFilter(String)
         case searchButtonDidTap
+        case searchFieldDidTap
+        case searchFieldInput(String)
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarker(Int)
@@ -37,6 +39,8 @@ final class MapReactor: Reactor, Stepper {
         case setAroundDatas([AroundMapSearchResponseResultContent], isLast: Bool)
         case setAroundDatasAppend([AroundMapSearchResponseResultContent], isLast: Bool)
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
+        case setMapHistories([MapSearchHistory])
+        case setMapKeywordSearchData([KeywordSearchItem])
     }
     
     struct State {
@@ -47,6 +51,9 @@ final class MapReactor: Reactor, Stepper {
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
+        
+        var mapKeywordSearchData: [KeywordSearchItem] = []
+        var mapSearchHistories: [MapSearchHistory]? = nil
         
         var mapInfoIsLast: Bool = false
         var mapInfoPage: Int = 0
@@ -92,6 +99,22 @@ final class MapReactor: Reactor, Stepper {
                 }
                 , .just(.setFilter(filter))
             ])
+        case .searchFieldDidTap:
+            guard let historyResult = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false) else { return .empty() }
+            return .just(.setMapHistories(Array(historyResult)))
+        case .searchFieldInput(let text):
+            if text.isEmpty {
+                return .just(.setMapKeywordSearchData([]))
+            } else {
+                return provider.mapService.mapSearch(data: MapSearchData(content: text,
+                                                                         latitude: currentState.mapCenterLocation?.0 ?? 0.0,
+                                                                         longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapKeywordSearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { result -> Observable<Mutation> in
+                        let datas = result.result.regionSearchList + result.result.storeSearchList
+                        return datas.isEmpty ? .just(.setMapKeywordSearchData([])) : .just(.setMapKeywordSearchData(datas))
+                    }
+            }
+            
         case .searchButtonDidTap:
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
             let mapFilterData = CategoryMapFilterData(category: selectedCategories,
@@ -164,8 +187,12 @@ final class MapReactor: Reactor, Stepper {
             state.mapCenterLocation = position
         case .setUserLocation(let position):
             state.userLocation = position
+        case .setMapHistories(let histories):
+            state.mapSearchHistories = histories
         case .setFilter(let filter):
             state.mapFilterSelected[filter]?.toggle()
+        case .setMapKeywordSearchData(let data):
+            state.mapKeywordSearchData = data
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
         case .setAroundDatasAppend(let datas, let isLast):

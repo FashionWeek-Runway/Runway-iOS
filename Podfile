@@ -21,6 +21,7 @@ target 'Runway-iOS' do
   pod 'Kingfisher', '~> 7.0'
   pod 'SnapKit', '~> 5.6.0'
   pod 'lottie-ios'
+  pod 'RealmSwift', '~>10'
 
   target 'Runway-iOSTests' do
     inherit! :search_paths

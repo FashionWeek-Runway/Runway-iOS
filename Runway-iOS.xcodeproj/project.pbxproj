@@ -26,7 +26,7 @@
 		193EEB042996C4B50093831A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EEB032996C4B50093831A /* BaseViewController.swift */; };
 		194F95452993B7890016DDFF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95442993B7890016DDFF /* LoginService.swift */; };
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
-		194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* NetworkRepository.swift */; };
+		194F95502993C63F0016DDFF /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* DataRepository.swift */; };
 		194F95532993CE480016DDFF /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95522993CE480016DDFF /* RequestError.swift */; };
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
 		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
@@ -78,6 +78,8 @@
 		199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */; };
 		199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */; };
 		199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */; };
+		199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */; };
+		199DF21D29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */; };
 		19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
@@ -181,7 +183,7 @@
 		193EEB032996C4B50093831A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		194F95442993B7890016DDFF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		194F954F2993C63F0016DDFF /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
+		194F954F2993C63F0016DDFF /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		194F95522993CE480016DDFF /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
@@ -238,6 +240,8 @@
 		199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
+		199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchHistory.swift; sourceTree = "<group>"; };
+		199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeywordSearchResponse.swift; sourceTree = "<group>"; };
 		19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAsKakaoResponse.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 				19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */,
 				19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */,
 				19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */,
+				199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -532,6 +537,14 @@
 			path = ci_scripts;
 			sourceTree = "<group>";
 		};
+		199DF21729AD050000F36BB0 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -590,9 +603,10 @@
 			path = UIComponents;
 			sourceTree = "<group>";
 		};
-		19A96222299131A900F952DA /* Network */ = {
+		19A96222299131A900F952DA /* DataRepository */ = {
 			isa = PBXGroup;
 			children = (
+				199DF21729AD050000F36BB0 /* Database */,
 				199B9C6C299D00CC00877AAE /* Traits */,
 				194F95512993CE390016DDFF /* Errors */,
 				194F954C2993C1F60016DDFF /* Models */,
@@ -600,9 +614,9 @@
 				1979591329939DC3009A4DDE /* Constant */,
 				19A962532991785D00F952DA /* Interceptor */,
 				19A9623F29915D7700F952DA /* Services */,
-				194F954F2993C63F0016DDFF /* NetworkRepository.swift */,
+				194F954F2993C63F0016DDFF /* DataRepository.swift */,
 			);
-			path = Network;
+			path = DataRepository;
 			sourceTree = "<group>";
 		};
 		19A962292991527500F952DA /* Resources */ = {
@@ -621,7 +635,7 @@
 			children = (
 				19E0C79C29A39EFF003E1F10 /* Models */,
 				19A96245299165AB00F952DA /* Utils */,
-				19A96222299131A900F952DA /* Network */,
+				19A96222299131A900F952DA /* DataRepository */,
 				19A962212991305D00F952DA /* UIComponents */,
 				19A9621F2991303B00F952DA /* Scenes */,
 				19917EED2994D8570016A175 /* Flows */,
@@ -1009,7 +1023,7 @@
 			files = (
 				19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */,
 				19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */,
-				194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */,
+				194F95502993C63F0016DDFF /* DataRepository.swift in Sources */,
 				19A962522991735300F952DA /* UserDefault.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */,
@@ -1048,6 +1062,7 @@
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
 				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,
 				19F10C7329A680100060F0BD /* MapMarker.swift in Sources */,
+				199DF21D29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				199B9C7B299D28A900877AAE /* SignUpAsPhoneData.swift in Sources */,
@@ -1092,6 +1107,7 @@
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
+				199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */,
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,
 				196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,

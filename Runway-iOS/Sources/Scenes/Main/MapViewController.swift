@@ -241,19 +241,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     private func setRx() {
         
-        mapSearchBar.searchView.rx.gesture(.tap())
-            .when(.recognized)
-            .bind(onNext: { [weak self] _ in
-                self?.mapMode = .search
-                self?.searchView.isHidden = false
-                self?.searchView.searchField.becomeFirstResponder()
-            }).disposed(by: disposeBag)
-        
         searchView.backButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
                 self?.mapMode = .normal
                 self?.searchView.isHidden = true
+                self?.searchView.searchField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
     }
@@ -270,6 +263,16 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        mapSearchBar.searchView.rx.gesture(.tap())
+            .when(.recognized)
+            .bind(onNext: { [weak self] _ in
+                self?.mapMode = .search
+                self?.searchView.isHidden = false
+                self?.searchView.searchField.becomeFirstResponder()
+                self?.searchView.layoutMode = .IsHistoryEmpty
+                self?.reactor?.action.onNext(.searchFieldDidTap)
+            }).disposed(by: disposeBag)
+        
         mapSearchBar.categoryCollectionView.rx.modelSelected(String.self)
             .map { Reactor.Action.selectFilter($0) }
             .bind(to: reactor.action)
@@ -280,6 +283,14 @@ extension MapViewController: View {
                 self?.searchButton.isHidden = true
             })
             .map { Reactor.Action.searchButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        searchView.searchField.rx.text
+            .distinctUntilChanged()
+            .compactMap({$0})
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.searchFieldInput($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -360,6 +371,44 @@ extension MapViewController: View {
                 self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             })
             .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.mapSearchHistories }
+            .do(onNext: { [weak self] in
+                self?.searchView.layoutMode = $0.isEmpty ? .IsHistoryEmpty : .IsHistoryExists
+            })
+            .bind(to: searchView.historyTableView.rx.items(cellIdentifier: RWMapSearchHistoryTableViewCell.identifier, cellType: RWMapSearchHistoryTableViewCell.self)) { indexPath, item, cell in
+                cell.titleLabel.text = item.name
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MM.dd"
+                cell.dateLabel.text = formatter.string(from: item.date)
+                cell.iconImageView.image = item.isStore ? UIImage(named: "icon_search_store") : UIImage(named: "icon_search_location")
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.mapKeywordSearchData }
+            .do(onNext: { [weak self] _ in
+                self?.searchView.layoutMode = .IsSearchResultExists
+            })
+            .bind(to: searchView.searchTableView.rx.items(cellIdentifier: RWMapSearchTableViewCell.identifier, cellType: RWMapSearchTableViewCell.self)) { [weak self] indexPath, item, cell in
+                guard let self = self, let searchText = self.searchView.searchField.text else { return }
+                cell.addressLabel.text = item.address
+                if let storeName = item.storeName, let storeId = item.storeID  { // 매장 검색결과
+                    cell.iconImageView.image = UIImage(named: "icon_search_store")
+                    cell.storeId = storeId
+                    let titleText = NSMutableAttributedString(string: storeName, attributes: [.font: UIFont.body1, .foregroundColor: UIColor.runwayBlack])
+                    let attributeRange = (storeName as NSString).range(of: searchText)
+                    titleText.addAttributes([.font: UIFont.body1M, .foregroundColor: UIColor.primary], range: attributeRange)
+                    cell.titleLabel.attributedText = titleText
+                } else if let regionName = item.region, let regionId = item.regionID { // 장소 검색결과
+                    cell.iconImageView.image = UIImage(named: "icon_search_location")
+                    cell.regionId = regionId
+                    let titleText = NSMutableAttributedString(string: regionName, attributes: [.font: UIFont.body1, .foregroundColor: UIColor.runwayBlack])
+                    let attributeRange = (regionName as NSString).range(of: searchText)
+                    titleText.addAttributes([.font: UIFont.body1M, .foregroundColor: UIColor.primary], range: attributeRange)
+                    cell.titleLabel.attributedText = titleText
+                } else {
+                    return
+                }
+            }.disposed(by: disposeBag)
     }
 }
 

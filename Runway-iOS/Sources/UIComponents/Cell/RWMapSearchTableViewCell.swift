@@ -32,6 +32,10 @@ final class RWMapSearchTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
+    
+    var regionId: Int? = nil
+    
+    var storeId: Int? = nil
 
     static let identifier = "RWMapSearchTableViewCell"
     
@@ -64,7 +68,6 @@ final class RWMapSearchTableViewCell: UITableViewCell {
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
         }
         
     }

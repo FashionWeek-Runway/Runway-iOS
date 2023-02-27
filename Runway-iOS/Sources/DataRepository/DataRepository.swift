@@ -1,5 +1,5 @@
 //
-//  NetworkRepository.swift
+//  DataRepository.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/08.
@@ -8,10 +8,13 @@
 import Foundation
 import RxSwift
 import Alamofire
+import Realm
+import RealmSwift
 
 protocol ServiceProviderType {
     var backgroundScheduler: ConcurrentDispatchQueueScheduler { get }
     
+    var realm: Realm? { get }
     var appSettingService: AppSettingService { get }
     var networkManager: NetworkReachabilityManager? { get }
     var loginService: LoginService { get }
@@ -23,8 +26,8 @@ protocol ServiceProviderType {
     var mapService: MapService { get }
 }
 
-final class NetworkRepository: ServiceProviderType {
-    static let shared = NetworkRepository()
+final class DataRepository: ServiceProviderType {
+    static let shared = DataRepository()
     
     let backgroundScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
     
@@ -37,6 +40,15 @@ final class NetworkRepository: ServiceProviderType {
     // MARK: - App Setting Service (UserDefaults Value)
     
     lazy var appSettingService: AppSettingService = AppSettingService.shared
+    
+    // MARK: - Realm
+    
+    lazy var realm: Realm? = {
+        var realmConfig = Realm.Configuration.defaultConfiguration
+        realmConfig.deleteRealmIfMigrationNeeded = true
+        Realm.Configuration.defaultConfiguration = realmConfig
+        return try? Realm()
+    }()
     
     // MARK: - Network Manager
     
