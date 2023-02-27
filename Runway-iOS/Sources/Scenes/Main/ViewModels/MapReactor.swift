@@ -91,7 +91,9 @@ final class MapReactor: Reactor, Stepper {
             let selectedCategories = Array(filterDict.filter { $0.value == true }.keys)
             let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
                                                                                      latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder()).map { $0.result }
+                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0))
+                .data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
+                .map { $0.result }
             
             return Observable.concat([
                 mapDatas.flatMap { datas -> Observable<Mutation> in
@@ -110,7 +112,7 @@ final class MapReactor: Reactor, Stepper {
                                                                          latitude: currentState.mapCenterLocation?.0 ?? 0.0,
                                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapKeywordSearchResponse.self, decoder: JSONDecoder())
                     .flatMap { result -> Observable<Mutation> in
-                        let datas = result.result.regionSearchList + result.result.storeSearchList
+                        let datas = (result.result.regionSearchList + result.result.storeSearchList)
                         return datas.isEmpty ? .just(.setMapKeywordSearchData([])) : .just(.setMapKeywordSearchData(datas))
                     }
             }

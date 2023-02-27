@@ -92,6 +92,8 @@ final class RWMapSearchView: UIView {
     
     let historyTableView: UITableView = {
         let view = UITableView()
+        view.separatorStyle = .none
+        view.rowHeight = 44
         view.showsVerticalScrollIndicator = false
         view.register(RWMapSearchHistoryTableViewCell.self, forCellReuseIdentifier: RWMapSearchHistoryTableViewCell.identifier)
         view.isHidden = true

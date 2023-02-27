@@ -246,6 +246,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             .drive(onNext: { [weak self] in
                 self?.mapMode = .normal
                 self?.searchView.isHidden = true
+                self?.searchView.searchField.text = nil
+                self?.searchView.layoutMode = .IsHistoryEmpty
                 self?.searchView.searchField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
@@ -269,8 +271,8 @@ extension MapViewController: View {
                 self?.mapMode = .search
                 self?.searchView.isHidden = false
                 self?.searchView.searchField.becomeFirstResponder()
-                self?.searchView.layoutMode = .IsHistoryEmpty
                 self?.reactor?.action.onNext(.searchFieldDidTap)
+                self?.searchView.layoutMode = .IsHistoryEmpty
             }).disposed(by: disposeBag)
         
         mapSearchBar.categoryCollectionView.rx.modelSelected(String.self)

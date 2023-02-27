@@ -52,23 +52,23 @@ final class RWMapSearchHistoryTableViewCell: UITableViewCell {
     private func configureUI() {
         addSubviews([iconImageView, titleLabel, dateLabel, removeButton])
         iconImageView.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview()
+            $0.leading.top.equalToSuperview()
             $0.width.height.equalTo(24)
         }
         
         removeButton.snp.makeConstraints {
-            $0.trailing.top.bottom.equalToSuperview()
+            $0.trailing.top.equalToSuperview()
             $0.width.height.equalTo(24)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview()
+            $0.leading.top.equalToSuperview()
             $0.width.equalTo(199)
         }
         
         dateLabel.snp.makeConstraints {
             $0.trailing.equalTo(removeButton.snp.leading)
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalToSuperview()
         }
         
     }
