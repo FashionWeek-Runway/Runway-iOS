@@ -1,5 +1,5 @@
 //
-//  RWMapSearchViewCollectionViewBookmarkCell.swift
+//  RWMapSearchBarCollectionViewBookmarkCell.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/21.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class RWMapSearchViewCollectionViewBookmarkCell: UICollectionViewCell {
+final class RWMapSearchBarCollectionViewBookmarkCell: UICollectionViewCell {
     
-    static let identifier: String = "RWMapSearchViewCollectionViewBookmarkCell"
+    static let identifier: String = "RWMapSearchBarCollectionViewBookmarkCell"
     
     let title: String = "bookmark"
     

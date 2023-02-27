@@ -253,11 +253,11 @@ extension MapViewController: View {
             .bind(to: mapSearchBar.categoryCollectionView.rx.items) { collectionView, index, item in
                 let indexPath = IndexPath(item: index, section: 0)
                 if index == 0 {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewBookmarkCell else { return UICollectionViewCell() }
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewBookmarkCell else { return UICollectionViewCell() }
                     cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
                     return cell
                 } else {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier, for: indexPath) as? RWMapSearchViewCollectionViewCell else { return UICollectionViewCell() }
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewCell else { return UICollectionViewCell() }
                     cell.titleLabel.text = item
                     cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
                     return cell

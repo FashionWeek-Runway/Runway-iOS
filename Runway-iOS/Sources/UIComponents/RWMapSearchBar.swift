@@ -33,8 +33,8 @@ final class RWMapSearchBar: UIView {
     
     let categoryCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        collectionView.register(RWMapSearchViewCollectionViewBookmarkCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewBookmarkCell.identifier)
-        collectionView.register(RWMapSearchViewCollectionViewCell.self, forCellWithReuseIdentifier: RWMapSearchViewCollectionViewCell.identifier)
+        collectionView.register(RWMapSearchBarCollectionViewBookmarkCell.self, forCellWithReuseIdentifier: RWMapSearchBarCollectionViewBookmarkCell.identifier)
+        collectionView.register(RWMapSearchBarCollectionViewCell.self, forCellWithReuseIdentifier: RWMapSearchBarCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 8

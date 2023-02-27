@@ -1,5 +1,5 @@
 //
-//  RWMapSearchViewCollectionViewCell.swift
+//  RWMapSearchBarCollectionViewCell.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/21.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class RWMapSearchViewCollectionViewCell: UICollectionViewCell {
+final class RWMapSearchBarCollectionViewCell: UICollectionViewCell {
     
-    static let identifier: String = "RWMapSearchViewCollectionViewCell"
+    static let identifier: String = "RWMapSearchBarCollectionViewCell"
     
     let titleLabel: UILabel = {
         let label = UILabel()
