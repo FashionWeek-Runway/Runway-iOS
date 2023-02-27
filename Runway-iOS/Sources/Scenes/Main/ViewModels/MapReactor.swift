@@ -35,6 +35,7 @@ final class MapReactor: Reactor, Stepper {
         case setUserLocation((Double, Double))
         case setMapMarkers([MapWithCategorySearchResponseResult])
         case setAroundDatas([AroundMapSearchResponseResultContent], isLast: Bool)
+        case setAroundDatasAppend([AroundMapSearchResponseResultContent], isLast: Bool)
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
     }
     
@@ -134,7 +135,7 @@ final class MapReactor: Reactor, Stepper {
                     .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
                     .flatMap { result -> Observable<Mutation> in
                         if let contents = result.result?.contents, let isLast = result.result?.isLast {
-                            return .just(.setAroundDatas(contents, isLast: isLast))
+                            return .just(.setAroundDatasAppend(contents, isLast: isLast))
                         } else {
                             return .empty()
                         }
@@ -167,9 +168,16 @@ final class MapReactor: Reactor, Stepper {
             state.mapFilterSelected[filter]?.toggle()
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
-        case .setAroundDatas(let datas, let isLast):
+        case .setAroundDatasAppend(let datas, let isLast):
             state.aroundDatas += datas
             state.mapInfoIsLast = isLast
+            if !isLast {
+                state.mapInfoPage += 1
+            }
+        case .setAroundDatas(let datas, let isLast):
+            state.aroundDatas = datas
+            state.mapInfoIsLast = isLast
+            state.mapInfoPage = 0
             if !isLast {
                 state.mapInfoPage += 1
             }

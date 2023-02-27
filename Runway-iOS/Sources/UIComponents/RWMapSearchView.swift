@@ -9,6 +9,12 @@ import UIKit
 
 final class RWMapSearchView: UIView {
     
+    let navigationBarArea: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "icon_back"), for: .normal)
@@ -67,12 +73,15 @@ final class RWMapSearchView: UIView {
     }
     
     private func configureUI() {
-        self.addSubviews([backButton, searchField, divider,
+        self.addSubviews([navigationBarArea, backButton, searchField, divider,
                           emptyImage, emptyLabel,
                           latestLabel, historyClearButton, historyTableView])
         
-//        backButton.snp.makeConstraints {
-//            
-//        }
+        self.navigationBarArea.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.height.equalTo(54).priority(.required)
+        }
+
     }
 }
