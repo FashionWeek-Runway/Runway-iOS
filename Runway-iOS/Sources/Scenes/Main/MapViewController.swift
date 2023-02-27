@@ -246,9 +246,9 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             .drive(onNext: { [weak self] in
                 self?.mapMode = .normal
                 self?.searchView.isHidden = true
-                self?.searchView.searchField.text = nil
-                self?.searchView.layoutMode = .IsHistoryEmpty
+                self?.searchView.searchField.text = ""
                 self?.searchView.searchField.resignFirstResponder()
+                self?.searchView.layoutMode = .IsHistoryEmpty
             })
             .disposed(by: disposeBag)
     }
@@ -290,8 +290,9 @@ extension MapViewController: View {
         
         searchView.searchField.rx.text
             .distinctUntilChanged()
-            .compactMap({$0})
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .compactMap({$0})
+            .filter { $0.count > 0 }
             .map { Reactor.Action.searchFieldInput($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

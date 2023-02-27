@@ -234,16 +234,14 @@ final class RWMapSearchView: UIView {
         }
     }
     
-    private func setRx() {
-        self.searchField.rx.value
-            .bind(to: self.resultEmptyWordLabel.rx.text)
-            .disposed(by: disposeBag)
-        
+    private func setRx() {        
         self.searchField.rx.controlEvent(.editingDidEndOnExit)
             .asDriver()
+            .delay(.milliseconds(400))
             .drive(onNext: { [weak self] in
                 if self?.searchTableView.numberOfRows(inSection: 0) == 0 {
                     self?.layoutMode = .IsSearchResultEmpty
+                    self?.resultEmptyWordLabel.text = self?.searchField.text
                 }
             })
             .disposed(by: disposeBag)
