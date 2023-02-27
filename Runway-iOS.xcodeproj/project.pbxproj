@@ -129,6 +129,8 @@
 		19E0C7AB29A3ED55003E1F10 /* RWMapSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */; };
 		19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */; };
 		19E88C3A29ACAF7500B111CE /* ShowRoomDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */; };
+		19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */; };
+		19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */; };
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarker.swift */; };
@@ -287,6 +289,8 @@
 		19E0C7AA29A3ED55003E1F10 /* RWMapSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchBar.swift; sourceTree = "<group>"; };
 		19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailViewController.swift; sourceTree = "<group>"; };
 		19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailReactor.swift; sourceTree = "<group>"; };
+		19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchTableViewCell.swift; sourceTree = "<group>"; };
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
@@ -470,6 +474,8 @@
 				19F10C7629A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift */,
 				196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */,
 				19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */,
+				19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */,
+				19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1002,6 +1008,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */,
+				19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */,
 				194F95502993C63F0016DDFF /* NetworkRepository.swift in Sources */,
 				19A962522991735300F952DA /* UserDefault.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
@@ -1110,6 +1117,7 @@
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */,
 				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,
+				19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,

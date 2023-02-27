@@ -56,6 +56,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         return button
     }()
     
+    private lazy var searchView: RWMapSearchView = {
+        let view = RWMapSearchView()
+        view.isHidden = true
+        return view
+    }()
+    
     private var isHiddenHelperViews: Bool = false {
         didSet {
             if isHiddenHelperViews {
@@ -70,6 +76,28 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 bottomSheet.isHidden = true
                 searchButton.isHidden = true
                 searchResultBottomSheet.isHidden = true
+            }
+        }
+    }
+    
+    enum MapMode {
+        case normal
+        case search
+    }
+    
+    private var mapMode: MapMode = .normal {
+        didSet {
+            switch mapMode {
+            case .normal:
+                self.tabBarController?.tabBar.isHidden = false
+                mapSearchBar.isHidden = false
+                searchButton.isHidden = false
+                break
+            case .search:
+                self.tabBarController?.tabBar.isHidden = true
+                mapSearchBar.isHidden = true
+                searchButton.isHidden = true
+                break
             }
         }
     }
@@ -102,11 +130,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationAuthorization()
+        setRx()
     }
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchResultBottomSheet])
+        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchResultBottomSheet, searchView])
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -130,6 +159,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                                                y: UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0),
                                                width: UIScreen.getDeviceWidth(),
                                                height: 276 + (self.tabBarController?.tabBar.frame.height ?? 0))
+        
+        searchView.frame = self.view.bounds
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -206,6 +237,25 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         default:
             break
         }
+    }
+    
+    private func setRx() {
+        
+        mapSearchBar.searchView.rx.gesture(.tap())
+            .when(.recognized)
+            .bind(onNext: { [weak self] _ in
+                self?.mapMode = .search
+                self?.searchView.isHidden = false
+                self?.searchView.searchField.becomeFirstResponder()
+            }).disposed(by: disposeBag)
+        
+        searchView.backButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.mapMode = .normal
+                self?.searchView.isHidden = true
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -315,7 +365,12 @@ extension MapViewController: View {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        isHiddenHelperViews.toggle()
+        switch mapMode {
+        case .normal:
+            isHiddenHelperViews.toggle()
+        case .search:
+            searchResultBottomSheet.showSheet(atState: .folded)
+        }
     }
 }
 

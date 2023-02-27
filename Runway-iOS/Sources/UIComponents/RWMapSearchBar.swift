@@ -18,11 +18,11 @@ final class RWMapSearchBar: UIView {
         return view
     }()
     
-    let searchField: UITextField = {
-        let field = UITextField()
-        field.attributedPlaceholder = NSAttributedString(string: "지역, 매장명 검색", attributes: [.font: UIFont.body1])
-        field.layer.borderWidth = 0
-        return field
+    let searchLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "지역, 매장명 검색", attributes: [.font: UIFont.body1, .foregroundColor: UIColor.gray300])
+        label.textAlignment = .left
+        return label
     }()
     
     let searchButton: UIButton = {
@@ -64,7 +64,7 @@ final class RWMapSearchBar: UIView {
     
     private func configureUI() {
         self.addSubviews([searchView, categoryCollectionView])
-        searchView.addSubviews([searchField, searchButton])
+        searchView.addSubviews([searchLabel, searchButton])
         
         searchView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -79,7 +79,7 @@ final class RWMapSearchBar: UIView {
             $0.width.height.equalTo(24)
         }
         
-        searchField.snp.makeConstraints {
+        searchLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(15)
             $0.top.bottom.equalToSuperview()
             $0.trailing.equalTo(searchButton.snp.leading)

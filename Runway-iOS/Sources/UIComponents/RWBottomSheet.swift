@@ -114,7 +114,7 @@ final class RWBottomSheet: UIView {
     }
     
     private func setupPanGesture() {
-        touchAreaView.rx.panGesture()
+        self.rx.panGesture()
             .when(.began, .changed, .ended)
             .subscribe(onNext: { [weak self] event in
                 guard let self = self else { return }
