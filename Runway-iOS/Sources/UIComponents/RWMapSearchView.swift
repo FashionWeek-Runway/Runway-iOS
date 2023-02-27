@@ -234,7 +234,7 @@ final class RWMapSearchView: UIView {
         }
     }
     
-    private func setRx() {        
+    private func setRx() { // TODO: - 개선 방안 연구해보기
         self.searchField.rx.controlEvent(.editingDidEndOnExit)
             .asDriver()
             .delay(.milliseconds(400))
