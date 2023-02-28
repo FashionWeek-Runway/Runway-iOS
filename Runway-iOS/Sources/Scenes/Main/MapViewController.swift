@@ -136,6 +136,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     override func configureUI() {
         super.configureUI()
         self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchResultBottomSheet, searchView])
+        addBackButton()
+        addExitButton()
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -249,6 +251,20 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 self?.searchView.searchField.text = ""
                 self?.searchView.searchField.resignFirstResponder()
                 self?.searchView.layoutMode = .IsHistoryEmpty
+            })
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.searchView.isHidden = false
+            })
+            .disposed(by: disposeBag)
+        
+        exitButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.mapMode = .normal
             })
             .disposed(by: disposeBag)
     }

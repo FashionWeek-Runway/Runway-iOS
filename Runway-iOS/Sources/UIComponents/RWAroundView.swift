@@ -25,6 +25,7 @@ final class RWAroundView: UIView {
         layout.estimatedItemSize = CGSize(width: 320, height: 245)
 //        view.showsVerticalScrollIndicator = false
         view.collectionViewLayout = layout
+        view.bounces = false
         view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier)
         return view
     }()

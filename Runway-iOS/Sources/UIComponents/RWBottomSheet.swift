@@ -114,7 +114,15 @@ final class RWBottomSheet: UIView {
     }
     
     private func setupPanGesture() {
-        self.rx.panGesture()
+        self.rx.panGesture(configuration: { [weak self] panGestureRecognizer, delegate in
+            delegate.simultaneousRecognitionPolicy = .custom({ panGesture, otherGesture in
+                if self?.aroundView.collectionView.contentOffset.y ?? 0.0 <= 0 {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        })
             .when(.began, .changed, .ended)
             .subscribe(onNext: { [weak self] event in
                 guard let self = self else { return }

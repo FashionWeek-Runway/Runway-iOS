@@ -34,6 +34,12 @@ class BaseViewController: UIViewController {
         return button
     }()
     
+    var exitButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setBackgroundImage(UIImage(named: "icon_close"), for: .normal)
+        return button
+    }()
+    
     var progressBar: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .bar)
         view.trackTintColor = .gray100
@@ -85,6 +91,14 @@ class BaseViewController: UIViewController {
         self.navigationBarArea.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
+            $0.bottom.equalToSuperview().offset(-14)
+        }
+    }
+    
+    func addExitButton() {
+        self.navigationBarArea.addSubview(exitButton)
+        exitButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-14)
         }
     }
