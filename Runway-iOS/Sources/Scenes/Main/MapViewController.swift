@@ -440,13 +440,19 @@ extension MapViewController: View {
                 cell.iconImageView.image = item.isStore ? UIImage(named: "icon_search_store_small") : UIImage(named: "icon_search_location_small")
             }.disposed(by: disposeBag)
         
+        // TODO: - 정리 필요
         reactor.state.map { $0.mapKeywordSearchData }
             .do(onNext: { [weak self] in
-                if $0.isEmpty == true && self?.searchView.searchField.isEditing == false {
+                if $0.isEmpty == true && self?.searchView.searchField.isEditing == false
+                    && self?.searchView.searchField.text?.isEmpty == false {
                     self?.searchView.layoutMode = .IsSearchResultEmpty
                     self?.searchView.resultEmptyWordLabel.text = self?.searchView.searchField.text
-                } else {
+                } else if $0.isEmpty == true && self?.reactor?.currentState.mapSearchHistories?.isEmpty == false {
+                    self?.searchView.layoutMode = .IsHistoryExists
+                } else if $0.isEmpty == false {
                     self?.searchView.layoutMode = .IsSearchResultExists
+                } else {
+                    self?.searchView.layoutMode = .IsHistoryEmpty
                 }
             })
             .bind(to: searchView.searchTableView.rx.items(cellIdentifier: RWMapSearchTableViewCell.identifier, cellType: RWMapSearchTableViewCell.self)) { [weak self] indexPath, item, cell in
