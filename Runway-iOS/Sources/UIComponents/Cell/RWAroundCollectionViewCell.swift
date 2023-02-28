@@ -62,8 +62,8 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints {
             $0.leading.trailing.top.equalToSuperview()
-            $0.width.equalTo(320)
-            $0.height.equalTo(180)
+            $0.width.equalTo(UIScreen.getDeviceWidth() - 40)
+            $0.height.equalTo((UIScreen.getDeviceWidth() - 40) * 0.75)
         }
         
         storeNameLabel.snp.makeConstraints {
@@ -75,6 +75,7 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(24) // TODO: - 추후 2줄 변경 가능성
+            $0.bottom.equalToSuperview()
         }
     }
     

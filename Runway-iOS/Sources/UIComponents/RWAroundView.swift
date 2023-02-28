@@ -17,13 +17,13 @@ final class RWAroundView: UIView {
         return label
     }()
     
-    let collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20
-        layout.estimatedItemSize = CGSize(width: 320, height: 245)
-//        view.showsVerticalScrollIndicator = false
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        view.showsVerticalScrollIndicator = false
         view.collectionViewLayout = layout
         view.bounces = false
         view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier)
