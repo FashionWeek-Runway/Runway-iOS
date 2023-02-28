@@ -304,12 +304,9 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        searchView.searchField.rx.text
-            .distinctUntilChanged()
+        searchView.searchField.rx.controlEvent([.editingChanged, .editingDidEndOnExit])
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-            .compactMap({$0})
-            .filter { $0.count > 0 }
-            .map { Reactor.Action.searchFieldInput($0) }
+            .map { [weak self] _ in Reactor.Action.searchFieldInput(self?.searchView.searchField.text ?? "") }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -404,8 +401,13 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapKeywordSearchData }
-            .do(onNext: { [weak self] _ in
-                self?.searchView.layoutMode = .IsSearchResultExists
+            .do(onNext: { [weak self] in
+                if $0.isEmpty == true && self?.searchView.searchField.isEditing == false {
+                    self?.searchView.layoutMode = .IsSearchResultEmpty
+                    self?.searchView.resultEmptyWordLabel.text = self?.searchView.searchField.text
+                } else {
+                    self?.searchView.layoutMode = .IsSearchResultExists
+                }
             })
             .bind(to: searchView.searchTableView.rx.items(cellIdentifier: RWMapSearchTableViewCell.identifier, cellType: RWMapSearchTableViewCell.self)) { [weak self] indexPath, item, cell in
                 guard let self = self, let searchText = self.searchView.searchField.text else { return }

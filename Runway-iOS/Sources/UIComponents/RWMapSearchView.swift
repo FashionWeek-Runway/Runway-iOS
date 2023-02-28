@@ -49,7 +49,7 @@ final class RWMapSearchView: UIView {
     }()
     
     private let resultEmptyImageView = UIImageView(image: UIImage(named: "icon_empty_search_map"))
-    private let resultEmptyWordLabel: UILabel = {
+    let resultEmptyWordLabel: UILabel = {
         let label = UILabel()
         label.textColor = .primary
         label.font = UIFont.headline4
@@ -140,7 +140,6 @@ final class RWMapSearchView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        setRx()
     }
     
     required init?(coder: NSCoder) {
@@ -232,19 +231,6 @@ final class RWMapSearchView: UIView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview()
         }
-    }
-    
-    private func setRx() { // TODO: - 개선 방안 연구해보기
-        self.searchField.rx.controlEvent(.editingDidEndOnExit)
-            .asDriver()
-            .delay(.milliseconds(500))
-            .drive(onNext: { [weak self] in
-                if self?.searchTableView.numberOfRows(inSection: 0) == 0 {
-                    self?.layoutMode = .IsSearchResultEmpty
-                    self?.resultEmptyWordLabel.text = self?.searchField.text
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     func setLayoutIfHistoryIsEmpty() {
