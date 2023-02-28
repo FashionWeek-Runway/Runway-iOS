@@ -377,6 +377,7 @@ extension MapViewController: View {
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.mapMarkerSelectData }

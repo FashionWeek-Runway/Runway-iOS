@@ -45,6 +45,8 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
     
     private var disposeBag = DisposeBag()
     
+    var storeId: Int? = nil
+    
     // MARK: - Initializer
     
     override init(frame: CGRect) {
