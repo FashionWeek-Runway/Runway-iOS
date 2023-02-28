@@ -185,7 +185,10 @@ final class MapReactor: Reactor, Stepper {
                 print(error)
             }
             
-            return .empty()
+            return Observable.concat([
+                .just(.setMapKeywordSearchData([])),
+                .just(.setMapHistories([]))
+            ])
             
         case .bottomSheetScrollReachesBottom:
             if currentState.mapInfoIsLast {

@@ -32,11 +32,20 @@ final class RWAlertViewController: UIViewController {
     }
     
     private func configureUI() {
+        self.modalPresentationStyle = .overFullScreen
+        setBlurBackground()
         self.view.addSubviews([alertView])
         alertView.snp.makeConstraints {
             $0.width.equalTo(292)
             $0.height.equalTo(189)
             $0.center.equalToSuperview()
         }
+    }
+    
+    private func setBlurBackground() {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = view.frame
+        view.addSubview(visualEffectView)
     }
 }

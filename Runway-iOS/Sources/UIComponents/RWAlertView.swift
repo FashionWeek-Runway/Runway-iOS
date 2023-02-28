@@ -24,7 +24,7 @@ final class RWAlertView: UIView {
         label.textColor = .runwayBlack
         label.font = .body1
         label.numberOfLines = 0
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     
@@ -39,6 +39,7 @@ final class RWAlertView: UIView {
         let button = RWButton()
         button.type = .secondary
         button.title = "아니요"
+        button.setBackgroundColor(UIColor.gray50, for: .normal)
         return button
     }()
     
