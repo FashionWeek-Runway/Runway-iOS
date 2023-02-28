@@ -14,4 +14,6 @@ final class MapSearchHistory: Object {
     @Persisted var name: String
     @Persisted var date: Date = Date()
     @Persisted var isStore: Bool
+    @Persisted var storeId: Int? = nil
+    @Persisted var regionId: Int? = nil
 }

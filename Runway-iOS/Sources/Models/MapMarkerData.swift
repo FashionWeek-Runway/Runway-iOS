@@ -1,5 +1,5 @@
 //
-//  MapMarker.swift
+//  MapMarkerData.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/02/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MapMarker {
+final class MapMarkerData {
     let storeID: Int
     let storeName: String
     let bookmark: Bool

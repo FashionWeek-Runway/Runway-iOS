@@ -83,7 +83,7 @@ final class RWMapSearchView: UIView {
         return label
     }()
     
-    private let historyClearButton: UIButton = {
+    let historyClearButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "전체 삭제", attributes: [.font: UIFont.font(.spoqaHanSansNeoRegular, ofSize: 12.0), .foregroundColor: UIColor.gray700]), for: .normal)
         button.isHidden = true

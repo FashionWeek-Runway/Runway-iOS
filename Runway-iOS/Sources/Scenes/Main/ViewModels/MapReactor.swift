@@ -13,6 +13,7 @@ import RxFlow
 import RxSwift
 import RxCocoa
 
+import RealmSwift
 import Alamofire
 
 
@@ -27,8 +28,10 @@ final class MapReactor: Reactor, Stepper {
         case searchFieldInput(String)
         case userLocationDidChanged((Double, Double))
         case mapViewCameraPositionDidChanged((Double, Double))
-        case selectMapMarker(Int)
+        case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
+        
+        case selectSearchItem(Int)
     }
     
     enum Mutation {
@@ -38,9 +41,16 @@ final class MapReactor: Reactor, Stepper {
         case setMapMarkers([MapWithCategorySearchResponseResult])
         case setAroundDatas([AroundMapSearchResponseResultContent], isLast: Bool)
         case setAroundDatasAppend([AroundMapSearchResponseResultContent], isLast: Bool)
+        
+        case setStoreSearchMarkerData(MapMarker?)
+        case setStoreSearchInfoData(StoreInfo?)
+        case setRegionSearchDatas([RegionSearchResponseResult])
+        
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
         case setMapHistories([MapSearchHistory])
         case setMapKeywordSearchData([KeywordSearchItem])
+        
+        case setSearchInfo
     }
     
     struct State {
@@ -49,9 +59,14 @@ final class MapReactor: Reactor, Stepper {
         var mapMarkers: [MapWithCategorySearchResponseResult] = []
         var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
+        
+        var regionSearchMarkerDatas: [RegionSearchResponseResult]? = nil
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
         
+        // search
+        var storeSearchMarker: MapMarker? = nil
+        var storeSearchInfo: StoreInfo? = nil
         var mapKeywordSearchData: [KeywordSearchItem] = []
         var mapSearchHistories: [MapSearchHistory]? = nil
         
@@ -71,7 +86,7 @@ final class MapReactor: Reactor, Stepper {
     let categoryFilterList: [String] = ["bookmark"] + MainMapCategory.allCategoryString.split(separator: ",").map { String($0) }
     
     // 맵에 표시될 마커들을 캐싱
-    let markerCache = NSCacheManager<MapMarker>()
+    let markerCache = NSCacheManager<MapMarkerData>()
     
     // MARK: - initializer
     init(provider: ServiceProviderType) {
@@ -101,9 +116,11 @@ final class MapReactor: Reactor, Stepper {
                 }
                 , .just(.setFilter(filter))
             ])
+            
         case .searchFieldDidTap:
             guard let historyResult = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false) else { return .empty() }
             return .just(.setMapHistories(Array(historyResult)))
+            
         case .searchFieldInput(let text):
             if text.isEmpty {
                 return .just(.setMapKeywordSearchData([]))
@@ -130,7 +147,7 @@ final class MapReactor: Reactor, Stepper {
                         for markerData in data.result {
                             if self?.markerCache.fetchObject(name: String(markerData.storeID)) == nil {
                                 isDatasAllCached = false
-                                let marker = MapMarker(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
+                                let marker = MapMarkerData(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
                                 self?.markerCache.saveObject(object: marker, forKey: String(markerData.storeID))
                             }
                         }
@@ -148,6 +165,7 @@ final class MapReactor: Reactor, Stepper {
                         }
                     }
             ])
+            
         case .bottomSheetScrollReachesBottom:
             if currentState.mapInfoIsLast {
                 return .empty()
@@ -166,8 +184,86 @@ final class MapReactor: Reactor, Stepper {
                         }
                     }
             }
+        case .selectSearchItem(let index):
+            let searchItem = currentState.mapKeywordSearchData[index]
             
-        case .selectMapMarker(let storeId):
+            // 매장
+            if let storeName = searchItem.storeName {
+                let history = provider.realm?.objects(MapSearchHistory.self).where {
+                    $0.name == storeName
+                }.first
+                if history == nil { // create
+                    let newHistory = MapSearchHistory()
+                    newHistory.name = storeName
+                    newHistory.storeId = searchItem.storeID
+                    newHistory.isStore = true
+                    do {
+                        try provider.realm?.write {
+                            provider.realm?.create(MapSearchHistory.self, value: newHistory)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                } else { // update
+                    do {
+                        try provider.realm?.write {
+                            history?.date = Date()
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            // 지역
+            } else if let regionName = searchItem.region {
+                let history = provider.realm?.objects(MapSearchHistory.self).where {
+                    $0.name == regionName
+                }.first
+                if history == nil {
+                    let newHistory = MapSearchHistory()
+                    newHistory.name = regionName
+                    newHistory.regionId = searchItem.regionID
+                    newHistory.isStore = false
+                    do {
+                        try provider.realm?.write {
+                            provider.realm?.create(MapSearchHistory.self, value: newHistory)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                } else {
+                    do {
+                        try provider.realm?.write {
+                            history?.date = Date()
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else { // error
+                return .empty()
+            }
+            
+            if let storeId = searchItem.storeID { // 매장검색
+                return provider.mapService.searchStore(storeId: storeId)
+                    .data().decode(type: StoreSearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { result -> Observable<Mutation> in
+                        return Observable.concat([
+                            .just(.setStoreSearchInfoData(result.result.storeInfo)),
+                            .just(.setStoreSearchMarkerData(result.result.mapMarker))
+                        ])
+                    }
+            } else if let regionId = searchItem.regionID { // 지역검색
+                return provider.mapService.searchMapRegion(regionId: regionId)
+                    .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
+                    .flatMap { result -> Observable<Mutation> in
+                        return .just(.setRegionSearchDatas(result.result))
+                    }
+            } else {
+                return .empty()
+            }
+            return .empty()
+            
+        case .selectMapMarkerData(let storeId):
             return provider.mapService
                 .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
                 .flatMap { data -> Observable<Mutation> in
@@ -175,10 +271,12 @@ final class MapReactor: Reactor, Stepper {
                 }
         case .userLocationDidChanged(let position):
             return .just(.setUserLocation(position))
+            
         case .mapViewCameraPositionDidChanged(let position):
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
             return .just(.setMapLocation(position))
         }
+        
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -203,6 +301,14 @@ final class MapReactor: Reactor, Stepper {
             if !isLast {
                 state.mapInfoPage += 1
             }
+        case .setRegionSearchDatas(let datas):
+            state.regionSearchMarkerDatas = datas
+            
+        case .setStoreSearchInfoData(let data):
+            state.storeSearchInfo = data
+        case .setStoreSearchMarkerData(let markerData):
+            state.storeSearchMarker = markerData
+            
         case .setAroundDatas(let datas, let isLast):
             state.aroundDatas = datas
             state.mapInfoIsLast = isLast
@@ -210,6 +316,8 @@ final class MapReactor: Reactor, Stepper {
             if !isLast {
                 state.mapInfoPage += 1
             }
+        case .setSearchInfo:
+            break
         case .setMapMarkerSelectData(let data):
             state.mapMarkerSelectData = data
         }

@@ -310,6 +310,11 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        searchView.searchTableView.rx.itemSelected
+            .map { Reactor.Action.selectSearchItem($0.item) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         bottomSheet.aroundView.collectionView.rx.didEndDecelerating // infiniteScrolling
             .asDriver()
             .drive(onNext: { [weak self] in
@@ -355,12 +360,14 @@ extension MapViewController: View {
                         marker.captionTextSize = 10
                         marker.captionColor = .runwayBlack
                         marker.captionHaloColor = .white
+                        
                         marker.touchHandler = { [weak self] (overlay) -> Bool in
-                            let action = Reactor.Action.selectMapMarker(data.storeID)
+                            let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self?.reactor?.action.onNext(action)
                             self?.searchResultBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
+                        
                         DispatchQueue.main.async {
                             marker.mapView = self?.mapView.mapView
                         }
