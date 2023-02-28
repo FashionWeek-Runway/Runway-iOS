@@ -102,7 +102,15 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    private let alertViewController = RWAlertViewController()
+    private let historyRemoveAlertViewController: RWAlertViewController = {
+        let controller = RWAlertViewController()
+        controller.alertView.titleLabel.text = "검색 내역을 모두 지우시겠어요?"
+        controller.alertView.captionLabel.text = "최근 검색어를 삭제하면\n다시 되돌릴 수 없습니다."
+        controller.alertView.alertMode = .twoAction
+        controller.alertView.leadingButton.title = "아니요"
+        controller.alertView.trailingButton.title = "삭제"
+        return controller
+    }()
     
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -273,7 +281,15 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         searchView.historyClearButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
-                
+                guard let self else { return }
+                self.present(self.historyRemoveAlertViewController, animated: false)
+            })
+            .disposed(by: disposeBag)
+        
+        historyRemoveAlertViewController.alertView.leadingButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.dismiss(animated: false)
             })
             .disposed(by: disposeBag)
     }
@@ -321,6 +337,12 @@ extension MapViewController: View {
         
         searchView.searchTableView.rx.itemSelected
             .map { Reactor.Action.selectSearchItem($0.item) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        historyRemoveAlertViewController.alertView.trailingButton.rx.tap
+            .do(onNext: { [weak self] in self?.dismiss(animated: false)})
+            .map { Reactor.Action.historyAllClearButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         

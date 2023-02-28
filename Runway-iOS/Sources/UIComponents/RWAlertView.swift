@@ -28,13 +28,46 @@ final class RWAlertView: UIView {
         return label
     }()
     
-    let button: RWButton = {
+    let confirmButton: RWButton = {
         let button = RWButton()
         button.type = .primary
         button.title = "확인"
         return button
     }()
     
+    let leadingButton: RWButton = {
+        let button = RWButton()
+        button.type = .secondary
+        button.title = "아니요"
+        return button
+    }()
+    
+    let trailingButton: RWButton = {
+        let button = RWButton()
+        button.type = .primary
+        button.title = "삭제"
+        return button
+    }()
+    
+    enum AlertMode {
+        case twoAction
+        case confirm
+    }
+    
+    var alertMode: AlertMode = .confirm {
+        didSet {
+            switch alertMode {
+            case .confirm:
+                confirmButton.isHidden = false
+                leadingButton.isHidden = true
+                trailingButton.isHidden = true
+            case .twoAction:
+                confirmButton.isHidden = true
+                leadingButton.isHidden = false
+                trailingButton.isHidden = false
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +83,7 @@ final class RWAlertView: UIView {
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
         
-        self.addSubviews([titleLabel, captionLabel, button])
+        self.addSubviews([titleLabel, captionLabel, confirmButton, leadingButton, trailingButton])
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview().offset(20)
@@ -63,11 +96,23 @@ final class RWAlertView: UIView {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        button.snp.makeConstraints {
+        confirmButton.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.leading.equalToSuperview().offset(14)
             $0.trailing.equalToSuperview().offset(-14)
             $0.bottom.equalToSuperview().offset(-12)
+        }
+        
+        leadingButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(14)
+            $0.bottom.equalToSuperview().offset(-12)
+            $0.width.equalToSuperview().multipliedBy(0.5).offset(-19)
+        }
+        
+        trailingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-14)
+            $0.bottom.equalToSuperview().offset(-12)
+            $0.width.equalToSuperview().multipliedBy(0.5).offset(-19)
         }
     }
 }

@@ -30,7 +30,7 @@ final class MapReactor: Reactor, Stepper {
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
-        
+        case historyAllClearButtonDidTap
         case selectSearchItem(Int)
     }
     
@@ -174,6 +174,18 @@ final class MapReactor: Reactor, Stepper {
                         }
                     }
             ])
+            
+        case .historyAllClearButtonDidTap:
+            do {
+                try provider.realm?.write {
+                    guard let histories = provider.realm?.objects(MapSearchHistory.self) else { return }
+                    provider.realm?.delete(histories)
+                }
+            } catch {
+                print(error)
+            }
+            
+            return .empty()
             
         case .bottomSheetScrollReachesBottom:
             if currentState.mapInfoIsLast {

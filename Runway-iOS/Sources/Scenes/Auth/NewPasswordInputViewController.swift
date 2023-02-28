@@ -183,7 +183,7 @@ extension NewPasswordInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        alertViewController.alertView.button.rx.tap
+        alertViewController.alertView.confirmButton.rx.tap
             .map { Reactor.Action.alertConfirmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
