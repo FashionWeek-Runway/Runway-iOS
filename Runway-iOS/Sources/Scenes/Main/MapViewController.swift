@@ -102,6 +102,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
+    private let alertViewController = RWAlertViewController()
+    
     lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.delegate = self
@@ -267,6 +269,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 self?.mapMode = .normal
             })
             .disposed(by: disposeBag)
+        
+        searchView.historyClearButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -402,10 +411,11 @@ extension MapViewController: View {
             })
             .bind(to: searchView.historyTableView.rx.items(cellIdentifier: RWMapSearchHistoryTableViewCell.identifier, cellType: RWMapSearchHistoryTableViewCell.self)) { indexPath, item, cell in
                 cell.titleLabel.text = item.name
+                cell.selectionStyle = .none
                 let formatter = DateFormatter()
                 formatter.dateFormat = "MM.dd"
                 cell.dateLabel.text = formatter.string(from: item.date)
-                cell.iconImageView.image = item.isStore ? UIImage(named: "icon_search_store") : UIImage(named: "icon_search_location")
+                cell.iconImageView.image = item.isStore ? UIImage(named: "icon_search_store_small") : UIImage(named: "icon_search_location_small")
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapKeywordSearchData }
@@ -420,6 +430,7 @@ extension MapViewController: View {
             .bind(to: searchView.searchTableView.rx.items(cellIdentifier: RWMapSearchTableViewCell.identifier, cellType: RWMapSearchTableViewCell.self)) { [weak self] indexPath, item, cell in
                 guard let self = self, let searchText = self.searchView.searchField.text else { return }
                 cell.addressLabel.text = item.address
+                cell.selectionStyle = .none
                 if let storeName = item.storeName, let storeId = item.storeID  { // 매장 검색결과
                     cell.iconImageView.image = UIImage(named: "icon_search_store")
                     cell.storeId = storeId

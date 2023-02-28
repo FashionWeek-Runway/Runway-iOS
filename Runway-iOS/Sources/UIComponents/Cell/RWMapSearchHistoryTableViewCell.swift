@@ -62,13 +62,14 @@ final class RWMapSearchHistoryTableViewCell: UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.top.equalToSuperview()
+            $0.centerY.equalTo(iconImageView.snp.centerY)
+            $0.leading.equalTo(iconImageView.snp.trailing).offset(4)
             $0.width.equalTo(199)
         }
         
         dateLabel.snp.makeConstraints {
             $0.trailing.equalTo(removeButton.snp.leading)
-            $0.top.equalToSuperview()
+            $0.centerY.equalTo(titleLabel.snp.centerY)
         }
         
     }

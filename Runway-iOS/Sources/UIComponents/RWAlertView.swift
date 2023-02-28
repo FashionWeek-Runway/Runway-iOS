@@ -10,7 +10,16 @@ import UIKit
 
 final class RWAlertView: UIView {
     
-    let textLabel: UILabel = {
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline4
+        label.text = "비밀번호 변경 완료!"
+        label.textAlignment = .center
+        label.textColor = .runwayBlack
+        return label
+    }()
+    
+    let captionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .runwayBlack
         label.font = .body1
@@ -41,16 +50,23 @@ final class RWAlertView: UIView {
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
         
-        self.addSubviews([textLabel, button])
-        textLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
+        self.addSubviews([titleLabel, captionLabel, button])
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        captionLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
         button.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(12)
-            $0.trailing.equalToSuperview().offset(-12)
+            $0.height.equalTo(50)
+            $0.leading.equalToSuperview().offset(14)
+            $0.trailing.equalToSuperview().offset(-14)
             $0.bottom.equalToSuperview().offset(-12)
         }
     }
