@@ -288,7 +288,7 @@ extension MapViewController: View {
                 self?.searchView.isHidden = false
                 self?.searchView.searchField.becomeFirstResponder()
                 self?.reactor?.action.onNext(.searchFieldDidTap)
-                self?.searchView.layoutMode = .IsHistoryEmpty
+                self?.searchView.layoutMode = reactor.currentState.mapSearchHistories?.isEmpty == true ? .IsHistoryEmpty : .IsHistoryExists
             }).disposed(by: disposeBag)
         
         mapSearchBar.categoryCollectionView.rx.modelSelected(String.self)

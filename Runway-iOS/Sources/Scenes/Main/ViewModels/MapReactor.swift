@@ -98,7 +98,12 @@ final class MapReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return .empty()
+            let histories = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false)
+            var historyContainer = [MapSearchHistory]()
+            histories?.forEach {
+                historyContainer.append($0)
+            }
+            return .just(.setMapHistories(historyContainer))
         case .selectFilter(let filter):
             var filterDict = currentState.mapFilterSelected
             filterDict[filter]?.toggle()
@@ -118,8 +123,12 @@ final class MapReactor: Reactor, Stepper {
             ])
             
         case .searchFieldDidTap:
-            guard let historyResult = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false) else { return .empty() }
-            return .just(.setMapHistories(Array(historyResult)))
+            let histories = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false)
+            var historyContainer = [MapSearchHistory]()
+            histories?.forEach {
+                historyContainer.append($0)
+            }
+            return .just(.setMapHistories(historyContainer))
             
         case .searchFieldInput(let text):
             if text.isEmpty {
@@ -186,7 +195,6 @@ final class MapReactor: Reactor, Stepper {
             }
         case .selectSearchItem(let index):
             let searchItem = currentState.mapKeywordSearchData[index]
-            
             // 매장
             if let storeName = searchItem.storeName {
                 let history = provider.realm?.objects(MapSearchHistory.self).where {
