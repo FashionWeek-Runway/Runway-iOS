@@ -21,12 +21,6 @@ final class RWBottomSheet: UIView {
         return view
     }()
     
-    private let touchAreaView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
-    
     let aroundView = RWAroundView()
     
     let aroundEmptyView: RWAroundEmptyView = {
@@ -80,7 +74,7 @@ final class RWBottomSheet: UIView {
         backgroundColor = .white
         layer.cornerRadius = 10
         
-        addSubviews([grabber, touchAreaView, aroundView, aroundEmptyView, searchResultView])
+        addSubviews([grabber, aroundView, aroundEmptyView, searchResultView])
         
         grabber.snp.makeConstraints {
             $0.height.equalTo(3)
@@ -89,26 +83,20 @@ final class RWBottomSheet: UIView {
             $0.top.equalToSuperview().offset(5.5)
         }
         
-        touchAreaView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(14)
-        }
-        
         aroundView.snp.makeConstraints {
-            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.top.equalTo(grabber.snp.bottom).offset(13)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
         aroundEmptyView.snp.makeConstraints {
-            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.top.equalTo(grabber.snp.bottom).offset(13)
             $0.leading.trailing.bottom.equalToSuperview()
         }
         
         searchResultView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(touchAreaView.snp.bottom)
+            $0.top.equalTo(grabber.snp.bottom).offset(4)
             $0.bottom.equalToSuperview().offset(-17)
         }
     }
