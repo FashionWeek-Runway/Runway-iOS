@@ -7,10 +7,32 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import Alamofire
 import RxAlamofire
 
-final class MapService: APIService {
+protocol MapSearchServiceProtocol {
+    var event: PublishRelay<SearchEvent> { get }
+}
+
+enum SearchEvent {
+    case store(StoreSearchDataType)
+    case region(RegionSearchDataType)
+}
+
+enum StoreSearchDataType {
+    case markerData(MapMarker)
+    case sheetData(StoreInfo)
+}
+
+enum RegionSearchDataType {
+    case markerDatas([RegionSearchResponseResult])
+    case sheetDatas(RegionAroundMapSearchResponseResult, Int, String) // data, regionId, regionName
+}
+
+final class MapService: APIService, MapSearchServiceProtocol {
+    
+    var event = PublishRelay<SearchEvent>()
     
     func searchStore(storeId: Int) -> Observable<DataRequest> {
         return request(.get, "maps/\(storeId)")

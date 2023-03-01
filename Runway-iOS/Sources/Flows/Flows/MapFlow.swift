@@ -34,6 +34,10 @@ final class MapFlow: Flow {
         switch step {
         case .mapTab:
             return coordinateToMapTabScreen()
+        case .mapSearch(let location):
+            return coordinateToMapSearchScreen(mapLocation: location)
+        case .cancelMapSearch:
+            return backToMapTabScreen()
         default:
             return .none
         }
@@ -44,5 +48,17 @@ final class MapFlow: Flow {
         let viewController = MapViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToMapSearchScreen(mapLocation: (Double, Double)) -> FlowContributors {
+        let reactor = MapSearchReactor(provider: provider, mapLocation: mapLocation)
+        let viewController = MapSearchViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: false)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func backToMapTabScreen() -> FlowContributors {
+        self.rootViewController.popViewController(animated: false)
+        return.none
     }
 }

@@ -49,6 +49,8 @@
 		196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AF29A5273F00E262FB /* UIScreen+.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
+		198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */; };
+		198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
 		198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B229980136000457CE /* RWCheckLabelView.swift */; };
 		19917EF12994DC440016A175 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF02994DC440016A175 /* AppStep.swift */; };
@@ -213,6 +215,8 @@
 		196D23AF29A5273F00E262FB /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
+		198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
+		198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactor.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
 		198CA2B229980136000457CE /* RWCheckLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWCheckLabelView.swift; sourceTree = "<group>"; };
 		19917EF02994DC440016A175 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
@@ -376,6 +380,7 @@
 				1939390129A0D12A0037810A /* MapViewController.swift */,
 				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
 				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
+				198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -748,6 +753,7 @@
 				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
 				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
 				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
+				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1045,6 +1051,7 @@
 				199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
 				19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */,
+				198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */,
 				199B9C61299CA21600877AAE /* PhoneLoginReactor.swift in Sources */,
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				199B9C6E299D00CC00877AAE /* AuthTokenHost.swift in Sources */,
@@ -1113,6 +1120,7 @@
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				19E0C78529A2AF96003E1F10 /* MyPageFlow.swift in Sources */,
+				198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */,
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,

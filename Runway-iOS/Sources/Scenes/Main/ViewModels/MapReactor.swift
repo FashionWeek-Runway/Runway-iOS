@@ -21,44 +21,37 @@ final class MapReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case viewDidLoad
         case selectFilter(String)
         case searchButtonDidTap
         case searchFieldDidTap
-        case searchFieldInput(String)
-        case userLocationDidChanged((Double, Double))
+
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
         case regionSearchBottomSheetScrollReachesBottom
-        case historyAllClearButtonDidTap
-        case selectSearchItem(Int)
     }
     
     enum Mutation {
         case setFilter(String)
-        case setMapLocation((Double, Double))
-        case setUserLocation((Double, Double))
         case setMapMarkers([MapWithCategorySearchResponseResult])
         case setAroundDatas([AroundMapSearchResponseResultContent], isLast: Bool)
         case setAroundDatasAppend([AroundMapSearchResponseResultContent], isLast: Bool)
         
+        case clearSearchMapDatas
+        
         case setStoreSearchMarkerData(MapMarker?)
         case setStoreSearchInfoData(StoreInfo?)
-        case setRegionSearchDatas([RegionSearchResponseResult], String, Int) // regionId를 함께 저장
-        case setRegionAroundDatas([RegionAroundMapSearchResponseResultContent], isLast: Bool)
+        case setRegionSearchDatas([RegionSearchResponseResult])
+        case setRegionAroundDatas([RegionAroundMapSearchResponseResultContent], regionId: Int, regionName: String, isLast: Bool)
         case setRegionAroundDatasAppend([RegionAroundMapSearchResponseResultContent], isLast: Bool)
         
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
-        case setMapHistories([MapSearchHistory])
-        case setMapKeywordSearchData([KeywordSearchItem])
         
         case setSearchInfo
     }
     
     struct State {
-        var mapCenterLocation: (Double, Double)?
-        var userLocation: (Double, Double)?
+
         var mapMarkers: [MapWithCategorySearchResponseResult] = []
         var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
@@ -69,12 +62,10 @@ final class MapReactor: Reactor, Stepper {
         // search
         var storeSearchMarker: MapMarker? = nil
         var storeSearchInfo: StoreInfo? = nil
-        var regionSearchMarkerDatas: ([RegionSearchResponseResult], String, Int)? = nil
-        var mapKeywordSearchData: [KeywordSearchItem] = []
-        var mapSearchHistories: [MapSearchHistory]? = nil
-        
+        var regionSearchMarkerDatas: [RegionSearchResponseResult]? = nil
         var regionSearchAroundDatas: [RegionAroundMapSearchResponseResultContent] = []
         var searchRegionId: Int? = nil
+        var searchRegionName: String? = nil
         var regionInfoIsLast: Bool = false
         var regionInfoPage: Int = 0
         
@@ -96,6 +87,8 @@ final class MapReactor: Reactor, Stepper {
     // 맵에 표시될 마커들을 캐싱
     let markerCache = NSCacheManager<MapMarkerData>()
     
+    var mapPosition: (Double, Double)? = nil
+
     // MARK: - initializer
     init(provider: ServiceProviderType) {
         self.provider = provider
@@ -105,57 +98,34 @@ final class MapReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
-            let histories = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false)
-            var historyContainer = [MapSearchHistory]()
-            histories?.forEach {
-                historyContainer.append($0)
-            }
-            return .just(.setMapHistories(historyContainer))
         case .selectFilter(let filter):
             var filterDict = currentState.mapFilterSelected
             filterDict[filter]?.toggle()
             
             let selectedCategories = Array(filterDict.filter { $0.value == true }.keys)
             let mapDatas = provider.mapService.filterMap(data: CategoryMapFilterData(category: selectedCategories,
-                                                                                     latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                                     longitude: currentState.mapCenterLocation?.1 ?? 0.0))
+                                                                                     latitude: self.mapPosition?.0 ?? 0.0,
+                                                                                     longitude: self.mapPosition?.1 ?? 0.0))
                 .data().decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
                 .map { $0.result }
             
             return Observable.concat([
                 mapDatas.flatMap { datas -> Observable<Mutation> in
                     return .just(.setMapMarkers(datas))
-                }
-                , .just(.setFilter(filter))
+                },
+                .just(.setFilter(filter))
             ])
             
         case .searchFieldDidTap:
-            let histories = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false)
-            var historyContainer = [MapSearchHistory]()
-            histories?.forEach {
-                historyContainer.append($0)
-            }
-            return .just(.setMapHistories(historyContainer))
-            
-        case .searchFieldInput(let text):
-            if text.isEmpty {
-                return .just(.setMapKeywordSearchData([]))
-            } else {
-                return provider.mapService.mapSearch(data: MapSearchData(content: text,
-                                                                         latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                                         longitude: currentState.mapCenterLocation?.1 ?? 0.0)).data().decode(type: MapKeywordSearchResponse.self, decoder: JSONDecoder())
-                    .flatMap { result -> Observable<Mutation> in
-                        let datas = (result.result.regionSearchList + result.result.storeSearchList)
-                        return datas.isEmpty ? .just(.setMapKeywordSearchData([])) : .just(.setMapKeywordSearchData(datas))
-                    }
-            }
+            guard let mapPosition = mapPosition else { return .empty() }
+            steps.accept(AppStep.mapSearch(mapPosition))
+            return .empty()
             
         case .searchButtonDidTap:
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
             let mapFilterData = CategoryMapFilterData(category: selectedCategories,
-                                                      latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                      longitude: currentState.mapCenterLocation?.1 ?? 0.0)
+                                                      latitude: self.mapPosition?.0 ?? 0.0,
+                                                      longitude: self.mapPosition?.1 ?? 0.0)
             return Observable.concat([
                 provider.mapService.filterMap(data: mapFilterData).data()
                     .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
@@ -183,29 +153,14 @@ final class MapReactor: Reactor, Stepper {
                     }
             ])
             
-        case .historyAllClearButtonDidTap:
-            do {
-                try provider.realm?.write {
-                    guard let histories = provider.realm?.objects(MapSearchHistory.self) else { return }
-                    provider.realm?.delete(histories)
-                }
-            } catch {
-                print(error)
-            }
-            
-            return Observable.concat([
-                .just(.setMapKeywordSearchData([])),
-                .just(.setMapHistories([]))
-            ])
-            
         case .bottomSheetScrollReachesBottom:
             if currentState.mapInfoIsLast {
                 return .empty()
             } else {
                 let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
                 let mapFilterData = CategoryMapFilterData(category: selectedCategories,
-                                                          latitude: currentState.mapCenterLocation?.0 ?? 0.0,
-                                                          longitude: currentState.mapCenterLocation?.1 ?? 0.0)
+                                                          latitude: self.mapPosition?.0 ?? 0.0,
+                                                          longitude: self.mapPosition?.1 ?? 0.0)
                 return provider.mapService.mapInfo(data: mapFilterData, page: currentState.mapInfoPage, size: 10).data()
                     .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
                     .flatMap { result -> Observable<Mutation> in
@@ -215,92 +170,6 @@ final class MapReactor: Reactor, Stepper {
                             return .empty()
                         }
                     }
-            }
-        case .selectSearchItem(let index):
-            let searchItem = currentState.mapKeywordSearchData[index]
-            // 매장
-            if let storeName = searchItem.storeName {
-                let history = provider.realm?.objects(MapSearchHistory.self).where {
-                    $0.name == storeName
-                }.first
-                if history == nil { // create
-                    let newHistory = MapSearchHistory()
-                    newHistory.name = storeName
-                    newHistory.storeId = searchItem.storeID
-                    newHistory.isStore = true
-                    do {
-                        try provider.realm?.write {
-                            provider.realm?.create(MapSearchHistory.self, value: newHistory)
-                        }
-                    } catch {
-                        print(error)
-                    }
-                } else { // update
-                    do {
-                        try provider.realm?.write {
-                            history?.date = Date()
-                        }
-                    } catch {
-                        print(error)
-                    }
-                }
-            // 지역
-            } else if let regionName = searchItem.region {
-                let history = provider.realm?.objects(MapSearchHistory.self).where {
-                    $0.name == regionName
-                }.first
-                if history == nil {
-                    let newHistory = MapSearchHistory()
-                    newHistory.name = regionName
-                    newHistory.regionId = searchItem.regionID
-                    newHistory.isStore = false
-                    do {
-                        try provider.realm?.write {
-                            provider.realm?.create(MapSearchHistory.self, value: newHistory)
-                        }
-                    } catch {
-                        print(error)
-                    }
-                } else {
-                    do {
-                        try provider.realm?.write {
-                            history?.date = Date()
-                        }
-                    } catch {
-                        print(error)
-                    }
-                }
-            } else { // error
-                return .empty()
-            }
-            
-            if let storeId = searchItem.storeID { // 매장검색
-                return provider.mapService.searchStore(storeId: storeId)
-                    .data().decode(type: StoreSearchResponse.self, decoder: JSONDecoder())
-                    .flatMap { result -> Observable<Mutation> in
-                        return Observable.concat([
-                            .just(.setStoreSearchInfoData(result.result.storeInfo)),
-                            .just(.setStoreSearchMarkerData(result.result.mapMarker)),
-                        ])
-                    }
-            } else if let regionId = searchItem.regionID { // 지역검색
-                
-                return Observable.concat([
-                    provider.mapService.searchMapRegion(regionId: regionId)
-                        .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
-                        .flatMap { result -> Observable<Mutation> in
-                            return .just(.setRegionSearchDatas(result.result, searchItem.region ?? "", regionId))
-                        },
-                    
-                    provider.mapService.searchMapInfoRegion(regionId: regionId, page: 0, size: 10)
-                        .data().decode(type: RegionAroundMapSearchResponse.self, decoder: JSONDecoder())
-                        .flatMap { result -> Observable<Mutation> in
-                            return .just(.setRegionAroundDatas(result.result.contents, isLast: result.result.isLast))
-                        }
-                ])
-                
-            } else {
-                return .empty()
             }
             
         case .regionSearchBottomSheetScrollReachesBottom:
@@ -318,45 +187,46 @@ final class MapReactor: Reactor, Stepper {
                 .flatMap { data -> Observable<Mutation> in
                     return .just(.setMapMarkerSelectData(data.result))
                 }
-        case .userLocationDidChanged(let position):
-            return .just(.setUserLocation(position))
             
         case .mapViewCameraPositionDidChanged(let position):
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
-            return .just(.setMapLocation(position))
+            self.mapPosition = position
+            return .empty()
         }
         
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        return Observable.merge([mutation, provider.mapService.event.flatMap { value -> Observable<Mutation> in
+            switch value {
+            case .store(let storeSearchData):
+                switch storeSearchData {
+                case.sheetData(let storeData):
+                    return .just(.setStoreSearchInfoData(storeData))
+                case .markerData(let markerData):
+                    return .just(.setStoreSearchMarkerData(markerData))
+                }
+            case .region(let regionSearchData):
+                switch regionSearchData {
+                case .sheetDatas(let sheetData, let regionId, let regionName):
+                    return .just(.setRegionAroundDatas(sheetData.contents, regionId: regionId, regionName: regionName, isLast: sheetData.isLast))
+                case.markerDatas(let markerDatas):
+                    return .just(.setRegionSearchDatas(markerDatas))
+                }
+            }
+        }])
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
         
         switch mutation {
-        case .setMapLocation(let position):
-            state.mapCenterLocation = position
-        case .setUserLocation(let position):
-            state.userLocation = position
-        case .setMapHistories(let histories):
-            state.mapSearchHistories = histories
+
         case .setFilter(let filter):
             state.mapFilterSelected[filter]?.toggle()
-        case .setMapKeywordSearchData(let data):
-            state.mapKeywordSearchData = data
+
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
-        case .setAroundDatasAppend(let datas, let isLast):
-            state.aroundDatas += datas
-            state.mapInfoIsLast = isLast
-            if !isLast {
-                state.mapInfoPage += 1
-            }
-        case .setRegionSearchDatas(let datas, let regionName, let regionId):
-            state.regionSearchMarkerDatas = (datas, regionName, regionId)
-            
-        case .setStoreSearchInfoData(let data):
-            state.storeSearchInfo = data
-        case .setStoreSearchMarkerData(let markerData):
-            state.storeSearchMarker = markerData
             
         case .setAroundDatas(let datas, let isLast):
             state.aroundDatas = datas
@@ -365,11 +235,30 @@ final class MapReactor: Reactor, Stepper {
             if !isLast {
                 state.mapInfoPage += 1
             }
-        case .setRegionAroundDatas(let datas, let isLast):
+            
+        case .setAroundDatasAppend(let datas, let isLast):
+            state.aroundDatas += datas
+            state.mapInfoIsLast = isLast
+            if !isLast {
+                state.mapInfoPage += 1
+            }
+            
+        case .setRegionSearchDatas(let datas):
+            state.regionSearchMarkerDatas = datas
+            
+        case .setStoreSearchInfoData(let data):
+            state.storeSearchInfo = data
+            
+        case .setStoreSearchMarkerData(let markerData):
+            state.storeSearchMarker = markerData
+            
+        case .setRegionAroundDatas(let datas, let regionId, let regionName, let isLast):
             state.regionSearchAroundDatas = datas
             state.regionInfoPage = 0
             state.regionInfoIsLast = isLast
-            if !isLast {
+            state.searchRegionName = regionName
+            state.searchRegionId = regionId
+            if !isLast{
                 state.regionInfoPage += 1
             }
             
@@ -384,6 +273,16 @@ final class MapReactor: Reactor, Stepper {
             break
         case .setMapMarkerSelectData(let data):
             state.mapMarkerSelectData = data
+            
+        case .clearSearchMapDatas:
+            state.storeSearchMarker = nil
+            state.mapMarkerSelectData = nil
+            state.regionSearchMarkerDatas = nil
+            
+            state.regionInfoIsLast = false
+            state.mapInfoIsLast = false
+            state.regionInfoPage = 0
+            state.mapInfoPage = 0
         }
         
         return state
