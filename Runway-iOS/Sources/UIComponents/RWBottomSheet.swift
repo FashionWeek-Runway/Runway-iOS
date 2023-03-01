@@ -35,6 +35,20 @@ final class RWBottomSheet: UIView {
         return view
     }()
     
+    let backToMapButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setAttributedTitle(NSAttributedString(string: "지도보기",
+                                                     attributes: [.font: UIFont.body1M, .foregroundColor: UIColor.point]),
+                                  for: .normal)
+        button.setBackgroundColor(.primary, for: .normal)
+        button.setImage(UIImage(named: "icon_location_fab"), for: .normal)
+        button.imageEdgeInsets.right = 2
+        button.layer.cornerRadius = 22
+        button.clipsToBounds = true
+        button.isHidden = true
+        return button
+    }()
+    
     // MARK: - properties
     
     private let disposeBag = DisposeBag()
@@ -46,12 +60,30 @@ final class RWBottomSheet: UIView {
         case cover // 완전히 덮기
     }
     
+    enum LayoutMode {
+        case normal
+        case search
+    }
+    
+    var layoutMode: LayoutMode = .normal {
+        didSet {
+            switch layoutMode {
+            case .normal:
+                self.sheetPanMinTopConstant = 138 + getSafeArea().top
+                backToMapButton.isHidden = true
+            case .search:
+                self.sheetPanMinTopConstant = sheetPanCoverTopConstant
+                backToMapButton.isHidden = false
+            }
+        }
+    }
+    
     // 펼친 상태 Top
     lazy var sheetPanMinTopConstant: CGFloat = 138 + getSafeArea().top
     // 접힌 상태 Top
     lazy var sheetPanMaxTopConstant: CGFloat = UIScreen.getDeviceHeight() - getSafeArea().bottom - 121
     // 덮기 상태 Top
-    lazy var sheetPanCoverTopConstant: CGFloat = UIScreen.getDeviceHeight() - 118 - getSafeArea().top + 14
+    lazy var sheetPanCoverTopConstant: CGFloat = self.getSafeArea().top + 51 - 62
     // 드래그 하기 전에 Bottom Sheet의 top Constraint value를 저장하기 위한 프로퍼티
     private lazy var sheetPanStartingTopConstant: CGFloat = frame.origin.y
     
@@ -74,7 +106,7 @@ final class RWBottomSheet: UIView {
         backgroundColor = .white
         layer.cornerRadius = 10
         
-        addSubviews([grabber, aroundView, aroundEmptyView, searchResultView])
+        addSubviews([grabber, aroundView, aroundEmptyView, searchResultView, backToMapButton])
         
         grabber.snp.makeConstraints {
             $0.height.equalTo(3)
@@ -98,6 +130,13 @@ final class RWBottomSheet: UIView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(grabber.snp.bottom).offset(4)
             $0.bottom.equalToSuperview().offset(-17)
+        }
+        
+        backToMapButton.snp.makeConstraints {
+            $0.bottom.equalTo(self.getSafeArea().bottom).offset(-20)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(117)
+            $0.height.equalTo(44)
         }
     }
     

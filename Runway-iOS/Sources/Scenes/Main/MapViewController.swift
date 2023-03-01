@@ -28,7 +28,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     private let bottomSheet: RWBottomSheet = RWBottomSheet()
     private lazy var searchResultBottomSheet: RWBottomSheet = {
         let sheet = RWBottomSheet()
-        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0.0)
+        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight()
         sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
         sheet.searchResultView.isHidden = false
         sheet.aroundView.isHidden = true
@@ -92,11 +92,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 self.tabBarController?.tabBar.isHidden = false
                 mapSearchBar.isHidden = false
                 searchButton.isHidden = false
+                bottomSheet.layoutMode = .normal
                 break
             case .search:
                 self.tabBarController?.tabBar.isHidden = true
                 mapSearchBar.isHidden = true
                 searchButton.isHidden = true
+                bottomSheet.layoutMode = .search
                 break
             }
         }
@@ -122,7 +124,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     // 표시될 마커들을 담아두기
     private var markers: [NMFMarker] = []
-    private var isFetchingMore = false
+    
+    // 검색 마커
+    private var storeSearchMarker: NMFMarker? = nil
+    private var regionSearchMarkers: [NMFMarker] = []
 
     // MARK: - initializer
     
@@ -336,6 +341,7 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
         
         searchView.searchTableView.rx.itemSelected
+            .do(onNext: { [weak self] _ in self?.searchView.isHidden = true })
             .map { Reactor.Action.selectSearchItem($0.item) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -354,7 +360,7 @@ extension MapViewController: View {
                 let contentHeight = self.bottomSheet.aroundView.collectionView.contentSize.height
                 let reachesBottom = (self.bottomSheet.aroundView.collectionView.contentOffset.y > contentHeight - height)
                 
-                if reachesBottom && !self.isFetchingMore {
+                if reachesBottom {
                     self.reactor?.action.onNext(.bottomSheetScrollReachesBottom)
                 }
             }).disposed(by: disposeBag)
@@ -381,6 +387,7 @@ extension MapViewController: View {
             .subscribe(onNext: { [weak self] markerData in
                 
                 self?.markers.forEach { $0.mapView = nil }
+                self?.regionSearchMarkers.removeAll()
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in
                         let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
@@ -477,6 +484,113 @@ extension MapViewController: View {
                     return
                 }
             }.disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.storeSearchMarker }
+            .distinctUntilChanged({ lMapMarker, rMapMarker in
+                lMapMarker.storeID == rMapMarker.storeID
+            })
+            .subscribe(onNext: { [weak self] markerData in
+                guard let self else { return }
+                self.setSearchMode()
+                
+                DispatchQueue.global(qos: .default).async {
+                    
+                    let marker = NMFMarker(position: NMGLatLng(lat: markerData.latitude, lng: markerData.longitude))
+                    marker.iconImage = NMFOverlayImage(name: "marker_highlight")
+                    marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.captionText = markerData.storeName
+                    marker.captionTextSize = 12
+                    marker.captionColor = .runwayBlack
+                    marker.captionHaloColor = .white
+                    
+                    marker.touchHandler = { [weak self] (overlay) -> Bool in
+                        guard let self else { return true }
+                        if self.searchResultBottomSheet.frame.origin.y < self.tabBarController?.tabBar.frame.origin.y ?? 0.0 {
+                            self.searchResultBottomSheet.showSheet(atState: .expanded)
+                        } else {
+                            self.searchResultBottomSheet.showSheet(atState: .folded)
+                        }
+                        return true
+                    }
+                    
+                    self.storeSearchMarker = marker
+                    
+                    DispatchQueue.main.async {
+                        marker.mapView = self.mapView.mapView
+                        let cameraUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: markerData.latitude, lng: markerData.longitude ), zoom: 14.0))
+                        cameraUpdate.reason = 1000
+                        cameraUpdate.animation = .easeIn
+                        self.mapView.mapView.moveCamera(cameraUpdate)
+                        
+                    }
+                }
+                
+            }).disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.storeSearchInfo }
+            .distinctUntilChanged({ lStoreInfo, rStoreInfo in
+                lStoreInfo.storeID != rStoreInfo.storeID
+            })
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                guard let url = URL(string: data.storeImage) else { return }
+                self.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: url)
+                self.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self.searchResultBottomSheet.searchResultView.tagRelay.accept(data.category)
+                
+                self.searchResultBottomSheet.showSheet(atState: .expanded)
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.regionSearchMarkerDatas }
+            .subscribe(onNext: { [weak self] markerData in
+                guard let self else { return }
+//                self.setSearchMode()
+                self.regionSearchMarkers.removeAll()
+                
+                DispatchQueue.global(qos: .default).async {
+                    let markers = markerData.map { data in
+                        let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
+                        marker.iconImage = NMFOverlayImage(name: "marker")
+                        marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+                        marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+                        marker.captionText = data.storeName
+                        marker.captionTextSize = 10
+                        marker.captionColor = .runwayBlack
+                        marker.captionHaloColor = .white
+                        
+                        marker.touchHandler = { [weak self] (overlay) -> Bool in
+                            guard let self else { return true }
+                            let action = Reactor.Action.selectMapMarkerData(data.storeID)
+                            self.reactor?.action.onNext(action)
+                            self.searchResultBottomSheet.showSheet(atState: .expanded)
+                            return true
+                        }
+                        
+                        DispatchQueue.main.async {
+                            marker.mapView = self.mapView.mapView
+                        }
+                        return marker
+                    }
+                    self.regionSearchMarkers = markers
+                }
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setSearchMode() {
+        self.mapMode = .search
+        self.searchView.isHidden = true
+        self.storeSearchMarker = nil
+        self.markers.forEach { $0.mapView = nil }
+        self.regionSearchMarkers.forEach { $0.mapView = nil }
+    }
+    
+    private func setNormalMode() {
+        self.mapMode = .normal
+        self.markers.forEach { $0.mapView = self.mapView.mapView }
     }
 }
 
@@ -492,7 +606,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
 }
 
 extension MapViewController: NMFMapViewCameraDelegate {
-    func mapViewCameraIdle(_ mapView: NMFMapView) {
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         searchButton.isHidden = false
         let lat = mapView.cameraPosition.target.lat
         let lng = mapView.cameraPosition.target.lng

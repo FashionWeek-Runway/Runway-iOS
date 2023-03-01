@@ -35,13 +35,14 @@ struct MapMarker: Codable {
 // MARK: - StoreInfo
 struct StoreInfo: Codable {
     let storeID: Int
-    let storeImg: String
+    let storeImage: String
     let category: [String]
     let storeName: String
     let distance: Double?
 
     enum CodingKeys: String, CodingKey {
         case storeID = "storeId"
-        case storeImg, category, storeName, distance
+        case storeImage = "storeImg"
+        case category, storeName, distance
     }
 }
