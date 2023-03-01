@@ -396,10 +396,10 @@
 				1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */,
 				19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */,
 				19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */,
+				19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */,
 				19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */,
 				199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */,
 				19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */,
-				19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */,
 				1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */,
 			);
 			path = Responses;

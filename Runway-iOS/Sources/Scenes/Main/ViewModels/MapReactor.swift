@@ -21,10 +21,12 @@ final class MapReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
+        case backButtonDidTap
+        case exitButtonDidTap
         case selectFilter(String)
         case searchButtonDidTap
         case searchFieldDidTap
-
+        
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
@@ -41,19 +43,19 @@ final class MapReactor: Reactor, Stepper {
         
         case setStoreSearchMarkerData(MapMarker?)
         case setStoreSearchInfoData(StoreInfo?)
-        case setRegionSearchDatas([RegionSearchResponseResult])
-        case setRegionAroundDatas([RegionAroundMapSearchResponseResultContent], regionId: Int, regionName: String, isLast: Bool)
-        case setRegionAroundDatasAppend([RegionAroundMapSearchResponseResultContent], isLast: Bool)
+        case setRegionSearchDatas([MapMarker])
+        case setRegionAroundDatas([StoreInfo], regionId: Int, regionName: String, isLast: Bool)
+        case setRegionAroundDatasAppend([StoreInfo], isLast: Bool)
         
-        case setMapMarkerSelectData(MapMarkerSelectResponseResult)
+        case setMapMarkerSelectData(StoreInfo)
         
         case setSearchInfo
     }
     
     struct State {
-
+        
         var mapMarkers: [MapWithCategorySearchResponseResult] = []
-        var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
+        var mapMarkerSelectData: StoreInfo? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         
         var mapCategoryFilters: [String]
@@ -62,8 +64,8 @@ final class MapReactor: Reactor, Stepper {
         // search
         var storeSearchMarker: MapMarker? = nil
         var storeSearchInfo: StoreInfo? = nil
-        var regionSearchMarkerDatas: [RegionSearchResponseResult]? = nil
-        var regionSearchAroundDatas: [RegionAroundMapSearchResponseResultContent] = []
+        var regionSearchMarkerDatas: [MapMarker]? = nil
+        var regionSearchAroundDatas: [StoreInfo] = []
         var searchRegionId: Int? = nil
         var searchRegionName: String? = nil
         var regionInfoIsLast: Bool = false
@@ -88,7 +90,7 @@ final class MapReactor: Reactor, Stepper {
     let markerCache = NSCacheManager<MapMarkerData>()
     
     var mapPosition: (Double, Double)? = nil
-
+    
     // MARK: - initializer
     init(provider: ServiceProviderType) {
         self.provider = provider
@@ -98,6 +100,14 @@ final class MapReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .backButtonDidTap:
+            guard let mapPosition else { return .empty()}
+            steps.accept(AppStep.mapSearch(mapPosition))
+            return .empty()
+            
+        case .exitButtonDidTap:
+            return .empty()
+            
         case .selectFilter(let filter):
             var filterDict = currentState.mapFilterSelected
             filterDict[filter]?.toggle()
@@ -180,7 +190,7 @@ final class MapReactor: Reactor, Stepper {
                 .flatMap { result -> Observable<Mutation> in
                     return .just(.setRegionAroundDatasAppend(result.result.contents, isLast: result.result.isLast))
                 }
-
+            
         case .selectMapMarkerData(let storeId):
             return provider.mapService
                 .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
@@ -193,11 +203,10 @@ final class MapReactor: Reactor, Stepper {
             self.mapPosition = position
             return .empty()
         }
-        
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        return Observable.merge([mutation, provider.mapService.event.flatMap { value -> Observable<Mutation> in
+        return Observable.merge([mutation, provider.mapService.event.debug().flatMap { value -> Observable<Mutation> in
             switch value {
             case .store(let storeSearchData):
                 switch storeSearchData {
@@ -221,12 +230,24 @@ final class MapReactor: Reactor, Stepper {
         var state = state
         
         switch mutation {
-
+            
         case .setFilter(let filter):
             state.mapFilterSelected[filter]?.toggle()
-
+            
         case .setMapMarkers(let markers):
             state.mapMarkers = markers
+            state.storeSearchMarker = nil
+            state.regionSearchMarkerDatas = nil
+            
+        case .setStoreSearchMarkerData(let markerData):
+            state.storeSearchMarker = markerData
+            state.mapMarkers = []
+            state.regionSearchMarkerDatas = nil
+            
+        case .setRegionSearchDatas(let datas):
+            state.mapMarkers = []
+            state.storeSearchMarker = nil
+            state.regionSearchMarkerDatas = datas
             
         case .setAroundDatas(let datas, let isLast):
             state.aroundDatas = datas
@@ -243,14 +264,8 @@ final class MapReactor: Reactor, Stepper {
                 state.mapInfoPage += 1
             }
             
-        case .setRegionSearchDatas(let datas):
-            state.regionSearchMarkerDatas = datas
-            
         case .setStoreSearchInfoData(let data):
             state.storeSearchInfo = data
-            
-        case .setStoreSearchMarkerData(let markerData):
-            state.storeSearchMarker = markerData
             
         case .setRegionAroundDatas(let datas, let regionId, let regionName, let isLast):
             state.regionSearchAroundDatas = datas
@@ -288,3 +303,4 @@ final class MapReactor: Reactor, Stepper {
         return state
     }
 }
+

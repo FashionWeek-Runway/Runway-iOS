@@ -11,17 +11,17 @@ import Foundation
 struct RegionSearchResponse: Codable {
     let isSuccess: Bool
     let code, message: String
-    let result: [RegionSearchResponseResult]
+    let result: [MapMarker]
 }
 
-// MARK: - Result
-struct RegionSearchResponseResult: Codable {
-    let storeID: Int
-    let storeName, address: String
-    let latitude, longitude: Double
-
-    enum CodingKeys: String, CodingKey {
-        case storeID = "storeId"
-        case storeName, address, latitude, longitude
-    }
-}
+//// MARK: - Result
+//struct MapMarker: Codable {
+//    let storeID: Int
+//    let storeName, address: String
+//    let latitude, longitude: Double
+//
+//    enum CodingKeys: String, CodingKey {
+//        case storeID = "storeId"
+//        case storeName, address, latitude, longitude
+//    }
+//}

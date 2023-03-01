@@ -26,7 +26,7 @@ enum StoreSearchDataType {
 }
 
 enum RegionSearchDataType {
-    case markerDatas([RegionSearchResponseResult])
+    case markerDatas([MapMarker])
     case sheetDatas(RegionAroundMapSearchResponseResult, Int, String) // data, regionId, regionName
 }
 

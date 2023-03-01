@@ -11,19 +11,19 @@ import Foundation
 struct MapMarkerSelectResponse: Codable {
     let isSuccess: Bool
     let code, message: String
-    let result: MapMarkerSelectResponseResult
+    let result: StoreInfo
 }
 
 // MARK: - Result
-struct MapMarkerSelectResponseResult: Codable {
-    let storeID: Int
-    let storeImage: String
-    let category: [String]
-    let storeName: String
-    let distance: Double?
-
-    enum CodingKeys: String, CodingKey {
-        case storeID = "storeId", storeImage = "storeImg"
-        case category, storeName, distance
-    }
-}
+//struct MapMarkerSelectResponseResult: Codable {
+//    let storeID: Int
+//    let storeImage: String
+//    let category: [String]
+//    let storeName: String
+//    let distance: Double?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case storeID = "storeId", storeImage = "storeImg"
+//        case category, storeName, distance
+//    }
+//}

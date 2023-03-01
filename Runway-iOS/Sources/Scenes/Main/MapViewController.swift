@@ -148,11 +148,12 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }()
     
     // 표시될 마커들을 담아두기
-    private var markers: [NMFMarker] = []
-    
-    // 검색 마커
-    private var storeSearchMarker: NMFMarker? = nil
-    private var regionSearchMarkers: [NMFMarker] = []
+    private var markers: [NMFMarker] = [] {
+        willSet {
+            markers.forEach { $0.mapView = nil }
+            newValue.forEach { $0.mapView = mapView.mapView }
+        }
+    }
 
     // MARK: - initializer
     
@@ -304,43 +305,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    private func removeAllMarkers() {
-        self.markers.forEach { $0.mapView = nil }
-        self.regionSearchMarkers.forEach { $0.mapView = nil }
-        self.storeSearchMarker?.mapView = nil
-    }
-    
     private func setRx() {
-        
-//        searchView.backButton.rx.tap
-//            .asDriver()
-//            .drive(onNext: { [weak self] in
-//                self?.mapMode = .normal
-//                self?.searchView.isHidden = true
-//                self?.searchView.searchField.text = ""
-//                self?.searchView.searchField.resignFirstResponder()
-//                self?.searchView.layoutMode = .IsHistoryEmpty
-//            })
-//            .disposed(by: disposeBag)
-        
-        backButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                self?.removeAllMarkers()
-                self?.markers.forEach { $0.mapView = self?.mapView.mapView }
-                
-            })
-            .disposed(by: disposeBag)
-        
-        exitButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                guard let self else { return }
-                self.mapMode = .normal
-                self.removeAllMarkers()
-                self.markers.forEach { $0.mapView = self.mapView.mapView }
-            })
-            .disposed(by: disposeBag)
         
         regionSearchBottomSheet.backToMapButton.rx.tap
             .asDriver()
@@ -364,11 +329,17 @@ extension MapViewController: View {
             .map { _ in Reactor.Action.searchFieldDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-//            .bind(onNext: { [weak self] _ in
-//                self?.searchView.isHidden = false
-//                self?.searchView.searchField.becomeFirstResponder()
-//                self?.searchView.layoutMode = reactor.currentState.mapSearchHistories?.isEmpty == true ? .IsHistoryEmpty : .IsHistoryExists
-//            }).disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        exitButton.rx.tap
+            .do(onNext: { [weak self] in self?.markers.forEach { $0.mapView = nil}})
+            .map { Reactor.Action.exitButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         mapSearchBar.categoryCollectionView.rx.modelSelected(String.self)
             .map { Reactor.Action.selectFilter($0) }
@@ -429,9 +400,10 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
-                self?.removeAllMarkers()
                 DispatchQueue.global(qos: .default).async {
+                    self?.markers.forEach { $0.mapView = nil }
                     let markers = markerData.map { data in
                         let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
                         marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
@@ -448,13 +420,11 @@ extension MapViewController: View {
                             self?.storeSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
-                        
-                        DispatchQueue.main.async {
-                            marker.mapView = self?.mapView.mapView
-                        }
                         return marker
                     }
-                    self?.markers = markers
+                    DispatchQueue.main.async {
+                        self?.markers = markers
+                    }
                 }
             }).disposed(by: disposeBag)
         
@@ -496,13 +466,13 @@ extension MapViewController: View {
         
         
         reactor.state.compactMap { $0.storeSearchMarker }
-            .distinctUntilChanged(at: \.storeID)
+//            .distinctUntilChanged(at: \.storeID)
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 guard let self else { return }
                 self.setSearchMode(mode: .storeSearch)
                 self.addNavigationTitleLabel(markerData.storeName)
                 self.storeSearchBottomSheet.showSheet(atState: .expanded)
-                
                 DispatchQueue.global(qos: .default).async {
                     
                     let marker = NMFMarker(position: NMGLatLng(lat: markerData.latitude, lng: markerData.longitude))
@@ -524,11 +494,8 @@ extension MapViewController: View {
                         return true
                     }
                     
-                    self.storeSearchMarker = marker
-                    
                     DispatchQueue.main.async {
-                        self.removeAllMarkers()
-                        marker.mapView = self.mapView.mapView
+                        self.markers = [marker]
                     }
                 }
                 
@@ -551,12 +518,11 @@ extension MapViewController: View {
             })
             .disposed(by: disposeBag)
         
-        let markerDataObservable = reactor.state.compactMap { $0.regionSearchMarkerDatas }
+        let markerDataObservable = reactor.state.compactMap { $0.regionSearchMarkerDatas }.observe(on: MainScheduler.instance)
             markerDataObservable.subscribe(onNext: { [weak self] markerData in
                 guard let self else { return }
                 self.setSearchMode(mode: .regionSearch)
-                self.removeAllMarkers()
-                
+                self.markers.forEach { $0.mapView = nil }
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in
                         let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
@@ -576,12 +542,11 @@ extension MapViewController: View {
                             return true
                         }
                         
-                        DispatchQueue.main.async {
-                            marker.mapView = self.mapView.mapView
-                        }
                         return marker
                     }
-                    self.regionSearchMarkers = markers
+                    DispatchQueue.main.async {
+                        self.markers = markers
+                    }
                 }
                 
                 let lat = markerData.reduce(0.0, { $0 + $1.latitude }) / Double(markerData.count)
@@ -597,9 +562,7 @@ extension MapViewController: View {
     
     private func setSearchMode(mode: MapMode) {
         self.mapMode = mode
-        self.storeSearchMarker = nil
         self.markers.forEach { $0.mapView = nil }
-        self.regionSearchMarkers.forEach { $0.mapView = nil }
     }
     
     private func setNormalMode() {

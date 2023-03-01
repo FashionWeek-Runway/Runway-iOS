@@ -17,20 +17,20 @@ struct RegionAroundMapSearchResponse: Codable {
 // MARK: - Result
 struct RegionAroundMapSearchResponseResult: Codable {
     let isLast: Bool
-    let contents: [RegionAroundMapSearchResponseResultContent]
+    let contents: [StoreInfo]
 }
 
-// MARK: - Content
-struct RegionAroundMapSearchResponseResultContent: Codable {
-    let storeID: Int
-    let storeImage: String
-    let category: [String]
-    let storeName: String
-    let distance: Double?
-
-    enum CodingKeys: String, CodingKey {
-        case storeID = "storeId"
-        case storeImage = "storeImg"
-        case category, storeName, distance
-    }
-}
+//// MARK: - Content
+//struct RegionAroundMapSearchResponseResultContent: Codable {
+//    let storeID: Int
+//    let storeImage: String
+//    let category: [String]
+//    let storeName: String
+//    let distance: Double?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case storeID = "storeId"
+//        case storeImage = "storeImg"
+//        case category, storeName, distance
+//    }
+//}
