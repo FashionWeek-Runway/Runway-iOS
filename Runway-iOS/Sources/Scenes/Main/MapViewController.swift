@@ -69,6 +69,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         return view
     }()
     
+    private let bottomSafeAreaView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    
     private var isHiddenHelperViews: Bool = false {
         didSet {
             if isHiddenHelperViews {
@@ -89,7 +96,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     enum MapMode {
         case normal
-        case search
+        case storeSearch
+        case regionSearch
     }
     
     private var mapMode: MapMode = .normal {
@@ -101,12 +109,37 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 searchButton.isHidden = false
                 regionSearchBottomSheet.isHidden = true
                 bottomSheet.isHidden = false
-            case .search:
+                mapView.snp.remakeConstraints {
+                    $0.top.leading.trailing.bottom.equalToSuperview()
+                }
+                bottomSafeAreaView.isHidden = true
+                navigationBarArea.isHidden = true
+            case .storeSearch:
+                self.tabBarController?.tabBar.isHidden = true
+                mapSearchBar.isHidden = true
+                searchButton.isHidden = true
+                regionSearchBottomSheet.isHidden = true
+                bottomSheet.isHidden = true
+                mapView.snp.remakeConstraints {
+                    $0.top.equalTo(self.navigationBarArea.snp.bottom)
+                    $0.horizontalEdges.equalToSuperview()
+                    $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom)
+                }
+                bottomSafeAreaView.isHidden = true
+                navigationBarArea.isHidden = false
+            case .regionSearch:
                 self.tabBarController?.tabBar.isHidden = true
                 mapSearchBar.isHidden = true
                 searchButton.isHidden = true
                 regionSearchBottomSheet.isHidden = false
                 bottomSheet.isHidden = true
+                mapView.snp.remakeConstraints {
+                    $0.top.equalTo(self.navigationBarArea.snp.bottom)
+                    $0.horizontalEdges.equalToSuperview()
+                    $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom)
+                }
+                bottomSafeAreaView.isHidden = false
+                navigationBarArea.isHidden = false
             }
         }
     }
@@ -157,9 +190,18 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, StoreSearchBottomSheet, searchView, regionSearchBottomSheet])
+        navigationBarArea.removeFromSuperview()
+        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchView, regionSearchBottomSheet, StoreSearchBottomSheet, navigationBarArea, bottomSafeAreaView])
         addBackButton()
         addExitButton()
+        
+        navigationBarArea.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.height.equalTo(54).priority(.required)
+        }
+        navigationBarArea.backgroundColor = .white
+        navigationBarArea.isHidden = true
         
         mapView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
@@ -200,6 +242,11 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             $0.trailing.equalToSuperview().offset(-20)
             $0.width.height.equalTo(42)
             $0.bottom.equalTo(bottomSheet.snp.top).offset(-19)
+        }
+        
+        bottomSafeAreaView.snp.makeConstraints {
+            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.height.equalTo(view.getSafeArea().bottom)
         }
     }
     
@@ -338,7 +385,6 @@ extension MapViewController: View {
         mapSearchBar.searchView.rx.gesture(.tap())
             .when(.recognized)
             .bind(onNext: { [weak self] _ in
-                self?.mapMode = .search
                 self?.searchView.isHidden = false
                 self?.searchView.searchField.becomeFirstResponder()
                 self?.reactor?.action.onNext(.searchFieldDidTap)
@@ -539,7 +585,8 @@ extension MapViewController: View {
             })
             .subscribe(onNext: { [weak self] markerData in
                 guard let self else { return }
-                self.setSearchMode()
+                self.setSearchMode(mode: .storeSearch)
+                self.addNavigationTitleLabel(markerData.storeName)
                 
                 DispatchQueue.global(qos: .default).async {
                     
@@ -593,11 +640,12 @@ extension MapViewController: View {
         
         reactor.state.compactMap { $0.regionSearchMarkerDatas }
             .distinctUntilChanged({ lDatas, rDatas in // regionId로 구별
-                lDatas.1 == rDatas.1
+                lDatas.2 == rDatas.2
             })
-            .subscribe(onNext: { [weak self] (markerData, regionId) in
+            .subscribe(onNext: { [weak self] (markerData, regionName, regionId) in
                 guard let self else { return }
-                self.setSearchMode()
+                self.setSearchMode(mode: .regionSearch)
+                self.addNavigationTitleLabel(regionName)
                 self.regionSearchMarkers.removeAll()
                 
                 DispatchQueue.global(qos: .default).async {
@@ -637,8 +685,8 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
     }
     
-    private func setSearchMode() {
-        self.mapMode = .search
+    private func setSearchMode(mode: MapMode) {
+        self.mapMode = mode
         self.searchView.isHidden = true
         self.storeSearchMarker = nil
         self.markers.forEach { $0.mapView = nil }
@@ -656,7 +704,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         switch mapMode {
         case .normal:
             isHiddenHelperViews.toggle()
-        case .search:
+        default:
             StoreSearchBottomSheet.showSheet(atState: .folded)
         }
     }

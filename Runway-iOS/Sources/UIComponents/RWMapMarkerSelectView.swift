@@ -59,8 +59,9 @@ final class RWMapMarkerSelectView: UIView {
         addSubviews([imageView, storeNameLabel, tagCollectionView])
         
         imageView.snp.makeConstraints {
-            $0.leading.trailing.top.equalToSuperview()
-            $0.height.equalTo(180)
+            $0.top.centerX.equalToSuperview()
+            $0.width.equalTo((UIScreen.getDeviceWidth() - 40))
+            $0.height.equalTo((UIScreen.getDeviceWidth() - 40) * 0.65)
         }
         
         storeNameLabel.snp.makeConstraints {

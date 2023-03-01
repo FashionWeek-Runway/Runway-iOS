@@ -137,7 +137,7 @@ final class RWBottomSheet: UIView {
         }
         
         backToMapButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.getSafeArea().bottom).offset(-20)
+            $0.bottom.equalToSuperview().offset(-getSafeArea().bottom-20)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(117)
             $0.height.equalTo(44)
