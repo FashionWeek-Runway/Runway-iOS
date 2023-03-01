@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import RxSwift
 import RxCocoa
 import ReactorKit
@@ -26,7 +27,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }()
     
     private let bottomSheet: RWBottomSheet = RWBottomSheet()
-    private lazy var searchResultBottomSheet: RWBottomSheet = {
+    private let regionSearchBottomSheet: RWBottomSheet = {
+        let sheet = RWBottomSheet()
+        sheet.layoutMode = .search
+        sheet.isHidden = true
+        return sheet
+    }()
+    private lazy var StoreSearchBottomSheet: RWBottomSheet = {
         let sheet = RWBottomSheet()
         sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight()
         sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
@@ -69,13 +76,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 showSearchView()
                 bottomSheet.isHidden = false
                 searchButton.isHidden = false
-                searchResultBottomSheet.isHidden = false
+                StoreSearchBottomSheet.isHidden = false
             } else {
                 hideTabbar()
                 hideSearchView()
                 bottomSheet.isHidden = true
                 searchButton.isHidden = true
-                searchResultBottomSheet.isHidden = true
+                StoreSearchBottomSheet.isHidden = true
             }
         }
     }
@@ -92,14 +99,14 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 self.tabBarController?.tabBar.isHidden = false
                 mapSearchBar.isHidden = false
                 searchButton.isHidden = false
-                bottomSheet.layoutMode = .normal
-                break
+                regionSearchBottomSheet.isHidden = true
+                bottomSheet.isHidden = false
             case .search:
                 self.tabBarController?.tabBar.isHidden = true
                 mapSearchBar.isHidden = true
                 searchButton.isHidden = true
-                bottomSheet.layoutMode = .search
-                break
+                regionSearchBottomSheet.isHidden = false
+                bottomSheet.isHidden = true
             }
         }
     }
@@ -150,7 +157,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     override func configureUI() {
         super.configureUI()
-        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, searchResultBottomSheet, searchView])
+        self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, StoreSearchBottomSheet, searchView, regionSearchBottomSheet])
         addBackButton()
         addExitButton()
         
@@ -171,9 +178,19 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             $0.top.equalTo(mapSearchBar.snp.bottom).offset(8)
         }
         
-        bottomSheet.frame = CGRect(x: 0, y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
-        searchResultBottomSheet.frame = CGRect(x: 0,
-                                               y: UIScreen.getDeviceHeight() - (self.tabBarController?.tabBar.frame.height ?? 0),
+        bottomSheet.frame = CGRect(x: 0,
+                                   y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 121,
+                                   width: UIScreen.getDeviceWidth(),
+                                   height: UIScreen.getDeviceHeight() - view.getSafeArea().top - 135)
+        regionSearchBottomSheet.frame = CGRect(x: 0,
+                                         y: UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 75,
+                                         width: UIScreen.getDeviceWidth(),
+                                         height: UIScreen.getDeviceHeight() - view.getSafeArea().top)
+        regionSearchBottomSheet.aroundView.collectionView.snp.updateConstraints {
+            $0.bottom.equalToSuperview()
+        }
+        StoreSearchBottomSheet.frame = CGRect(x: 0,
+                                               y: UIScreen.getDeviceHeight(),
                                                width: UIScreen.getDeviceWidth(),
                                                height: 276 + (self.tabBarController?.tabBar.frame.height ?? 0))
         
@@ -297,6 +314,13 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 self?.dismiss(animated: false)
             })
             .disposed(by: disposeBag)
+        
+        regionSearchBottomSheet.backToMapButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.regionSearchBottomSheet.showSheet(atState: .folded)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -364,6 +388,19 @@ extension MapViewController: View {
                     self.reactor?.action.onNext(.bottomSheetScrollReachesBottom)
                 }
             }).disposed(by: disposeBag)
+        
+        regionSearchBottomSheet.aroundView.collectionView.rx.didEndDecelerating // infiniteScrolling
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                let height = self.bottomSheet.aroundView.collectionView.frame.height
+                let contentHeight = self.bottomSheet.aroundView.collectionView.contentSize.height
+                let reachesBottom = (self.bottomSheet.aroundView.collectionView.contentOffset.y > contentHeight - height)
+                
+                if reachesBottom {
+                    self.reactor?.action.onNext(.regionSearchBottomSheetScrollReachesBottom)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: MapReactor) {
@@ -402,7 +439,7 @@ extension MapViewController: View {
                         marker.touchHandler = { [weak self] (overlay) -> Bool in
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self?.reactor?.action.onNext(action)
-                            self?.searchResultBottomSheet.showSheet(atState: .expanded)
+                            self?.StoreSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
                         
@@ -425,12 +462,23 @@ extension MapViewController: View {
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         
+        reactor.state.map { $0.regionSearchAroundDatas }
+            .do(onNext: { [weak self] in self?.regionSearchBottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
+            .bind(to: regionSearchBottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
+//                guard let cell = cell as? RWAroundCollectionViewCell else { return }
+                cell.storeNameLabel.text = item.storeName
+                cell.tagRelay.accept(item.category)
+                guard let url = URL(string: item.storeImage) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.storeId = item.storeID
+            }.disposed(by: disposeBag)
+        
         reactor.state.compactMap { $0.mapMarkerSelectData }
             .subscribe(onNext: { [weak self] data in
                 guard let url = URL(string: data.storeImage) else { return }
-                self?.searchResultBottomSheet.searchResultView.tagRelay.accept(data.category)
-                self?.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
-                self?.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                self?.StoreSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
+                self?.StoreSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self?.StoreSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             })
             .disposed(by: disposeBag)
         
@@ -506,10 +554,10 @@ extension MapViewController: View {
                     
                     marker.touchHandler = { [weak self] (overlay) -> Bool in
                         guard let self else { return true }
-                        if self.searchResultBottomSheet.frame.origin.y < self.tabBarController?.tabBar.frame.origin.y ?? 0.0 {
-                            self.searchResultBottomSheet.showSheet(atState: .expanded)
+                        if self.StoreSearchBottomSheet.frame.origin.y < self.tabBarController?.tabBar.frame.origin.y ?? 0.0 {
+                            self.StoreSearchBottomSheet.showSheet(atState: .expanded)
                         } else {
-                            self.searchResultBottomSheet.showSheet(atState: .folded)
+                            self.StoreSearchBottomSheet.showSheet(atState: .folded)
                         }
                         return true
                     }
@@ -535,11 +583,11 @@ extension MapViewController: View {
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 guard let url = URL(string: data.storeImage) else { return }
-                self.searchResultBottomSheet.searchResultView.imageView.kf.setImage(with: url)
-                self.searchResultBottomSheet.searchResultView.storeNameLabel.text = data.storeName
-                self.searchResultBottomSheet.searchResultView.tagRelay.accept(data.category)
+                self.StoreSearchBottomSheet.searchResultView.imageView.kf.setImage(with: url)
+                self.StoreSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self.StoreSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
                 
-                self.searchResultBottomSheet.showSheet(atState: .expanded)
+                self.StoreSearchBottomSheet.showSheet(atState: .expanded)
             })
             .disposed(by: disposeBag)
         
@@ -567,7 +615,7 @@ extension MapViewController: View {
                             guard let self else { return true }
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self.reactor?.action.onNext(action)
-                            self.searchResultBottomSheet.showSheet(atState: .expanded)
+                            self.StoreSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
                         
@@ -609,14 +657,16 @@ extension MapViewController: NMFMapViewTouchDelegate {
         case .normal:
             isHiddenHelperViews.toggle()
         case .search:
-            searchResultBottomSheet.showSheet(atState: .folded)
+            StoreSearchBottomSheet.showSheet(atState: .folded)
         }
     }
 }
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        searchButton.isHidden = false
+        if mapMode == .normal {
+            searchButton.isHidden = false
+        }
         let lat = mapView.cameraPosition.target.lat
         let lng = mapView.cameraPosition.target.lng
         let action = Reactor.Action.mapViewCameraPositionDidChanged((lat, lng))

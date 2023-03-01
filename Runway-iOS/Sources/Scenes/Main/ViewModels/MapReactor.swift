@@ -30,6 +30,7 @@ final class MapReactor: Reactor, Stepper {
         case mapViewCameraPositionDidChanged((Double, Double))
         case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
+        case regionSearchBottomSheetScrollReachesBottom
         case historyAllClearButtonDidTap
         case selectSearchItem(Int)
     }
@@ -45,6 +46,8 @@ final class MapReactor: Reactor, Stepper {
         case setStoreSearchMarkerData(MapMarker?)
         case setStoreSearchInfoData(StoreInfo?)
         case setRegionSearchDatas([RegionSearchResponseResult], Int) // regionId를 함께 저장
+        case setRegionAroundDatas([RegionAroundMapSearchResponseResultContent], isLast: Bool)
+        case setRegionAroundDatasAppend([RegionAroundMapSearchResponseResultContent], isLast: Bool)
         
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
         case setMapHistories([MapSearchHistory])
@@ -60,15 +63,20 @@ final class MapReactor: Reactor, Stepper {
         var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         
-        var regionSearchMarkerDatas: ([RegionSearchResponseResult], Int)? = nil
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
         
         // search
         var storeSearchMarker: MapMarker? = nil
         var storeSearchInfo: StoreInfo? = nil
+        var regionSearchMarkerDatas: ([RegionSearchResponseResult], Int)? = nil
         var mapKeywordSearchData: [KeywordSearchItem] = []
         var mapSearchHistories: [MapSearchHistory]? = nil
+        
+        var regionSearchAroundDatas: [RegionAroundMapSearchResponseResultContent] = []
+        var searchRegionId: Int? = nil
+        var regionInfoIsLast: Bool = false
+        var regionInfoPage: Int = 0
         
         var mapInfoIsLast: Bool = false
         var mapInfoPage: Int = 0
@@ -272,18 +280,37 @@ final class MapReactor: Reactor, Stepper {
                     .flatMap { result -> Observable<Mutation> in
                         return Observable.concat([
                             .just(.setStoreSearchInfoData(result.result.storeInfo)),
-                            .just(.setStoreSearchMarkerData(result.result.mapMarker))
+                            .just(.setStoreSearchMarkerData(result.result.mapMarker)),
                         ])
                     }
             } else if let regionId = searchItem.regionID { // 지역검색
-                return provider.mapService.searchMapRegion(regionId: regionId)
-                    .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
-                    .flatMap { result -> Observable<Mutation> in
-                        return .just(.setRegionSearchDatas(result.result, regionId))
-                    }
+                
+                return Observable.concat([
+                    provider.mapService.searchMapRegion(regionId: regionId)
+                        .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
+                        .flatMap { result -> Observable<Mutation> in
+                            return .just(.setRegionSearchDatas(result.result, regionId))
+                        },
+                    
+                    provider.mapService.searchMapInfoRegion(regionId: regionId, page: 0, size: 10)
+                        .data().decode(type: RegionAroundMapSearchResponse.self, decoder: JSONDecoder())
+                        .flatMap { result -> Observable<Mutation> in
+                            return .just(.setRegionAroundDatas(result.result.contents, isLast: result.result.isLast))
+                        }
+                ])
+                
             } else {
                 return .empty()
             }
+            
+        case .regionSearchBottomSheetScrollReachesBottom:
+            if currentState.regionInfoIsLast {
+                return .empty()
+            }
+            return provider.mapService.searchMapInfoRegion(regionId: currentState.searchRegionId ?? 0, page: currentState.regionInfoPage, size: 10).data().decode(type: RegionAroundMapSearchResponse.self, decoder: JSONDecoder())
+                .flatMap { result -> Observable<Mutation> in
+                    return .just(.setRegionAroundDatasAppend(result.result.contents, isLast: result.result.isLast))
+                }
 
         case .selectMapMarkerData(let storeId):
             return provider.mapService
@@ -338,6 +365,21 @@ final class MapReactor: Reactor, Stepper {
             if !isLast {
                 state.mapInfoPage += 1
             }
+        case .setRegionAroundDatas(let datas, let isLast):
+            state.regionSearchAroundDatas = datas
+            state.regionInfoPage = 0
+            state.regionInfoIsLast = isLast
+            if !isLast {
+                state.regionInfoPage += 1
+            }
+            
+        case .setRegionAroundDatasAppend(let datas, let isLast):
+            state.regionSearchAroundDatas += datas
+            state.regionInfoIsLast = isLast
+            if !isLast {
+                state.regionInfoPage += 1
+            }
+            
         case .setSearchInfo:
             break
         case .setMapMarkerSelectData(let data):

@@ -40,10 +40,9 @@ final class MapService: APIService {
     
     func searchMapInfoRegion(regionId: Int, page: Int, size: Int) -> Observable<DataRequest> {
         var params = Parameters()
-        params.updateValue(regionId, forKey: "regionId")
         params.updateValue(page, forKey: "page")
         params.updateValue(size, forKey: "size")
-        return request(.get, "maps/info/region", parameters: params, encoding: URLEncoding.default)
+        return request(.get, "maps/info/region/\(regionId)", parameters: params, encoding: URLEncoding.default)
     }
     
     func searchMapRegion(regionId: Int) -> Observable<DataRequest> {
