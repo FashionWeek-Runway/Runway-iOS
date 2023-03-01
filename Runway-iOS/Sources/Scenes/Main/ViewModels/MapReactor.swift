@@ -44,7 +44,7 @@ final class MapReactor: Reactor, Stepper {
         
         case setStoreSearchMarkerData(MapMarker?)
         case setStoreSearchInfoData(StoreInfo?)
-        case setRegionSearchDatas([RegionSearchResponseResult])
+        case setRegionSearchDatas([RegionSearchResponseResult], Int) // regionId를 함께 저장
         
         case setMapMarkerSelectData(MapMarkerSelectResponseResult)
         case setMapHistories([MapSearchHistory])
@@ -60,7 +60,7 @@ final class MapReactor: Reactor, Stepper {
         var mapMarkerSelectData: MapMarkerSelectResponseResult? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         
-        var regionSearchMarkerDatas: [RegionSearchResponseResult]? = nil
+        var regionSearchMarkerDatas: ([RegionSearchResponseResult], Int)? = nil
         var mapCategoryFilters: [String]
         var mapFilterSelected: [String: Bool]
         
@@ -279,13 +279,12 @@ final class MapReactor: Reactor, Stepper {
                 return provider.mapService.searchMapRegion(regionId: regionId)
                     .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
                     .flatMap { result -> Observable<Mutation> in
-                        return .just(.setRegionSearchDatas(result.result))
+                        return .just(.setRegionSearchDatas(result.result, regionId))
                     }
             } else {
                 return .empty()
             }
-            return .empty()
-            
+
         case .selectMapMarkerData(let storeId):
             return provider.mapService
                 .mapInfoBottomSheet(storeId: storeId).data().decode(type: MapMarkerSelectResponse.self, decoder: JSONDecoder())
@@ -324,8 +323,8 @@ final class MapReactor: Reactor, Stepper {
             if !isLast {
                 state.mapInfoPage += 1
             }
-        case .setRegionSearchDatas(let datas):
-            state.regionSearchMarkerDatas = datas
+        case .setRegionSearchDatas(let datas, let regionId):
+            state.regionSearchMarkerDatas = (datas, regionId)
             
         case .setStoreSearchInfoData(let data):
             state.storeSearchInfo = data

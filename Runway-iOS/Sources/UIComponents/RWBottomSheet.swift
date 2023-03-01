@@ -71,9 +71,11 @@ final class RWBottomSheet: UIView {
             case .normal:
                 self.sheetPanMinTopConstant = 138 + getSafeArea().top
                 backToMapButton.isHidden = true
+                self.bounds = CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - getSafeArea().top - 135)
             case .search:
                 self.sheetPanMinTopConstant = sheetPanCoverTopConstant
                 backToMapButton.isHidden = false
+                self.bounds = CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - getSafeArea().top - 51)
             }
         }
     }

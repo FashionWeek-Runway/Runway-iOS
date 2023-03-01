@@ -530,7 +530,7 @@ extension MapViewController: View {
         
         reactor.state.compactMap { $0.storeSearchInfo }
             .distinctUntilChanged({ lStoreInfo, rStoreInfo in
-                lStoreInfo.storeID != rStoreInfo.storeID
+                lStoreInfo.storeID == rStoreInfo.storeID
             })
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
@@ -544,9 +544,12 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.regionSearchMarkerDatas }
-            .subscribe(onNext: { [weak self] markerData in
+            .distinctUntilChanged({ lDatas, rDatas in // regionId로 구별
+                lDatas.1 == rDatas.1
+            })
+            .subscribe(onNext: { [weak self] (markerData, regionId) in
                 guard let self else { return }
-//                self.setSearchMode()
+                self.setSearchMode()
                 self.regionSearchMarkers.removeAll()
                 
                 DispatchQueue.global(qos: .default).async {
@@ -568,8 +571,14 @@ extension MapViewController: View {
                             return true
                         }
                         
+                        let lat = markerData.reduce(0.0, { $0 + $1.latitude }) / Double(markerData.count)
+                        let lng = markerData.reduce(0.0, { $0 + $1.longitude }) / Double(markerData.count)
+                        let cameraUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: lat, lng: lng ), zoom: 12.0))
+                        cameraUpdate.reason = 1000
+                        cameraUpdate.animation = .easeIn
                         DispatchQueue.main.async {
                             marker.mapView = self.mapView.mapView
+                            self.mapView.mapView.moveCamera(cameraUpdate)
                         }
                         return marker
                     }
