@@ -35,8 +35,6 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     }()
     private lazy var storeSearchBottomSheet: RWBottomSheet = {
         let sheet = RWBottomSheet()
-        sheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight()
-        sheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
         sheet.searchResultView.isHidden = false
         sheet.aroundView.isHidden = true
         sheet.aroundEmptyView.isHidden = true
@@ -88,7 +86,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    enum MapMode {
+    enum MapMode: String {
         case normal
         case storeSearch
         case regionSearch
@@ -96,6 +94,9 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     
     private var mapMode: MapMode = .normal {
         didSet {
+            if oldValue == mapMode {
+                return
+            }
             [bottomSheet, regionSearchBottomSheet, storeSearchBottomSheet].forEach { $0.showSheet(atState: .folded) }
             switch mapMode {
             case .normal:
@@ -221,6 +222,8 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                                                y: UIScreen.getDeviceHeight(),
                                                width: UIScreen.getDeviceWidth(),
                                                height: 276 + (self.tabBarController?.tabBar.frame.height ?? 0))
+        storeSearchBottomSheet.sheetPanMaxTopConstant = UIScreen.getDeviceHeight()
+        storeSearchBottomSheet.sheetPanMinTopConstant = UIScreen.getDeviceHeight() - view.getSafeArea().bottom - 276 - (self.tabBarController?.tabBar.frame.height ?? 0.0)
         
         setLocationButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
@@ -336,7 +339,10 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
-            .do(onNext: { [weak self] in self?.markers.forEach { $0.mapView = nil}})
+            .do(onNext: { [weak self] in
+                self?.markers.forEach { $0.mapView = nil }
+                self?.mapMode = .normal
+            })
             .map { Reactor.Action.exitButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -403,7 +409,6 @@ extension MapViewController: View {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 DispatchQueue.global(qos: .default).async {
-                    self?.markers.forEach { $0.mapView = nil }
                     let markers = markerData.map { data in
                         let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
                         marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
@@ -438,7 +443,6 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.aroundDatas }.share()
-            .distinctUntilChanged(at: \.first?.storeID)
             .bind(onNext: { [weak self] in self?.bottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
             .disposed(by: disposeBag)
         
@@ -451,7 +455,6 @@ extension MapViewController: View {
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         reactor.state.map { $0.regionSearchAroundDatas }.share()
-            .distinctUntilChanged(at: \.first?.storeID)
             .bind(onNext: { [weak self] in self?.regionSearchBottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
             .disposed(by: disposeBag)
         
@@ -461,16 +464,16 @@ extension MapViewController: View {
                 self?.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
                 self?.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                self?.storeSearchBottomSheet.showSheet(atState: .expanded)
             })
             .disposed(by: disposeBag)
         
         
         reactor.state.compactMap { $0.storeSearchMarker }
-//            .distinctUntilChanged(at: \.storeID)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 guard let self else { return }
-                self.setSearchMode(mode: .storeSearch)
+                self.mapMode = .storeSearch
                 self.addNavigationTitleLabel(markerData.storeName)
                 self.storeSearchBottomSheet.showSheet(atState: .expanded)
                 DispatchQueue.global(qos: .default).async {
@@ -486,7 +489,7 @@ extension MapViewController: View {
                     
                     marker.touchHandler = { [weak self] (overlay) -> Bool in
                         guard let self else { return true }
-                        if self.storeSearchBottomSheet.frame.origin.y < self.tabBarController?.tabBar.frame.origin.y ?? 0.0 {
+                        if self.storeSearchBottomSheet.frame.origin.y > self.tabBarController?.tabBar.frame.origin.y ?? 0.0 {
                             self.storeSearchBottomSheet.showSheet(atState: .expanded)
                         } else {
                             self.storeSearchBottomSheet.showSheet(atState: .folded)
@@ -518,11 +521,15 @@ extension MapViewController: View {
             })
             .disposed(by: disposeBag)
         
-        let markerDataObservable = reactor.state.compactMap { $0.regionSearchMarkerDatas }.observe(on: MainScheduler.instance)
+        let markerDataObservable = reactor.state.compactMap { $0.regionSearchMarkerDatas }
+            .observe(on: MainScheduler.instance)
             markerDataObservable.subscribe(onNext: { [weak self] markerData in
                 guard let self else { return }
-                self.setSearchMode(mode: .regionSearch)
-                self.markers.forEach { $0.mapView = nil }
+                self.mapMode = .regionSearch
+                if let regionName = self.reactor?.currentState.searchRegionName {
+                    self.regionSearchBottomSheet.aroundView.regionLabel.text = "[\(regionName)] 둘러보기"
+                    self.navigationTitleLabel.text = "\(regionName)"
+                }
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in
                         let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
@@ -538,7 +545,6 @@ extension MapViewController: View {
                             guard let self else { return true }
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self.reactor?.action.onNext(action)
-                            self.storeSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
                         
@@ -549,25 +555,16 @@ extension MapViewController: View {
                     }
                 }
                 
-                let lat = markerData.reduce(0.0, { $0 + $1.latitude }) / Double(markerData.count)
-                let lng = markerData.reduce(0.0, { $0 + $1.longitude }) / Double(markerData.count)
-                let cameraUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: lat, lng: lng ), zoom: 12.0))
-                cameraUpdate.animation = .easeIn
-                cameraUpdate.reason = 1000
-                self.mapView.mapView.moveCamera(cameraUpdate)
+                if self.reactor?.currentState.mapMarkerSelectData == nil {
+                    let lat = markerData.reduce(0.0, { $0 + $1.latitude }) / Double(markerData.count)
+                    let lng = markerData.reduce(0.0, { $0 + $1.longitude }) / Double(markerData.count)
+                    let cameraUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: lat, lng: lng ), zoom: 12.0))
+                    cameraUpdate.animation = .easeIn
+                    self.mapView.mapView.moveCamera(cameraUpdate)
+                }
                 
             })
             .disposed(by: disposeBag)
-    }
-    
-    private func setSearchMode(mode: MapMode) {
-        self.mapMode = mode
-        self.markers.forEach { $0.mapView = nil }
-    }
-    
-    private func setNormalMode() {
-        self.mapMode = .normal
-        self.markers.forEach { $0.mapView = self.mapView.mapView }
     }
 }
 

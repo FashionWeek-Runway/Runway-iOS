@@ -103,10 +103,10 @@ final class MapReactor: Reactor, Stepper {
         case .backButtonDidTap:
             guard let mapPosition else { return .empty()}
             steps.accept(AppStep.mapSearch(mapPosition))
-            return .empty()
+            return .just(.clearSearchMapDatas)
             
         case .exitButtonDidTap:
-            return .empty()
+            return .just(.clearSearchMapDatas)
             
         case .selectFilter(let filter):
             var filterDict = currentState.mapFilterSelected
@@ -298,9 +298,8 @@ final class MapReactor: Reactor, Stepper {
             state.mapInfoIsLast = false
             state.regionInfoPage = 0
             state.mapInfoPage = 0
+            state.storeSearchInfo = nil
         }
-        
         return state
     }
 }
-

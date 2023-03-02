@@ -221,16 +221,18 @@ final class MapSearchReactor: Reactor, Stepper {
         
         provider.mapService.searchMapRegion(regionId: regionId)
             .data().decode(type: RegionSearchResponse.self, decoder: JSONDecoder())
-            .bind(onNext: { [weak self] result in
-                self?.provider.mapService.event.accept(.region(.markerDatas(result.result)))
-            }).disposed(by: disposeBag)
-        
-            
-        provider.mapService.searchMapInfoRegion(regionId: regionId, page: 0, size: 10)
-            .data().decode(type: RegionAroundMapSearchResponse.self, decoder: JSONDecoder())
-            .bind(onNext: { [weak self] result  in
-                self?.provider.mapService.event.accept(.region(.sheetDatas(result.result, regionId, regionName)))
-                self?.steps.accept(AppStep.cancelMapSearch)
+            .bind(onNext: { [weak self] markerResult in
+                guard let self else { return }
+                
+                self.provider.mapService.searchMapInfoRegion(regionId: regionId, page: 0, size: 10)
+                    .data().decode(type: RegionAroundMapSearchResponse.self, decoder: JSONDecoder())
+                    .subscribe(onNext: { result in
+                        self.provider.mapService.event.accept(.region(.markerDatas(markerResult.result)))
+                        self.provider.mapService.event.accept(.region(.sheetDatas(result.result, regionId, regionName)))
+                        self.steps.accept(AppStep.cancelMapSearch)
+                    }).disposed(by: self.disposeBag)
+                
+                
             }).disposed(by: disposeBag)
     }
 }
