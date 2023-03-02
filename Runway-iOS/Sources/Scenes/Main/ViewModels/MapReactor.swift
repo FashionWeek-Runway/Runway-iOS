@@ -48,8 +48,6 @@ final class MapReactor: Reactor, Stepper {
         case setRegionAroundDatasAppend([StoreInfo], isLast: Bool)
         
         case setMapMarkerSelectData(StoreInfo)
-        
-        case setSearchInfo
     }
     
     struct State {
@@ -129,7 +127,7 @@ final class MapReactor: Reactor, Stepper {
         case .searchFieldDidTap:
             guard let mapPosition = mapPosition else { return .empty() }
             steps.accept(AppStep.mapSearch(mapPosition))
-            return .empty()
+            return .just(.clearSearchMapDatas)
             
         case .searchButtonDidTap:
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
@@ -137,6 +135,8 @@ final class MapReactor: Reactor, Stepper {
                                                       latitude: self.mapPosition?.0 ?? 0.0,
                                                       longitude: self.mapPosition?.1 ?? 0.0)
             return Observable.concat([
+                .just(.clearSearchMapDatas),
+                
                 provider.mapService.filterMap(data: mapFilterData).data()
                     .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
                     .flatMap { [weak self] data -> Observable<Mutation> in
@@ -284,8 +284,6 @@ final class MapReactor: Reactor, Stepper {
                 state.regionInfoPage += 1
             }
             
-        case .setSearchInfo:
-            break
         case .setMapMarkerSelectData(let data):
             state.mapMarkerSelectData = data
             
@@ -293,7 +291,6 @@ final class MapReactor: Reactor, Stepper {
             state.storeSearchMarker = nil
             state.mapMarkerSelectData = nil
             state.regionSearchMarkerDatas = nil
-            
             state.regionInfoIsLast = false
             state.mapInfoIsLast = false
             state.regionInfoPage = 0

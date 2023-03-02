@@ -465,7 +465,6 @@ extension MapViewController: View {
                 self?.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
                 self?.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
-                self?.storeSearchBottomSheet.showSheet(atState: .expanded)
             })
             .disposed(by: disposeBag)
         
@@ -517,8 +516,6 @@ extension MapViewController: View {
                 self.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: url)
                 self.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
-                
-                self.storeSearchBottomSheet.showSheet(atState: .expanded)
             })
             .disposed(by: disposeBag)
         
