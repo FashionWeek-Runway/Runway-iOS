@@ -46,6 +46,8 @@ extension UIFont {
     
     static let button1 = UIFont.font(.spoqaHanSansNeoMedium, ofSize: 16)
     
+    static let button2 = UIFont.font(.spoqaHanSansNeoMedium, ofSize: 12)
+    
     static func font(_ style: FontName, ofSize size: CGFloat) -> UIFont {
         return UIFont(name: style.rawValue, size: size)!
     }
