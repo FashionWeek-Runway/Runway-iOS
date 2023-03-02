@@ -408,7 +408,6 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] markerData in
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in

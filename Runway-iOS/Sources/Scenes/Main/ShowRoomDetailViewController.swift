@@ -30,7 +30,8 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addBackButton()
+//        backButton.setBackgroundImage(UIImage(named: <#T##String#>), for: <#T##UIControl.State#>)
     }
     
     override func configureUI() {

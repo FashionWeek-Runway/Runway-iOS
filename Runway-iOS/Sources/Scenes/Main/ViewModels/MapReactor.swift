@@ -85,7 +85,7 @@ final class MapReactor: Reactor, Stepper {
     let categoryFilterList: [String] = ["bookmark"] + MainMapCategory.allCategoryString.split(separator: ",").map { String($0) }
     
     // 맵에 표시될 마커들을 캐싱
-    let markerCache = NSCacheManager<MapMarkerData>()
+//    let markerCache = NSCacheManager<MapMarkerData>()
     
     var mapPosition: (Double, Double)? = nil
     
@@ -137,18 +137,8 @@ final class MapReactor: Reactor, Stepper {
             return Observable.concat([
                 provider.mapService.filterMap(data: mapFilterData).data()
                     .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
-                    .flatMap { [weak self] data -> Observable<Mutation> in
-                        var isDatasAllCached = true
-                        for markerData in data.result {
-                            if self?.markerCache.fetchObject(name: String(markerData.storeID)) == nil {
-                                isDatasAllCached = false
-                                let marker = MapMarkerData(storeID: markerData.storeID, storeName: markerData.storeName, bookmark: markerData.bookmark, latitude: markerData.latitude, longitude: markerData.longitude)
-                                self?.markerCache.saveObject(object: marker, forKey: String(markerData.storeID))
-                            }
-                        }
-                        
-                        // 모든 데이터가 캐싱 -> empty 방출
-                        return isDatasAllCached ? .empty() : .just(.setMapMarkers(data.result))
+                    .flatMap { data -> Observable<Mutation> in
+                        return .just(.setMapMarkers(data.result))
                     },
                 provider.mapService.mapInfo(data: mapFilterData, page: 0, size: 10).data()
                     .decode(type: AroundMapSearchResponse.self, decoder: JSONDecoder())
