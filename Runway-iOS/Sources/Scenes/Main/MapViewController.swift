@@ -334,6 +334,7 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
         
         backButton.rx.tap
+            .do(onNext: {[weak self] in self?.mapMode = .normal})
             .map { Reactor.Action.backButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
