@@ -379,9 +379,9 @@ extension MapViewController: View {
             .asDriver()
             .drive(onNext: { [weak self] in
                 guard let self else { return }
-                let height = self.bottomSheet.aroundView.collectionView.frame.height
-                let contentHeight = self.bottomSheet.aroundView.collectionView.contentSize.height
-                let reachesBottom = (self.bottomSheet.aroundView.collectionView.contentOffset.y > contentHeight - height)
+                let height = self.regionSearchBottomSheet.aroundView.collectionView.frame.height
+                let contentHeight = self.regionSearchBottomSheet.aroundView.collectionView.contentSize.height
+                let reachesBottom = (self.regionSearchBottomSheet.aroundView.collectionView.contentOffset.y > contentHeight - height)
                 
                 if reachesBottom {
                     self.reactor?.action.onNext(.regionSearchBottomSheetScrollReachesBottom)

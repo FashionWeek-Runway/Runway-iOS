@@ -127,7 +127,7 @@ final class MapReactor: Reactor, Stepper {
         case .searchFieldDidTap:
             guard let mapPosition = mapPosition else { return .empty() }
             steps.accept(AppStep.mapSearch(mapPosition))
-            return .just(.clearSearchMapDatas)
+            return .empty()
             
         case .searchButtonDidTap:
             let selectedCategories = Array(currentState.mapFilterSelected.filter({ $0.value == true }).keys)
@@ -135,8 +135,6 @@ final class MapReactor: Reactor, Stepper {
                                                       latitude: self.mapPosition?.0 ?? 0.0,
                                                       longitude: self.mapPosition?.1 ?? 0.0)
             return Observable.concat([
-                .just(.clearSearchMapDatas),
-                
                 provider.mapService.filterMap(data: mapFilterData).data()
                     .decode(type: MapWithCategorySearchResponse.self, decoder: JSONDecoder())
                     .flatMap { [weak self] data -> Observable<Mutation> in
