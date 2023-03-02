@@ -181,6 +181,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         self.view.addSubviews([mapView, mapSearchBar, searchButton, setLocationButton, bottomSheet, regionSearchBottomSheet, storeSearchBottomSheet, navigationBarArea, bottomSafeAreaView])
         addBackButton()
         addExitButton()
+        addNavigationTitleLabel()
         
         navigationBarArea.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
@@ -434,7 +435,7 @@ extension MapViewController: View {
                 }
             }).disposed(by: disposeBag)
         
-        reactor.state.map { $0.aroundDatas }.share()
+        reactor.state.map { $0.aroundDatas }
             .bind(to: bottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
@@ -443,11 +444,7 @@ extension MapViewController: View {
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.aroundDatas }.share()
-            .bind(onNext: { [weak self] in self?.bottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.regionSearchAroundDatas }.share()
+        reactor.state.map { $0.regionSearchAroundDatas }
             .bind(to: regionSearchBottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
@@ -455,9 +452,6 @@ extension MapViewController: View {
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
-        reactor.state.map { $0.regionSearchAroundDatas }.share()
-            .bind(onNext: { [weak self] in self?.regionSearchBottomSheet.aroundEmptyView.isHidden = !$0.isEmpty })
-            .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.mapMarkerSelectData }
             .subscribe(onNext: { [weak self] data in
@@ -526,7 +520,7 @@ extension MapViewController: View {
                 self.mapMode = .regionSearch
                 if let regionName = self.reactor?.currentState.searchRegionName {
                     self.regionSearchBottomSheet.aroundView.regionLabel.text = "[\(regionName)] 둘러보기"
-                    self.navigationTitleLabel.text = "\(regionName)"
+                    self.navigationTitleLabel.text = regionName
                 }
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in
@@ -543,6 +537,7 @@ extension MapViewController: View {
                             guard let self else { return true }
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self.reactor?.action.onNext(action)
+                            self.storeSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
                         
