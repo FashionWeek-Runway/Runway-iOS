@@ -12,6 +12,8 @@ import ReactorKit
 
 import Kingfisher
 
+import SafariServices
+
 final class ShowRoomDetailViewController: BaseViewController {
     
     private let scrollView: UIScrollView = {
@@ -456,6 +458,18 @@ extension ShowRoomDetailViewController: View {
         bookmarkButton.rx.tap.map { Reactor.Action.bookmarkButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        blogReviewTableView.rx.modelSelected(ShowRoomBlogsResponseResult.self)
+            .asDriver()
+            .drive(onNext: { [weak self] item in
+                guard let url = URL(string: item.webURL) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ShowRoomDetailReactor) {
@@ -528,6 +542,7 @@ extension ShowRoomDetailViewController: View {
             })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
+                cell.selectionStyle = .none
                 cell.blogImageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
                                                                            attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
