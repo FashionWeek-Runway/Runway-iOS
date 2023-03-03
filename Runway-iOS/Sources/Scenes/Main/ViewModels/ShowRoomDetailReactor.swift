@@ -17,37 +17,36 @@
 //
 //final class ShowRoomDetailReactor: Reactor, Stepper {
 //    // MARK: - Events
-//    
+//
 //    enum Action {
 //        case viewWillAppear
-//    }
-//    
+//
 //    enum Mutation {
 //        case setShowRoomImageUrl(String)
 //    }
-//    
+//
 //    struct State {
 //        var showRoomImageURL: String? = nil
 //    }
-//    
+//
 //    // MARK: - Properties
-//    
+//
 //    var steps = PublishRelay<Step>()
-//    
+//
 //    let initialState: State
 //    let provider: ServiceProviderType
-//    
+//
 //    private let disposeBag = DisposeBag()
-//    
+//
 //    let storeId: Int
-//    
+//
 //    // MARK: - initializer
 //    init(provider: ServiceProviderType, storeId: Int) {
 //        self.provider = provider
 //        self.initialState = State()
 //        self.storeId = storeId
 //    }
-//    
+//
 //    func mutate(action: Action) -> Observable<Mutation> {
 //        switch action {
 //        case .viewWillAppear:
@@ -57,7 +56,7 @@
 //            ])
 //        }
 //    }
-//    
+//
 //    func reduce(state: State, mutation: Mutation) -> State {
 //
 //    }
