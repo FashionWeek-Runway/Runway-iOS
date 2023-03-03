@@ -237,6 +237,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         topArea.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
+        setGradientImageView()
     }
     
     override func configureUI() {
@@ -442,7 +443,14 @@ final class ShowRoomDetailViewController: BaseViewController {
     }
     
     private func setGradientImageView() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.locations = [0, 1]
+        gradientLayer.frame = CGRect(x: 0, y: imageView.frame.height-21, width: imageView.bounds.width, height: 21)
         
+        imageView.layer.addSublayer(gradientLayer)
     }
 }
 
