@@ -139,6 +139,7 @@ final class ShowRoomDetailViewController: BaseViewController {
                                                                                    .foregroundColor: UIColor.primary]), for: .normal)
         button.setImage(UIImage(named: "icon_camera"), for: .normal)
         button.imageEdgeInsets.right = 2
+        return button
     }()
 
     private let reviewCollectionView: UICollectionView = {
