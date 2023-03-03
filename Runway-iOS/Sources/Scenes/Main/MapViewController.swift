@@ -473,6 +473,7 @@ extension MapViewController: View {
                 guard let url = URL(string: data.storeImage) else { return }
                 self?.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
                 self?.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self?.storeSearchBottomSheet.searchResultView.storeId = data.storeID
                 self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             })
             .disposed(by: disposeBag)

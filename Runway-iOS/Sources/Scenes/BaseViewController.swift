@@ -116,9 +116,8 @@ class BaseViewController: UIViewController {
         self.view.addSubviews([self.keyboardWrapperView, self.keyboardSafeAreaView])
         self.keyboardSafeAreaView.addSubview(self.navigationBarArea)
         self.navigationBarArea.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.height.equalTo(54).priority(.required)
+            $0.leading.trailing.top.equalToSuperview()
+            $0.height.equalTo(54 + view.getSafeArea().top).priority(.required)
         }
         
         RxKeyboard.instance.visibleHeight

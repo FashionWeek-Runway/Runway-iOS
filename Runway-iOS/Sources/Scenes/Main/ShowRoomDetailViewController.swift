@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
+import Kingfisher
+
 final class ShowRoomDetailViewController: BaseViewController {
 
     private let scrollView: UIScrollView = {
@@ -45,7 +47,7 @@ final class ShowRoomDetailViewController: BaseViewController {
 
     private let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleToFill
         return view
     }()
 
@@ -138,7 +140,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         button.setAttributedTitle(NSAttributedString(string: "후기 작성", attributes: [.font: UIFont.body1M,
                                                                                    .foregroundColor: UIColor.primary]), for: .normal)
         button.setImage(UIImage(named: "icon_camera"), for: .normal)
-        button.imageEdgeInsets.right = 2
+        button.imageEdgeInsets.right = 6
         return button
     }()
 
@@ -205,10 +207,6 @@ final class ShowRoomDetailViewController: BaseViewController {
         setRx()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func configureUI() {
         super.configureUI()
         backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
@@ -219,9 +217,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         }
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalToSuperview().priority(.high)
+            $0.width.centerX.horizontalEdges.equalToSuperview()
         }
 
         containerView.addSubviews([imageView,
@@ -282,6 +278,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         addressLabel.snp.makeConstraints {
             $0.leading.equalTo(locationIcon.snp.trailing).offset(8)
             $0.top.equalTo(tagCollectionView.snp.bottom).offset(16)
+            $0.trailing.equalToSuperview().offset(-100)
         }
 
         copyButton.snp.makeConstraints {
@@ -296,7 +293,7 @@ final class ShowRoomDetailViewController: BaseViewController {
 
         timeLabel.snp.makeConstraints {
             $0.leading.equalTo(timeIcon.snp.trailing).offset(8)
-            $0.top.equalTo(timeIcon.snp.top)
+            $0.top.equalTo(timeIcon.snp.top).offset(1)
         }
 
         phoneIcon.snp.makeConstraints {
@@ -306,27 +303,27 @@ final class ShowRoomDetailViewController: BaseViewController {
 
         phoneLabel.snp.makeConstraints {
             $0.leading.equalTo(phoneIcon.snp.trailing).offset(8)
-            $0.top.equalTo(phoneIcon.snp.bottom).offset(1)
+            $0.top.equalTo(phoneIcon.snp.top).offset(1)
         }
 
         instagramIcon.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(phoneIcon.snp.bottom).offset(12)
+            $0.top.equalTo(phoneLabel.snp.bottom).offset(11)
         }
 
         instagramLabel.snp.makeConstraints {
             $0.leading.equalTo(instagramIcon.snp.trailing).offset(8)
-            $0.top.equalTo(phoneLabel.snp.bottom).offset(10)
+            $0.top.equalTo(instagramIcon.snp.top).offset(1)
         }
 
         webIcon.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(instagramIcon.snp.bottom).offset(12)
+            $0.top.equalTo(instagramLabel.snp.bottom).offset(11)
         }
 
         webLabel.snp.makeConstraints {
             $0.leading.equalTo(webIcon.snp.trailing).offset(8)
-            $0.top.equalTo(instagramLabel.snp.bottom).offset(10)
+            $0.top.equalTo(webIcon.snp.top).offset(1)
         }
 
         divider.snp.makeConstraints {
@@ -346,8 +343,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         }
 
         reviewCollectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(userReviewLabel.snp.bottom).offset(23)
             $0.height.equalTo(200)
         }
@@ -366,13 +362,14 @@ final class ShowRoomDetailViewController: BaseViewController {
         blogReviewTableView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(blogReviewLabel.snp.bottom).offset(16)
+            $0.height.equalTo(10)
         }
 
         moreButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(blogReviewTableView.snp.bottom)
             $0.height.equalTo(44)
-            $0.bottom.equalTo(view.getSafeArea().bottom).offset(-50)
+            $0.bottom.equalToSuperview().offset(-50)
         }
     }
 
@@ -396,12 +393,24 @@ extension ShowRoomDetailViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         bookmarkButton.rx.tap.map { Reactor.Action.bookmarkButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
 
     private func bindState(reactor: ShowRoomDetailReactor) {
+        reactor.state.compactMap { $0.mainImageURL }
+            .distinctUntilChanged()
+            .bind(onNext: {[weak self] in
+                guard let url = URL(string: $0) else { return }
+                self?.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+            }).disposed(by: disposeBag)
+        
         reactor.state.map { $0.title }
             .distinctUntilChanged()
             .bind(to: showRoomTitleLabel.rx.text)
@@ -442,14 +451,19 @@ extension ShowRoomDetailViewController: View {
         reactor.state.map { $0.userReviewImages }
             .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.1) else { return }
-                cell.imageView.kf.setImage(with: url)
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.reviewId = item.0
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.blogReviews }
+        reactor.pulse(\.$blogReviews)
+            .do(onNext: {[weak self] items in
+                self?.blogReviewTableView.snp.updateConstraints {
+                    $0.height.equalTo(items.count * 136)
+                }
+            })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
-                cell.blogImageView.kf.setImage(with: url)
+                cell.blogImageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
                                                                            attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
                 cell.titleLabel.text = item.title

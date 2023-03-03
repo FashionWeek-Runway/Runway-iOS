@@ -20,10 +20,9 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
 
     enum Action {
         case viewWillAppear
-        
-        case userReviewScrollReachesBottom
-        
+        case backButtonDidTap
         case bookmarkButtonDidTap
+        case userReviewScrollReachesBottom
     }
 
     enum Mutation {
@@ -46,7 +45,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         
         @Pulse var userReviewImages: [(Int, String)] = []
         
-        var blogReviews: [ShowRoomBlogsResponseResult] = []
+        @Pulse var blogReviews: [ShowRoomBlogsResponseResult] = []
         
         var userReviewPage: Int = 0
         var userReviewIsLast: Bool = false
@@ -76,16 +75,25 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             return Observable.concat([
                 provider.showRoomService.storeDetail(storeId: storeId)
                     .data().decode(type: ShowRoomDetailResponse.self, decoder: JSONDecoder())
-                    .map { Mutation.setStoreDetailInfo($0.result) },
-                
-                provider.showRoomService.storeBlogs(storeId: storeId, storeName: currentState.title)
-                    .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
-                    .map { Mutation.setBlogReviews($0.result)},
+                    .flatMap { [weak self] data -> Observable<Mutation> in
+                        guard let self else { return .empty() }
+                        
+                        return Observable.concat([
+                            .just(.setStoreDetailInfo(data.result)),
+                            self.provider.showRoomService.storeBlogs(storeId: self.storeId, storeName: data.result.storeName)
+                                .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
+                                .map { Mutation.setBlogReviews($0.result) }
+                        ])
+                        },
                 
                 provider.showRoomService.storeReview(storeId: storeId, page: 0, size: 5)
                     .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())
                     .map { Mutation.setStoreReview($0.result)}
             ])
+            
+        case .backButtonDidTap:
+            steps.accept(AppStep.back)
+            return .empty()
             
         case .bookmarkButtonDidTap:
             return .empty()
