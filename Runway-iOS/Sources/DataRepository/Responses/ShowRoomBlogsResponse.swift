@@ -25,6 +25,6 @@ struct ShowRoomBlogsResponseResult: Codable {
         case webURL = "webUrl"
         case imageURL = "imgUrl"
         case title, content
-        case imageCount = "imageCount"
+        case imageCount = "imgCnt"
     }
 }

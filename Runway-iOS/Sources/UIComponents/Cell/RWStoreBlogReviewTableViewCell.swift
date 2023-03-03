@@ -11,7 +11,7 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
     
     let blogImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleToFill
         return view
     }()
     

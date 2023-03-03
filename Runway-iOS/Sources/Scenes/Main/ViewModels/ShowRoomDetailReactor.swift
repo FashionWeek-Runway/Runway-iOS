@@ -68,7 +68,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         self.initialState = State()
         self.storeId = storeId
     }
-
+    
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewWillAppear:
@@ -142,7 +142,6 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             
         case .setBlogReviews(let results):
             state.blogReviews = results
-            
         }
         
         return state
