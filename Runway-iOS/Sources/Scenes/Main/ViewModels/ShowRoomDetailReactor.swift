@@ -43,9 +43,9 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         var instagramID: String = ""
         var webSiteLink: String = ""
         
-        @Pulse var userReviewImages: [(Int, String)] = []
+        var userReviewImages: [(Int, String)] = []
         
-        @Pulse var blogReviews: [ShowRoomBlogsResponseResult] = []
+        var blogReviews: [ShowRoomBlogsResponseResult] = []
         
         var userReviewPage: Int = 0
         var userReviewIsLast: Bool = false
@@ -78,13 +78,15 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
                     .flatMap { [weak self] data -> Observable<Mutation> in
                         guard let self else { return .empty() }
                         
-                        return Observable.concat([
-                            .just(.setStoreDetailInfo(data.result)),
-                            self.provider.showRoomService.storeBlogs(storeId: self.storeId, storeName: data.result.storeName)
-                                .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
-                                .map { Mutation.setBlogReviews($0.result) }
-                        ])
-                        },
+                        return self.provider.showRoomService.storeBlogs(storeId: self.storeId, storeName: data.result.storeName)
+                            .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
+                            .flatMap { blogData -> Observable<Mutation> in
+                                Observable.concat([
+                                    .just(.setBlogReviews(blogData.result)),
+                                    .just(.setStoreDetailInfo(data.result))
+                                ])
+                            }
+                    },
                 
                 provider.showRoomService.storeReview(storeId: storeId, page: 0, size: 5)
                     .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())

@@ -30,7 +30,8 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let topArea: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+//        view.backgroundColor = .clear
+        view.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.7), colorBottom: .clear)
         return view
     }()
     
@@ -509,7 +510,8 @@ extension ShowRoomDetailViewController: View {
                 cell.reviewId = item.0
             }.disposed(by: disposeBag)
         
-        reactor.pulse(\.$blogReviews)
+        reactor.state.map { $0.blogReviews }
+            .filter { !$0.isEmpty }
             .do(onNext: {[weak self] items in
                 DispatchQueue.main.async {
                     self?.blogReviewTableView.snp.updateConstraints {
