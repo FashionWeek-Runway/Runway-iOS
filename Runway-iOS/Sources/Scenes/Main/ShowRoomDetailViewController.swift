@@ -430,6 +430,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         [reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel].forEach { $0.isHidden = false }
         reviewCollectionView.isHidden = true
     }
+    
+    private func setUserReviews() {
+        [reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel].forEach { $0.isHidden = true }
+        reviewCollectionView.isHidden = false
+    }
 }
 
 extension ShowRoomDetailViewController: View {
@@ -499,9 +504,11 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.userReviewImages }
-            .do(onNext: {[weak self] in
-                if $0.count == 0 {
+            .do(onNext: { [weak self] in
+                if $0.isEmpty {
                     self?.setUserReviewsIfEmpty()
+                } else {
+                    self?.setUserReviews()
                 }
             })
             .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
@@ -509,7 +516,7 @@ extension ShowRoomDetailViewController: View {
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.reviewId = item.0
             }.disposed(by: disposeBag)
-        
+
         reactor.state.map { $0.blogReviews }
             .filter { !$0.isEmpty }
             .do(onNext: {[weak self] items in
