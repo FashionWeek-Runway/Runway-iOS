@@ -45,11 +45,9 @@ enum AppStep: Step {
     // Main
     case homeTab
     
-    
-    
     case mapTab
     case mapSearch((Double, Double))
-    case cancelMapSearch
+    case showRoomDetail(Int)
     
     
     

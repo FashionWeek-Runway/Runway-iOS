@@ -36,8 +36,10 @@ final class MapFlow: Flow {
             return coordinateToMapTabScreen()
         case .mapSearch(let location):
             return coordinateToMapSearchScreen(mapLocation: location)
-        case .cancelMapSearch:
-            return backToMapTabScreen()
+        case .showRoomDetail(let storeId):
+            return coordinateToShowRoomDetail(storeId: storeId)
+        case .back:
+            return back()
         default:
             return .none
         }
@@ -57,7 +59,14 @@ final class MapFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func backToMapTabScreen() -> FlowContributors {
+    private func coordinateToShowRoomDetail(storeId: Int) -> FlowContributors {
+        let reactor = ShowRoomDetailReactor(provider: provider, storeId: storeId)
+        let viewController = ShowRoomDetailViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func back() -> FlowContributors {
         self.rootViewController.popViewController(animated: false)
         return.none
     }

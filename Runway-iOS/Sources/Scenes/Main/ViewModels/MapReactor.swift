@@ -31,6 +31,8 @@ final class MapReactor: Reactor, Stepper {
         case selectMapMarkerData(Int)
         case bottomSheetScrollReachesBottom
         case regionSearchBottomSheetScrollReachesBottom
+        
+        case storeCellSelected(Int)
     }
     
     enum Mutation {
@@ -189,6 +191,10 @@ final class MapReactor: Reactor, Stepper {
         case .mapViewCameraPositionDidChanged(let position):
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
             self.mapPosition = position
+            return .empty()
+            
+        case .storeCellSelected(let storeId):
+            steps.accept(AppStep.showRoomDetail(storeId))
             return .empty()
         }
     }

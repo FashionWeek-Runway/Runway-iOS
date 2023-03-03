@@ -388,6 +388,22 @@ extension MapViewController: View {
                     self.reactor?.action.onNext(.regionSearchBottomSheetScrollReachesBottom)
                 }
             }).disposed(by: disposeBag)
+        
+        bottomSheet.aroundView.collectionView.rx.modelSelected(Int.self)
+            .map { Reactor.Action.storeCellSelected($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        storeSearchBottomSheet.searchResultView.rx.tapGesture()
+            .when(.recognized)
+            .map { [weak self] _ in Reactor.Action.storeCellSelected(self?.storeSearchBottomSheet.searchResultView.storeId ?? 0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        regionSearchBottomSheet.aroundView.collectionView.rx.modelSelected(Int.self)
+            .map { Reactor.Action.storeCellSelected($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: MapReactor) {

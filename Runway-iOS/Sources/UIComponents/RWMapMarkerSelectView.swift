@@ -41,6 +41,8 @@ final class RWMapMarkerSelectView: UIView {
     
     let tagRelay = PublishRelay<[String]>()
     
+    var storeId: Int? = nil
+    
     private var disposeBag = DisposeBag()
     
     // MARK: - Life Cycle
