@@ -1,63 +1,142 @@
-////
-////  ShowRoomDetailReactor.swift
-////  Runway-iOS
-////
-////  Created by 김인환 on 2023/02/27.
-////
 //
-//import Foundation
+//  ShowRoomDetailReactor.swift
+//  Runway-iOS
 //
-//import ReactorKit
-//import RxFlow
-//import RxSwift
-//import RxCocoa
+//  Created by 김인환 on 2023/02/27.
 //
-//import Alamofire
-//
-//
-//final class ShowRoomDetailReactor: Reactor, Stepper {
-//    // MARK: - Events
-//
-//    enum Action {
-//        case viewWillAppear
-//
-//    enum Mutation {
-//        case setShowRoomImageUrl(String)
-//    }
-//
-//    struct State {
-//        var showRoomImageURL: String? = nil
-//    }
-//
-//    // MARK: - Properties
-//
-//    var steps = PublishRelay<Step>()
-//
-//    let initialState: State
-//    let provider: ServiceProviderType
-//
-//    private let disposeBag = DisposeBag()
-//
-//    let storeId: Int
-//
-//    // MARK: - initializer
-//    init(provider: ServiceProviderType, storeId: Int) {
-//        self.provider = provider
-//        self.initialState = State()
-//        self.storeId = storeId
-//    }
-//
-//    func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//        case .viewWillAppear:
-//            return Observable.concat([
-//                provider.showRoomService.storeDetail(storeId: storeId)
-//                    .data().decode(type: <#T##Decodable.Protocol#>, decoder: JSONDecoder())
-//            ])
-//        }
-//    }
-//
-//    func reduce(state: State, mutation: Mutation) -> State {
-//
-//    }
-//}
+
+import Foundation
+
+import ReactorKit
+import RxFlow
+import RxSwift
+import RxCocoa
+
+import Alamofire
+
+
+final class ShowRoomDetailReactor: Reactor, Stepper {
+    // MARK: - Events
+
+    enum Action {
+        case viewWillAppear
+        
+        case userReviewScrollReachesBottom
+        
+        case bookmarkButtonDidTap
+    }
+
+    enum Mutation {
+        case setStoreDetailInfo(ShowRoomDetailResponseResult)
+        case setStoreReview(UserReviewResponseResult)
+        case setStoreReviewAppend(UserReviewResponseResult)
+        
+        case setBlogReviews([ShowRoomBlogsResponseResult])
+    }
+
+    struct State {
+        var mainImageURL: String? = nil
+        var title: String = ""
+        var categories: [String] = []
+        var address: String = ""
+        var timeInfo: String = ""
+        var phoneNumber: String = ""
+        var instagramID: String = ""
+        var webSiteLink: String = ""
+        
+        @Pulse var userReviewImages: [(Int, String)] = []
+        
+        var blogReviews: [ShowRoomBlogsResponseResult] = []
+        
+        var userReviewPage: Int = 0
+        var userReviewIsLast: Bool = false
+    }
+
+    // MARK: - Properties
+
+    var steps = PublishRelay<Step>()
+
+    let initialState: State
+    let provider: ServiceProviderType
+
+    private let disposeBag = DisposeBag()
+
+    let storeId: Int
+
+    // MARK: - initializer
+    init(provider: ServiceProviderType, storeId: Int) {
+        self.provider = provider
+        self.initialState = State()
+        self.storeId = storeId
+    }
+
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .viewWillAppear:
+            return Observable.concat([
+                provider.showRoomService.storeDetail(storeId: storeId)
+                    .data().decode(type: ShowRoomDetailResponse.self, decoder: JSONDecoder())
+                    .map { Mutation.setStoreDetailInfo($0.result) },
+                
+                provider.showRoomService.storeBlogs(storeId: storeId, storeName: currentState.title)
+                    .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
+                    .map { Mutation.setBlogReviews($0.result)},
+                
+                provider.showRoomService.storeReview(storeId: storeId, page: 0, size: 5)
+                    .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())
+                    .map { Mutation.setStoreReview($0.result)}
+            ])
+            
+        case .bookmarkButtonDidTap:
+            return .empty()
+            
+        case .userReviewScrollReachesBottom:
+            if currentState.userReviewIsLast {
+                return .empty()
+            } else {
+                return provider.showRoomService.storeReview(storeId: storeId, page: currentState.userReviewPage, size: 5)
+                    .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())
+                    .map { Mutation.setStoreReviewAppend($0.result)}
+            }
+        }
+        
+
+    }
+
+    func reduce(state: State, mutation: Mutation) -> State {
+        var state = state
+
+        switch mutation {
+        case .setStoreDetailInfo(let result):
+            state.mainImageURL = result.imageURLList.first
+            state.title = result.storeName
+            state.categories = result.category
+            state.address = result.address
+            state.timeInfo = result.storeTime
+            state.phoneNumber = result.storePhone
+            state.instagramID = result.instagram
+            state.webSiteLink = result.webSite
+            
+        case .setStoreReview(let result):
+            state.userReviewPage = 0
+            state.userReviewImages = result.contents.map { ($0.reviewID, $0.imgURL) }
+            state.userReviewIsLast = result.isLast
+            if !result.isLast {
+                state.userReviewPage += 1
+            }
+            
+        case .setStoreReviewAppend(let result):
+            state.userReviewImages = result.contents.map { ($0.reviewID, $0.imgURL) }
+            state.userReviewIsLast = result.isLast
+            if !result.isLast {
+                state.userReviewPage += 1
+            }
+            
+        case .setBlogReviews(let results):
+            state.blogReviews = results
+            
+        }
+        
+        return state
+    }
+}

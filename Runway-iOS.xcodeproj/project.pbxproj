@@ -24,6 +24,11 @@
 		1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939390329A14E3E0037810A /* AppleLoginResponse.swift */; };
 		1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */; };
 		193EEB042996C4B50093831A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EEB032996C4B50093831A /* BaseViewController.swift */; };
+		1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */; };
+		1941DFE029B2465400C7F5BA /* UserReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */; };
+		1941DFE229B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */; };
+		1941DFE429B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */; };
+		1941DFE629B2522B00C7F5BA /* RWContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */; };
 		1948130429AF61DC00C1110D /* RegionAroundMapSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */; };
 		194F95452993B7890016DDFF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95442993B7890016DDFF /* LoginService.swift */; };
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
@@ -56,6 +61,7 @@
 		19917EF12994DC440016A175 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF02994DC440016A175 /* AppStep.swift */; };
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
+		19938A1729B2026D00234C5D /* ShowRoomDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19938A1629B2026D00234C5D /* ShowRoomDetailResponse.swift */; };
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
 		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
@@ -186,6 +192,11 @@
 		1939390329A14E3E0037810A /* AppleLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginResponse.swift; sourceTree = "<group>"; };
 		1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneResponse.swift; sourceTree = "<group>"; };
 		193EEB032996C4B50093831A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReviewResponse.swift; sourceTree = "<group>"; };
+		1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRoomBlogsResponse.swift; sourceTree = "<group>"; };
+		1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWStoreBlogReviewTableViewCell.swift; sourceTree = "<group>"; };
+		1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWContentSizedTableView.swift; sourceTree = "<group>"; };
 		1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionAroundMapSearchResponse.swift; sourceTree = "<group>"; };
 		194F95442993B7890016DDFF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
@@ -222,6 +233,7 @@
 		19917EF02994DC440016A175 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
+		19938A1629B2026D00234C5D /* ShowRoomDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailResponse.swift; sourceTree = "<group>"; };
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
 		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
@@ -401,6 +413,9 @@
 				199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */,
 				19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */,
 				1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */,
+				19938A1629B2026D00234C5D /* ShowRoomDetailResponse.swift */,
+				1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */,
+				1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -495,6 +510,8 @@
 				19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */,
 				19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */,
 				19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */,
+				1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */,
+				1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -613,6 +630,7 @@
 				19F10C7A29A8D3F90060F0BD /* RWAroundEmptyView.swift */,
 				196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */,
 				19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */,
+				1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1043,6 +1061,7 @@
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */,
 				1948130429AF61DC00C1110D /* RegionAroundMapSearchResponse.swift in Sources */,
+				1941DFE629B2522B00C7F5BA /* RWContentSizedTableView.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
 				19AB0083299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift in Sources */,
 				199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */,
@@ -1079,6 +1098,8 @@
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
 				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,
 				19F10C7329A680100060F0BD /* MapMarkerData.swift in Sources */,
+				1941DFE229B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift in Sources */,
+				19938A1729B2026D00234C5D /* ShowRoomDetailResponse.swift in Sources */,
 				199DF21D29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift in Sources */,
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
@@ -1087,6 +1108,7 @@
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
+				1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
 				199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */,
@@ -1103,6 +1125,7 @@
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */,
+				1941DFE429B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift in Sources */,
 				196D23AA29A4F80000E262FB /* RWMapSearchBarCollectionViewCell.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
@@ -1117,6 +1140,7 @@
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				19E0C79529A39A78003E1F10 /* RxCLLocationDelegateProxy.swift in Sources */,
 				19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */,
+				1941DFE029B2465400C7F5BA /* UserReviewResponse.swift in Sources */,
 				199B9C73299D061800877AAE /* PassThroughView.swift in Sources */,
 				19345E8F2995617100E1EF9A /* CategorySettingViewController.swift in Sources */,
 				19E0C78529A2AF96003E1F10 /* MyPageFlow.swift in Sources */,
