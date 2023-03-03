@@ -32,8 +32,6 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let topArea: UIView = {
         let view = UIView()
-//        view.backgroundColor = .clear
-        view.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.7), colorBottom: .clear)
         return view
     }()
     
@@ -236,6 +234,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         setRx()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        topArea.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
+    }
+    
     override func configureUI() {
         super.configureUI()
         backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
@@ -436,6 +439,10 @@ final class ShowRoomDetailViewController: BaseViewController {
     private func setUserReviews() {
         [reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel].forEach { $0.isHidden = true }
         reviewCollectionView.isHidden = false
+    }
+    
+    private func setGradientImageView() {
+        
     }
 }
 
