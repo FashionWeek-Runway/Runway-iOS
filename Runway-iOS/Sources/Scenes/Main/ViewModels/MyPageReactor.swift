@@ -24,11 +24,16 @@ final class MyPageReactor: Reactor, Stepper {
     }
     
     enum Mutation {
-
+        case setProfileData(MyPageInformationResponseResult)
     }
     
     struct State {
+        var nickname: String? = nil
+        var profileImageURL: String? = nil
         
+        
+        var myReviewPage: Int = 0
+        var myReviewIsLast: Bool = false
     }
     
     // MARK: - Properties
@@ -49,7 +54,16 @@ final class MyPageReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return provider.
+            return Observable.concat([
+                
+                provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder())
+                    .map({ responseData -> Mutation in
+                        return .setProfileData(responseData.result)
+                    }),
+                
+//                provider.userService.myReview(page: 0, size: 10)
+            
+            ])
             
         case .profileImageButtonDidTap:
             steps.accept(AppStep.profileSettingIsRequired)
@@ -58,6 +72,14 @@ final class MyPageReactor: Reactor, Stepper {
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
-
+        var state = state
+        
+        switch mutation {
+        case .setProfileData(let data):
+            state.nickname = data.nickname
+            state.profileImageURL = data.imageURL
+        }
+        
+        return state
     }
 }
