@@ -249,8 +249,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         
         view.addSubviews([scrollView, topAreaGradientView, topArea])
         scrollView.snp.makeConstraints {
-            $0.top.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0))
+            $0.edges.equalToSuperview()
         }
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints {
@@ -482,6 +481,18 @@ final class ShowRoomDetailViewController: BaseViewController {
         
         imageView.layer.addSublayer(gradientLayer)
     }
+    
+    private func showbookmarkToast() {
+        let toastMessage = RWToastView(message: "매장이 저장되었습니다")
+        self.view.addSubview(toastMessage)
+        toastMessage.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom - 20)
+        }
+        UIView.animate(withDuration: 1.0, delay: 1, options: .curveLinear, animations: {
+            toastMessage.alpha = 0
+        }, completion: {_ in toastMessage.removeFromSuperview() })
+    }
 }
 
 extension ShowRoomDetailViewController: View {
@@ -500,7 +511,14 @@ extension ShowRoomDetailViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        bookmarkButton.rx.tap.map { Reactor.Action.bookmarkButtonDidTap }
+        bookmarkButton.rx.tap
+            .do(onNext: { [weak self] _ in
+                self?.bookmarkButton.isSelected.toggle()
+                if self?.bookmarkButton.isSelected == true {
+                    self?.showbookmarkToast()
+                }
+            })
+                .map { Reactor.Action.bookmarkButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -560,6 +578,11 @@ extension ShowRoomDetailViewController: View {
         reactor.state.map { $0.webSiteLink }
             .distinctUntilChanged()
             .bind(to: webLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isBookmark }
+            .distinctUntilChanged()
+            .bind(to: bookmarkButton.rx.isSelected)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.userReviewImages }

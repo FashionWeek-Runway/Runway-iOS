@@ -29,7 +29,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case setStoreDetailInfo(ShowRoomDetailResponseResult)
         case setStoreReview(UserReviewResponseResult)
         case setStoreReviewAppend(UserReviewResponseResult)
-        
+        case setIsBookMark(Bool)
         case setBlogReviews([ShowRoomBlogsResponseResult])
     }
 
@@ -42,6 +42,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         var phoneNumber: String = ""
         var instagramID: String = ""
         var webSiteLink: String = ""
+        var isBookmark: Bool = false
         
         var userReviewImages: [(Int, String)] = []
         
@@ -98,7 +99,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             return .empty()
             
         case .bookmarkButtonDidTap:
-            return .empty()
+            provider.showRoomService.storeBookmark(storeId: storeId)
+                .subscribe(onNext: { [weak self] _ in
+                }).disposed(by: disposeBag)
+            return .just(.setIsBookMark(!currentState.isBookmark))
             
         case .userReviewScrollReachesBottom:
             if currentState.userReviewIsLast {
@@ -126,6 +130,9 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             state.phoneNumber = result.storePhone
             state.instagramID = result.instagram
             state.webSiteLink = result.webSite
+            state.isBookmark = result.bookmark
+        case .setIsBookMark(let isSelected):
+            state.isBookmark = isSelected
             
         case .setStoreReview(let result):
             state.userReviewPage = 0

@@ -16,6 +16,10 @@ final class ShowRoomService: APIService {
         return request(.get, "stores")
     }
     
+    func storeBookmark(storeId: Int) -> Observable<DataRequest> {
+        return request(.post, "stores/\(storeId)")
+    }
+    
     func storeBlogs(storeId: Int, storeName: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(storeName, forKey: "storeName")
