@@ -12,6 +12,86 @@ import RxAlamofire
 
 final class UserService: APIService {
     
+    func mypageInformation() -> Observable<DataRequest> {
+        return request(.get, "users")
+    }
+    
+    func bookmarkReviewList(page: Int, size: Int) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(page, forKey: "page")
+        params.updateValue(size, forKey: "size")
+        return request(.get, "users/bookmark/review", parameters: params, encoding: URLEncoding.default)
+    }
+    
+    func bookmarkReviewDetail(reviewId: Int) -> Observable<DataRequest> {
+        return request(.get, "users/bookmark/review/detail/\(reviewId)")
+    }
+    
+    func personalInformation() -> Observable<DataRequest> {
+        return request(.get, "users/info")
+    }
+    
+    func linkWithApple(socialToken: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(socialToken, forKey: "accessToken")
+        return request(.post, "users/info/apple", parameters: params)
+    }
+    
+    func unlinkWithApple() -> Observable<DataRequest> {
+        return request(.delete, "users/info/apple")
+    }
+    
+    func linkWithKakao(socialToken: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(socialToken, forKey: "accessToken")
+        return request(.post, "users/info/kakao", parameters: params)
+    }
+    
+    func unlinkWithKakao() -> Observable<DataRequest> {
+        return request(.delete, "users/info/kakao")
+    }
+    
+    func existingProfile() -> Observable<DataRequest> {
+        return request(.get, "users/profile")
+    }
+    
+    func editProfile(nickname: String, profileImageData: Data?) -> Observable<UploadRequest> {
+        var params = Parameters()
+        params.updateValue(nickname, forKey: "nickname")
+        
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+        
+        return self.session.rx.upload(multipartFormData: { data in
+            for (key, value) in params {
+                data.append("\(value)".data(using: .utf8)!, withName: key)
+            }
+            if let profileImageData = profileImageData {
+                data.append(profileImageData, withName: "multipartFile",
+                            fileName: nickname + ".png",
+                            mimeType: "image/png")
+            }
+        }, to: baseURL + "users/profile", method: .patch, headers: headers)
+    }
+    
+    func myReview(page: Int, size: Int) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(page, forKey: "page")
+        params.updateValue(size, forKey: "size")
+        return request(.get, "users/review", parameters: params, encoding: URLEncoding.default)
+    }
+    
+    func myReviewDetail(reviewId: Int) -> Observable<DataRequest> {
+        return request(.get, "users/review/detail/\(reviewId)")
+    }
+    
+    func bookmarkShowRooms(page: Int, size: Int) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(page, forKey: "page")
+        params.updateValue(size, forKey: "size")
+        return request(.get, "users/store", parameters: params, encoding: URLEncoding.default)
+    }
+    
+    
     func setUserLocation(latitude: Float, longitude: Float) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(latitude, forKey: "latitude")

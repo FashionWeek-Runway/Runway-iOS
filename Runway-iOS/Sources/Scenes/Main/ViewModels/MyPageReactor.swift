@@ -49,7 +49,7 @@ final class MyPageReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return .empty()
+            return provider.
             
         case .profileImageButtonDidTap:
             steps.accept(AppStep.profileSettingIsRequired)
