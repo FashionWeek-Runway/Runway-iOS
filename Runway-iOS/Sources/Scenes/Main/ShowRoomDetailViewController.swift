@@ -32,8 +32,11 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let topArea: UIView = {
         let view = UIView()
+        view.backgroundColor = .clear
         return view
     }()
+    
+    private let topAreaGradientView: UIView = UIView()
     
     private let bookmarkButton: UIButton = {
         let button = UIButton()
@@ -50,7 +53,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleToFill
         return view
     }()
     
@@ -234,9 +237,9 @@ final class ShowRoomDetailViewController: BaseViewController {
         setRx()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        topArea.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        topAreaGradientView.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
         setGradientImageView()
     }
     
@@ -244,7 +247,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         super.configureUI()
         backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
         
-        view.addSubviews([scrollView, topArea])
+        view.addSubviews([scrollView, topAreaGradientView, topArea])
         scrollView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0))
@@ -269,6 +272,10 @@ final class ShowRoomDetailViewController: BaseViewController {
         topArea.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.equalTo(view.getSafeArea().top + 51)
+        }
+        
+        topAreaGradientView.snp.makeConstraints {
+            $0.edges.equalTo(topArea.snp.edges)
         }
         
         topArea.addSubviews([backButton, bookmarkButton, shareButton])
@@ -429,6 +436,29 @@ final class ShowRoomDetailViewController: BaseViewController {
             .asDriver()
             .drive(onNext: { [weak self] in
                 UIPasteboard.general.string = self?.addressLabel.text
+            }).disposed(by: disposeBag)
+        
+        scrollView.rx.contentOffset
+            .asDriver()
+            .drive(onNext: { [weak self] offset in
+                guard let self else { return }
+                if offset.y >= 280 {
+                    self.topArea.backgroundColor = .white
+                    self.topAreaGradientView.isHidden = true
+                    
+                    self.backButton.setBackgroundImage(UIImage(named: "icon_tab_back"), for: .normal)
+                    self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_black"), for: .normal)
+                    self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_black_selected"), for: .selected)
+                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share_black"), for: .normal)
+                } else {
+                    self.topArea.backgroundColor = .clear
+                    self.topAreaGradientView.isHidden = false
+                    
+                    self.backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
+                    self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
+                    self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
+                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
+                }
             }).disposed(by: disposeBag)
     }
     

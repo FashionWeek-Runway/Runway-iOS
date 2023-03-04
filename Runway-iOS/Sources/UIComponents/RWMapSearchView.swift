@@ -20,7 +20,7 @@ final class RWMapSearchView: UIView {
     
     let backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setBackgroundImage(UIImage(named: "icon_back"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_tab_back"), for: .normal)
         return button
     }()
     

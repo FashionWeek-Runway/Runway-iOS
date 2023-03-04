@@ -389,8 +389,8 @@ extension MapViewController: View {
                 }
             }).disposed(by: disposeBag)
         
-        bottomSheet.aroundView.collectionView.rx.modelSelected(Int.self)
-            .map { Reactor.Action.storeCellSelected($0) }
+        bottomSheet.aroundView.collectionView.rx.modelSelected(AroundMapSearchResponseResultContent.self)
+            .map { Reactor.Action.storeCellSelected($0.storeID) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -400,8 +400,8 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        regionSearchBottomSheet.aroundView.collectionView.rx.modelSelected(Int.self)
-            .map { Reactor.Action.storeCellSelected($0) }
+        regionSearchBottomSheet.aroundView.collectionView.rx.modelSelected(StoreInfo.self)
+            .map { Reactor.Action.storeCellSelected($0.storeID) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -525,6 +525,7 @@ extension MapViewController: View {
                 guard let url = URL(string: data.storeImage) else { return }
                 self.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: url)
                 self.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
+                self.storeSearchBottomSheet.searchResultView.storeId = data.storeID
                 self.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
             })
             .disposed(by: disposeBag)
