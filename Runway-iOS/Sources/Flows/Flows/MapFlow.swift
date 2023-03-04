@@ -62,6 +62,7 @@ final class MapFlow: Flow {
     private func coordinateToShowRoomDetail(storeId: Int) -> FlowContributors {
         let reactor = ShowRoomDetailReactor(provider: provider, storeId: storeId)
         let viewController = ShowRoomDetailViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
