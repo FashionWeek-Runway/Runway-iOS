@@ -18,15 +18,17 @@ import Alamofire
 final class MyPageReactor: Reactor, Stepper {
     // MARK: - Events
     
-    struct State {
-    }
-    
     enum Action {
-
+        case viewDidLoad
+        case profileImageButtonDidTap
     }
     
     enum Mutation {
 
+    }
+    
+    struct State {
+        
     }
     
     // MARK: - Properties
@@ -45,7 +47,14 @@ final class MyPageReactor: Reactor, Stepper {
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .viewDidLoad:
+            return .empty()
+            
+        case .profileImageButtonDidTap:
+            steps.accept(AppStep.profileSettingIsRequired)
+            return .empty()
+        }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {

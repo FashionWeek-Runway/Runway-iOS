@@ -52,4 +52,6 @@ enum AppStep: Step {
     
     
     case myPageTab
+    case editProfile
+    case profileChangeCompleted
 }

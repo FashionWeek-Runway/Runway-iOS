@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		191B8EA929B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
@@ -175,6 +176,7 @@
 
 /* Begin PBXFileReference section */
 		130599E13CDCA961CB8B53DC /* Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSUITests/Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */,
 				1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */,
 				1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */,
+				191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1156,6 +1159,7 @@
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */,
 				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
+				191B8EA929B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift in Sources */,
 				19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */,
 				19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */,
 				19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */,

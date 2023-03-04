@@ -26,6 +26,8 @@ extension UIFont {
     
     static let headline4 = UIFont.font(.spoqaHanSansNeoBold, ofSize: 18)
     
+    static let headline4M = UIFont.font(.spoqaHanSansNeoMedium, ofSize: 18)
+    
     static let subheadline1 = UIFont.font(.spoqaHanSansNeoRegular, ofSize: 20)
     
     static let subheadline1B = UIFont.font(.spoqaHanSansNeoBold, ofSize: 20)

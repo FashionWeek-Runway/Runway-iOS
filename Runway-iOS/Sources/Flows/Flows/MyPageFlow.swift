@@ -33,6 +33,10 @@ final class MyPageFlow: Flow {
         switch step {
         case .myPageTab:
             return coordinateToMyPageScreen()
+        case .editProfile:
+            return coordinateToProfileSettingScreen()
+        case .profileChangeCompleted:
+            return coordinateToProfileChangeCompletedScreen()
         default:
             return .none
         }
@@ -43,5 +47,16 @@ final class MyPageFlow: Flow {
         let viewController = MyPageViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToProfileSettingScreen() -> FlowContributors {
+        let reactor = ProfileSettingReactor(provider: provider)
+        let viewController = ProfileSettingViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToProfileChangeCompletedScreen() -> FlowContributors {
+        return .none
     }
 }
