@@ -57,7 +57,7 @@ final class DataRepository: ServiceProviderType {
         manager?.startListening(onUpdatePerforming: { status in
             switch status {
             case .reachable(_):
-                // TODO:
+                // TODO:s
                 break
             default:
                 break
