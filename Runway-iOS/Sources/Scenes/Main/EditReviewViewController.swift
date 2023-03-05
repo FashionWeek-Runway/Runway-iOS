@@ -14,7 +14,7 @@ final class EditReviewViewController: BaseViewController {
     
     private let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
         return view
     }()
