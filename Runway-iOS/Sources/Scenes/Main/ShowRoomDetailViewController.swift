@@ -588,6 +588,19 @@ extension ShowRoomDetailViewController: View {
                 }
             }).disposed(by: disposeBag)
         
+        reviewCollectionView.rx.didEndDecelerating // infiniteScrolling
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                let width = self.reviewCollectionView.frame.width
+                let contentWidth = self.reviewCollectionView.contentSize.width
+                let reachesBottom = (self.reviewCollectionView.contentOffset.x > contentWidth - width)
+                
+                if reachesBottom {
+                    self.reactor?.action.onNext(.userReviewScrollReachesBottom)
+                }
+            }).disposed(by: disposeBag)
+        
         
         Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
             .bind(onNext: { _ in self.dismiss(animated: true) })

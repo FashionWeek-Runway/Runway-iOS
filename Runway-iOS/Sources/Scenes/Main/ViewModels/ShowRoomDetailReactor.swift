@@ -150,7 +150,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             }
             
         case .setStoreReviewAppend(let result):
-            state.userReviewImages = result.contents.map { ($0.reviewID, $0.imgURL) }
+            state.userReviewImages.append(contentsOf: result.contents.map { ($0.reviewID, $0.imgURL) })
             state.userReviewIsLast = result.isLast
             if !result.isLast {
                 state.userReviewPage += 1
