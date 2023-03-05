@@ -17,7 +17,7 @@ extension UIWindow {
         case bottom
     }
     
-    static func makeToastAnimation(message: String, _ location: ToastMessageLocation = .center) {
+    static func makeToastAnimation(message: String, _ location: ToastMessageLocation = .center, _ bottomInset: CGFloat = 0.0) {
         let toastMessage = RWToastView(message: message)
         UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.addSubview(toastMessage)
         toastMessage.snp.makeConstraints {
@@ -25,7 +25,7 @@ extension UIWindow {
             if location == .center {
                 $0.centerY.equalToSuperview()
             } else {
-                $0.bottom.equalToSuperview().offset(-20 - (window?.safeAreaInsets.bottom ?? 0.0))
+                $0.bottom.equalToSuperview().offset(-20 - (window?.safeAreaInsets.bottom ?? 0.0) - bottomInset)
             }
         }
         UIView.animate(withDuration: 1.0, delay: 1, options: .curveLinear, animations: {

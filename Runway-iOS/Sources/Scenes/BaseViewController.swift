@@ -18,7 +18,7 @@ class BaseViewController: UIViewController {
     
     let navigationTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.body1
+        label.font = UIFont.body1B
         return label
     }()
     
