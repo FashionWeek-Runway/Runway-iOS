@@ -52,7 +52,7 @@ final class ForgotPasswordReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .enterPhoneNumber(let number):
             return  .just(.setPhoneNumber(String.limitedLengthString(number ?? "", length: 11)))

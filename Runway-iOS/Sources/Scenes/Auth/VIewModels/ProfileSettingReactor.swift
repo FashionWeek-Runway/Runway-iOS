@@ -87,7 +87,7 @@ final class ProfileSettingReactor: Reactor, Stepper {
                 }
             }
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .profileImageButtonDidTap:
             return .just(.showActionSheet)

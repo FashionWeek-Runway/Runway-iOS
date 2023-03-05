@@ -10,7 +10,9 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-final class ShowRoomService: APIService {
+final class ShowRoomService: APIService, AuthTokenHost {
+    
+    private let authHeaderInterceptor =  AuthHeaderInterceptor()
     
     func stores() -> Observable<DataRequest> {
         return request(.get, "stores")
@@ -44,11 +46,9 @@ final class ShowRoomService: APIService {
         return request(.get, "stores/review/\(storeId)", parameters: params, encoding: URLEncoding.default)
     }
     
-    func storeReview(storeId: Int, imageData: Data) -> Observable<UploadRequest> {
-        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+    func storeReview(storeId: Int, imageData: Data) -> Observable<DataRequest> {
+        let imageDataString = String(decoding: imageData, as: UTF8.self)
         
-        return self.session.rx.upload(multipartFormData: { data in
-            data.append(imageData, withName: "img")
-        }, to: baseURL + "stores/review/\(storeId)", method: .post, headers: headers)
+        return request(.post, "stores/review/\(storeId)", parameters: [:] , encoding: imageDataString)
     }
 }

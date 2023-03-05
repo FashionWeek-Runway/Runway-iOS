@@ -23,6 +23,8 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case backButtonDidTap
         case bookmarkButtonDidTap
         case userReviewScrollReachesBottom
+        
+        case pickingReviewImage(Data?)
     }
 
     enum Mutation {
@@ -95,7 +97,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             ])
             
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
             
         case .bookmarkButtonDidTap:
@@ -112,6 +114,11 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
                     .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())
                     .map { Mutation.setStoreReviewAppend($0.result)}
             }
+            
+        case .pickingReviewImage(let imageData):
+            guard let imageData else { return .empty() }
+            steps.accept(AppStep.editReviewImage(storeId, imageData))
+            return .empty()
         }
         
 

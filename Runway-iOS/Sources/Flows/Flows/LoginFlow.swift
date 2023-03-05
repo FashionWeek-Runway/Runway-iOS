@@ -34,8 +34,8 @@ final class LoginFlow: Flow {
         switch step {
         case .toast(let message):
             return makeToastMessage(message)
-        case .back:
-            return backScreen()
+        case .back(let animated):
+            return backScreen(animated: animated)
         case .dismiss:
             return dismissScreen()
             
@@ -89,8 +89,8 @@ final class LoginFlow: Flow {
         return .none
     }
     
-    private func backScreen() -> FlowContributors {
-        self.rootViewController.popViewController(animated: true)
+    private func backScreen(animated: Bool) -> FlowContributors {
+        self.rootViewController.popViewController(animated: animated)
         return .none
     }
     

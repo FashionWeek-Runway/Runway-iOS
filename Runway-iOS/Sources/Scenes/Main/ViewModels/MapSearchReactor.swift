@@ -68,7 +68,7 @@ final class MapSearchReactor: Reactor, Stepper {
             ])
             
         case .backButtonDidtap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: false))
             return .empty()
             
         case .historyAllClearButtonDidTap:
@@ -211,7 +211,7 @@ final class MapSearchReactor: Reactor, Stepper {
             .bind(onNext: { [weak self] result in
                 self?.provider.mapService.event.accept(.store(.markerData(result.result.mapMarker)))
                 self?.provider.mapService.event.accept(.store(.sheetData(result.result.storeInfo)))
-                self?.steps.accept(AppStep.back)
+                self?.steps.accept(AppStep.back(animated: false))
             }).disposed(by: disposeBag)
     }
     
@@ -227,7 +227,7 @@ final class MapSearchReactor: Reactor, Stepper {
                     .subscribe(onNext: { result in
                         self.provider.mapService.event.accept(.region(.markerDatas(markerResult.result)))
                         self.provider.mapService.event.accept(.region(.sheetDatas(result.result, regionId, regionName)))
-                        self.steps.accept(AppStep.back)
+                        self.steps.accept(AppStep.back(animated: false))
                     }).disposed(by: self.disposeBag)
                 
                 

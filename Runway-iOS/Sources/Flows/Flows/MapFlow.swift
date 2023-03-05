@@ -38,8 +38,10 @@ final class MapFlow: Flow {
             return coordinateToMapSearchScreen(mapLocation: location)
         case .showRoomDetail(let storeId):
             return coordinateToShowRoomDetail(storeId: storeId)
-        case .back:
-            return back()
+        case .editReviewImage(let storeId, let data):
+            return coordinateToEditReviewImage(storeId: storeId, imageData: data)
+        case .back(let animated):
+            return back(animated: animated)
         default:
             return .none
         }
@@ -67,8 +69,16 @@ final class MapFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func back() -> FlowContributors {
-        self.rootViewController.popViewController(animated: false)
+    private func coordinateToEditReviewImage(storeId: Int, imageData: Data) -> FlowContributors {
+        let reactor = EditReviewReactor(provider: provider, storeId: storeId ,reviewImageData: imageData)
+        let viewController = EditReviewViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func back(animated: Bool) -> FlowContributors {
+        self.rootViewController.popViewController(animated: animated)
         return.none
     }
 }

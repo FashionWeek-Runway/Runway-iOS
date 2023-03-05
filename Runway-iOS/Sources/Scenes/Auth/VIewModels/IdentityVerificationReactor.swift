@@ -71,7 +71,7 @@ final class IdentityVerificationReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .nameInput(let name):
             return .just(.setName(name))

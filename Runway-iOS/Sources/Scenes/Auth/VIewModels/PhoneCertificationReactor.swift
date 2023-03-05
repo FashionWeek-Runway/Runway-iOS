@@ -70,7 +70,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         case .timer(_):
             return .just(.setTime)
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .verificationNumberInput(let string):
             return .just(.setVerificationNumber(string))

@@ -11,8 +11,9 @@ import RxCocoa
 import ReactorKit
 
 import Kingfisher
-
 import SafariServices
+import AVFoundation
+import Photos
 
 final class ShowRoomDetailViewController: BaseViewController {
     
@@ -217,6 +218,22 @@ final class ShowRoomDetailViewController: BaseViewController {
         button.semanticContentAttribute = .forceRightToLeft
         button.imageEdgeInsets.left = 10
         return button
+    }()
+    
+    private let cameraPickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = nil
+        picker.allowsEditing = true
+        picker.sourceType = .camera
+        return picker
+    }()
+    
+    private let albumPickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = nil
+        picker.allowsEditing = true
+        picker.sourceType = .photoLibrary
+        return picker
     }()
     
     // MARK: - initializer
@@ -459,6 +476,12 @@ final class ShowRoomDetailViewController: BaseViewController {
                     self.shareButton.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
                 }
             }).disposed(by: disposeBag)
+        
+        reviewRegisterButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.presentActionSheet()
+            }).disposed(by: disposeBag)
     }
     
     private func setUserReviewsIfEmpty() {
@@ -492,6 +515,37 @@ final class ShowRoomDetailViewController: BaseViewController {
         UIView.animate(withDuration: 1.0, delay: 1, options: .curveLinear, animations: {
             toastMessage.alpha = 0
         }, completion: {_ in toastMessage.removeFromSuperview() })
+    }
+    
+    private func presentActionSheet() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "사진 찍기", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    DispatchQueue.main.async {
+                        self.present(self.cameraPickerController, animated: true)
+                    }
+                }
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "사진 앨범", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                print(status)
+                switch status {
+                case .authorized, .limited:
+                    DispatchQueue.main.async {
+                        self.present(self.albumPickerController, animated: true)
+                    }
+                default:
+                    break
+                }
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alertController, animated: true)
     }
 }
 
@@ -533,6 +587,22 @@ extension ShowRoomDetailViewController: View {
                     self?.present(webView, animated: true)
                 }
             }).disposed(by: disposeBag)
+        
+        
+        Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
+            .bind(onNext: { _ in self.dismiss(animated: true) })
+            .disposed(by: disposeBag)
+        
+        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
+            .bind(onNext: { _ in self.dismiss(animated: true)})
+            .disposed(by: disposeBag)
+        
+        // bind action
+        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
+            .map { $0[.originalImage] as? UIImage ?? UIImage() }
+            .map { Reactor.Action.pickingReviewImage($0.pngData()) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ShowRoomDetailReactor) {

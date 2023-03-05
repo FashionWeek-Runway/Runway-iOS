@@ -73,7 +73,7 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         case .setTimer(let string):
             return .just(.setTimerText(string))
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .verificationNumberInput(let string):
             return .just(.setVerificationNumber(string))

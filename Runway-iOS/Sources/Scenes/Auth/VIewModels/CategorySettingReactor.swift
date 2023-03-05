@@ -94,7 +94,7 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .selectCategory(let category):
             return .just(.selectCategory(category))
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .nextButtonDidTap:
             let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true })

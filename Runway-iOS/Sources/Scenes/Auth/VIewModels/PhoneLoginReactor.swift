@@ -55,7 +55,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .forgotPasswordButtonDidTap:
             steps.accept(AppStep.forgotPassword)

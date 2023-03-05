@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 extension String {
     static func limitedLengthString(_ string: String, length: Int) -> String { // limit
@@ -15,5 +16,14 @@ extension String {
         } else {
             return string
         }
+    }
+}
+
+extension String: ParameterEncoding {
+
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        var request = try urlRequest.asURLRequest()
+        request.httpBody = data(using: .utf8, allowLossyConversion: false)
+        return request
     }
 }

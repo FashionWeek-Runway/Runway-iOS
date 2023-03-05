@@ -62,7 +62,7 @@ final class PolicyAgreementReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .allAgreeButtonDidTap:
             return .just(.setAllAgree)

@@ -52,7 +52,7 @@ final class PasswordInputReactor: Reactor, Stepper {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonDidTap:
-            steps.accept(AppStep.back)
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         case .passwordFieldInput(let password):
             return .just(.setPassword(password))

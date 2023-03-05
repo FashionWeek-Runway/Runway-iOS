@@ -15,7 +15,7 @@ enum AppStep: Step {
     case dismiss
     case toast(String)
     
-    case back
+    case back(animated: Bool)
     
     // Login
     case loginRequired
@@ -48,7 +48,7 @@ enum AppStep: Step {
     case mapTab
     case mapSearch((Double, Double))
     case showRoomDetail(Int)
-    
+    case editReviewImage(Int, Data)
     
     
     case myPageTab
