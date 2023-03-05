@@ -62,4 +62,8 @@ final class ShowRoomService: APIService, AuthTokenHost {
     func reviewBookmark(reviewId: Int) -> Observable<DataRequest> {
         return request(.post, "stores/review/bookmark/\(reviewId)")
     }
+    
+    func removeReview(reviewId: Int) -> Observable<DataRequest> {
+        return request(.patch, "stores/review/detail/\(reviewId)")
+    }
 }

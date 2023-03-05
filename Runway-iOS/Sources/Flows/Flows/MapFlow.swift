@@ -42,6 +42,8 @@ final class MapFlow: Flow {
             return coordinateToEditReviewImageScreen(storeId: storeId, imageData: data)
         case .userReviewReels(let reviewId):
             return coordinateToReviewReelsScreen(reviewId: reviewId)
+        case .reportReview(let reviewId):
+            return coordinateToReviewReportingScreen(reviewId: reviewId)
         case .back(let animated):
             return back(animated: animated)
         default:
@@ -83,6 +85,13 @@ final class MapFlow: Flow {
         let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId)
         let viewController = ReviewReelsViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToReviewReportingScreen(reviewId: Int) -> FlowContributors {
+        let reactor = ReviewReportingReactor(provider: provider)
+        let viewController = ReviewReportingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }

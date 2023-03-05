@@ -105,10 +105,19 @@ final class ReviewReelsReactor: Reactor, Stepper {
             return .empty()
             
         case .removeButtonDidTap(let reviewId):
-            steps.accept(AppStep.back(animated: false))
+            provider.showRoomService.reviewDetail(reviewId: reviewId)
+                .data().decode(type: BaseResponse.self, decoder: JSONDecoder())
+                .subscribe(onNext: { [weak self] responseData in
+                    if responseData.isSuccess {
+                        self?.steps.accept(AppStep.back(animated: false))
+                    }
+                })
+                .disposed(by: disposeBag)
+            
             return .empty()
             
         case .reportButtonDidTap(let reviewId):
+            steps.accept(AppStep.reportReview(reviewId))
             return .empty()
             
         case .exitButtonDidTap:

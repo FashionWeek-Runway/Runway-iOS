@@ -603,8 +603,9 @@ extension ShowRoomDetailViewController: View {
         
         reviewCollectionView.rx.modelSelected((Int, String).self)
             .asDriver()
-            .drive(onNext: { [weak self] cell in
-                
+            .drive(onNext: { [weak self] data in
+                let action = Reactor.Action.reviewCellDidTap(data.0)
+                self?.reactor?.action.onNext(action)
             }).disposed(by: disposeBag)
         
         

@@ -10,12 +10,21 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
+import Kingfisher
+
 final class ReviewReelsViewController: BaseViewController {
     
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView()
+    private lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.isPagingEnabled = true
-        
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        view.register(RWReviewReelsCollectionViewCell.self, forCellWithReuseIdentifier: RWReviewReelsCollectionViewCell.identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - view.getSafeArea().bottom)
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        view.collectionViewLayout = layout
         return view
     }()
     
@@ -40,23 +49,17 @@ final class ReviewReelsViewController: BaseViewController {
         super.configureUI()
         view.backgroundColor = .runwayBlack
         
-        view.addSubviews([scrollView])
-        scrollView.snp.makeConstraints {
+        view.addSubviews([collectionView])
+        collectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(view.getSafeArea().top)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom)
         }
     }
     
-    private func addReelsViewsToScrollView(view: [RWReviewReelsView]) {
-//        for i in 0..<images.count {
-//            let xPos = scrollView.frame.width * CGFloat(i)
-//            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-//            imageView.image = images[i]
-//            scrollView.addSubview(imageView)
-//            scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
-//        }
+    private func setRx() {
     }
+    
     
     
 }
@@ -68,10 +71,48 @@ extension ReviewReelsViewController: View {
     }
     
     private func bindAction(reactor: ReviewReelsReactor) {
-        rx.viewDidLoad
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func bindState(reactor: ReviewReelsReactor) {
-        reactor.state.map { }
+        // 추후 boxcube레이아웃으로 개선해보기
+        reactor.state.map { $0.reviewData }
+            .bind(to: collectionView.rx.items(cellIdentifier: RWReviewReelsCollectionViewCell.identifier, cellType: RWReviewReelsCollectionViewCell.self)) { indexPath, item, cell in
+//                guard let reactor = self.reactor else { return }
+                if let profileImageURL = item.profileImageURL, let url = URL(string: profileImageURL) {
+                    cell.profileImageView.kf.setImage(with: ImageResource(downloadURL: url))
+                }
+                
+                guard let imageURL = URL(string: item.imageURL) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageURL))
+                cell.storeNameLabel.text = item.storeName
+                cell.addressLabel.text = item.regionInfo
+                cell.usernameLabel.text = item.nickname
+                
+                cell.bookmarkButton.isSelected = item.isBookmarked
+                if item.isMine {
+                    cell.bookmarkButton.isHidden = true
+                }
+                
+                cell.bookmarkButton.rx.tap
+                    .map { Reactor.Action.bookmarkButtonDidTap(item.reviewID) }
+                    .bind(to: reactor.action)
+                    .disposed(by: self.disposeBag)
+                
+                cell.exitButton.rx.tap
+                    .map { Reactor.Action.exitButtonDidTap }
+                    .bind(to: reactor.action)
+                    .disposed(by: self.disposeBag)
+                
+                cell.bottomStoreButton.rx.tap
+                    .map { Reactor.Action.showRoomButtonDidTap(item.reviewID) }
+                    .bind(to: reactor.action)
+                    .disposed(by: self.disposeBag)
+                
+            }.disposed(by: disposeBag)
     }
 }

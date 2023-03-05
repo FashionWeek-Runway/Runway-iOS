@@ -16,8 +16,8 @@ struct ReviewDetailResponse: Codable {
 
 // MARK: - Result
 struct ReviewDetailResponseResult: Codable {
-    let bookmark: Bool
-    let bookmarkCnt: Int
+    let isBookmarked: Bool
+    let bookmarkCount: Int
     let imageURL: String
     let isMine: Bool
     let profileImageURL: String?
@@ -28,7 +28,8 @@ struct ReviewDetailResponseResult: Codable {
     let storeName: String
 
     enum CodingKeys: String, CodingKey {
-        case bookmark, bookmarkCnt
+        case isBookmarked = "bookmark"
+        case bookmarkCount = "bookmarkCnt"
         case imageURL = "imgUrl"
         case isMine = "my"
         case nickname

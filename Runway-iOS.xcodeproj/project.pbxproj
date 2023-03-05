@@ -14,9 +14,12 @@
 		191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB029B4AED500CF5C83 /* UIImage+.swift */; };
 		191B8EB329B4BCD600CF5C83 /* BodyStringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */; };
 		191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */; };
-		191B8EB729B4C37600CF5C83 /* RWReviewReelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */; };
+		191B8EB729B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */; };
 		191B8EB929B4D75300CF5C83 /* ReviewReelsReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */; };
 		191B8EBB29B4DB7500CF5C83 /* ReviewDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */; };
+		191B8EBD29B4E84800CF5C83 /* ReviewReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */; };
+		191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */; };
+		191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
@@ -192,9 +195,12 @@
 		191B8EB029B4AED500CF5C83 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyStringEncoding.swift; sourceTree = "<group>"; };
 		191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsViewController.swift; sourceTree = "<group>"; };
-		191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsView.swift; sourceTree = "<group>"; };
+		191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsCollectionViewCell.swift; sourceTree = "<group>"; };
 		191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsReactor.swift; sourceTree = "<group>"; };
 		191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailResponse.swift; sourceTree = "<group>"; };
+		191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportingViewController.swift; sourceTree = "<group>"; };
+		191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportingReactor.swift; sourceTree = "<group>"; };
+		191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
@@ -415,6 +421,7 @@
 				198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */,
 				191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */,
 				191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */,
+				191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -657,7 +664,7 @@
 				196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */,
 				19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */,
 				1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */,
-				191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */,
+				191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -802,6 +809,8 @@
 				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
 				191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */,
 				191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */,
+				191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */,
+				191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1165,8 +1174,10 @@
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
+				191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
+				191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19E0C7A929A3C540003E1F10 /* Reactive+CLLocationManager.swift in Sources */,
@@ -1215,10 +1226,11 @@
 				196D23AC29A4FB5200E262FB /* RWMapSearchBarCollectionViewBookmarkCell.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */,
+				191B8EBD29B4E84800CF5C83 /* ReviewReportingViewController.swift in Sources */,
 				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,
 				19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
-				191B8EB729B4C37600CF5C83 /* RWReviewReelsView.swift in Sources */,
+				191B8EB729B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,

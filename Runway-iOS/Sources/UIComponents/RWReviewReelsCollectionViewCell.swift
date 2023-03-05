@@ -1,5 +1,5 @@
 //
-//  RWReviewReelsView.swift
+//  RWReviewReelsCollectionViewCell.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/03/05.
@@ -7,53 +7,56 @@
 
 import UIKit
 
-final class RWReviewReelsView: UIView {
+// - 추후 boxcube layout으로 개선해보기
+final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         return view
     }()
     
-    private let profileImageView: UIImageView = {
-        let view = UIImageView()
+    let profileImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "icon_profile"))
         view.contentMode = .scaleToFill
+        view.layer.cornerRadius = 15
+        view.clipsToBounds = true
         return view
     }()
     
-    private let usernameLabel: UILabel = {
+    let usernameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .body2B
         return label
     }()
     
-    private let etcButton: UIButton = {
+    let etcButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "icon_etc_white"), for: .normal)
         return button
     }()
     
-    private let exitButton: UIButton = {
+    let exitButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "icon_tab_close"), for: .normal)
         return button
     }()
     
-    private let bookmarkButton: UIButton = {
+    let bookmarkButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "icon_bookmark"), for: .normal)
         button.setBackgroundImage(UIImage(named: "icon_bookmark_selected"), for: .selected)
         return button
     }()
     
-    private let bottomStoreButton: UIButton = {
+    let bottomStoreButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundColor(.runwayBlack, for: .normal)
+        button.setBackgroundColor(.gray900, for: .normal)
         button.layer.cornerRadius = 4
         button.clipsToBounds = true
-        button.layer.borderColor = UIColor.gray300.cgColor
-        button.layer.borderWidth = 0.5
+        button.layer.borderColor = UIColor.gray800.cgColor
+        button.layer.borderWidth = 1
         return button
     }()
     
@@ -62,7 +65,7 @@ final class RWReviewReelsView: UIView {
         return view
     }()
     
-    private let storeNameLabel: UILabel = {
+    let storeNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .body2
@@ -70,7 +73,7 @@ final class RWReviewReelsView: UIView {
         return label
     }()
     
-    private let addressLabel: UILabel = {
+    let addressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray300
         label.font = .caption
@@ -82,6 +85,8 @@ final class RWReviewReelsView: UIView {
         let view = UIImageView(image: UIImage(named: "icon_go"))
         return view
     }()
+    
+    static let identifier = "RWReviewReelsView"
     
     // MARK: - initializer
     
@@ -100,12 +105,13 @@ final class RWReviewReelsView: UIView {
         
         imageView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(70)
+            $0.bottom.equalToSuperview().offset(-70)
         }
         
         profileImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(21)
+            $0.width.height.equalTo(30)
         }
         
         usernameLabel.snp.makeConstraints {
@@ -132,7 +138,7 @@ final class RWReviewReelsView: UIView {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-13)
-            $0.top.height.equalTo(45)
+            $0.height.equalTo(45)
         }
         
         bottomStoreButton.addSubviews([locationIconView, storeNameLabel, addressLabel, goIcon])
@@ -140,8 +146,9 @@ final class RWReviewReelsView: UIView {
         locationIconView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(10)
             $0.top.equalToSuperview().offset(15)
+            $0.height.width.equalTo(16)
         }
-        storeNameLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+        storeNameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         storeNameLabel.snp.makeConstraints {
             $0.leading.equalTo(locationIconView.snp.trailing).offset(8)
             $0.top.equalToSuperview().offset(13)

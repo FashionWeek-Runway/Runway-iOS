@@ -50,6 +50,7 @@ enum AppStep: Step {
     case showRoomDetail(Int)
     case editReviewImage(Int, Data)
     case userReviewReels(Int)
+    case reportReview(Int)
     
     
     case myPageTab
