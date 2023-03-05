@@ -19,6 +19,7 @@ final class ReviewReelsViewController: BaseViewController {
         view.isPagingEnabled = true
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
+        view.bounces = false
         view.register(RWReviewReelsCollectionViewCell.self, forCellWithReuseIdentifier: RWReviewReelsCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceHeight() - view.getSafeArea().top - view.getSafeArea().bottom)
@@ -75,7 +76,41 @@ extension ReviewReelsViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+
+        collectionView.rx.swipeGesture(.left)
+            .when(.recognized)
+            .filter { _ in
+                let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
+                return Int(currentIndex)+1 == self.collectionView.numberOfItems(inSection: 0)
+            }
+            .map { _ in Reactor.Action.swipeNextReview }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        
+        collectionView.rx.swipeGesture(.right)
+            .when(.recognized)
+            .filter { _ in
+                let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
+                return Int(currentIndex) == 0
+            }
+            .map { _ in Reactor.Action.swipePreviousReview }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        
+        collectionView.rx.didEndDecelerating // infiniteScrolling
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                let height = self.collectionView.frame.height
+                let contentHeight = self.collectionView.contentSize.height
+                let reachesBottom = (self.collectionView.contentOffset.y > contentHeight - height)
+                
+                if reachesBottom {
+                    self.reactor?.action.onNext(.swipeNextReview)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ReviewReelsReactor) {
@@ -109,7 +144,7 @@ extension ReviewReelsViewController: View {
                     .disposed(by: self.disposeBag)
                 
                 cell.bottomStoreButton.rx.tap
-                    .map { Reactor.Action.showRoomButtonDidTap(item.reviewID) }
+                    .map { Reactor.Action.showRoomButtonDidTap(item.storeID) }
                     .bind(to: reactor.action)
                     .disposed(by: self.disposeBag)
                 
