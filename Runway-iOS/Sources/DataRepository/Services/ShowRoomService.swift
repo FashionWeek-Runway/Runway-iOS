@@ -12,8 +12,6 @@ import RxAlamofire
 
 final class ShowRoomService: APIService, AuthTokenHost {
     
-    private let authHeaderInterceptor =  AuthHeaderInterceptor()
-    
     func stores() -> Observable<DataRequest> {
         return request(.get, "stores")
     }
@@ -46,9 +44,14 @@ final class ShowRoomService: APIService, AuthTokenHost {
         return request(.get, "stores/review/\(storeId)", parameters: params, encoding: URLEncoding.default)
     }
     
-    func storeReview(storeId: Int, imageData: Data) -> Observable<DataRequest> {
-        let imageDataString = String(decoding: imageData, as: UTF8.self)
+    func storeReview(storeId: Int, imageData: Data) -> Observable<UploadRequest> {
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "application/json", "X-AUTH-TOKEN": authToken]
         
-        return request(.post, "stores/review/\(storeId)", parameters: [:] , encoding: BodyStringEncoding(body: imageDataString))
+        return self.session.rx.upload(multipartFormData: { data in
+            data.append(imageData,
+                        withName: "img",
+                        fileName: "\(UUID(uuidString: String(storeId)))" + ".png",
+                        mimeType: "image/png")
+        }, to: baseURL + "stores/review/img/\(storeId)", method: .post, headers: headers)
     }
 }

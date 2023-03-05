@@ -594,7 +594,7 @@ extension ShowRoomDetailViewController: View {
                 guard let self else { return }
                 let width = self.reviewCollectionView.frame.width
                 let contentWidth = self.reviewCollectionView.contentSize.width
-                let reachesBottom = (self.reviewCollectionView.contentOffset.x > contentWidth - width)
+                let reachesBottom = (self.reviewCollectionView.contentOffset.x > contentWidth - width * 5)
                 
                 if reachesBottom {
                     self.reactor?.action.onNext(.userReviewScrollReachesBottom)

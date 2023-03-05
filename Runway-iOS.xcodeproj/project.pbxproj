@@ -13,6 +13,8 @@
 		191B8EAF29B491E100CF5C83 /* EditReviewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */; };
 		191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB029B4AED500CF5C83 /* UIImage+.swift */; };
 		191B8EB329B4BCD600CF5C83 /* BodyStringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */; };
+		191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */; };
+		191B8EB729B4C37600CF5C83 /* RWReviewReelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
@@ -187,6 +189,8 @@
 		191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewReactor.swift; sourceTree = "<group>"; };
 		191B8EB029B4AED500CF5C83 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyStringEncoding.swift; sourceTree = "<group>"; };
+		191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsViewController.swift; sourceTree = "<group>"; };
+		191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsView.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
@@ -406,6 +410,7 @@
 				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
 				198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */,
 				191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */,
+				191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -647,6 +652,7 @@
 				196CE20C29A93F9C000809C1 /* RWMapSearchView.swift */,
 				19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */,
 				1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */,
+				191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1086,6 +1092,7 @@
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
 				19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */,
 				199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */,
+				191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */,
 				193EEB042996C4B50093831A /* BaseViewController.swift in Sources */,
 				19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */,
 				198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */,
@@ -1203,6 +1210,7 @@
 				19E0C77429A2A82E003E1F10 /* HomeViewController.swift in Sources */,
 				19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */,
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
+				191B8EB729B4C37600CF5C83 /* RWReviewReelsView.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
