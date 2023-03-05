@@ -58,10 +58,25 @@ final class ReviewReelsViewController: BaseViewController {
         }
     }
     
-    private func setRx() {
+    private func presentDeleteActionSheet(reviewId: Int) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.reactor?.action.onNext(Reactor.Action.removeButtonDidTap(reviewId))
+        }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alertController, animated: true)
     }
     
-    
+    private func presentReportActionSheet(reviewId: Int) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.reactor?.action.onNext(Reactor.Action.reportButtonDidTap(reviewId))
+        }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alertController, animated: true)
+    }
     
 }
 
@@ -98,20 +113,27 @@ extension ReviewReelsViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+//        collectionView.rx.tapGesture()
+//            .asLocation(in: self.collectionView)
+//            .subscribe(onNext: { [weak self] location in
+//                guard let self else { return }
+//
+//                let currentIndex = self.collectionView.contentOffset.x / self.collectionView.frame.size.width
+//                let pageSize = self.collectionView.frame.size.width / CGFloat(self.collectionView.numberOfItems(inSection: 0))
+//
+//                let nextContentOffset = CGPoint(x: self.collectionView.contentOffset.x + pageSize, y: self.collectionView.bounds.origin.y)
+//
+//                let prevContentOffset = CGPoint(x: self.collectionView.contentOffset.x - pageSize, y: self.collectionView.bounds.origin.y)
+//
+//                if location.x > self.collectionView.bounds.midX {
+//                    self.collectionView.setContentOffset(nextContentOffset, animated: false)
+//                } else {
+//                    self.collectionView.setContentOffset(prevContentOffset, animated: false)
+//                }
+//            }).disposed(by: disposeBag)
         
-        collectionView.rx.didEndDecelerating // infiniteScrolling
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                guard let self else { return }
-                let height = self.collectionView.frame.height
-                let contentHeight = self.collectionView.contentSize.height
-                let reachesBottom = (self.collectionView.contentOffset.y > contentHeight - height)
-                
-                if reachesBottom {
-                    self.reactor?.action.onNext(.swipeNextReview)
-                }
-            }).disposed(by: disposeBag)
-    }
+        }
+        
     
     private func bindState(reactor: ReviewReelsReactor) {
         // 추후 boxcube레이아웃으로 개선해보기
@@ -147,6 +169,16 @@ extension ReviewReelsViewController: View {
                     .map { Reactor.Action.showRoomButtonDidTap(item.storeID) }
                     .bind(to: reactor.action)
                     .disposed(by: self.disposeBag)
+                
+                cell.etcButton.rx.tap
+                    .asDriver()
+                    .drive(onNext: { [weak self] in
+                        if item.isMine {
+                            self?.presentDeleteActionSheet(reviewId: item.reviewID)
+                        } else {
+                            self?.presentReportActionSheet(reviewId: item.reviewID)
+                        }
+                    }).disposed(by: self.disposeBag)
                 
             }.disposed(by: disposeBag)
     }

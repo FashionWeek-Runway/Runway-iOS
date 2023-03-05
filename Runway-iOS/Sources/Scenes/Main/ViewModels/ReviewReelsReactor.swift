@@ -105,7 +105,7 @@ final class ReviewReelsReactor: Reactor, Stepper {
             return .empty()
             
         case .removeButtonDidTap(let reviewId):
-            provider.showRoomService.reviewDetail(reviewId: reviewId)
+            provider.showRoomService.removeReview(reviewId: reviewId)
                 .data().decode(type: BaseResponse.self, decoder: JSONDecoder())
                 .subscribe(onNext: { [weak self] responseData in
                     if responseData.isSuccess {
