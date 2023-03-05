@@ -63,6 +63,7 @@ final class ReviewReelsViewController: BaseViewController {
         alertController.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
             guard let self = self else { return }
             self.reactor?.action.onNext(Reactor.Action.removeButtonDidTap(reviewId))
+            self.showRemoveToast()
         }))
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(alertController, animated: true)
@@ -76,6 +77,10 @@ final class ReviewReelsViewController: BaseViewController {
         }))
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(alertController, animated: true)
+    }
+    
+    private func showRemoveToast() {
+        UIWindow.makeToastAnimation(message: "후기가 삭제되었습니다.", .bottom)
     }
     
 }
