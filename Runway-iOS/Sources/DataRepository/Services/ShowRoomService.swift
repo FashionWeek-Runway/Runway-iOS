@@ -49,6 +49,6 @@ final class ShowRoomService: APIService, AuthTokenHost {
     func storeReview(storeId: Int, imageData: Data) -> Observable<DataRequest> {
         let imageDataString = String(decoding: imageData, as: UTF8.self)
         
-        return request(.post, "stores/review/\(storeId)", parameters: [:] , encoding: imageDataString)
+        return request(.post, "stores/review/\(storeId)", parameters: [:] , encoding: BodyStringEncoding(body: imageDataString))
     }
 }

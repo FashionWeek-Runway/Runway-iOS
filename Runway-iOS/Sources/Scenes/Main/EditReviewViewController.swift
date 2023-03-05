@@ -71,12 +71,12 @@ final class EditReviewViewController: BaseViewController {
         backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
         backButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(13)
+            $0.bottom.equalTo(navigationBarArea.snp.bottom).offset(-14)
         }
         
         addTextButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalToSuperview().offset(9)
+            $0.bottom.equalTo(navigationBarArea.snp.bottom).offset(-10)
         }
         
         registerButton.snp.makeConstraints {

@@ -205,13 +205,13 @@ extension ProfileSettingViewController: View {
         
         // set profile image
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .map { $0[.originalImage] as? UIImage }
+            .map { $0[.editedImage] as? UIImage }
             .bind(to: profileSettingView.profileImageView.rx.image )
             .disposed(by: disposeBag)
         
         // bind action
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .map { $0[.originalImage] as? UIImage ?? UIImage() }
+            .map { $0[.editedImage] as? UIImage ?? UIImage() }
             .map { Reactor.Action.setImage($0.pngData()) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
