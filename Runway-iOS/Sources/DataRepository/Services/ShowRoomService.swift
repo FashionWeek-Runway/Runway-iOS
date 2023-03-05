@@ -54,4 +54,12 @@ final class ShowRoomService: APIService, AuthTokenHost {
                         mimeType: "image/png")
         }, to: baseURL + "stores/review/img/\(storeId)", method: .post, headers: headers)
     }
+    
+    func reviewDetail(reviewId: Int) -> Observable<DataRequest> {
+        return request(.get, "stores/review/detail/\(reviewId)")
+    }
+    
+    func reviewBookmark(reviewId: Int) -> Observable<DataRequest> {
+        return request(.post, "stores/review/bookmark/\(reviewId)")
+    }
 }

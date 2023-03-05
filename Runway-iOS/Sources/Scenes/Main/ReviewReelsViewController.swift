@@ -21,7 +21,7 @@ final class ReviewReelsViewController: BaseViewController {
     
     // MARK: - initializer
     
-    init(with reactor: HomeReactor) {
+    init(with reactor: ReviewReelsReactor) {
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -62,16 +62,16 @@ final class ReviewReelsViewController: BaseViewController {
 }
 
 extension ReviewReelsViewController: View {
-    func bind(reactor: HomeReactor) {
+    func bind(reactor: ReviewReelsReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
     
-    private func bindAction(reactor: HomeReactor) {
-        
+    private func bindAction(reactor: ReviewReelsReactor) {
+        rx.viewDidLoad
     }
     
-    private func bindState(reactor: HomeReactor) {
-        
+    private func bindState(reactor: ReviewReelsReactor) {
+        reactor.state.map { }
     }
 }

@@ -601,6 +601,12 @@ extension ShowRoomDetailViewController: View {
                 }
             }).disposed(by: disposeBag)
         
+        reviewCollectionView.rx.modelSelected((Int, String).self)
+            .asDriver()
+            .drive(onNext: { [weak self] cell in
+                
+            }).disposed(by: disposeBag)
+        
         
         Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
             .bind(onNext: { _ in self.dismiss(animated: true) })

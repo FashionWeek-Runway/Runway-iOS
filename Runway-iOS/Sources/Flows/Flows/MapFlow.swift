@@ -37,9 +37,11 @@ final class MapFlow: Flow {
         case .mapSearch(let location):
             return coordinateToMapSearchScreen(mapLocation: location)
         case .showRoomDetail(let storeId):
-            return coordinateToShowRoomDetail(storeId: storeId)
+            return coordinateToShowRoomDetailScreen(storeId: storeId)
         case .editReviewImage(let storeId, let data):
-            return coordinateToEditReviewImage(storeId: storeId, imageData: data)
+            return coordinateToEditReviewImageScreen(storeId: storeId, imageData: data)
+        case .userReviewReels(let reviewId):
+            return coordinateToReviewReelsScreen(reviewId: reviewId)
         case .back(let animated):
             return back(animated: animated)
         default:
@@ -61,7 +63,7 @@ final class MapFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToShowRoomDetail(storeId: Int) -> FlowContributors {
+    private func coordinateToShowRoomDetailScreen(storeId: Int) -> FlowContributors {
         let reactor = ShowRoomDetailReactor(provider: provider, storeId: storeId)
         let viewController = ShowRoomDetailViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
@@ -69,9 +71,17 @@ final class MapFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToEditReviewImage(storeId: Int, imageData: Data) -> FlowContributors {
+    private func coordinateToEditReviewImageScreen(storeId: Int, imageData: Data) -> FlowContributors {
         let reactor = EditReviewReactor(provider: provider, storeId: storeId ,reviewImageData: imageData)
         let viewController = EditReviewViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToReviewReelsScreen(reviewId: Int) -> FlowContributors {
+        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId)
+        let viewController = ReviewReelsViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

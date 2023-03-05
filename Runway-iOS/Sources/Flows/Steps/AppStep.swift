@@ -49,6 +49,7 @@ enum AppStep: Step {
     case mapSearch((Double, Double))
     case showRoomDetail(Int)
     case editReviewImage(Int, Data)
+    case userReviewReels(Int)
     
     
     case myPageTab

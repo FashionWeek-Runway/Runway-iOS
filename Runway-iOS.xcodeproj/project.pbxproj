@@ -15,6 +15,8 @@
 		191B8EB329B4BCD600CF5C83 /* BodyStringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */; };
 		191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */; };
 		191B8EB729B4C37600CF5C83 /* RWReviewReelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */; };
+		191B8EB929B4D75300CF5C83 /* ReviewReelsReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */; };
+		191B8EBB29B4DB7500CF5C83 /* ReviewDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
@@ -191,6 +193,8 @@
 		191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyStringEncoding.swift; sourceTree = "<group>"; };
 		191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsViewController.swift; sourceTree = "<group>"; };
 		191B8EB629B4C37600CF5C83 /* RWReviewReelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsView.swift; sourceTree = "<group>"; };
+		191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsReactor.swift; sourceTree = "<group>"; };
+		191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailResponse.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
@@ -435,6 +439,7 @@
 				1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */,
 				1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */,
 				191B8EAA29B3B9B900CF5C83 /* MyPageInformationResponse.swift */,
+				191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -796,6 +801,7 @@
 				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
 				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
 				191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */,
+				191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1180,6 +1186,7 @@
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
 				199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */,
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,
+				191B8EBB29B4DB7500CF5C83 /* ReviewDetailResponse.swift in Sources */,
 				196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */,
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				191B8EAB29B3B9B900CF5C83 /* MyPageInformationResponse.swift in Sources */,
@@ -1194,6 +1201,7 @@
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
+				191B8EB929B4D75300CF5C83 /* ReviewReelsReactor.swift in Sources */,
 				19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,

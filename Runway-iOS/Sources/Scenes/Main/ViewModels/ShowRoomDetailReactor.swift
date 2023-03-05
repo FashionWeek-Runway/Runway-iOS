@@ -23,7 +23,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case backButtonDidTap
         case bookmarkButtonDidTap
         case userReviewScrollReachesBottom
-        
+        case reviewCellDidTap(Int)
         case pickingReviewImage(Data?)
     }
 
@@ -114,6 +114,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
                     .data().decode(type: UserReviewResponse.self, decoder: JSONDecoder())
                     .map { Mutation.setStoreReviewAppend($0.result)}
             }
+            
+        case .reviewCellDidTap(let reviewId):
+            steps.accept(AppStep.userReviewReels(reviewId))
+            return .empty()
             
         case .pickingReviewImage(let imageData):
             guard let imageData else { return .empty() }
