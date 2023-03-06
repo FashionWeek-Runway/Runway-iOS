@@ -19,7 +19,7 @@ struct AppleLoginResponse: Decodable {
 struct AppleLoginResponseResult: Decodable {
     let accessToken, refreshToken: String?
     let checkUser: Bool
-    let appleID: String
+    let appleID: String?
     let userID: Int?
 
     enum CodingKeys: String, CodingKey {
