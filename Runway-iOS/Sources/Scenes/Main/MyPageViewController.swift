@@ -209,7 +209,7 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                  myReviewTabButton, storedTabButton, divider2, reviewBottomLine, storedBottomLine, emptyImageView, emptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView])
+                                  myReviewTabButton, storedTabButton, divider2, reviewBottomLine, storedBottomLine, emptyImageView, emptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
         myReviewTabButton.addSubviews([myReviewImageView, myReviewTabLabel])
         storedTabButton.addSubviews([storedImageView, storedTabLabel])
         
@@ -235,6 +235,7 @@ final class MyPageViewController: BaseViewController {
         
         divider.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(1)
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(29)
         }
         
@@ -254,7 +255,7 @@ final class MyPageViewController: BaseViewController {
         
         myReviewImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(7)
+            $0.top.equalToSuperview().offset(10)
         }
         
         myReviewTabLabel.snp.makeConstraints {
@@ -264,7 +265,7 @@ final class MyPageViewController: BaseViewController {
         
         storedImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(7)
+            $0.top.equalToSuperview().offset(10)
         }
         
         storedTabLabel.snp.makeConstraints {
@@ -282,14 +283,14 @@ final class MyPageViewController: BaseViewController {
             $0.leading.equalToSuperview()
             $0.height.equalTo(2)
             $0.width.equalToSuperview().dividedBy(2)
-            $0.bottom.equalTo(divider.snp.top)
+            $0.bottom.equalTo(divider2.snp.top)
         }
         
         storedBottomLine.snp.makeConstraints {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(2)
             $0.width.equalToSuperview().dividedBy(2)
-            $0.bottom.equalTo(divider.snp.top)
+            $0.bottom.equalTo(divider2.snp.top)
         }
         
         emptyImageView.snp.makeConstraints {
