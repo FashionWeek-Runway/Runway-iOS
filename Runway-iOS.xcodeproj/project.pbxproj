@@ -103,6 +103,7 @@
 		199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */; };
 		199DF21D29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */; };
 		19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */; };
+		19A2552429B61889001EF3DD /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A2552329B61889001EF3DD /* HomeService.swift */; };
 		19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3112D2996D23C0068FF41 /* UIView+.swift */; };
 		19A962262991322800F952DA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962252991322800F952DA /* UIColor+.swift */; };
 		19A962282991369600F952DA /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A962272991369600F952DA /* UIFont+.swift */; };
@@ -289,6 +290,7 @@
 		199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchHistory.swift; sourceTree = "<group>"; };
 		199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeywordSearchResponse.swift; sourceTree = "<group>"; };
 		19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAsKakaoResponse.swift; sourceTree = "<group>"; };
+		19A2552329B61889001EF3DD /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		19A3112D2996D23C0068FF41 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		19A962252991322800F952DA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		19A962272991369600F952DA /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -413,15 +415,9 @@
 		193938FF29A0D1090037810A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				19E0C77929A2ABA6003E1F10 /* ViewModels */,
-				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
-				1939390129A0D12A0037810A /* MapViewController.swift */,
-				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
-				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
-				198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */,
-				191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */,
-				191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */,
-				191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */,
+				19A2551D29B61343001EF3DD /* Home */,
+				19A2551F29B6136C001EF3DD /* Map */,
+				19A2552129B6139E001EF3DD /* MyPage */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -608,6 +604,68 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		19A2551D29B61343001EF3DD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
+				19A2551E29B6134F001EF3DD /* ViewModels */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		19A2551E29B6134F001EF3DD /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19A2551F29B6136C001EF3DD /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				19A2552029B61377001EF3DD /* ViewModels */,
+				198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */,
+				191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */,
+				191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */,
+				191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */,
+				1939390129A0D12A0037810A /* MapViewController.swift */,
+				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		19A2552029B61377001EF3DD /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */,
+				19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */,
+				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
+				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
+				191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */,
+				191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */,
+				191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19A2552129B6139E001EF3DD /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				19A2552229B613A6001EF3DD /* ViewModels */,
+				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		19A2552229B613A6001EF3DD /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		19A9621E29912FD800F952DA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -774,6 +832,7 @@
 				19E0C78629A36943003E1F10 /* UserService.swift */,
 				19E0C78829A36B2F003E1F10 /* ShowRoomService.swift */,
 				19E0C78A29A36E3B003E1F10 /* MapService.swift */,
+				19A2552329B61889001EF3DD /* HomeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -797,22 +856,6 @@
 				19A9624129915F0300F952DA /* AuthHeaderInterceptor.swift */,
 			);
 			path = Interceptor;
-			sourceTree = "<group>";
-		};
-		19E0C77929A2ABA6003E1F10 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */,
-				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
-				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
-				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
-				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
-				191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */,
-				191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */,
-				191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */,
-				191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		19E0C79C29A39EFF003E1F10 /* Models */ = {
@@ -1192,6 +1235,7 @@
 				198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */,
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
+				19A2552429B61889001EF3DD /* HomeService.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
