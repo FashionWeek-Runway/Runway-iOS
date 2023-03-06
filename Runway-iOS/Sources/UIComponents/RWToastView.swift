@@ -13,6 +13,8 @@ final class RWToastView: UIView {
         let label = UILabel()
         label.font = .body1
         label.textColor = .white
+        label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     

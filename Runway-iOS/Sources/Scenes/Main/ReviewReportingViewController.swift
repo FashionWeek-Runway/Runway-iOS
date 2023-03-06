@@ -119,16 +119,17 @@ final class ReviewReportingViewController: BaseViewController {
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 4
         textView.clipsToBounds = true
-        
+        textView.font = .body1
+        textView.backgroundColor = .clear
         return textView
     }()
     
-    private let opnionTextViewPlaceholderLabel: UILabel = {
-        let label = UILabel()
-        label.text = "신고 사유를 입력해주세요"
-        label.font = .body1
-        label.textColor = .gray300
-        return label
+    private let opinionPlaceholderView: UITextView = {
+        let textView = UITextView()
+        textView.font = .body1
+        textView.textColor = .gray300
+        textView.isUserInteractionEnabled = false
+        return textView
     }()
     
     private let guideTextLabel: UILabel = {
@@ -246,7 +247,12 @@ final class ReviewReportingViewController: BaseViewController {
         reasonUIStackView.spacing = 32
         reasonUIStackView.alignment = .leading
         
-        containerView.addSubviews([reasonLabel, reasonUIStackView, opinionLabel, opinionTextView, opnionTextViewPlaceholderLabel, guideTextLabel])
+        containerView.addSubviews([reasonLabel,
+                                   reasonUIStackView,
+                                   opinionLabel,
+                                   opinionPlaceholderView,
+                                   opinionTextView,
+                                   guideTextLabel])
         reasonLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(20)
@@ -269,9 +275,8 @@ final class ReviewReportingViewController: BaseViewController {
             $0.height.equalTo((UIScreen.getDeviceWidth() - 40) / 2)
         }
         
-        opnionTextViewPlaceholderLabel.snp.makeConstraints {
-            $0.top.equalTo(opinionTextView.snp.top).offset(14)
-            $0.leading.equalTo(opinionTextView.snp.leading).offset(14)
+        opinionPlaceholderView.snp.makeConstraints {
+            $0.edges.equalTo(opinionTextView.snp.edges)
         }
         
         guideTextLabel.snp.makeConstraints {
@@ -298,10 +303,42 @@ final class ReviewReportingViewController: BaseViewController {
     }
     
     private func setRx() {
+        view.rx.tapGesture()
+            .when(.recognized)
+            .bind(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
+        
         opinionTextView.rx.didBeginEditing
             .asDriver()
             .drive(onNext: { [weak self] in
-                self?.opnionTextViewPlaceholderLabel.isHidden = self?.opinionTextView.text.isEmpty != true
+                if self?.opinionTextView.text.isEmpty == true {
+                    self?.opinionPlaceholderView.text = "100자 이내로 작성해주세요"
+                } else {
+                    self?.opinionPlaceholderView.text = ""
+                }
+            }).disposed(by: disposeBag)
+        
+        opinionTextView.rx.text
+            .asDriver()
+            .drive(onNext: { [weak self] text in
+                if text == nil || text?.isEmpty == true {
+                    if self?.opinionTextView.isFirstResponder == true {
+                        self?.opinionPlaceholderView.text = "100자 이내로 작성해주세요"
+                    } else {
+                        self?.opinionPlaceholderView.text = "신고 사유를 입력해주세요"
+                    }
+                } else {
+                    self?.opinionPlaceholderView.text = ""
+                }
+            }).disposed(by: disposeBag)
+        
+        opinionTextView.rx.didEndEditing
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                if self?.opinionTextView.text.isEmpty == true {
+                    self?.opinionPlaceholderView.text = "신고 사유를 입력해주세요"
+                }
             }).disposed(by: disposeBag)
     }
 }
@@ -313,10 +350,82 @@ extension ReviewReportingViewController: View {
     }
     
     private func bindAction(reactor: ReviewReportingReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
         
+        isSpamButton.rx.tap
+            .map { Reactor.Action.spamButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        isInappropreatedButton.rx.tap
+            .map { Reactor.Action.inappropreateButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        isHarmfulButton.rx.tap
+            .map { Reactor.Action.harmfulButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        isAbuseButton.rx.tap
+            .map { Reactor.Action.abuseButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        isLieButton.rx.tap
+            .map { Reactor.Action.lieButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        isEtcButton.rx.tap
+            .map { Reactor.Action.etcButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        opinionTextView.rx.text
+            .filter { _ in self.opinionTextView.textColor != .gray300 }
+            .map { Reactor.Action.enterOpinion($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reportButton.rx.tap
+            .do(onNext: {
+                UIWindow.makeToastAnimation(message: "신고가완료됐습니다.\n더 나은 서비스를 위해 노력하겠습니다.", .bottom, 88 )
+            })
+            .map { Reactor.Action.reportButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ReviewReportingReactor) {
+        reactor.state.map { $0.reportButtonIsEnable }
+            .bind(to: reportButton.rx.isEnabled)
+            .disposed(by: disposeBag)
         
+        reactor.state.compactMap { $0.reportingReason }
+            .bind(onNext: { [weak self] reasonNumber in
+                guard let self else { return }
+                [self.isSpamButton, self.isInappropreatedButton, self.isHarmfulButton, self.isAbuseButton, self.isLieButton, self.isEtcButton].forEach {
+                    $0.isSelected = false
+                }
+                switch reasonNumber {
+                case 1:
+                    self.isSpamButton.isSelected = true
+                case 2:
+                    self.isInappropreatedButton.isSelected = true
+                case 3:
+                    self.isHarmfulButton.isSelected = true
+                case 4:
+                    self.isAbuseButton.isSelected = true
+                case 5:
+                    self.isLieButton.isSelected = true
+                case 6:
+                    self.isEtcButton.isSelected = true
+                default:
+                    break
+                }
+            }).disposed(by: disposeBag)
     }
 }
