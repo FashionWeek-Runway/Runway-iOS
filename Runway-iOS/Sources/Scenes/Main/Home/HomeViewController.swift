@@ -12,6 +12,17 @@ import ReactorKit
 
 final class HomeViewController: BaseViewController {
     
+    private let topCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0.0
+        view.collectionViewLayout = layout
+        return view
+    }()
+    
     
     // MARK: - initializer
     

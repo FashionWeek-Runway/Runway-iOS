@@ -8,6 +8,7 @@
 import UIKit
 
 enum FontName: String {
+    case blackHanSansRegular = "BlackHanSans-Regular"
     case spoqaHanSansNeoBold = "SpoqaHanSansNeo-Bold"
     case spoqaHanSansNeoLight = "SpoqaHanSansNeo-Light"
     case spoqaHanSansNeoMedium = "SpoqaHanSansNeo-Medium"
