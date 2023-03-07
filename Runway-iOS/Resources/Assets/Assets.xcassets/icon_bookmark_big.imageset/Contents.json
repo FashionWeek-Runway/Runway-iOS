@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon_bookmark.png",
+      "filename" : "Property 1=Default.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_bookmark@2x.png",
+      "filename" : "Property 1=Default@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon_bookmark@3x.png",
+      "filename" : "Property 1=Default@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

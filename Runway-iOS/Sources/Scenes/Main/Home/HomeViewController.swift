@@ -64,7 +64,7 @@ final class HomeViewController: BaseViewController {
         return button
     }()
     
-    private let wholeContentButton: UIButton = {
+    private let showAllContentButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "전체보기", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
         button.setImage(UIImage(named: "icon_go_small"), for: .normal)
@@ -251,7 +251,7 @@ final class HomeViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         
-        gradientTopArea.addSubviews([guideLabelText, categorySelectButton, wholeContentButton])
+        gradientTopArea.addSubviews([guideLabelText, categorySelectButton, showAllContentButton])
         guideLabelText.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.bottom.equalToSuperview().offset(-20)
@@ -262,7 +262,7 @@ final class HomeViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-64)
         }
         
-        wholeContentButton.snp.makeConstraints {
+        showAllContentButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-22.5)
         }
@@ -293,6 +293,11 @@ extension HomeViewController: View {
         
         categorySelectButton.rx.tap
             .map { Reactor.Action.categorySelectButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        showAllContentButton.rx.tap
+            .map { Reactor.Action.showAllContentButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

@@ -35,8 +35,8 @@ final class HomeFlow: Flow {
             return coordinateToHomeTabScreen()
         case .categorySelect(let nickname):
             return coordinateToCategorySelectScreen(nickname: nickname)
-            
-            
+        case .showAllStore:
+            return coordinateToAllStoreScreen()
         case .back(let animated):
             return backScreen(animated: animated)
         default:
@@ -55,6 +55,14 @@ final class HomeFlow: Flow {
     private func coordinateToCategorySelectScreen(nickname: String) -> FlowContributors {
         let reactor = CategorySelectReactor(provider: provider, nickname: nickname)
         let viewController = CategorySelectViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToAllStoreScreen() -> FlowContributors {
+        let reactor = AllStoreReactor(provider: provider)
+        let viewController = AllStoreViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

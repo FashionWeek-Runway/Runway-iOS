@@ -22,11 +22,12 @@ final class HomeReactor: Reactor, Stepper {
     enum Action {
         case viewWillAppear
         case categorySelectButtonDidTap
+        case showAllContentButtonDidTap
         case userReviewCollectionViewReachesEnd
     }
     
     enum Mutation {
-        case setPagerData([HomePagerResponseResult])
+        case setPagerData([HomeStoreResponseResult])
         case setUserReview(HomeReviewResponseResult)
         case appendUserReview(HomeReviewResponseResult)
         case setUserName(String)
@@ -34,7 +35,7 @@ final class HomeReactor: Reactor, Stepper {
     
     struct State {
         var nickname: String? = nil
-        var pagerData: [HomePagerResponseResult] = []
+        var pagerData: [HomeStoreResponseResult] = []
         
         var userReview: [HomeReviewResponseResultContent] = []
         var userReviewIsLast: Bool = false
@@ -62,19 +63,20 @@ final class HomeReactor: Reactor, Stepper {
         switch action {
         case .viewWillAppear:
             return Observable.concat([
-                provider.homeService.home(type: .home).data().decode(type: HomePagerResponse.self, decoder: JSONDecoder()).map {
+                provider.homeService.home(type: .home).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setPagerData($0.result)
                 },
-                
                 provider.homeService.review(page: 0, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setUserReview($0.result)
                 },
-                
                 provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setUserName($0.result.nickname)
                 }
-                
             ])
+            
+        case .showAllContentButtonDidTap:
+            steps.accept(AppStep.showAllStore)
+            return .empty()
             
         case .categorySelectButtonDidTap:
             guard let nickname = currentState.nickname else { return .empty()}

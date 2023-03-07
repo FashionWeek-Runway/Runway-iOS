@@ -8,14 +8,14 @@
 import Foundation
 
 // MARK: - Welcome
-struct HomePagerResponse: Codable {
+struct HomeStoreResponse: Codable {
     let isSuccess: Bool
     let code, message: String
-    let result: [HomePagerResponseResult]
+    let result: [HomeStoreResponseResult]
 }
 
 // MARK: - Result
-struct HomePagerResponseResult: Codable {
+struct HomeStoreResponseResult: Codable {
     let isBookmarked: Bool
     let imageURL: String
     let storeID: Int

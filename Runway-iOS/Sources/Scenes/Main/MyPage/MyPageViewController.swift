@@ -89,7 +89,7 @@ final class MyPageViewController: BaseViewController {
         return view
     }()
     
-    private let storedImageView = UIImageView(image: UIImage(named: "icon_bookmark"))
+    private let storedImageView = UIImageView(image: UIImage(named: "icon_bookmark_grey"))
     private let storedTabLabel: UILabel = {
         let label = UILabel()
         label.text = "저장"

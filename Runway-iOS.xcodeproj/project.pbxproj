@@ -166,7 +166,7 @@
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
 		19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */; };
 		19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */; };
-		19FF9B2829B7684600C48BD7 /* HomePagerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */; };
+		19FF9B2829B7684600C48BD7 /* HomeStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */; };
 		19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */; };
 		19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */; };
 		19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */; };
@@ -174,6 +174,9 @@
 		19FF9B3229B7ABEE00C48BD7 /* CategorySelectReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */; };
 		19FF9B3429B7AFEA00C48BD7 /* FashionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3329B7AFEA00C48BD7 /* FashionCategory.swift */; };
 		19FF9B3629B7B34200C48BD7 /* ExistCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3529B7B34200C48BD7 /* ExistCategoryResponse.swift */; };
+		19FF9B3829B7B8FE00C48BD7 /* AllStoreReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3729B7B8FE00C48BD7 /* AllStoreReactor.swift */; };
+		19FF9B3C29B7B92C00C48BD7 /* AllStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */; };
+		19FF9B3E29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -363,7 +366,7 @@
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
 		19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackHanSans-Regular.ttf"; sourceTree = "<group>"; };
 		19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomePagerCollectionViewCell.swift; sourceTree = "<group>"; };
-		19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePagerResponse.swift; sourceTree = "<group>"; };
+		19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreResponse.swift; sourceTree = "<group>"; };
 		19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewResponse.swift; sourceTree = "<group>"; };
 		19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeNoticeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -371,6 +374,9 @@
 		19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectReactor.swift; sourceTree = "<group>"; };
 		19FF9B3329B7AFEA00C48BD7 /* FashionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionCategory.swift; sourceTree = "<group>"; };
 		19FF9B3529B7B34200C48BD7 /* ExistCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistCategoryResponse.swift; sourceTree = "<group>"; };
+		19FF9B3729B7B8FE00C48BD7 /* AllStoreReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoreReactor.swift; sourceTree = "<group>"; };
+		19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoreViewController.swift; sourceTree = "<group>"; };
+		19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAllStoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC0D042F8A70E49A270DED /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -461,7 +467,7 @@
 				1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */,
 				191B8EAA29B3B9B900CF5C83 /* MyPageInformationResponse.swift */,
 				191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */,
-				19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */,
+				19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */,
 				19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */,
 				19FF9B3529B7B34200C48BD7 /* ExistCategoryResponse.swift */,
 			);
@@ -564,6 +570,7 @@
 				19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */,
 				19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */,
 				19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */,
+				19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -632,9 +639,10 @@
 		19A2551D29B61343001EF3DD /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
-				19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */,
 				19A2551E29B6134F001EF3DD /* ViewModels */,
+				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
+				19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */,
+				19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -644,6 +652,7 @@
 			children = (
 				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
 				19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */,
+				19FF9B3729B7B8FE00C48BD7 /* AllStoreReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1197,6 +1206,7 @@
 				19345E8B2995613B00E1EF9A /* PolicyDetailViewController.swift in Sources */,
 				19E0C78129A2AF8B003E1F10 /* MapFlow.swift in Sources */,
 				19E0C77B29A2ABC0003E1F10 /* HomeReactor.swift in Sources */,
+				19FF9B3C29B7B92C00C48BD7 /* AllStoreViewController.swift in Sources */,
 				19A962282991369600F952DA /* UIFont+.swift in Sources */,
 				196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */,
 				19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */,
@@ -1246,6 +1256,7 @@
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				191B8EAF29B491E100CF5C83 /* EditReviewReactor.swift in Sources */,
 				19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */,
+				19FF9B3829B7B8FE00C48BD7 /* AllStoreReactor.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
@@ -1285,6 +1296,7 @@
 				19E0C78F29A37352003E1F10 /* MapSearchData.swift in Sources */,
 				191B8EAD29B491C100CF5C83 /* EditReviewViewController.swift in Sources */,
 				19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */,
+				19FF9B3E29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift in Sources */,
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
@@ -1311,7 +1323,7 @@
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				191B8EB729B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
-				19FF9B2829B7684600C48BD7 /* HomePagerResponse.swift in Sources */,
+				19FF9B2829B7684600C48BD7 /* HomeStoreResponse.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
