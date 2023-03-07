@@ -123,6 +123,7 @@ extension CategorySelectViewController: View {
             .disposed(by: disposeBag)
         
         confirmButton.rx.tap
+            .do(onNext: { UIWindow.makeToastAnimation(message: "변경된 카테고리가 적용됐습니다.", .bottom)})
             .map { Reactor.Action.confirmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
