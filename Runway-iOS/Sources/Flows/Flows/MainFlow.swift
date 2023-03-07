@@ -32,12 +32,6 @@ final class MainFlow: Flow {
         switch step {
         case .userIsLoggedIn:
             return coordinateToMainTabScreen()
-//        case .homeTab:
-//            return coordinateToHomeTab()
-//        case .mapTab:
-//            return coordinateToMapTab()
-//        case .myPageTab:
-//            return coordinateToMyPageTab()
         default:
             return .none
         }
@@ -63,7 +57,7 @@ final class MainFlow: Flow {
             flow3Root.tabBarItem = myPageTabbarItem
             
             self.rootViewController.setViewControllers([flow1Root, flow2Root, flow3Root], animated: false)
-            self.rootViewController.selectedIndex = 1
+            self.rootViewController.selectedIndex = 0
         }
         return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
                                             .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),

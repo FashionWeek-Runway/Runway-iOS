@@ -1,13 +1,13 @@
 //
-//  RWReviewCollectionViewCell.swift
+//  RWHomeUserReviewCollectionViewCell.swift
 //  Runway-iOS
 //
-//  Created by 김인환 on 2023/03/05.
+//  Created by 김인환 on 2023/03/07.
 //
 
 import UIKit
 
-final class RWReviewCollectionViewCell: UICollectionViewCell {
+final class RWHomeUserReviewCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let view = UIImageView()
@@ -16,21 +16,18 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let bottomGradientView = UIView()
-    
     private let locationIcon = UIImageView(image: UIImage(named: "icon_location_small"))
     
     let addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption
-        label.textColor = .gray100
+        label.textColor = .white
         return label
     }()
     
+    static let identifier = "RWHomeUserReviewCollectionViewCell"
     
-    static let identifier = "RWReviewCollectionViewCell"
-    
-    // MARK: - intializer
+    // MARK: - initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,34 +38,20 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        bottomGradientView.setGradientBackground(colorTop: .clear, colorBottom: .black)
-    }
-    
     private func configureUI() {
-        addSubviews([imageView, bottomGradientView])
-        
-        imageView.addSubviews([locationIcon, addressLabel])
-        
+        addSubviews([imageView, locationIcon, addressLabel])
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        bottomGradientView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(29)
-        }
-        
         locationIcon.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(6)
-            $0.bottom.equalToSuperview().offset(6.5)
+            $0.leading.equalTo(8)
+            $0.bottom.equalTo(-9.5)
         }
         
         addressLabel.snp.makeConstraints {
+            $0.bottom.equalTo(-8)
             $0.leading.equalTo(locationIcon.snp.trailing).offset(3)
-            $0.bottom.equalToSuperview().offset(5)
         }
     }
 }

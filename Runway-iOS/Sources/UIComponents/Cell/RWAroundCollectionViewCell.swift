@@ -13,7 +13,8 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         return view
     }()
     

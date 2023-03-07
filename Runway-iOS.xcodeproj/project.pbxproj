@@ -166,6 +166,10 @@
 		19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */; };
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
 		19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */; };
+		19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */; };
+		19FF9B2829B7684600C48BD7 /* HomePagerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */; };
+		19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */; };
+		19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -355,6 +359,10 @@
 		19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSearchResponse.swift; sourceTree = "<group>"; };
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
 		19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackHanSans-Regular.ttf"; sourceTree = "<group>"; };
+		19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomePagerCollectionViewCell.swift; sourceTree = "<group>"; };
+		19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePagerResponse.swift; sourceTree = "<group>"; };
+		19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewResponse.swift; sourceTree = "<group>"; };
+		19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC0D042F8A70E49A270DED /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -445,6 +453,8 @@
 				1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */,
 				191B8EAA29B3B9B900CF5C83 /* MyPageInformationResponse.swift */,
 				191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */,
+				19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */,
+				19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -542,6 +552,8 @@
 				1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */,
 				1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */,
 				191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */,
+				19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */,
+				19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1180,6 +1192,7 @@
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
 				191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */,
 				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
+				19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */,
 				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
@@ -1205,6 +1218,7 @@
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */,
 				196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */,
+				19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */,
 				196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */,
 				19E0C7AB29A3ED55003E1F10 /* RWMapSearchBar.swift in Sources */,
 				19A3112E2996D23C0068FF41 /* UIView+.swift in Sources */,
@@ -1222,6 +1236,7 @@
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,
 				191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */,
+				19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */,
@@ -1280,6 +1295,7 @@
 				19345E8D2995615700E1EF9A /* ProfileSettingViewController.swift in Sources */,
 				191B8EB729B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift in Sources */,
 				19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */,
+				19FF9B2829B7684600C48BD7 /* HomePagerResponse.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,

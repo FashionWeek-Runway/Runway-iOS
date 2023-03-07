@@ -13,8 +13,16 @@ import RxAlamofire
 
 final class HomeService: APIService {
     
-    func home() -> Observable<DataRequest> {
-        return request(.get, "home")
+    enum HomeEndpointType: Int {
+        case home = 0
+        case all = 1
+    }
+    
+    func home(type: HomeEndpointType) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(type.rawValue, forKey: "type")
+        
+        return request(.get, "home", parameters: params, encoding: URLEncoding.default)
     }
     
     func categories() -> Observable<DataRequest> {

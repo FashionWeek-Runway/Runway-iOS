@@ -23,6 +23,7 @@ protocol ServiceProviderType {
     
     var userService: UserService { get }
     var showRoomService: ShowRoomService { get }
+    var homeService: HomeService { get }
     var mapService: MapService { get }
 }
 
@@ -77,6 +78,8 @@ final class DataRepository: ServiceProviderType {
     lazy var userService: UserService = UserService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
     
     lazy var showRoomService: ShowRoomService = ShowRoomService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
+    
+    lazy var homeService: HomeService = HomeService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
     
     lazy var mapService: MapService = MapService(baseURL: APIServiceURL.RUNWAY_BASEURL, isLogging: true)
 }

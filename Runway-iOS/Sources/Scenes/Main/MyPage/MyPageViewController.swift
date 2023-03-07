@@ -37,7 +37,8 @@ final class MyPageViewController: BaseViewController {
     
     private let profileImageButton: UIButton = {
         let view = UIButton()
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.layer.cornerRadius = 30
         view.clipsToBounds = true
         return view

@@ -87,7 +87,7 @@ final class RWProfileTagCardView: UIView {
         return view
     }()
     
-    private let bardCodeImageView: UIImageView = {
+    private let barcodeImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "barcode"))
         return view
     }()
@@ -158,7 +158,7 @@ final class RWProfileTagCardView: UIView {
                          styleLabel,
                          divider3,
                           styleStackView,
-                         bardCodeImageView])
+                         barcodeImageView])
         self.snp.makeConstraints {
             $0.width.equalTo(256)
             $0.height.equalTo(426)
@@ -236,7 +236,7 @@ final class RWProfileTagCardView: UIView {
             $0.trailing.equalTo(-18)
         }
         
-        bardCodeImageView.snp.makeConstraints {
+        barcodeImageView.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-14)
             $0.centerX.equalToSuperview()
         }

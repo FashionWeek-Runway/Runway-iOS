@@ -12,13 +12,14 @@ final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         return view
     }()
     
     let profileImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_profile"))
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 15
         view.clipsToBounds = true
         return view
