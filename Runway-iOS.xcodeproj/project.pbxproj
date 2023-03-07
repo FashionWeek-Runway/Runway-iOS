@@ -170,6 +170,7 @@
 		19FF9B2829B7684600C48BD7 /* HomePagerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */; };
 		19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */; };
 		19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */; };
+		19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */; };
 		4F68410956F18703C623E297 /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A52F8735A6319DF2E6AAD7 /* Pods_Runway_iOSTests.framework */; };
 		A3E2A53E3724A1341CE9383B /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */; };
 		D203408CA41E96AE4D357480 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7BFD8C4543DFE9968D5AE74 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
@@ -363,6 +364,7 @@
 		19FF9B2729B7684600C48BD7 /* HomePagerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePagerResponse.swift; sourceTree = "<group>"; };
 		19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewResponse.swift; sourceTree = "<group>"; };
 		19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeNoticeCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EEC5AAD303CC4507D0C5D26 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6300271F6B76CE845F4531D2 /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC0D042F8A70E49A270DED /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */,
 				19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */,
 				19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */,
+				19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1232,6 +1235,7 @@
 				196D23AA29A4F80000E262FB /* RWMapSearchBarCollectionViewCell.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				191B8EAF29B491E100CF5C83 /* EditReviewReactor.swift in Sources */,
+				19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,
 				19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */,

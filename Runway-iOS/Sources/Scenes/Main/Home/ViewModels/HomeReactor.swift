@@ -36,6 +36,8 @@ final class HomeReactor: Reactor, Stepper {
         var userReview: [HomeReviewResponseResultContent] = []
         var userReviewIsLast: Bool = false
         var userReviewPage: Int = 0
+        
+        
     }
     
     // MARK: - Properties

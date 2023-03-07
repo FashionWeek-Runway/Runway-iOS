@@ -19,6 +19,7 @@ final class HomeViewController: BaseViewController {
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
         view.isPagingEnabled = true
+        view.bounces = false
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -38,7 +39,7 @@ final class HomeViewController: BaseViewController {
     
     private let gradientTopArea: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = nil
         return view
     }()
     
@@ -132,6 +133,7 @@ final class HomeViewController: BaseViewController {
     private let noticeCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.showsVerticalScrollIndicator = false
+        view.register(RWHomeNoticeCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeNoticeCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
@@ -142,6 +144,8 @@ final class HomeViewController: BaseViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.bounces = false
         return scrollView
     }()
     
@@ -163,8 +167,8 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         gradientTopArea.setGradientBackground(colorTop: .black.withAlphaComponent(0.4), colorBottom: .clear)
     }
     
@@ -177,7 +181,7 @@ final class HomeViewController: BaseViewController {
         
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints {
-            $0.width.horizontalEdges.equalToSuperview()
+            $0.width.verticalEdges.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
         
@@ -295,10 +299,9 @@ extension HomeViewController: View {
 
                 item.categoryList.compactMap { $0 }.forEach {
                     let button = UIButton()
-                    button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.white]), for: .normal)
+                    button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
                     button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                     button.backgroundColor = .primary
-                    
                     cell.categoryTagStackView.addArrangedSubview(button)
                 }
                 
@@ -307,10 +310,19 @@ extension HomeViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.userReview }
+            .do(onNext: { [weak self] reviews in
+                [self?.emptyReviewImageView,
+                 self?.emptyReviewTitleLabel,
+                 self?.emptyReviewDescriptionLabel].forEach {
+                    $0?.isHidden = !reviews.isEmpty
+                }
+            })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let imageUrl = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
+        
+        
     }
 }
