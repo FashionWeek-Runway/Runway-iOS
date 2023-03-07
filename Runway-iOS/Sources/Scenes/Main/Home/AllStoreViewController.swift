@@ -65,7 +65,12 @@ extension AllStoreViewController: View {
     }
     
     private func bindAction(reactor: AllStoreReactor) {
-        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+        rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.modelSelected(HomeStoreResponseResult.self)
+            .map { Reactor.Action.selectStoreCell($0.storeID) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -73,7 +78,8 @@ extension AllStoreViewController: View {
     
     private func bindState(reactor: AllStoreReactor) {
         reactor.state.map { $0.storeDatas }
-            .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { indexPath, item, cell in
+            .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { [weak self] indexPath, item, cell in
+                guard let self else { return }
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeNameLabel.text = item.storeName
@@ -111,6 +117,14 @@ extension AllStoreViewController: View {
                         cell.tagStackView.addArrangedSubview(label)
                     }
                 }
+                
+                cell.bookmarkButton.rx.tap
+                    .asDriver()
+                    .drive(onNext: {
+                        cell.bookmarkButton.isSelected.toggle()
+                        reactor.action.onNext(Reactor.Action.bookmarkButtonDidTap(item.storeID))
+                    }).disposed(by: self.disposeBag)
+                
             }.disposed(by: disposeBag)
     }
 }

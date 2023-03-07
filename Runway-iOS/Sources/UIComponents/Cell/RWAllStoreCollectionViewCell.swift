@@ -18,7 +18,8 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
     
     let bookmarkButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "icon_bookmark_big"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
         return button
     }()
     

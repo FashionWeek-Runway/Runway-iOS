@@ -19,7 +19,9 @@ final class AllStoreReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case viewDidLoad
+        case viewWillAppear
+        case selectStoreCell(Int)
+        case bookmarkButtonDidTap(Int)
     }
     
     enum Mutation {
@@ -47,9 +49,19 @@ final class AllStoreReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
+        case .viewWillAppear:
             return provider.homeService.home(type: .all).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder())
                 .map { Mutation.setStoreDatas($0.result) }
+            
+        case .selectStoreCell(let storeId):
+            steps.accept(AppStep.showRoomDetail(storeId))
+            return .empty()
+            
+        case .bookmarkButtonDidTap(let storeId):
+            return provider.showRoomService.storeBookmark(storeId: storeId)
+                .flatMap { response -> Observable<Mutation> in
+                    return .empty()
+                }
         }
     }
     
