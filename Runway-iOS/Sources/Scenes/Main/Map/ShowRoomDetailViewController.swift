@@ -166,7 +166,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     }()
     
     private let reviewEmptyImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "AppIcon"))
+        let view = UIImageView(image: UIImage(named: "icon_empty_review"))
         view.isHidden = true
         return view
     }()

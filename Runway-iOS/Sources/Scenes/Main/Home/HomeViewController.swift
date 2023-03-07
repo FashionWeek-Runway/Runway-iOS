@@ -300,6 +300,19 @@ extension HomeViewController: View {
             .map { Reactor.Action.showAllContentButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        userReviewCollectionView.rx.didEndDecelerating
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                let width = self.userReviewCollectionView.frame.width
+                let contentWidth = self.userReviewCollectionView.contentSize.width
+                let reachesEnd = (self.userReviewCollectionView.contentOffset.y) > contentWidth - width
+                
+                if reachesEnd {
+                    self.reactor?.action.onNext(.userReviewCollectionViewReachesEnd)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: HomeReactor) {
@@ -311,7 +324,8 @@ extension HomeViewController: View {
                     self.pageProgressBar.setProgress(Float(percentage), animated: false)
                 }
             })
-            .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell in
+            .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell
+                in
                 
                 guard let imageUrl = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
@@ -324,19 +338,37 @@ extension HomeViewController: View {
                         .font: UIFont.font(.blackHanSansRegular, ofSize: 26)
                     ]
                 )
-
-                item.categoryList.compactMap { $0 }.forEach {
+                
+                let categories = item.categoryList.compactMap { $0 }
+                
+                if categories.count > 3 {
+                    for i in 0...2 {
+                        let button = UIButton()
+                        button.setAttributedTitle(NSAttributedString(string: "# \(categories[i])", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+                        button.backgroundColor = .primary
+                        cell.categoryTagStackView.addArrangedSubview(button)
+                    }
+                    let restNumber = categories.count - 3
                     let button = UIButton()
-                    button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                    button.setAttributedTitle(NSAttributedString(string: "+\(restNumber)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
                     button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                     button.backgroundColor = .primary
                     cell.categoryTagStackView.addArrangedSubview(button)
+                } else {
+                    categories.forEach {
+                        let button = UIButton()
+                        button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+                        button.backgroundColor = .primary
+                        cell.categoryTagStackView.addArrangedSubview(button)
+                    }
                 }
                 if item.isBookmarked {
-                    cell.bookmarkButton.setBackgroundImage(UIImage(named: "icon_bookmark_white"), for: .normal)
+                    cell.bookmarkButton.isSelected = true
                 }
-                
-                cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo, attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
+                cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
+                                                                        attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
                 
             }.disposed(by: disposeBag)
         
