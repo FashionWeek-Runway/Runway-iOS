@@ -13,7 +13,7 @@ import RxAlamofire
 final class UserService: APIService {
     
     func mypageInformation() -> Observable<DataRequest> {
-        return request(.get, "users")
+        return request(.get, "users/")
     }
     
     func bookmarkReviewList(page: Int, size: Int) -> Observable<DataRequest> {

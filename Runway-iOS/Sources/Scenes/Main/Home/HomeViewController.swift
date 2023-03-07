@@ -322,6 +322,9 @@ extension HomeViewController: View {
                     button.backgroundColor = .primary
                     cell.categoryTagStackView.addArrangedSubview(button)
                 }
+                if item.isBookmarked {
+                    cell.bookmarkButton.setBackgroundImage(UIImage(named: "icon_bookmark_white"), for: .normal)
+                }
                 
                 cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo, attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
                 
@@ -341,6 +344,9 @@ extension HomeViewController: View {
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         
-        
+        reactor.state.compactMap { $0.username }
+            .bind(onNext: { [weak self] username in
+                self?.guideLabelText.text = "\(username)님의\n취향을 가득 담은 매장"
+            }).disposed(by: disposeBag)
     }
 }

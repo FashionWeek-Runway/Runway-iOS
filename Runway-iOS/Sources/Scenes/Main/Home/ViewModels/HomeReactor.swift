@@ -28,9 +28,11 @@ final class HomeReactor: Reactor, Stepper {
         case setPagerData([HomePagerResponseResult])
         case setUserReview(HomeReviewResponseResult)
         case appendUserReview(HomeReviewResponseResult)
+        case setUserName(String)
     }
     
     struct State {
+        var username: String? = nil
         var pagerData: [HomePagerResponseResult] = []
         
         var userReview: [HomeReviewResponseResultContent] = []
@@ -65,6 +67,10 @@ final class HomeReactor: Reactor, Stepper {
                 
                 provider.homeService.review(page: 0, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setUserReview($0.result)
+                },
+                
+                provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder()).map {
+                    return Mutation.setUserName($0.result.nickname)
                 }
                 
             ])
@@ -94,6 +100,9 @@ final class HomeReactor: Reactor, Stepper {
             if !result.isLast {
                 state.userReviewPage += 1
             }
+            
+        case .setUserName(let username):
+            state.username = username
         }
         
         return state

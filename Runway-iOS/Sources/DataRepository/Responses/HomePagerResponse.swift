@@ -16,7 +16,7 @@ struct HomePagerResponse: Codable {
 
 // MARK: - Result
 struct HomePagerResponseResult: Codable {
-    let bookmark: Bool
+    let isBookmarked: Bool
     let imageURL: String
     let storeID: Int
     let storeName, regionInfo: String
@@ -24,7 +24,7 @@ struct HomePagerResponseResult: Codable {
     let bookmarkCount: Int
 
     enum CodingKeys: String, CodingKey {
-        case bookmark
+        case isBookmarked = "bookmark"
         case imageURL = "imgUrl"
         case storeID = "storeId"
         case storeName, regionInfo, categoryList
