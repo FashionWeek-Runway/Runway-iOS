@@ -20,6 +20,31 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    private let showMoreCardImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "store_card"))
+        return view
+    }()
+    
+    private let showMoreTopCircleHole: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 6
+        view.layer.borderWidth = 0.7
+        view.layer.borderColor = UIColor.white.cgColor
+        view.clipsToBounds = true
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    private let showMoreShopLabel: UILabel = {
+        let label = UILabel()
+        label.text = "SHOW\nMORE\nSHOP"
+        label.font = UIFont.font(.blackHanSansRegular, ofSize: 24)
+        label.textColor = .point
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
     private let clothesTagView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 4
@@ -50,6 +75,8 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
     let storeNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -82,9 +109,32 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private let disposeBag = DisposeBag()
+    private let showMoreBarcodeImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "barcode_white"))
+        return view
+    }()
+    
     
     static let identifier = "RWHomePagerCollectionViewCell"
+    
+    private let disposeBag = DisposeBag()
+    
+    enum CellMode {
+        case store
+        case showMoreShop
+    }
+    
+    var cellMode: CellMode = .store {
+        didSet {
+            switch cellMode {
+            case .store:
+                self.imageView.isHidden = false
+                
+            case .showMoreShop:
+                self.imageView.isHidden = true
+            }
+        }
+    }
     
     // MARK: - initializer
     
@@ -98,7 +148,32 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        addSubview(imageView)
+        self.backgroundColor = .black
+        addSubviews([showMoreCardImageView, imageView])
+        showMoreCardImageView.addSubviews([showMoreTopCircleHole, showMoreShopLabel, showMoreBarcodeImageView])
+        showMoreCardImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(38)
+            $0.top.equalToSuperview().offset(140)
+            $0.trailing.equalToSuperview().offset(-38)
+            $0.bottom.equalToSuperview().offset(-20)
+        }
+        
+        showMoreTopCircleHole.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(12)
+            $0.top.equalToSuperview().offset(11)
+        }
+        
+        showMoreBarcodeImageView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-10)
+            $0.centerX.equalToSuperview()
+        }
+        
+        showMoreShopLabel.snp.makeConstraints {
+            $0.bottom.equalTo(showMoreBarcodeImageView.snp.top).offset(-28)
+            $0.centerX.equalToSuperview()
+        }
+        
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -115,6 +190,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         topCircleHole.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(12)
+            $0.top.equalToSuperview().offset(11)
         }
         
         bookmarkButton.snp.makeConstraints {
@@ -157,5 +233,6 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         self.categoryTagStackView.arrangedSubviews.forEach {
             $0.removeFromSuperview()
         }
+        self.cellMode = .store
     }
 }

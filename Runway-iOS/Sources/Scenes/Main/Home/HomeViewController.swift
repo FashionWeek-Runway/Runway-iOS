@@ -327,48 +327,54 @@ extension HomeViewController: View {
             .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell
                 in
                 
-                guard let imageUrl = URL(string: item.imageURL) else { return }
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
-                cell.storeNameLabel.attributedText = NSAttributedString(
-                    string: item.storeName,
-                    attributes: [
-                        .strokeColor: UIColor.white,
-                        .foregroundColor: UIColor.primary,
-                        .strokeWidth: -1.0,
-                        .font: UIFont.font(.blackHanSansRegular, ofSize: 26)
-                    ]
-                )
-                
-                let categories = item.categoryList.compactMap { $0 }
-                
-                if categories.count > 3 {
-                    for i in 0...2 {
+                switch item.cellType {
+                case .store:
+                    cell.cellMode = .store
+                    guard let imageUrl = URL(string: item.imageURL) else { return }
+                    cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
+                    cell.storeNameLabel.attributedText = NSAttributedString(
+                        string: item.storeName,
+                        attributes: [
+                            .strokeColor: UIColor.white,
+                            .foregroundColor: UIColor.primary,
+                            .strokeWidth: -1.0,
+                            .font: UIFont.font(.blackHanSansRegular, ofSize: 26)
+                        ]
+                    )
+                    
+                    let categories = item.categoryList.compactMap { $0 }
+                    
+                    if categories.count > 3 {
+                        for i in 0...2 {
+                            let button = UIButton()
+                            button.setAttributedTitle(NSAttributedString(string: "# \(categories[i])", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                            button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+                            button.backgroundColor = .primary
+                            cell.categoryTagStackView.addArrangedSubview(button)
+                        }
+                        let restNumber = categories.count - 3
                         let button = UIButton()
-                        button.setAttributedTitle(NSAttributedString(string: "# \(categories[i])", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                        button.setAttributedTitle(NSAttributedString(string: "+\(restNumber)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
                         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
                         button.backgroundColor = .primary
                         cell.categoryTagStackView.addArrangedSubview(button)
+                    } else {
+                        categories.forEach {
+                            let button = UIButton()
+                            button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
+                            button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+                            button.backgroundColor = .primary
+                            cell.categoryTagStackView.addArrangedSubview(button)
+                        }
                     }
-                    let restNumber = categories.count - 3
-                    let button = UIButton()
-                    button.setAttributedTitle(NSAttributedString(string: "+\(restNumber)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
-                    button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-                    button.backgroundColor = .primary
-                    cell.categoryTagStackView.addArrangedSubview(button)
-                } else {
-                    categories.forEach {
-                        let button = UIButton()
-                        button.setAttributedTitle(NSAttributedString(string: "# \($0)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.point]), for: .normal)
-                        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-                        button.backgroundColor = .primary
-                        cell.categoryTagStackView.addArrangedSubview(button)
+                    if item.isBookmarked {
+                        cell.bookmarkButton.isSelected = true
                     }
+                    cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
+                                                                            attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
+                case .showMoreShop: // last cell
+                    cell.cellMode = .showMoreShop
                 }
-                if item.isBookmarked {
-                    cell.bookmarkButton.isSelected = true
-                }
-                cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
-                                                                        attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
                 
             }.disposed(by: disposeBag)
         

@@ -30,4 +30,11 @@ struct HomeStoreResponseResult: Codable {
         case storeName, regionInfo, categoryList
         case bookmarkCount = "bookmarkCnt"
     }
+    
+    // last show more shop cell
+    enum CellType {
+        case store
+        case showMoreShop
+    }
+    var cellType: CellType = .store
 }

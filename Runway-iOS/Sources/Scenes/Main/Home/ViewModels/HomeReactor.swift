@@ -95,7 +95,14 @@ final class HomeReactor: Reactor, Stepper {
         
         switch mutation {
         case .setPagerData(let results):
-            state.pagerData = results
+            state.pagerData = results + [HomeStoreResponseResult(isBookmarked: false,
+                                                                 imageURL: "",
+                                                                 storeID: 0,
+                                                                 storeName: "",
+                                                                 regionInfo: "",
+                                                                 categoryList: [],
+                                                                 bookmarkCount: 0,
+                                                                 cellType: .showMoreShop)]
         case .setUserReview(let result):
             state.userReview = result.contents
             state.userReviewIsLast = result.isLast
