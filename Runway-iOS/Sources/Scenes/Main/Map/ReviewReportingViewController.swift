@@ -353,6 +353,7 @@ extension ReviewReportingViewController: View {
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidTap }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         isSpamButton.rx.tap
             .map { Reactor.Action.spamButtonDidTap }
