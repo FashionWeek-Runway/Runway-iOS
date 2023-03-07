@@ -30,7 +30,7 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
-    private let pageProgressBar: UIProgressView = {
+    private lazy var pageProgressBar: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .bar)
         view.trackTintColor = .gray100
         view.progressTintColor = .point
@@ -40,6 +40,13 @@ final class HomeViewController: BaseViewController {
     private let gradientTopArea: UIView = {
         let view = UIView()
         view.backgroundColor = nil
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: 140)
+        view.layer.insertSublayer(gradientLayer, at: 0)
         return view
     }()
     
@@ -167,11 +174,11 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        gradientTopArea.setGradientBackground(colorTop: .black.withAlphaComponent(0.4), colorBottom: .clear)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setRx()
     }
-    
+
     override func configureUI() {
         super.configureUI()
         view.addSubviews([scrollView])
@@ -262,10 +269,14 @@ final class HomeViewController: BaseViewController {
         
     }
     
-    // MARK: - Life cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setRx() {
+        pagerCollectionView.rx.contentOffset
+            .asDriver()
+            .drive(onNext: { [weak self] offset in
+                guard let self else { return }
+                let percentage = (offset.x + self.pagerCollectionView.bounds.width) / self.pagerCollectionView.contentSize.width
+                self.pageProgressBar.setProgress(Float(percentage), animated: false)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -283,6 +294,13 @@ extension HomeViewController: View {
     
     private func bindState(reactor: HomeReactor) {
         reactor.state.map { $0.pagerData }
+            .do(onNext: { [weak self] data in
+                guard let self, data.count > 0 else { return }
+                let percentage = CGFloat(data.count) / 100
+                DispatchQueue.main.async {
+                    self.pageProgressBar.setProgress(Float(percentage), animated: false)
+                }
+            })
             .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell in
                 
                 guard let imageUrl = URL(string: item.imageURL) else { return }

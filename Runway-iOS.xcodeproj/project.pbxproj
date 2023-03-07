@@ -12,7 +12,6 @@
 		191B8EAD29B491C100CF5C83 /* EditReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */; };
 		191B8EAF29B491E100CF5C83 /* EditReviewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */; };
 		191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB029B4AED500CF5C83 /* UIImage+.swift */; };
-		191B8EB329B4BCD600CF5C83 /* BodyStringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */; };
 		191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */; };
 		191B8EB729B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */; };
 		191B8EB929B4D75300CF5C83 /* ReviewReelsReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */; };
@@ -200,7 +199,6 @@
 		191B8EAC29B491C100CF5C83 /* EditReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewViewController.swift; sourceTree = "<group>"; };
 		191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewReactor.swift; sourceTree = "<group>"; };
 		191B8EB029B4AED500CF5C83 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyStringEncoding.swift; sourceTree = "<group>"; };
 		191B8EB429B4BFE800CF5C83 /* ReviewReelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsViewController.swift; sourceTree = "<group>"; };
 		191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsCollectionViewCell.swift; sourceTree = "<group>"; };
 		191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReelsReactor.swift; sourceTree = "<group>"; };
@@ -862,7 +860,6 @@
 				19A962512991735300F952DA /* UserDefault.swift */,
 				19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */,
 				19F10C7029A67BE80060F0BD /* NSCacheManager.swift */,
-				191B8EB229B4BCD600CF5C83 /* BodyStringEncoding.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1208,7 +1205,6 @@
 				194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */,
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				199B9C7B299D28A900877AAE /* SignUpAsPhoneData.swift in Sources */,
-				191B8EB329B4BCD600CF5C83 /* BodyStringEncoding.swift in Sources */,
 				19E0C7A529A3B2B7003E1F10 /* Reactive+NMFMapView.swift in Sources */,
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
