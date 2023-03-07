@@ -30,11 +30,8 @@ final class HomeService: APIService {
     }
     
     func categorySelect(categories: [Int]) -> Observable<DataRequest> {
-        
-        let categoryString = "[" + categories.map { String($0) }.joined(separator: ",") + "]"
-        
         var params = Parameters()
-        params.updateValue(categoryString, forKey: "categoryList")
+        params.updateValue(categories, forKey: "categoryList")
         
         return request(.patch, "home/categories", parameters: params)
     }

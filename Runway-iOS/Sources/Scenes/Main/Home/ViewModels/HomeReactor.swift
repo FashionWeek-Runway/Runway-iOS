@@ -21,6 +21,7 @@ final class HomeReactor: Reactor, Stepper {
     
     enum Action {
         case viewWillAppear
+        case categorySelectButtonDidTap
         case userReviewCollectionViewReachesEnd
     }
     
@@ -32,7 +33,7 @@ final class HomeReactor: Reactor, Stepper {
     }
     
     struct State {
-        var username: String? = nil
+        var nickname: String? = nil
         var pagerData: [HomePagerResponseResult] = []
         
         var userReview: [HomeReviewResponseResultContent] = []
@@ -75,6 +76,11 @@ final class HomeReactor: Reactor, Stepper {
                 
             ])
             
+        case .categorySelectButtonDidTap:
+            guard let nickname = currentState.nickname else { return .empty()}
+            steps.accept(AppStep.categorySelect(nickname))
+            return .empty()
+            
         case .userReviewCollectionViewReachesEnd:
             return currentState.userReviewIsLast ? .empty() : provider.homeService.review(page: currentState.userReviewPage, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
                 return Mutation.appendUserReview($0.result)
@@ -102,7 +108,7 @@ final class HomeReactor: Reactor, Stepper {
             }
             
         case .setUserName(let username):
-            state.username = username
+            state.nickname = username
         }
         
         return state

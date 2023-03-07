@@ -44,6 +44,7 @@ enum AppStep: Step {
     
     // Main
     case homeTab
+    case categorySelect(String)
     
     case mapTab
     case mapSearch((Double, Double))

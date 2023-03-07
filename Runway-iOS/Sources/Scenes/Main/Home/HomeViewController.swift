@@ -290,6 +290,11 @@ extension HomeViewController: View {
         rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        categorySelectButton.rx.tap
+            .map { Reactor.Action.categorySelectButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: HomeReactor) {
@@ -344,9 +349,9 @@ extension HomeViewController: View {
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         
-        reactor.state.compactMap { $0.username }
-            .bind(onNext: { [weak self] username in
-                self?.guideLabelText.text = "\(username)님의\n취향을 가득 담은 매장"
+        reactor.state.compactMap { $0.nickname }
+            .bind(onNext: { [weak self] nickname in
+                self?.guideLabelText.text = "\(nickname)님의\n취향을 가득 담은 매장"
             }).disposed(by: disposeBag)
     }
 }

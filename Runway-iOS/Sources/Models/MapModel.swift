@@ -19,13 +19,6 @@ enum PointerType {
     case bookmarkStore
 }
 
-struct MainMapCategory {
-    let categoryName: String
-//    let categoryIcon: UIImage
-    
-    static let allCategoryString = "미니멀,캐주얼,스트릿,페미닌,빈티지,시티보이"
-}
-
 struct Location {
     let latitude: Double
     let longitude: Double

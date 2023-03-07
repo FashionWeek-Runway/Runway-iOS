@@ -33,6 +33,12 @@ final class HomeFlow: Flow {
         switch step {
         case .homeTab:
             return coordinateToHomeTabScreen()
+        case .categorySelect(let nickname):
+            return coordinateToCategorySelectScreen(nickname: nickname)
+            
+            
+        case .back(let animated):
+            return backScreen(animated: animated)
         default:
             break
         }
@@ -44,5 +50,18 @@ final class HomeFlow: Flow {
         let viewController = HomeViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToCategorySelectScreen(nickname: String) -> FlowContributors {
+        let reactor = CategorySelectReactor(provider: provider, nickname: nickname)
+        let viewController = CategorySelectViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func backScreen(animated: Bool) -> FlowContributors {
+        self.rootViewController.popViewController(animated: animated)
+        return .none
     }
 }
