@@ -23,7 +23,9 @@ final class HomeReactor: Reactor, Stepper {
         case viewWillAppear
         case categorySelectButtonDidTap
         case showAllContentButtonDidTap
+        case pagerCellDidTap(Int)
         case userReviewCollectionViewReachesEnd
+        case userReviewCellDidTap(Int)
     }
     
     enum Mutation {
@@ -78,6 +80,10 @@ final class HomeReactor: Reactor, Stepper {
             steps.accept(AppStep.showAllStore)
             return .empty()
             
+        case .pagerCellDidTap(let storeId):
+            steps.accept(AppStep.showRoomDetail(storeId))
+            return .empty()
+            
         case .categorySelectButtonDidTap:
             guard let nickname = currentState.nickname else { return .empty()}
             steps.accept(AppStep.categorySelect(nickname))
@@ -87,6 +93,10 @@ final class HomeReactor: Reactor, Stepper {
             return currentState.userReviewIsLast ? .empty() : provider.homeService.review(page: currentState.userReviewPage, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
                 return Mutation.appendUserReview($0.result)
             }
+            
+        case .userReviewCellDidTap(let reviewId):
+            steps.accept(AppStep.userReviewReels(reviewId))
+            return .empty()
         }
     }
     

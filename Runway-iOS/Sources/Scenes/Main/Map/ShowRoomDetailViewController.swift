@@ -71,7 +71,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.register(RWTagCollectionViewCell.self, forCellWithReuseIdentifier: RWTagCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 59, height: 24)
+        layout.estimatedItemSize = CGSize(width: 59, height: 24)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
         layout.scrollDirection = .horizontal

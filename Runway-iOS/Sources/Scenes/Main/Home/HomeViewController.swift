@@ -301,6 +301,12 @@ extension HomeViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        pagerCollectionView.rx.modelSelected(HomeStoreResponseResult.self)
+            .filter { $0.cellType == .store }
+            .map { Reactor.Action.pagerCellDidTap($0.storeID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         userReviewCollectionView.rx.didEndDecelerating
             .asDriver()
             .drive(onNext: { [weak self] in
@@ -313,6 +319,11 @@ extension HomeViewController: View {
                     self.reactor?.action.onNext(.userReviewCollectionViewReachesEnd)
                 }
             }).disposed(by: disposeBag)
+        
+        userReviewCollectionView.rx.modelSelected(HomeReviewResponseResultContent.self)
+            .map { Reactor.Action.userReviewCellDidTap($0.reviewID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: HomeReactor) {
