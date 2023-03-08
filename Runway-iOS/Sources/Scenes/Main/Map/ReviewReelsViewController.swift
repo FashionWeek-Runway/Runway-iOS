@@ -161,6 +161,7 @@ extension ReviewReelsViewController: View {
                 }
                 
                 cell.bookmarkButton.rx.tap
+                    .do(onNext: { cell.bookmarkButton.isSelected.toggle() })
                     .map { Reactor.Action.bookmarkButtonDidTap(item.reviewID) }
                     .bind(to: reactor.action)
                     .disposed(by: self.disposeBag)

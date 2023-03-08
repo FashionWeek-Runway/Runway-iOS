@@ -14,7 +14,7 @@ final class RWMapSearchBarCollectionViewBookmarkCell: UICollectionViewCell {
     let title: String = "bookmark"
     
     let bookmarkImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "icon_bookmark_grey"))
+        let view = UIImageView(image: UIImage(named: "icon_bookmark_grey_selected"))
         return view
     }()
     
@@ -52,7 +52,7 @@ final class RWMapSearchBarCollectionViewBookmarkCell: UICollectionViewCell {
             backgroundColor = .primary
             layer.borderWidth = 1
         } else {
-            bookmarkImageView.image = UIImage(named: "icon_bookmark_grey")
+            bookmarkImageView.image = UIImage(named: "icon_bookmark_grey_selected")
             backgroundColor = .gray50
             layer.borderWidth = 0
         }
