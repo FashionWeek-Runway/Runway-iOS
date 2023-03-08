@@ -16,7 +16,14 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let bottomGradientView = UIView()
+    let bottomGradientView: UIView = {
+        let view = UIView(frame: CGRect(x: 0,
+                                        y: ((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 - 29,
+                                        width: (UIScreen.getDeviceHeight() - 6) / 3.0 ,
+                                        height: 29))
+        view.setGradientBackground(colorTop: .clear, colorBottom: .black.withAlphaComponent(0.2))
+        return view
+    }()
     
     private let locationIcon = UIImageView(image: UIImage(named: "icon_location_small"))
     
@@ -43,7 +50,6 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        bottomGradientView.setGradientBackground(colorTop: .clear, colorBottom: .black)
     }
     
     private func configureUI() {
@@ -63,12 +69,12 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
         
         locationIcon.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(6)
-            $0.bottom.equalToSuperview().offset(6.5)
+            $0.bottom.equalToSuperview().offset(-6.5)
         }
         
         addressLabel.snp.makeConstraints {
             $0.leading.equalTo(locationIcon.snp.trailing).offset(3)
-            $0.bottom.equalToSuperview().offset(5)
+            $0.bottom.equalToSuperview().offset(-5)
         }
     }
 }

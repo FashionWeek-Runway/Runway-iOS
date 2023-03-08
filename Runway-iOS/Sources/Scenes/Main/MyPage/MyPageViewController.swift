@@ -144,6 +144,7 @@ final class MyPageViewController: BaseViewController {
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
         view.collectionViewLayout = layout
+        view.bounces = false
         return view
     }()
     
@@ -165,6 +166,7 @@ final class MyPageViewController: BaseViewController {
         view.collectionViewLayout = layout
         view.bounces = false
         view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier)
+        view.isHidden = true
         return view
     }()
     
@@ -177,6 +179,7 @@ final class MyPageViewController: BaseViewController {
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
         view.collectionViewLayout = layout
+        view.isHidden = true
         return view
     }()
     
@@ -323,6 +326,7 @@ final class MyPageViewController: BaseViewController {
             $0.top.equalTo(divider2.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
+            $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53)
         }
         
         segmentedControl.snp.makeConstraints {
@@ -380,11 +384,17 @@ extension MyPageViewController: View {
                     self?.myReviewCollectionView.isHidden = true
                     self?.myReviewEmptyImageView.isHidden = false
                     self?.myReviewEmptyLabel.isHidden = false
+                } else {
+                    self?.myReviewCollectionView.snp.updateConstraints {
+                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
+                    }
+                    self?.myReviewCollectionView.isHidden = false
+                    self?.myReviewEmptyImageView.isHidden = true
+                    self?.myReviewEmptyLabel.isHidden = true
                 }
             })
             .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
-                
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
