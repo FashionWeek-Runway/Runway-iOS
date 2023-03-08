@@ -55,28 +55,50 @@ final class ReviewReelsReactor: Reactor, Stepper {
     
     let intialReviewId: Int
     
+    enum TraverseMode {
+        case home
+        case store
+    }
+    
+    let traverseMode: TraverseMode
+    
     // MARK: - initializer
-    init(provider: ServiceProviderType, intialReviewId reviewId: Int) {
+    init(provider: ServiceProviderType, intialReviewId reviewId: Int, mode: TraverseMode = .store) {
         self.provider = provider
         self.initialState = State()
         self.intialReviewId = reviewId
+        self.traverseMode = mode
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return provider.showRoomService.reviewDetail(reviewId: intialReviewId)
-                .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
-                .map { .setReviewData($0.result) }
+            switch traverseMode {
+            case .home:
+                return provider.homeService.reviewDetail(reviewId: intialReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .setReviewData($0.result) }
+            case .store:
+                return provider.showRoomService.reviewDetail(reviewId: intialReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .setReviewData($0.result) }
+            }
         case .swipeNextReview:
             guard let nextReviewId = currentState.nextReviewId else {
                 steps.accept(AppStep.back(animated: true))
                 return .empty()
             }
             
-            return provider.showRoomService.reviewDetail(reviewId: nextReviewId)
-                .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
-                .map { .appendReviewData($0.result) }
+            switch traverseMode {
+            case .home:
+                return provider.homeService.reviewDetail(reviewId: nextReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .appendReviewData($0.result) }
+            case .store:
+                return provider.showRoomService.reviewDetail(reviewId: nextReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .appendReviewData($0.result) }
+            }
             
         case .swipePreviousReview:
             guard let previousReviewId = currentState.previousReviewId else {
@@ -84,9 +106,16 @@ final class ReviewReelsReactor: Reactor, Stepper {
                 return .empty()
             }
             
-            return provider.showRoomService.reviewDetail(reviewId: previousReviewId)
-                .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
-                .map { .insertFrontReviewData($0.result) }
+            switch traverseMode {
+            case .home:
+                return provider.homeService.reviewDetail(reviewId: previousReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .insertFrontReviewData($0.result) }
+            case .store:
+                return provider.showRoomService.reviewDetail(reviewId: previousReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .insertFrontReviewData($0.result) }
+            }
             
         case .bookmarkButtonDidTap(let reviewId):
             return provider.showRoomService.reviewDetail(reviewId: reviewId)

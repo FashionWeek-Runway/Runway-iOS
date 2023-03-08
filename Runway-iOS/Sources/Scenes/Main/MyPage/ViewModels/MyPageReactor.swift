@@ -21,16 +21,19 @@ final class MyPageReactor: Reactor, Stepper {
     enum Action {
         case viewWillAppear
         case profileImageButtonDidTap
+        case myReviewCollectionViewReachesBottom
     }
     
     enum Mutation {
         case setProfileData(MyPageInformationResponseResult)
+        case setMyReviewData(MyReviewResponseResult)
+        case appendMyReviewData(MyReviewResponseResult)
     }
     
     struct State {
         var nickname: String? = nil
         var profileImageURL: String? = nil
-        
+        var myReviewDatas: [MyReviewResponseResultContent] = []
         
         var myReviewPage: Int = 0
         var myReviewIsLast: Bool = false
@@ -61,13 +64,21 @@ final class MyPageReactor: Reactor, Stepper {
                         return .setProfileData(responseData.result)
                     }),
                 
-//                provider.userService.myReview(page: 0, size: 10).data().decode(type: , decoder: <#T##DataDecoder#>)
-            
+                provider.userService.myReview(page: 0, size: 10).data().decode(type: MyReviewResponse.self, decoder: JSONDecoder())
+                    .map({ responseData -> Mutation in
+                        return .setMyReviewData(responseData.result)
+                    })
             ])
             
         case .profileImageButtonDidTap:
             steps.accept(AppStep.profileSettingIsRequired)
             return .empty()
+            
+        case .myReviewCollectionViewReachesBottom:
+            return currentState.myReviewIsLast ? .empty() : provider.userService.myReview(page: currentState.myReviewPage, size: 10).data().decode(type: MyReviewResponse.self, decoder: JSONDecoder())
+                .map({ responseData -> Mutation in
+                    return .appendMyReviewData(responseData.result)
+                })
         }
     }
     
@@ -78,6 +89,20 @@ final class MyPageReactor: Reactor, Stepper {
         case .setProfileData(let data):
             state.nickname = data.nickname
             state.profileImageURL = data.imageURL
+            
+        case.setMyReviewData(let data):
+            state.myReviewDatas = data.contents
+            state.myReviewIsLast = data.isLast
+            if !data.isLast {
+                state.myReviewPage += 1
+            }
+            
+        case .appendMyReviewData(let data):
+            state.myReviewDatas.append(contentsOf: data.contents)
+            state.myReviewIsLast = data.isLast
+            if !data.isLast {
+                state.myReviewPage += 1
+            }
         }
         
         return state

@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
+import Kingfisher
+
 final class MyPageViewController: BaseViewController {
     
     private let myLabel: UILabel = {
@@ -118,12 +120,12 @@ final class MyPageViewController: BaseViewController {
         return view
     }()
     
-    private let emptyImageView: UIImageView = {
+    private let myReviewEmptyImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_review"))
         view.isHidden = false
         return view
     }()
-    private let emptyLabel: UILabel = {
+    private let myReviewEmptyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.text = "내 스타일의 매장에 방문하고\n기록해보세요!"
@@ -149,6 +151,7 @@ final class MyPageViewController: BaseViewController {
         let view = UISegmentedControl(items: ["매장", "사용자 후기"])
         view.setTitleTextAttributes([.font: UIFont.body2B], for: .selected)
         view.setTitleTextAttributes([.font: UIFont.body2], for: .normal)
+        view.isHidden = true
         return view
     }()
     
@@ -221,7 +224,7 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                  myReviewTabButton, storedTabButton, divider2, reviewBottomLine, storedBottomLine, emptyImageView, emptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
+                                  myReviewTabButton, storedTabButton, divider2, reviewBottomLine, storedBottomLine, myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
         myReviewTabButton.addSubviews([myReviewImageView, myReviewTabLabel])
         storedTabButton.addSubviews([storedImageView, storedTabLabel])
         
@@ -305,15 +308,15 @@ final class MyPageViewController: BaseViewController {
             $0.bottom.equalTo(divider2.snp.top)
         }
         
-        emptyImageView.snp.makeConstraints {
+        myReviewEmptyImageView.snp.makeConstraints {
             $0.width.height.equalTo(100)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(divider2).offset(85)
         }
         
-        emptyLabel.snp.makeConstraints {
+        myReviewEmptyLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(emptyImageView.snp.bottom).offset(26)
+            $0.top.equalTo(myReviewEmptyImageView.snp.bottom).offset(26)
         }
         
         myReviewCollectionView.snp.makeConstraints {
@@ -370,5 +373,21 @@ extension MyPageViewController: View {
             .bind(onNext: { [weak self] nickname in
                 self?.nicknameLabel.text = nickname + "님"
             }).disposed(by: disposeBag)
+        
+        reactor.state.map { $0.myReviewDatas }
+            .do(onNext: { [weak self] datas in
+                if datas.isEmpty {
+                    self?.myReviewCollectionView.isHidden = true
+                    self?.myReviewEmptyImageView.isHidden = false
+                    self?.myReviewEmptyLabel.isHidden = false
+                }
+            })
+            .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
+                guard let url = URL(string: item.imageURL) else { return }
+                
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.addressLabel.text = item.regionInfo
+            }.disposed(by: disposeBag)
+        
     }
 }
