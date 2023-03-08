@@ -46,8 +46,8 @@ final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
     let bookmarkButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "icon_bookmark_big"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "icon_bookmark_selected"), for: .selected)
+        button.setBackgroundImage(UIImage(named: "icon_bookmark_medium"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_bookmark_green_big"), for: .selected)
         return button
     }()
     
