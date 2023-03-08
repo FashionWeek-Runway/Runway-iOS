@@ -232,7 +232,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let albumPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
         picker.delegate = nil
-        picker.allowsEditing = true
+        picker.allowsEditing = false
         picker.sourceType = .photoLibrary
         return picker
     }()
@@ -614,13 +614,10 @@ extension ShowRoomDetailViewController: View {
             .bind(onNext: { _ in self.dismiss(animated: true) })
             .disposed(by: disposeBag)
         
-        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .bind(onNext: { _ in self.dismiss(animated: true)})
-            .disposed(by: disposeBag)
-        
         // bind action
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .map { $0[.editedImage] as? UIImage ?? UIImage() }
+            .do(onNext: { [weak self] _ in self?.dismiss(animated: true)})
+            .map { $0[.originalImage] as? UIImage ?? UIImage() }
             .map { Reactor.Action.pickingReviewImage($0.pngData()) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

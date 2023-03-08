@@ -61,7 +61,7 @@ final class MyPageReactor: Reactor, Stepper {
                         return .setProfileData(responseData.result)
                     }),
                 
-//                provider.userService.myReview(page: 0, size: 10)
+//                provider.userService.myReview(page: 0, size: 10).data().decode(type: , decoder: <#T##DataDecoder#>)
             
             ])
             

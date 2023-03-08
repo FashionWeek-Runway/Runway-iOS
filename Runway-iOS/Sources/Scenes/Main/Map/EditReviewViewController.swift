@@ -103,7 +103,7 @@ extension EditReviewViewController: View {
             .disposed(by: disposeBag)
         
         registerButton.rx.tap
-            .do(onNext: { [weak self] in UIWindow.makeToastAnimation(message: "")})
+            .do(onNext: { UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")})
             .map { Reactor.Action.registerButtonDidTap(self.imageView.asImage().pngData())}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
