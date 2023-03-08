@@ -41,6 +41,7 @@ final class MyPageViewController: BaseViewController {
         view.clipsToBounds = true
         view.layer.cornerRadius = 30
         view.clipsToBounds = true
+        view.setBackgroundImage(UIImage(named: "icon_profile_my"), for: .normal)
         return view
     }()
     private let penImageView: UIImageView = {
@@ -118,16 +119,17 @@ final class MyPageViewController: BaseViewController {
     }()
     
     private let emptyImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "AppIcon"))
-        view.isHidden = true
+        let view = UIImageView(image: UIImage(named: "icon_empty_review"))
+        view.isHidden = false
         return view
     }()
     private let emptyLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 2
         label.text = "내 스타일의 매장에 방문하고\n기록해보세요!"
         label.font = .body1
         label.textAlignment = .center
-        label.isHidden = true
+        label.isHidden = false
         return label
     }()
     
@@ -197,6 +199,15 @@ final class MyPageViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         navigationBarArea.addSubviews([myLabel, settingButton])
+        myLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.bottom.equalToSuperview().offset(-16)
+        }
+        
+        settingButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-18)
+        }
         
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
@@ -215,7 +226,7 @@ final class MyPageViewController: BaseViewController {
         storedTabButton.addSubviews([storedImageView, storedTabLabel])
         
         profileImageButton.snp.makeConstraints {
-            $0.top.equalTo(view.getSafeArea().top).offset(53)
+            $0.top.equalToSuperview().offset(2)
             $0.leading.equalToSuperview().offset(20)
         }
         
@@ -226,7 +237,7 @@ final class MyPageViewController: BaseViewController {
         
         helloLabel.snp.makeConstraints {
             $0.leading.equalTo(profileImageButton.snp.trailing).offset(21)
-            $0.top.equalTo(view.getSafeArea().top).offset(59)
+            $0.top.equalToSuperview().offset(8)
         }
         
         nicknameLabel.snp.makeConstraints {
@@ -344,7 +355,7 @@ extension MyPageViewController: View {
     }
     
     private func bindAction(reactor: MyPageReactor) {
-        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+        rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -355,6 +366,9 @@ extension MyPageViewController: View {
     }
     
     private func bindState(reactor: MyPageReactor) {
-        
+        reactor.state.compactMap { $0.nickname }
+            .bind(onNext: { [weak self] nickname in
+                self?.nicknameLabel.text = nickname + "님"
+            }).disposed(by: disposeBag)
     }
 }

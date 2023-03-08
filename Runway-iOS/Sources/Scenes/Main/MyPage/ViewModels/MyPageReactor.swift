@@ -19,7 +19,7 @@ final class MyPageReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case viewDidLoad
+        case viewWillAppear
         case profileImageButtonDidTap
     }
     
@@ -53,7 +53,7 @@ final class MyPageReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
+        case .viewWillAppear:
             return Observable.concat([
                 
                 provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder())

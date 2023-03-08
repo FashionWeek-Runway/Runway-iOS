@@ -57,7 +57,7 @@ final class MainFlow: Flow {
             flow3Root.tabBarItem = myPageTabbarItem
             
             self.rootViewController.setViewControllers([flow1Root, flow2Root, flow3Root], animated: false)
-            self.rootViewController.selectedIndex = 0
+            self.rootViewController.selectedIndex = 2
         }
         return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
                                             .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),

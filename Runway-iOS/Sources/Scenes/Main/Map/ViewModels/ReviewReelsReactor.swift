@@ -70,7 +70,7 @@ final class ReviewReelsReactor: Reactor, Stepper {
                 .map { .setReviewData($0.result) }
         case .swipeNextReview:
             guard let nextReviewId = currentState.nextReviewId else {
-                steps.accept(AppStep.back(animated: false))
+                steps.accept(AppStep.back(animated: true))
                 return .empty()
             }
             
@@ -80,7 +80,7 @@ final class ReviewReelsReactor: Reactor, Stepper {
             
         case .swipePreviousReview:
             guard let previousReviewId = currentState.previousReviewId else {
-                steps.accept(AppStep.back(animated: false))
+                steps.accept(AppStep.back(animated: true))
                 return .empty()
             }
             
@@ -109,7 +109,7 @@ final class ReviewReelsReactor: Reactor, Stepper {
                 .data().decode(type: BaseResponse.self, decoder: JSONDecoder())
                 .subscribe(onNext: { [weak self] responseData in
                     if responseData.isSuccess {
-                        self?.steps.accept(AppStep.back(animated: false))
+                        self?.steps.accept(AppStep.back(animated: true))
                     }
                 })
                 .disposed(by: disposeBag)
@@ -121,7 +121,7 @@ final class ReviewReelsReactor: Reactor, Stepper {
             return .empty()
             
         case .exitButtonDidTap:
-            steps.accept(AppStep.back(animated: false))
+            steps.accept(AppStep.back(animated: true))
             return .empty()
         }
     }

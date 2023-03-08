@@ -378,9 +378,7 @@ extension HomeViewController: View {
                             cell.categoryTagStackView.addArrangedSubview(button)
                         }
                     }
-                    if item.isBookmarked {
-                        cell.bookmarkButton.isSelected = true
-                    }
+                    cell.bookmarkButton.isSelected = item.isBookmarked
                     cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
                                                                             attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
                 case .showMoreShop: // last cell
