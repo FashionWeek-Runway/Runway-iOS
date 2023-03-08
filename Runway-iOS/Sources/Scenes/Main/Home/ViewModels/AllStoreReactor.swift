@@ -20,6 +20,7 @@ final class AllStoreReactor: Reactor, Stepper {
     
     enum Action {
         case viewWillAppear
+        case backButtonDidTap
         case selectStoreCell(Int)
         case bookmarkButtonDidTap(Int)
     }
@@ -52,6 +53,10 @@ final class AllStoreReactor: Reactor, Stepper {
         case .viewWillAppear:
             return provider.homeService.home(type: .all).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder())
                 .map { Mutation.setStoreDatas($0.result) }
+            
+        case .backButtonDidTap:
+            steps.accept(AppStep.back(animated: true))
+            return .empty()
             
         case .selectStoreCell(let storeId):
             steps.accept(AppStep.showRoomDetail(storeId))

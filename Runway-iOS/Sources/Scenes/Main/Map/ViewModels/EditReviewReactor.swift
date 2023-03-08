@@ -56,6 +56,7 @@ final class EditReviewReactor: Reactor, Stepper {
         case .registerButtonDidTap(let imageData):
             guard let imageData = imageData else { return .empty() }
             return provider.showRoomService.storeReview(storeId: storeId, imageData: imageData).flatMap { request -> Observable<Mutation> in
+                steps.accept(AppStep.back(animated: false))
                 return .empty()
             }
         }

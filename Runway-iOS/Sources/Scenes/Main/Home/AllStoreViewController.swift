@@ -69,6 +69,11 @@ extension AllStoreViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         collectionView.rx.modelSelected(HomeStoreResponseResult.self)
             .map { Reactor.Action.selectStoreCell($0.storeID) }
             .bind(to: reactor.action)
@@ -88,7 +93,7 @@ extension AllStoreViewController: View {
                 
                 
                 if item.isBookmarked {
-                    cell.bookmarkButton.setBackgroundImage(UIImage(named: "icon_bookmark_white"), for: .normal)
+                    cell.bookmarkButton.isSelected = true
                 }
                 
                 let categories = item.categoryList.compactMap { $0 }
