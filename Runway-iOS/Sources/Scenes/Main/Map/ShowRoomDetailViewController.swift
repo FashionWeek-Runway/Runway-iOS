@@ -618,7 +618,7 @@ extension ShowRoomDetailViewController: View {
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
             .subscribe(onNext: { [weak self] info in
                 self?.dismiss(animated: false, completion: {
-                    guard let image = info[.originalImage] as? UIImage, let imageData = image.pngData() else { return }
+                    guard let image = info[.originalImage] as? UIImage, let imageData = image.fixedOrientation().pngData() else { return }
                     let action = Reactor.Action.pickingReviewImage(imageData)
                     self?.reactor?.action.onNext(action)
                 })

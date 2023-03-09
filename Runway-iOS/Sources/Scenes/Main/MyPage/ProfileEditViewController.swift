@@ -189,8 +189,8 @@ extension ProfileEditViewController: View {
             .bind(onNext: { [weak self] info in
                 self?.dismiss(animated: true) {
                     guard let image = info[.originalImage] as? UIImage else { return }
-                    self?.profileSettingView.profileImageView.image = image
-                    guard let imageData = image.pngData() else { return }
+                    self?.profileSettingView.profileImageView.image = image.fixedOrientation()
+                    guard let imageData = image.fixedOrientation().pngData() else { return }
                     let action = Reactor.Action.setProfileImage(imageData)
                     self?.reactor?.action.onNext(action)
                 }

@@ -207,7 +207,7 @@ extension ProfileSettingViewController: View {
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
             .bind(onNext: { [weak self] info in
                 self?.dismiss(animated: true, completion: {
-                    guard let image = info[.editedImage] as? UIImage, let imageData = image.pngData() else { return }
+                    guard let image = info[.editedImage] as? UIImage, let imageData = image.fixedOrientation().pngData() else { return }
                     self?.profileSettingView.profileImageView.image = image
                     let action = Reactor.Action.setImage(imageData)
                     self?.reactor?.action.onNext(action)
