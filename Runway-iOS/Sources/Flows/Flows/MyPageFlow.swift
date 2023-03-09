@@ -45,6 +45,8 @@ final class MyPageFlow: Flow {
             return coordinateToMainLoginScreen()
         case .withdrawalStep:
             return coordinateToWithdrawalScreen()
+        case .back(let animated):
+            return back(animated: animated)
         default:
             return .none
         }
@@ -104,5 +106,10 @@ final class MyPageFlow: Flow {
     
     private func coordinateToMainLoginScreen() -> FlowContributors {
         return .end(forwardToParentFlowWithStep: AppStep.userIsLoggedOut)
+    }
+    
+    private func back(animated: Bool) -> FlowContributors {
+        self.rootViewController.popViewController(animated: animated)
+        return.none
     }
 }

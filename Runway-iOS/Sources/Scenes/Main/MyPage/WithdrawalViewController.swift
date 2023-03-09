@@ -87,8 +87,8 @@ final class WithdrawalViewController: BaseViewController {
     
     private let withdrawalButton: RWButton = {
         let button = RWButton()
-        button.type = .secondary
         button.title = "탈퇴하기"
+        button.type = .secondary
         button.isEnabled = false
         return button
     }()
@@ -109,7 +109,6 @@ final class WithdrawalViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setRx()
     }
     
     override func configureUI() {
@@ -176,10 +175,6 @@ final class WithdrawalViewController: BaseViewController {
         }
     
     }
-    
-    private func setRx() {
-
-    }
 }
 
 extension WithdrawalViewController: View {
@@ -189,11 +184,37 @@ extension WithdrawalViewController: View {
     }
     
     private func bindAction(reactor: WithdrawalReactor) {
-
+        rx.viewDidLoad
+            .map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        agreeCheckBox.rx.tap
+            .map { Reactor.Action.agreeCheckBoxDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindState(reactor: WithdrawalReactor) {
-
+        reactor.state.map { $0.nickname }
+            .bind(onNext: { [weak self] nickname in
+                self?.titleLabel.text = "\(nickname)님..정말 탈퇴하시겠어요..?"
+            }).disposed(by: disposeBag)
         
+        reactor.state.map { $0.isAgree }
+            .bind(onNext: { [weak self] in
+                self?.agreeCheckBox.isSelected = $0
+                self?.withdrawalButton.isEnabled = $0
+                self?.withdrawalButton.setAttributedTitle(NSAttributedString(string: "탈퇴하기",
+                                                                             attributes: [.font: UIFont.button1, .foregroundColor: self?.withdrawalButton.currentTitleColor]), for: .normal)
+                self?.withdrawalButton.setAttributedTitle(NSAttributedString(string: "탈퇴하기",
+                                                                             attributes: [.font: UIFont.button1, .foregroundColor: self?.withdrawalButton.currentTitleColor]), for: .disabled)
+            }).disposed(by: disposeBag)
     }
 }

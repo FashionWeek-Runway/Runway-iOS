@@ -98,24 +98,10 @@ final class MyPageViewController: BaseViewController {
         view.backgroundColor = .gray200
         return view
     }()
-    
-    private let pagerScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-//        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.bounces = false
-        scrollView.isPagingEnabled = true
-        return scrollView
-    }()
-    
-    private let customTabbarIndicator: UIView = {
-        let view = UIView()
-        view.backgroundColor = .runwayBlack
-        return view
-    }()
-    
+
     private let myReviewEmptyImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_review"))
+        view.isHidden = true
         return view
     }()
     private let myReviewEmptyLabel: UILabel = {
@@ -124,6 +110,7 @@ final class MyPageViewController: BaseViewController {
         label.text = "내 스타일의 매장에 방문하고\n기록해보세요!"
         label.font = .body1
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
     
@@ -141,18 +128,6 @@ final class MyPageViewController: BaseViewController {
         return view
     }()
     
-    private let storeEmptyImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "icon_empty_bookmark"))
-        return view
-    }()
-    private let storeEmptyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "마음에 드는 매장을 저장해보세요"
-        label.font = .body1
-        label.textAlignment = .center
-        return label
-    }()
-    
     private let segmentedControl: UISegmentedControl = {
         let view = UISegmentedControl(items: ["매장", "사용자 후기"])
         view.setTitleTextAttributes([.font: UIFont.body2B], for: .selected)
@@ -160,6 +135,20 @@ final class MyPageViewController: BaseViewController {
         view.selectedSegmentIndex = 0
         view.isHidden = true
         return view
+    }()
+    
+    private let storeEmptyImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "icon_empty_bookmark"))
+        view.isHidden = true
+        return view
+    }()
+    private let storeEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "마음에 드는 매장을 저장해보세요"
+        label.font = .body1
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
     }()
     
     private let storeCollectionView: UICollectionView = {
@@ -234,7 +223,9 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                   myReviewTabButton, storedTabButton, divider2, customTabbarIndicator, pagerScrollView])
+                                   myReviewTabButton, storedTabButton, divider2,
+                                   myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView,
+                                  segmentedControl, storeEmptyImageView, storeEmptyLabel, storeCollectionView, userReviewCollectionView])
 
         
         profileImageButton.snp.makeConstraints {
@@ -283,51 +274,64 @@ final class MyPageViewController: BaseViewController {
             $0.height.equalTo(0.5)
         }
         
-        pagerScrollView.addSubviews([myReviewCollectionView,
-                                      segmentedControl, storeCollectionView, userReviewCollectionView])
-        pagerScrollView.contentSize = CGSize(width: UIScreen.getDeviceWidth() * 2, height: UIScreen.getDeviceHeight() - navigationBarArea.frame.height - 156)
-        pagerScrollView.snp.makeConstraints {
-            $0.top.equalTo(divider2.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0))
-        }
-        myReviewCollectionView.addSubviews([myReviewEmptyImageView, myReviewEmptyLabel])
-        storeCollectionView.addSubviews([storeEmptyImageView, storeEmptyLabel])
-        
-        myReviewCollectionView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.equalTo(CGFloat(UIScreen.getDeviceWidth()))
-            $0.height.equalTo(UIScreen.getDeviceHeight() - navigationBarArea.frame.height - 156)
-            $0.bottom.equalToSuperview()
-        }
-        
         myReviewEmptyImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(58)
-            $0.leading.equalToSuperview().offset(CGFloat(UIScreen.getDeviceWidth() - 182) / 2.0)
+            $0.top.equalTo(divider2.snp.bottom).offset(58)
+            $0.centerX.equalToSuperview()
         }
         
         myReviewEmptyLabel.snp.makeConstraints {
             $0.top.equalTo(myReviewEmptyImageView.snp.bottom).offset(17)
             $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        myReviewCollectionView.snp.makeConstraints {
+            $0.top.equalTo(divider2.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
         
         segmentedControl.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.centerX.equalTo(UIScreen.getDeviceWidth() * 1.5)
+            $0.top.equalTo(divider2.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        
+        storeEmptyImageView.snp.makeConstraints {
+            $0.top.equalTo(divider2.snp.bottom).offset(58)
+            $0.centerX.equalToSuperview()
+        }
+        
+        storeEmptyLabel.snp.makeConstraints {
+            $0.top.equalTo(storeEmptyImageView.snp.bottom).offset(17)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         storeCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview()
-            $0.leading.equalTo(myReviewEmptyImageView.snp.trailing)
-            $0.height.equalTo(UIScreen.getDeviceHeight() - navigationBarArea.frame.height - 156)
-            $0.bottom.equalToSuperview()
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        userReviewCollectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
     
     }
     
     private func setRx() {
-
+        myReviewTabButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.myReviewTabButton.isSelected = true
+                self?.storedTabButton.isSelected = false
+            }).disposed(by: disposeBag)
+        
+        storedTabButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.myReviewTabButton.isSelected = false
+                self?.storedTabButton.isSelected = true
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -367,26 +371,26 @@ extension MyPageViewController: View {
             })
             .disposed(by: disposeBag)
         
-//        reactor.state.map { $0.myReviewDatas }
-//            .do(onNext: { [weak self] datas in
-//                if datas.isEmpty {
-//                    self?.myReviewCollectionView.isHidden = true
-//                    self?.myReviewEmptyImageView.isHidden = false
-//                    self?.myReviewEmptyLabel.isHidden = false
-//                } else {
-//                    self?.myReviewCollectionView.snp.updateConstraints {
-//                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
-//                    }
-//                    self?.myReviewCollectionView.isHidden = false
-//                    self?.myReviewEmptyImageView.isHidden = true
-//                    self?.myReviewEmptyLabel.isHidden = true
-//                }
-//            })
-//            .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
-//                guard let url = URL(string: item.imageURL) else { return }
-//                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
-//                cell.addressLabel.text = item.regionInfo
-//            }.disposed(by: disposeBag)
-////
+        reactor.state.map { $0.myReviewDatas }
+            .do(onNext: { [weak self] datas in
+                if datas.isEmpty {
+                    self?.myReviewCollectionView.isHidden = true
+                    self?.myReviewEmptyImageView.isHidden = false
+                    self?.myReviewEmptyLabel.isHidden = false
+                } else {
+                    self?.myReviewCollectionView.snp.updateConstraints {
+                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
+                    }
+                    self?.myReviewCollectionView.isHidden = false
+                    self?.myReviewEmptyImageView.isHidden = true
+                    self?.myReviewEmptyLabel.isHidden = true
+                }
+            })
+            .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
+                guard let url = URL(string: item.imageURL) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.addressLabel.text = item.regionInfo
+            }.disposed(by: disposeBag)
+        
     }
 }

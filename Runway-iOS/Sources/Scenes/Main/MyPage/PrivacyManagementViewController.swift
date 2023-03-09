@@ -389,6 +389,11 @@ extension PrivacyManagementViewController: View {
     }
     
     private func bindAction(reactor: PrivacyManagementReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidtap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         withdrawalButton.rx.tap
             .map { Reactor.Action.withdrawalButtonDidTap }
             .bind(to: reactor.action)
