@@ -368,6 +368,14 @@ extension MyPageViewController: View {
                 self?.nicknameLabel.text = nickname + "님"
             }).disposed(by: disposeBag)
         
+        reactor.state.compactMap { $0.profileImageURL }
+            .bind(onNext: { [weak self] imageURL in
+                guard let url = URL(string: imageURL) else { return }
+                self?.profileImageButton.kf.setBackgroundImage(with: ImageResource(downloadURL: url), for: .normal,
+                                                               options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 60, height: 60)))])
+            })
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.myReviewDatas }
             .do(onNext: { [weak self] datas in
                 if datas.isEmpty {
