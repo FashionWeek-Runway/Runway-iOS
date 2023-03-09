@@ -35,6 +35,10 @@ final class MyPageFlow: Flow {
             return coordinateToMyPageScreen()
         case .editProfile:
             return coordinateToProfileSettingScreen()
+        case .setting:
+            return coordinateToSettingScreen()
+        case .privacyInformationControlNeeded:
+            return coordinateToPrivacyManagementScreen()
         case .profileChangeCompleted:
             return coordinateToProfileChangeCompletedScreen()
         default:
@@ -47,6 +51,17 @@ final class MyPageFlow: Flow {
         let viewController = MyPageViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToSettingScreen() -> FlowContributors {
+        let reactor = SettingReactor(provider: provider)
+        let viewController = SettingViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToPrivacyManagementScreen() -> FlowContributors {
+        return .none
     }
     
     private func coordinateToProfileSettingScreen() -> FlowContributors {

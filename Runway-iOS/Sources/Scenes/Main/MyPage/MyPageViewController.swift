@@ -72,42 +72,35 @@ final class MyPageViewController: BaseViewController {
     }()
     
     private let myReviewTabButton: UIButton = {
-        let view = UIButton()
-        view.setBackgroundColor(.clear, for: .normal)
-        return view
-    }()
-    
-    private let myReviewImageView = UIImageView(image: UIImage(named: "icon_review"))
-    private let myReviewTabLabel: UILabel = {
-        let label = UILabel()
-        label.text = "나의 후기"
-        label.textColor = .runwayBlack
-        label.font = .body2
-        return label
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon_review"), for: .selected)
+        button.setImage(UIImage(named: "icon_review_grey"), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "나의 후기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray300]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "나의 후기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.black]), for: .selected)
+        button.setBackgroundColor(.clear, for: .normal)
+        button.isSelected = true
+        button.alignVertical(spacing: 2.0)
+        return button
     }()
     
     private let storedTabButton: UIButton = {
-        let view = UIButton()
-        view.setBackgroundColor(.clear, for: .normal)
-        return view
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon_bookmark_grey"), for: .normal)
+        button.setImage(UIImage(named: "icon_bookmark_black"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "저장", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray300]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "저장", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.black]), for: .selected)
+        button.setBackgroundColor(.clear, for: .normal)
+        button.alignVertical(spacing: 2.0)
+        return button
     }()
-    
-    private let storedImageView = UIImageView(image: UIImage(named: "icon_bookmark_grey"))
-    private let storedTabLabel: UILabel = {
-        let label = UILabel()
-        label.text = "저장"
-        label.textColor = .gray300
-        label.font = .body2
-        return label
-    }()
-    
+
     private let divider2: UIView = {
         let view = UIView()
         view.backgroundColor = .gray200
         return view
     }()
     
-    private let reviewBottomLine: UIView = {
+    private let myReviewBottomLine: UIView = {
         let view = UIView()
         view.backgroundColor = .runwayBlack
         return view
@@ -152,6 +145,7 @@ final class MyPageViewController: BaseViewController {
         let view = UISegmentedControl(items: ["매장", "사용자 후기"])
         view.setTitleTextAttributes([.font: UIFont.body2B], for: .selected)
         view.setTitleTextAttributes([.font: UIFont.body2], for: .normal)
+        view.selectedSegmentIndex = 0
         view.isHidden = true
         return view
     }()
@@ -227,9 +221,8 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                  myReviewTabButton, storedTabButton, divider2, reviewBottomLine, storedBottomLine, myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
-        myReviewTabButton.addSubviews([myReviewImageView, myReviewTabLabel])
-        storedTabButton.addSubviews([storedImageView, storedTabLabel])
+                                  myReviewTabButton, storedTabButton, divider2, myReviewBottomLine, storedBottomLine, myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
+
         
         profileImageButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(2)
@@ -271,33 +264,13 @@ final class MyPageViewController: BaseViewController {
             $0.height.equalTo(65)
         }
         
-        myReviewImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(10)
-        }
-        
-        myReviewTabLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(myReviewImageView.snp.bottom).offset(2)
-        }
-        
-        storedImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(10)
-        }
-        
-        storedTabLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(myReviewImageView.snp.bottom).offset(2)
-        }
-        
         divider2.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(myReviewTabButton.snp.bottom)
             $0.height.equalTo(1)
         }
         
-        reviewBottomLine.snp.makeConstraints {
+        myReviewBottomLine.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.height.equalTo(2)
             $0.width.equalToSuperview().dividedBy(2)
@@ -351,7 +324,19 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func setRx() {
-        
+        storedTabButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.myReviewTabButton.isSelected = false
+                self?.myReviewEmptyLabel.isHidden = true
+                self?.myReviewEmptyImageView.isHidden = true
+                self?.myReviewCollectionView.isHidden = true
+                self?.myReviewBottomLine.isHidden = true
+                
+                self?.storedTabButton.isSelected = true
+                self?.segmentedControl.isHidden = false
+                self?.storedBottomLine.isHidden = false
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -368,6 +353,11 @@ extension MyPageViewController: View {
         
         profileImageButton.rx.tap
             .map { Reactor.Action.profileImageButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        settingButton.rx.tap
+            .map { Reactor.Action.settingButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

@@ -20,6 +20,7 @@ final class MyPageReactor: Reactor, Stepper {
     
     enum Action {
         case viewWillAppear
+        case settingButtonDidTap
         case profileImageButtonDidTap
         case myReviewCollectionViewReachesBottom
     }
@@ -69,6 +70,10 @@ final class MyPageReactor: Reactor, Stepper {
                         return .setMyReviewData(responseData.result)
                     })
             ])
+            
+        case .settingButtonDidTap:
+            steps.accept(AppStep.setting)
+            return .empty()
             
         case .profileImageButtonDidTap:
             steps.accept(AppStep.profileSettingIsRequired)

@@ -67,6 +67,9 @@
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
 		19849B7729B8D09E00B1FA1F /* MyReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7629B8D09E00B1FA1F /* MyReviewResponse.swift */; };
+		19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7829B9A08000B1FA1F /* SettingViewController.swift */; };
+		19849B7B29B9A08600B1FA1F /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7A29B9A08600B1FA1F /* SettingReactor.swift */; };
+		19849B7D29B9A84300B1FA1F /* PolicyURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7C29B9A84300B1FA1F /* PolicyURL.swift */; };
 		198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */; };
 		198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
@@ -266,6 +269,9 @@
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
 		19849B7629B8D09E00B1FA1F /* MyReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewResponse.swift; sourceTree = "<group>"; };
+		19849B7829B9A08000B1FA1F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		19849B7A29B9A08600B1FA1F /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
+		19849B7C29B9A84300B1FA1F /* PolicyURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyURL.swift; sourceTree = "<group>"; };
 		198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactor.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
@@ -583,6 +589,7 @@
 			children = (
 				1979591129939D5F009A4DDE /* APIServiceURL.swift */,
 				19FF9B3329B7AFEA00C48BD7 /* FashionCategory.swift */,
+				19849B7C29B9A84300B1FA1F /* PolicyURL.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -693,6 +700,7 @@
 			children = (
 				19A2552229B613A6001EF3DD /* ViewModels */,
 				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
+				19849B7829B9A08000B1FA1F /* SettingViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -701,6 +709,7 @@
 			isa = PBXGroup;
 			children = (
 				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
+				19849B7A29B9A08600B1FA1F /* SettingReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1273,6 +1282,7 @@
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19E0C7A929A3C540003E1F10 /* Reactive+CLLocationManager.swift in Sources */,
 				19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */,
+				19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
 				19E0C79529A39A78003E1F10 /* RxCLLocationDelegateProxy.swift in Sources */,
 				19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */,
@@ -1284,6 +1294,7 @@
 				199B9C5C299BECD800877AAE /* SignUpAsKakaoData.swift in Sources */,
 				199B9C7F299D3F3800877AAE /* PasswordInputViewController.swift in Sources */,
 				19A2552429B61889001EF3DD /* HomeService.swift in Sources */,
+				19849B7D29B9A84300B1FA1F /* PolicyURL.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
@@ -1313,6 +1324,7 @@
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
 				19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */,
+				19849B7B29B9A08600B1FA1F /* SettingReactor.swift in Sources */,
 				19F10C7729A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift in Sources */,
 				19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
