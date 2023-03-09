@@ -58,7 +58,7 @@ enum AppStep: Step {
     case myPageTab
     case editProfile
     case setting
-    case privacyInformationControlNeeded
+    case privacyManagementNeeded
     case profileChangeCompleted
     case userIsLoggedOut
 }

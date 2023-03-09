@@ -69,6 +69,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
                 do {
                     let responseData = try JSONDecoder().decode(LoginResponse.self, from: data) as LoginResponse
                     self?.provider.appSettingService.isLoggedIn = true
+                    self?.provider.appSettingService.lastLoginType = .phone
                     self?.provider.appSettingService.authToken = responseData.result.accessToken
                     self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
                     

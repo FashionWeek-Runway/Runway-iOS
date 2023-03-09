@@ -101,6 +101,7 @@ final class MainLoginReactor: Reactor, Stepper {
                             self?.provider.appSettingService.authToken = authToken
                             self?.provider.appSettingService.refreshToken = refreshToken
                             self?.provider.appSettingService.isLoggedIn = true
+                            self?.provider.appSettingService.lastLoginType = .apple
                             self?.steps.accept(AppStep.userIsLoggedIn)
                         } else {
                             self?.provider.signUpService.signUpAsAppleData?.socialID = response.result.appleID
@@ -146,6 +147,7 @@ final class MainLoginReactor: Reactor, Stepper {
                         self?.provider.appSettingService.isLoggedIn = true
                         self?.provider.appSettingService.authToken = responseData.result.accessToken
                         self?.provider.appSettingService.refreshToken = responseData.result.refreshToken
+                        self?.provider.appSettingService.lastLoginType = .kakao
                         self?.steps.accept(AppStep.userIsLoggedIn)
                     } catch {
                         print(data)

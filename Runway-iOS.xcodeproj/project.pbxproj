@@ -70,6 +70,10 @@
 		19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7829B9A08000B1FA1F /* SettingViewController.swift */; };
 		19849B7B29B9A08600B1FA1F /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7A29B9A08600B1FA1F /* SettingReactor.swift */; };
 		19849B7D29B9A84300B1FA1F /* PolicyURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7C29B9A84300B1FA1F /* PolicyURL.swift */; };
+		19849B7F29B9C08600B1FA1F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7E29B9C08600B1FA1F /* ProfileEditViewController.swift */; };
+		19849B8129B9C0EB00B1FA1F /* ProfileEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */; };
+		19849B8329B9DB7E00B1FA1F /* PrivacyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */; };
+		19849B8529BA144500B1FA1F /* PrivacyManagementReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */; };
 		198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */; };
 		198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
@@ -272,6 +276,10 @@
 		19849B7829B9A08000B1FA1F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		19849B7A29B9A08600B1FA1F /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
 		19849B7C29B9A84300B1FA1F /* PolicyURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyURL.swift; sourceTree = "<group>"; };
+		19849B7E29B9C08600B1FA1F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditReactor.swift; sourceTree = "<group>"; };
+		19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagementViewController.swift; sourceTree = "<group>"; };
+		19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagementReactor.swift; sourceTree = "<group>"; };
 		198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactor.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
@@ -701,6 +709,8 @@
 				19A2552229B613A6001EF3DD /* ViewModels */,
 				19E0C77529A2A835003E1F10 /* MyPageViewController.swift */,
 				19849B7829B9A08000B1FA1F /* SettingViewController.swift */,
+				19849B7E29B9C08600B1FA1F /* ProfileEditViewController.swift */,
+				19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -710,6 +720,8 @@
 			children = (
 				19E0C77C29A2AC05003E1F10 /* MyPageReactor.swift */,
 				19849B7A29B9A08600B1FA1F /* SettingReactor.swift */,
+				19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */,
+				19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1185,6 +1197,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19849B8529BA144500B1FA1F /* PrivacyManagementReactor.swift in Sources */,
+				19849B8329B9DB7E00B1FA1F /* PrivacyManagementViewController.swift in Sources */,
 				19849B7729B8D09E00B1FA1F /* MyReviewResponse.swift in Sources */,
 				19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */,
 				19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */,
@@ -1228,6 +1242,7 @@
 				19CA8D7429ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift in Sources */,
 				194F95532993CE480016DDFF /* RequestError.swift in Sources */,
 				191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */,
+				19849B7F29B9C08600B1FA1F /* ProfileEditViewController.swift in Sources */,
 				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
 				19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */,
 				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
@@ -1284,6 +1299,7 @@
 				19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */,
 				19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */,
 				19A9624229915F0300F952DA /* AuthHeaderInterceptor.swift in Sources */,
+				19849B8129B9C0EB00B1FA1F /* ProfileEditReactor.swift in Sources */,
 				19E0C79529A39A78003E1F10 /* RxCLLocationDelegateProxy.swift in Sources */,
 				19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */,
 				1941DFE029B2465400C7F5BA /* UserReviewResponse.swift in Sources */,

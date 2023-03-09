@@ -37,11 +37,10 @@ final class MyPageFlow: Flow {
             return coordinateToProfileSettingScreen()
         case .setting:
             return coordinateToSettingScreen()
-        case .privacyInformationControlNeeded:
+        case .privacyManagementNeeded:
             return coordinateToPrivacyManagementScreen()
         case .profileChangeCompleted:
             return coordinateToProfileChangeCompletedScreen()
-            
         case .userIsLoggedOut:
             return coordinateToMainLoginScreen()
         default:
@@ -65,7 +64,21 @@ final class MyPageFlow: Flow {
     }
     
     private func coordinateToPrivacyManagementScreen() -> FlowContributors {
-        return .none
+        let reactor = PrivacyManagementReactor(provider: provider)
+        switch provider.appSettingService.lastLoginType {
+        case .phone:
+            let viewController = PrivacyManagementViewController(with: reactor, mode: .phone)
+            self.rootViewController.pushViewController(viewController, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+        case .kakao:
+            let viewController = PrivacyManagementViewController(with: reactor, mode: .kakao)
+            self.rootViewController.pushViewController(viewController, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+        case .apple:
+            let viewController = PrivacyManagementViewController(with: reactor, mode: .apple)
+            self.rootViewController.pushViewController(viewController, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+        }
     }
     
     private func coordinateToProfileSettingScreen() -> FlowContributors {

@@ -1,5 +1,5 @@
 //
-//  SettingReactor.swift
+//  PrivacyManagementReactor.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/03/09.
@@ -15,12 +15,11 @@ import RxCocoa
 import Alamofire
 
 
-final class SettingReactor: Reactor, Stepper {
+final class PrivacyManagementReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case privacyManageButtonDidTap
-        case logoutButtonDidTap
+
     }
     
     enum Mutation {
@@ -28,7 +27,7 @@ final class SettingReactor: Reactor, Stepper {
     }
     
     struct State {
-        let appVersion: String
+
     }
     
     // MARK: - Properties
@@ -43,18 +42,11 @@ final class SettingReactor: Reactor, Stepper {
     // MARK: - initializer
     init(provider: ServiceProviderType) {
         self.provider = provider
-        self.initialState = State(appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
+        self.initialState = State()
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .privacyManageButtonDidTap:
-            steps.accept(AppStep.privacyManagementNeeded)
-            return .empty()
-        case .logoutButtonDidTap:
-            provider.appSettingService.logout()
-            steps.accept(AppStep.userIsLoggedOut)
-            return .empty()
         }
     }
 }

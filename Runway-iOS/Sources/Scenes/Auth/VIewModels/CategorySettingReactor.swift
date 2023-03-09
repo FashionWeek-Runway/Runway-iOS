@@ -161,27 +161,4 @@ final class CategorySettingReactor: Reactor, Stepper {
         
         return newState
     }
-    
-    func createBody(parameters: [String: Any], boundary: String, data: Data) -> Data {
-        var body = Data()
-        let boundaryPrefix = "--\(boundary)\r\n"
-
-        for (key, value) in parameters {
-          body.append(boundaryPrefix.data(using: .utf8)!)
-          body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
-            body.append("\(value)\r\n".data(using: .utf8)!)
-        }
-
-
-        body.append(boundaryPrefix.data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"multipartFile\"; filename=\"test\"\r\n".data(using: .utf8)!)
-        body.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-        body.append(data)
-        body.append("\r\n".data(using: .utf8)!)
-
-        body.append(boundaryPrefix.data(using: .utf8)!)
-
-        return body
-    }
-    
 }

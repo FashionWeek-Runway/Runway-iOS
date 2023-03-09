@@ -76,7 +76,7 @@ final class MyPageReactor: Reactor, Stepper {
             return .empty()
             
         case .profileImageButtonDidTap:
-            steps.accept(AppStep.profileSettingIsRequired)
+            steps.accept(AppStep.editProfile)
             return .empty()
             
         case .myReviewCollectionViewReachesBottom:
