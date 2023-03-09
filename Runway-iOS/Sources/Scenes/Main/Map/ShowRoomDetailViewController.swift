@@ -453,6 +453,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             .asDriver()
             .drive(onNext: { [weak self] in
                 UIPasteboard.general.string = self?.addressLabel.text
+                UIWindow.makeToastAnimation(message: "클립보드에 복사되었습니다.", .bottom, 20)
             }).disposed(by: disposeBag)
         
         scrollView.rx.contentOffset
