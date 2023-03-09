@@ -39,6 +39,8 @@ final class HomeFlow: Flow {
             return coordinateToAllStoreScreen()
         case .showRoomDetail(let storeId):
             return coordinateToShowRoomDetailScreen(storeId: storeId)
+        case .editReviewImage(let storeId, let imageData):
+            return coordinateToEditReviewImageScreen(storeId: storeId, imageData: imageData)
         case .userReviewReels(let reviewId):
             return coordinateToReviewReelsScreen(reviewId: reviewId)
         case .back(let animated):
@@ -75,6 +77,14 @@ final class HomeFlow: Flow {
     private func coordinateToShowRoomDetailScreen(storeId: Int) -> FlowContributors {
         let reactor = ShowRoomDetailReactor(provider: provider, storeId: storeId)
         let viewController = ShowRoomDetailViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToEditReviewImageScreen(storeId: Int, imageData: Data) -> FlowContributors {
+        let reactor = EditReviewReactor(provider: provider, storeId: storeId ,reviewImageData: imageData)
+        let viewController = EditReviewViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))

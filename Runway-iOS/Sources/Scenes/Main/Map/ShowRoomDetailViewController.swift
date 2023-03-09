@@ -224,6 +224,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let cameraPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
 //        picker.delegate = nil
+        picker.modalPresentationStyle = .overCurrentContext
         picker.sourceType = .camera
         return picker
     }()
@@ -232,6 +233,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         let picker = UIImagePickerController()
 //        picker.delegate = nil
         picker.sourceType = .photoLibrary
+        picker.modalPresentationStyle = .overCurrentContext
         return picker
     }()
     

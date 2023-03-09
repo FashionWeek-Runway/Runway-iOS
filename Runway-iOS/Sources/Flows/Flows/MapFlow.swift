@@ -77,7 +77,6 @@ final class MapFlow: Flow {
         let reactor = EditReviewReactor(provider: provider, storeId: storeId ,reviewImageData: imageData)
         let viewController = EditReviewViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
-        self.rootViewController.presentedViewController?.dismiss(animated: true)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
