@@ -148,6 +148,7 @@ final class PolicyAgreementViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setRx()
     }
     
     override func configureUI() {
@@ -224,6 +225,56 @@ final class PolicyAgreementViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
         }
+    }
+    
+    private func setRx() {
+        usagePolicyDetailButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let url = URL(string: PolicyURL.USAGE_POLICY) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
+        
+        privacyPolicyDetailButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let url = URL(string: PolicyURL.PRIVACY_POLICY) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
+        
+        locationPolicyDetailButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let url = URL(string: PolicyURL.LOCATION_USAGE_POLICY) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
+        
+        marketingDetailButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let url = URL(string: PolicyURL.MARKETING_INFORMATION_USAGE_POLICY) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
     }
 
 }
