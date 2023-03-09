@@ -31,7 +31,7 @@ final class MyPageViewController: BaseViewController {
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
-        view.contentInsetAdjustmentBehavior = .never
+//        view.contentInsetAdjustmentBehavior
         return view
     }()
     
@@ -136,6 +136,7 @@ final class MyPageViewController: BaseViewController {
                                  height: ((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
+        view.isScrollEnabled = false
         view.collectionViewLayout = layout
         view.bounces = false
         return view
@@ -211,8 +212,9 @@ final class MyPageViewController: BaseViewController {
         
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
-            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(navigationBarArea.snp.bottom)
+            $0.bottom.equalToSuperview().offset(-(tabBarController?.tabBar.frame.height ?? 0.0))
         }
         
         scrollView.addSubview(containerView)
@@ -221,7 +223,7 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                  myReviewTabButton, storedTabButton, divider2, myReviewBottomLine, storedBottomLine, myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, myReviewCollectionView, userReviewCollectionView])
+                                  myReviewTabButton, storedTabButton, divider2, myReviewBottomLine, storedBottomLine, myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView, segmentedControl, storeCollectionView, userReviewCollectionView])
 
         
         profileImageButton.snp.makeConstraints {
