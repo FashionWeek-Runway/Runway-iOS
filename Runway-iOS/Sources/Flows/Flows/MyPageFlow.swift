@@ -43,6 +43,8 @@ final class MyPageFlow: Flow {
             return coordinateToProfileChangeCompletedScreen()
         case .userIsLoggedOut:
             return coordinateToMainLoginScreen()
+        case .withdrawalStep:
+            return coordinateToWithdrawalScreen()
         default:
             return .none
         }
@@ -91,6 +93,13 @@ final class MyPageFlow: Flow {
     
     private func coordinateToProfileChangeCompletedScreen() -> FlowContributors {
         return .none
+    }
+    
+    private func coordinateToWithdrawalScreen() -> FlowContributors {
+        let reactor = WithdrawalReactor(provider: provider)
+        let viewController = WithdrawalViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
     private func coordinateToMainLoginScreen() -> FlowContributors {

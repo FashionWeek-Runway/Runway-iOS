@@ -1,5 +1,5 @@
 //
-//  PrivacyManagementReactor.swift
+//  WithdrawalReactor.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/03/09.
@@ -15,11 +15,11 @@ import RxCocoa
 import Alamofire
 
 
-final class PrivacyManagementReactor: Reactor, Stepper {
+final class WithdrawalReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case withdrawalButtonDidTap
+
     }
     
     enum Mutation {
@@ -47,11 +47,6 @@ final class PrivacyManagementReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-            
-            
-        case .withdrawalButtonDidTap:
-            steps.accept(AppStep.withdrawalStep)
-            return .empty()
         }
     }
 }

@@ -74,6 +74,8 @@
 		19849B8129B9C0EB00B1FA1F /* ProfileEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */; };
 		19849B8329B9DB7E00B1FA1F /* PrivacyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */; };
 		19849B8529BA144500B1FA1F /* PrivacyManagementReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */; };
+		19849B8729BA17EB00B1FA1F /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8629BA17EB00B1FA1F /* WithdrawalViewController.swift */; };
+		19849B8929BA17F200B1FA1F /* WithdrawalReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */; };
 		198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */; };
 		198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
@@ -280,6 +282,8 @@
 		19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditReactor.swift; sourceTree = "<group>"; };
 		19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagementViewController.swift; sourceTree = "<group>"; };
 		19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManagementReactor.swift; sourceTree = "<group>"; };
+		19849B8629BA17EB00B1FA1F /* WithdrawalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalViewController.swift; sourceTree = "<group>"; };
+		19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalReactor.swift; sourceTree = "<group>"; };
 		198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactor.swift; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
@@ -711,6 +715,7 @@
 				19849B7829B9A08000B1FA1F /* SettingViewController.swift */,
 				19849B7E29B9C08600B1FA1F /* ProfileEditViewController.swift */,
 				19849B8229B9DB7E00B1FA1F /* PrivacyManagementViewController.swift */,
+				19849B8629BA17EB00B1FA1F /* WithdrawalViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -722,6 +727,7 @@
 				19849B7A29B9A08600B1FA1F /* SettingReactor.swift */,
 				19849B8029B9C0EB00B1FA1F /* ProfileEditReactor.swift */,
 				19849B8429BA144500B1FA1F /* PrivacyManagementReactor.swift */,
+				19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1264,6 +1270,7 @@
 				1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
+				19849B8729BA17EB00B1FA1F /* WithdrawalViewController.swift in Sources */,
 				199B9C75299D153B00877AAE /* PhoneCertificationReactor.swift in Sources */,
 				19F10C7B29A8D3F90060F0BD /* RWAroundEmptyView.swift in Sources */,
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
@@ -1279,6 +1286,7 @@
 				199B9C81299D3F7500877AAE /* PasswordInputReactor.swift in Sources */,
 				19BF2C812994100F00F1134D /* RWButton.swift in Sources */,
 				19E0C78929A36B2F003E1F10 /* ShowRoomService.swift in Sources */,
+				19849B8929BA17F200B1FA1F /* WithdrawalReactor.swift in Sources */,
 				1941DFE429B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift in Sources */,
 				196D23AA29A4F80000E262FB /* RWMapSearchBarCollectionViewCell.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,

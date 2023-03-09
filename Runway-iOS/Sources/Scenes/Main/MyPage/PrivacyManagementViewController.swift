@@ -329,6 +329,7 @@ final class PrivacyManagementViewController: BaseViewController {
             withdrawalButton.snp.makeConstraints {
                 $0.leading.equalToSuperview().offset(20)
                 $0.top.equalTo(divider1.snp.bottom).offset(24)
+                $0.bottom.equalToSuperview()
             }
             
         case .apple:
@@ -370,6 +371,7 @@ final class PrivacyManagementViewController: BaseViewController {
             withdrawalButton.snp.makeConstraints {
                 $0.leading.equalToSuperview().offset(20)
                 $0.top.equalTo(divider1.snp.bottom).offset(24)
+                $0.bottom.equalToSuperview()
             }
         }
         
@@ -387,10 +389,12 @@ extension PrivacyManagementViewController: View {
     }
     
     private func bindAction(reactor: PrivacyManagementReactor) {
-    
+        withdrawalButton.rx.tap
+            .map { Reactor.Action.withdrawalButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: PrivacyManagementReactor) {
-
     }
 }
