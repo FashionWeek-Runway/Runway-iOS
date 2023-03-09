@@ -91,6 +91,7 @@ final class MainLoginReactor: Reactor, Stepper {
                 if let error = error {
                     print(error)
                 }
+
                 guard let identityToken = loginResult?.identityToken,
                       let oauthToken = String(data: identityToken, encoding: .utf8) else { return }
                 self.provider.loginService.loginAsApple(oAuthToken: oauthToken).validate(statusCode: 200...299).data().decode(type: AppleLoginResponse.self, decoder: JSONDecoder())

@@ -223,16 +223,14 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let cameraPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
-        picker.delegate = nil
-        picker.allowsEditing = true
+//        picker.delegate = nil
         picker.sourceType = .camera
         return picker
     }()
     
     private let albumPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
-        picker.delegate = nil
-        picker.allowsEditing = false
+//        picker.delegate = nil
         picker.sourceType = .photoLibrary
         return picker
     }()
@@ -616,11 +614,13 @@ extension ShowRoomDetailViewController: View {
         
         // bind action
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .do(onNext: { [weak self] _ in self?.dismiss(animated: true)})
-            .map { $0[.originalImage] as? UIImage ?? UIImage() }
-            .map { Reactor.Action.pickingReviewImage($0.pngData()) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] info in
+                self?.dismiss(animated: false, completion: {
+                    guard let image = info[.originalImage] as? UIImage, let imageData = image.pngData() else { return }
+                    let action = Reactor.Action.pickingReviewImage(imageData)
+                    self?.reactor?.action.onNext(action)
+                })
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ShowRoomDetailReactor) {

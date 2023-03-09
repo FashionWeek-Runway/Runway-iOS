@@ -203,18 +203,16 @@ extension ProfileSettingViewController: View {
             .bind(onNext: { _ in self.dismiss(animated: true)})
             .disposed(by: disposeBag)
         
-        // set profile image
-        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .map { $0[.editedImage] as? UIImage }
-            .bind(to: profileSettingView.profileImageView.rx.image )
-            .disposed(by: disposeBag)
-        
         // bind action
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .map { $0[.editedImage] as? UIImage ?? UIImage() }
-            .map { Reactor.Action.setImage($0.pngData()) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+            .bind(onNext: { [weak self] info in
+                self?.dismiss(animated: true, completion: {
+                    guard let image = info[.editedImage] as? UIImage, let imageData = image.pngData() else { return }
+                    self?.profileSettingView.profileImageView.image = image
+                    let action = Reactor.Action.setImage(imageData)
+                    self?.reactor?.action.onNext(action)
+                })
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: ProfileSettingReactor) {

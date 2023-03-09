@@ -181,16 +181,19 @@ extension ProfileEditViewController: View {
             .disposed(by: disposeBag)
         
         Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
-            .bind(onNext: { _ in self.dismiss(animated: true) })
-            .disposed(by: disposeBag)
+            .bind(onNext: { [weak self]  in
+                self?.dismiss(animated: true)
+            }).disposed(by: disposeBag)
         
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .bind(onNext: { [weak self] in
-                guard let image = $0[.editedImage] as? UIImage else { return }
-                self?.profileSettingView.profileImageView.image = image
-                guard let imageData = image.pngData() else { return }
-                let action = Reactor.Action.setProfileImage(imageData)
-                self?.reactor?.action.onNext(action)
+            .bind(onNext: { [weak self] info in
+                self?.dismiss(animated: true) {
+                    guard let image = info[.originalImage] as? UIImage else { return }
+                    self?.profileSettingView.profileImageView.image = image
+                    guard let imageData = image.pngData() else { return }
+                    let action = Reactor.Action.setProfileImage(imageData)
+                    self?.reactor?.action.onNext(action)
+                }
             }).disposed(by: disposeBag)
     }
     

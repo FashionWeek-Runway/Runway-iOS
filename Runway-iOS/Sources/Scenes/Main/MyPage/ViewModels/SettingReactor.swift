@@ -19,6 +19,7 @@ final class SettingReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
+        case backButtonDidtap
         case privacyManageButtonDidTap
         case logoutButtonDidTap
     }
@@ -48,6 +49,9 @@ final class SettingReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .backButtonDidtap:
+            steps.accept(AppStep.back(animated: true))
+            return .empty()
         case .privacyManageButtonDidTap:
             steps.accept(AppStep.privacyManagementNeeded)
             return .empty()

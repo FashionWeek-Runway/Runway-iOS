@@ -353,6 +353,11 @@ extension SettingViewController: View {
     }
     
     private func bindAction(reactor: SettingReactor) {
+        backButton.rx.tap
+            .map { Reactor.Action.backButtonDidtap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         privacyManageButton.rx.tap
             .map { Reactor.Action.privacyManageButtonDidTap}
             .bind(to: reactor.action)
