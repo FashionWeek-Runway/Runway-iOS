@@ -134,6 +134,15 @@ final class SettingViewController: BaseViewController {
         return view
     }()
     
+    private let logoutAlertViewController: RWAlertViewController = {
+        let viewController = RWAlertViewController()
+        viewController.alertView.alertMode = .twoAction
+        viewController.alertView.leadingButton.title = "취소"
+        viewController.alertView.trailingButton.title = "로그아웃"
+        viewController.alertView.titleLabel.text = "로그아웃"
+        viewController.alertView.captionLabel.text = "RUNWAY의 힙한 매장을 볼 수 없어요.\n정말 로그아웃 하시겠어요?"
+        return viewController
+    }()
     // MARK: - initializer
     
     init(with reactor: SettingReactor) {
@@ -260,6 +269,18 @@ final class SettingViewController: BaseViewController {
     }
     
     private func setRx() {
+        storeAddRequestButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let url = URL(string: PolicyURL.STORE_ADD_REQUEST) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
+        
         usagePolicyButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
@@ -307,6 +328,21 @@ final class SettingViewController: BaseViewController {
                     self?.present(webView, animated: true)
                 }
             }).disposed(by: disposeBag)
+        
+        logoutButton.rx.tap
+            .asDriver()
+            .drive(onNext: {[weak self] in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    self.present(self.logoutAlertViewController, animated: false)
+                }
+            }).disposed(by: disposeBag)
+        
+        logoutAlertViewController.alertView.leadingButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.dismiss(animated: false)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -319,6 +355,11 @@ extension SettingViewController: View {
     private func bindAction(reactor: SettingReactor) {
         privacyManageButton.rx.tap
             .map { Reactor.Action.privacyManageButtonDidTap}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        logoutAlertViewController.alertView.trailingButton.rx.tap
+            .map { Reactor.Action.logoutButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

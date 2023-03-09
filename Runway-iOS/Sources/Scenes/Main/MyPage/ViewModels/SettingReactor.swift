@@ -20,6 +20,7 @@ final class SettingReactor: Reactor, Stepper {
     
     enum Action {
         case privacyManageButtonDidTap
+        case logoutButtonDidTap
     }
     
     enum Mutation {
@@ -49,6 +50,10 @@ final class SettingReactor: Reactor, Stepper {
         switch action {
         case .privacyManageButtonDidTap:
             steps.accept(AppStep.privacyInformationControlNeeded)
+            return .empty()
+        case .logoutButtonDidTap:
+            provider.appSettingService.logout()
+            steps.accept(AppStep.userIsLoggedOut)
             return .empty()
         }
     }

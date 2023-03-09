@@ -67,4 +67,11 @@ final class AppSettingService {
             UserDefaults.standard.removeObject(forKey: key.description)
         }
     }
+    
+    func logout() {
+        isLoggedIn = false
+        authToken = ""
+        refreshToken = ""
+        kakaoAccessToken = ""
+    }
 }

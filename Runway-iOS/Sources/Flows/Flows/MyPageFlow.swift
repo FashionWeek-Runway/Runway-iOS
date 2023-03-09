@@ -41,6 +41,9 @@ final class MyPageFlow: Flow {
             return coordinateToPrivacyManagementScreen()
         case .profileChangeCompleted:
             return coordinateToProfileChangeCompletedScreen()
+            
+        case .userIsLoggedOut:
+            return coordinateToMainLoginScreen()
         default:
             return .none
         }
@@ -56,6 +59,7 @@ final class MyPageFlow: Flow {
     private func coordinateToSettingScreen() -> FlowContributors {
         let reactor = SettingReactor(provider: provider)
         let viewController = SettingViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
@@ -67,11 +71,16 @@ final class MyPageFlow: Flow {
     private func coordinateToProfileSettingScreen() -> FlowContributors {
         let reactor = ProfileSettingReactor(provider: provider)
         let viewController = ProfileSettingViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
     private func coordinateToProfileChangeCompletedScreen() -> FlowContributors {
         return .none
+    }
+    
+    private func coordinateToMainLoginScreen() -> FlowContributors {
+        return .end(forwardToParentFlowWithStep: AppStep.userIsLoggedOut)
     }
 }

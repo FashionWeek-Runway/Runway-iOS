@@ -8,6 +8,8 @@
 import Foundation
 
 class PolicyURL {
+    static let STORE_ADD_REQUEST = "https://forms.gle/jEgWZR8pLSxv6CcB7"
+    
     static let PRIVACY_POLICY = "https://www.notion.so/d46c2a16fe7d48638219feaa11dc9c1d?pvs=4"
     
     static let USAGE_POLICY = "https://www.notion.so/cc75bccc6c0a421a8d1c117ee39eec2c?pvs=4"

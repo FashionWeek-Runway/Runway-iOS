@@ -60,4 +60,5 @@ enum AppStep: Step {
     case setting
     case privacyInformationControlNeeded
     case profileChangeCompleted
+    case userIsLoggedOut
 }

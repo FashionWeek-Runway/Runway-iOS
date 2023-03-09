@@ -32,6 +32,8 @@ final class MainFlow: Flow {
         switch step {
         case .userIsLoggedIn:
             return coordinateToMainTabScreen()
+        case .userIsLoggedOut:
+            return coordinateToMainLoginScreen()
         default:
             return .none
         }
@@ -80,5 +82,9 @@ final class MainFlow: Flow {
         self.rootViewController.selectedIndex = 2
         
         return .none
+    }
+    
+    private func coordinateToMainLoginScreen() -> FlowContributors {
+        return .end(forwardToParentFlowWithStep: AppStep.loginRequired)
     }
 }

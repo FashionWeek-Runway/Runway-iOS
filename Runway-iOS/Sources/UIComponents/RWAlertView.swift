@@ -81,7 +81,7 @@ final class RWAlertView: UIView {
     
     private func configureUI() {
         self.backgroundColor = .white
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 10
         self.clipsToBounds = true
         
         self.addSubviews([titleLabel, captionLabel, confirmButton, leadingButton, trailingButton])
