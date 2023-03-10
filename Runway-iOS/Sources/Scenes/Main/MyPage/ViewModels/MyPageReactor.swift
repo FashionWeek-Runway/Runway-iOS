@@ -24,6 +24,7 @@ final class MyPageReactor: Reactor, Stepper {
         case profileImageButtonDidTap
         case myReviewCollectionViewReachesBottom
         case bookmarkedStoreCollectionViewReachesBottom
+        case bookmarkedReviewCollectionViewReachesBottom
     }
     
     enum Mutation {
@@ -32,6 +33,8 @@ final class MyPageReactor: Reactor, Stepper {
         case appendMyReviewData(MyReviewResponseResult)
         case setBookmarkedStoreData(BookmarkedStoreResponseResult)
         case appendBookmarkedStoreData(BookmarkedStoreResponseResult)
+        case setBookmarkedReviewData(BookmarkedReviewResponseResult)
+        case appendBookmarkedReviewData(BookmarkedReviewResponseResult)
     }
     
     struct State {
@@ -39,6 +42,7 @@ final class MyPageReactor: Reactor, Stepper {
         var profileImageURL: String? = nil
         var myReviewDatas: [MyReviewResponseResultContent] = []
         var bookmarkedStoreDatas: [BookmarkedStoreResponseResultContent] = []
+        var bookmarkedReviewDatas: [BookmarkedReviewResponseResultContent] = []
         
         var myReviewPage: Int = 0
         var myReviewIsLast: Bool = false
@@ -83,7 +87,8 @@ final class MyPageReactor: Reactor, Stepper {
                 provider.userService.bookmarkShowRooms(page: 0, size: 10).data().decode(type: BookmarkedStoreResponse.self, decoder: JSONDecoder())
                     .map { .setBookmarkedStoreData($0.result) },
                 
-//                provider.userService.bookmarkReviewList(page: 0, size: 10).data().decode(type: Bookmarke, decoder: <#T##DataDecoder#>)
+                provider.userService.bookmarkReviewList(page: 0, size: 10).data().decode(type: BookmarkedReviewResponse.self, decoder: JSONDecoder())
+                    .map { return .setBookmarkedReviewData($0.result)}
             ])
             
         case .settingButtonDidTap:
@@ -103,6 +108,10 @@ final class MyPageReactor: Reactor, Stepper {
         case .bookmarkedStoreCollectionViewReachesBottom:
             return currentState.bookmarkedStoreIsLast ? .empty() : provider.userService.bookmarkShowRooms(page: currentState.bookmarkedStorePage, size: 10).data().decode(type: BookmarkedStoreResponse.self, decoder: JSONDecoder())
                 .map { .appendBookmarkedStoreData($0.result) }
+            
+        case .bookmarkedReviewCollectionViewReachesBottom:
+            return currentState.bookmarkedReviewIsLast ? .empty() : provider.userService.bookmarkReviewList(page: currentState.bookmarkedReviewPage, size: 10).data().decode(type: BookmarkedReviewResponse.self, decoder: JSONDecoder())
+                .map { .appendBookmarkedReviewData($0.result) }
         }
     }
     
@@ -140,6 +149,20 @@ final class MyPageReactor: Reactor, Stepper {
             state.bookmarkedStoreIsLast = data.isLast
             if !data.isLast {
                 state.bookmarkedStorePage += 1
+            }
+            
+        case .setBookmarkedReviewData(let data):
+            state.bookmarkedReviewDatas = data.contents
+            state.bookmarkedReviewIsLast = data.isLast
+            if !data.isLast {
+                state.bookmarkedReviewPage += 1
+            }
+            
+        case .appendBookmarkedReviewData(let data):
+            state.bookmarkedReviewDatas.append(contentsOf: data.contents)
+            state.bookmarkedReviewIsLast = data.isLast
+            if !data.isLast {
+                state.bookmarkedReviewPage += 1
             }
         }
         

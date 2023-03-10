@@ -102,6 +102,7 @@ final class MyPageViewController: BaseViewController {
     private let storedButtonBottomLine: UIView = {
         let view = UIView()
         view.backgroundColor = .runwayBlack
+        view.isHidden = true
         return view
     }()
 
@@ -222,7 +223,7 @@ final class MyPageViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-18)
         }
         
-        view.addSubview(scrollView)
+        view.addSubviews([scrollView, myReviewEmptyImageView, myReviewEmptyLabel, storeEmptyImageView, storeEmptyLabel])
         scrollView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(navigationBarArea.snp.bottom)
@@ -236,8 +237,8 @@ final class MyPageViewController: BaseViewController {
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
                                    myReviewTabButton, myReviewButtonBottomLine,storedTabButton, storedButtonBottomLine, divider2,
-                                   myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView,
-                                  segmentedControl, storeEmptyImageView, storeEmptyLabel, storeCollectionView, userReviewCollectionView])
+                                   myReviewCollectionView,
+                                  segmentedControl, storeCollectionView, userReviewCollectionView])
 
         
         profileImageButton.snp.makeConstraints {
@@ -308,7 +309,7 @@ final class MyPageViewController: BaseViewController {
         myReviewEmptyLabel.snp.makeConstraints {
             $0.top.equalTo(myReviewEmptyImageView.snp.bottom).offset(17)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         }
         
         myReviewCollectionView.snp.makeConstraints {
@@ -329,16 +330,18 @@ final class MyPageViewController: BaseViewController {
         storeEmptyLabel.snp.makeConstraints {
             $0.top.equalTo(storeEmptyImageView.snp.bottom).offset(17)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         }
         
         storeCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
+            $0.height.equalTo(10)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
         
         userReviewCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
+//            $0.height.equalTo(10)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
     
@@ -366,6 +369,9 @@ final class MyPageViewController: BaseViewController {
                     self?.myReviewEmptyImageView.isHidden = true
                     self?.myReviewEmptyLabel.isHidden = true
                     self?.myReviewCollectionView.isHidden = false
+//                    self?.myReviewCollectionView.snp.updateConstraints {
+//                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
+//                    }
                 }
             }).disposed(by: disposeBag)
         
@@ -378,30 +384,53 @@ final class MyPageViewController: BaseViewController {
                 self?.storedButtonBottomLine.isHidden = false
                 
                 self?.segmentedControl.isHidden = false
+                self?.myReviewEmptyImageView.isHidden = true
+                self?.myReviewEmptyLabel.isHidden = true
                 
-//                if self?.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true
-//                    || self?.reactor?.currentState{
-//                    self?.segmentedControl.isHidden = true
-//                    self?.storeEmptyImageView.isHidden = false
-//                    self?.storeEmptyLabel.isHidden = false
-//                    self?.storeCollectionView.isHidden = true
-//                    self?.userReviewCollectionView.isHidden = true
-//                } else {
-//                    self?
-//                }
-                
-                self?.storeEmptyImageView.isHidden = true
-                self?.storeEmptyLabel.isHidden = true
-                self?.storeCollectionView.isHidden = true
-                self?.userReviewCollectionView.isHidden = true
-                
-                if self?.reactor?.currentState.myReviewDatas.isEmpty == true {
-                    self?.myReviewEmptyImageView.isHidden = false
-                    self?.myReviewEmptyLabel.isHidden = false
+                if self?.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true
+                    || self?.reactor?.currentState.bookmarkedReviewDatas.isEmpty == true {
+                    self?.segmentedControl.isHidden = true
+                    self?.storeEmptyImageView.isHidden = false
+                    self?.storeEmptyLabel.isHidden = false
+                    self?.storeCollectionView.isHidden = true
+                    self?.userReviewCollectionView.isHidden = true
                 } else {
-                    self?.myReviewEmptyImageView.isHidden = true
-                    self?.myReviewEmptyLabel.isHidden = true
-                    self?.myReviewCollectionView.isHidden = false
+                    self?.segmentedControl.isHidden = false
+                    self?.storeEmptyImageView.isHidden = true
+                    self?.storeEmptyImageView.isHidden = true
+                    if self?.segmentedControl.selectedSegmentIndex == 0 {
+                        self?.storeCollectionView.isHidden = false
+                        self?.userReviewCollectionView.isHidden = true
+                    } else {
+                        self?.storeCollectionView.isHidden = true
+                        self?.userReviewCollectionView.isHidden = false
+                    }
+                }
+            }).disposed(by: disposeBag)
+        
+        segmentedControl.rx.selectedSegmentIndex
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                if self?.storedTabButton.isSelected == true {
+                    if $0 == 0 {
+                        self?.storeCollectionView.isHidden = false
+                        self?.userReviewCollectionView.isHidden = true
+//                        self?.containerView.snp.updateConstraints {
+//                            $0.bottom.equalTo(self?.storeCollectionView.snp.bottom)
+//                        }
+//                        self?.storeCollectionView.snp.updateConstraints {
+//                            $0.height.equalTo(CGFloat(UIScreen.getDeviceWidth() - 40.0) * 0.76)
+//                        }
+                    } else {
+                        self?.storeCollectionView.isHidden = true
+                        self?.userReviewCollectionView.isHidden = false
+//                        self?.containerView.snp.updateConstraints {
+//                            $0.bottom.equalTo(self?.userReviewCollectionView.snp.bottom)
+//                        }
+//                        self?.userReviewCollectionView.snp.updateConstraints {
+//                            $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(self?.reactor?.currentState.bookmarkedReviewDa) / 3.0))
+//                        }
+                    }
                 }
             }).disposed(by: disposeBag)
     }
@@ -446,19 +475,43 @@ extension MyPageViewController: View {
         reactor.state.map { $0.myReviewDatas }
             .do(onNext: { [weak self] datas in
                 if datas.isEmpty {
-                    self?.myReviewCollectionView.isHidden = true
                     self?.myReviewEmptyImageView.isHidden = false
                     self?.myReviewEmptyLabel.isHidden = false
                 } else {
                     self?.myReviewCollectionView.snp.updateConstraints {
                         $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
                     }
-                    self?.myReviewCollectionView.isHidden = false
-                    self?.myReviewEmptyImageView.isHidden = true
-                    self?.myReviewEmptyLabel.isHidden = true
                 }
             })
             .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
+                guard let url = URL(string: item.imageURL) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.addressLabel.text = item.regionInfo
+            }.disposed(by: disposeBag)
+        
+        let bookmarkedStoreObservable = reactor.state.map { $0.bookmarkedStoreDatas }
+            .filter { $0.isEmpty == false }
+                
+        bookmarkedStoreObservable
+        .do(onNext: { [weak self] datas in
+            self?.storeCollectionView.snp.updateConstraints {
+                $0.height.equalTo(CGFloat(UIScreen.getDeviceWidth() - 40.0) * 0.76 * CGFloat(datas.count))
+            }
+        }).bind(to: storeCollectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
+                guard let url = URL(string: item.storeImg) else { return }
+                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.storeNameLabel.text = item.storeName
+                cell.tagRelay.accept(item.category)
+            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.bookmarkedReviewDatas }
+            .filter { $0.isEmpty == false }
+            .do(onNext: { [weak self] datas in
+//                self?.userReviewCollectionView.snp.updateConstraints {
+//                    $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
+//                }
+            })
+            .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.addressLabel.text = item.regionInfo
