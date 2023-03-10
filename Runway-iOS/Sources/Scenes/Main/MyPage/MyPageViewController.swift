@@ -82,6 +82,12 @@ final class MyPageViewController: BaseViewController {
         return button
     }()
     
+    private let myReviewButtonBottomLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .runwayBlack
+        return view
+    }()
+    
     private let storedTabButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon_bookmark_grey"), for: .normal)
@@ -91,6 +97,12 @@ final class MyPageViewController: BaseViewController {
         button.setBackgroundColor(.clear, for: .normal)
         button.alignVertical(spacing: 2.0)
         return button
+    }()
+    
+    private let storedButtonBottomLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .runwayBlack
+        return view
     }()
 
     private let divider2: UIView = {
@@ -223,7 +235,7 @@ final class MyPageViewController: BaseViewController {
         }
         
         containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
-                                   myReviewTabButton, storedTabButton, divider2,
+                                   myReviewTabButton, myReviewButtonBottomLine,storedTabButton, storedButtonBottomLine, divider2,
                                    myReviewEmptyImageView, myReviewEmptyLabel, myReviewCollectionView,
                                   segmentedControl, storeEmptyImageView, storeEmptyLabel, storeCollectionView, userReviewCollectionView])
 
@@ -272,6 +284,20 @@ final class MyPageViewController: BaseViewController {
             $0.top.equalTo(myReviewTabButton.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(0.5)
+        }
+        
+        myReviewButtonBottomLine.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.bottom.equalTo(divider2.snp.top)
+            $0.width.equalToSuperview().dividedBy(2.0)
+            $0.height.equalTo(2.5)
+        }
+        
+        storedButtonBottomLine.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalTo(divider2.snp.top)
+            $0.width.equalToSuperview().dividedBy(2.0)
+            $0.height.equalTo(2.5)
         }
         
         myReviewEmptyImageView.snp.makeConstraints {
@@ -323,14 +349,60 @@ final class MyPageViewController: BaseViewController {
             .asDriver()
             .drive(onNext: { [weak self] in
                 self?.myReviewTabButton.isSelected = true
+                self?.myReviewButtonBottomLine.isHidden = false
                 self?.storedTabButton.isSelected = false
+                self?.storedButtonBottomLine.isHidden = true
+                
+                self?.segmentedControl.isHidden = true
+                self?.storeEmptyImageView.isHidden = true
+                self?.storeEmptyLabel.isHidden = true
+                self?.storeCollectionView.isHidden = true
+                self?.userReviewCollectionView.isHidden = true
+                
+                if self?.reactor?.currentState.myReviewDatas.isEmpty == true {
+                    self?.myReviewEmptyImageView.isHidden = false
+                    self?.myReviewEmptyLabel.isHidden = false
+                } else {
+                    self?.myReviewEmptyImageView.isHidden = true
+                    self?.myReviewEmptyLabel.isHidden = true
+                    self?.myReviewCollectionView.isHidden = false
+                }
             }).disposed(by: disposeBag)
         
         storedTabButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
                 self?.myReviewTabButton.isSelected = false
+                self?.myReviewButtonBottomLine.isHidden = true
                 self?.storedTabButton.isSelected = true
+                self?.storedButtonBottomLine.isHidden = false
+                
+                self?.segmentedControl.isHidden = false
+                
+//                if self?.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true
+//                    || self?.reactor?.currentState{
+//                    self?.segmentedControl.isHidden = true
+//                    self?.storeEmptyImageView.isHidden = false
+//                    self?.storeEmptyLabel.isHidden = false
+//                    self?.storeCollectionView.isHidden = true
+//                    self?.userReviewCollectionView.isHidden = true
+//                } else {
+//                    self?
+//                }
+                
+                self?.storeEmptyImageView.isHidden = true
+                self?.storeEmptyLabel.isHidden = true
+                self?.storeCollectionView.isHidden = true
+                self?.userReviewCollectionView.isHidden = true
+                
+                if self?.reactor?.currentState.myReviewDatas.isEmpty == true {
+                    self?.myReviewEmptyImageView.isHidden = false
+                    self?.myReviewEmptyLabel.isHidden = false
+                } else {
+                    self?.myReviewEmptyImageView.isHidden = true
+                    self?.myReviewEmptyLabel.isHidden = true
+                    self?.myReviewCollectionView.isHidden = false
+                }
             }).disposed(by: disposeBag)
     }
 }

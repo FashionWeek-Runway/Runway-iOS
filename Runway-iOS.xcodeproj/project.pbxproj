@@ -66,6 +66,7 @@
 		196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AF29A5273F00E262FB /* UIScreen+.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
+		198372D829BA7C0500F01CB7 /* BookmarkedStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198372D729BA7C0500F01CB7 /* BookmarkedStoreResponse.swift */; };
 		19849B7729B8D09E00B1FA1F /* MyReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7629B8D09E00B1FA1F /* MyReviewResponse.swift */; };
 		19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7829B9A08000B1FA1F /* SettingViewController.swift */; };
 		19849B7B29B9A08600B1FA1F /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B7A29B9A08600B1FA1F /* SettingReactor.swift */; };
@@ -274,6 +275,7 @@
 		196D23AF29A5273F00E262FB /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
+		198372D729BA7C0500F01CB7 /* BookmarkedStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedStoreResponse.swift; sourceTree = "<group>"; };
 		19849B7629B8D09E00B1FA1F /* MyReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewResponse.swift; sourceTree = "<group>"; };
 		19849B7829B9A08000B1FA1F /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		19849B7A29B9A08600B1FA1F /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */,
 				19FF9B3529B7B34200C48BD7 /* ExistCategoryResponse.swift */,
 				19849B7629B8D09E00B1FA1F /* MyReviewResponse.swift */,
+				198372D729BA7C0500F01CB7 /* BookmarkedStoreResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1329,6 +1332,7 @@
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				191B8EAB29B3B9B900CF5C83 /* MyPageInformationResponse.swift in Sources */,
 				196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */,
+				198372D829BA7C0500F01CB7 /* BookmarkedStoreResponse.swift in Sources */,
 				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
 				191B8EA929B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift in Sources */,
 				19E0C77D29A2AC05003E1F10 /* MyPageReactor.swift in Sources */,

@@ -118,16 +118,9 @@ final class ReviewReelsReactor: Reactor, Stepper {
             }
             
         case .bookmarkButtonDidTap(let reviewId):
-            return provider.showRoomService.reviewDetail(reviewId: reviewId)
+            return provider.showRoomService.reviewBookmark(reviewId: reviewId)
                 .data().decode(type: BaseResponse.self, decoder: JSONDecoder())
-                .flatMap { response -> Observable<Mutation> in
-                    if response.isSuccess {
-                        return .empty()
-                    } else {
-                        // ...?
-                        return .empty()
-                    }
-                }
+                .flatMap { _ in Observable.empty() }
             
         case .showRoomButtonDidTap(let storeId):
             steps.accept(AppStep.showRoomDetail(storeId))
