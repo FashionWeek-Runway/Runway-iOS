@@ -181,6 +181,8 @@
 		19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7C29A8D9560060F0BD /* AroundMapSearchResponse.swift */; };
 		19F8FD9229BB6C7E0072F3E5 /* PasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9129BB6C7E0072F3E5 /* PasswordChangeViewController.swift */; };
 		19F8FD9429BB6C860072F3E5 /* PasswordChangeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9329BB6C860072F3E5 /* PasswordChangeReactor.swift */; };
+		19F8FD9629BB756E0072F3E5 /* NewChangePasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9529BB756E0072F3E5 /* NewChangePasswordInputViewController.swift */; };
+		19F8FD9829BB757B0072F3E5 /* NewChangePasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */; };
 		19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */; };
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
 		19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */; };
@@ -400,6 +402,8 @@
 		19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Runway-iOS.entitlements"; sourceTree = "<group>"; };
 		19F8FD9129BB6C7E0072F3E5 /* PasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeViewController.swift; sourceTree = "<group>"; };
 		19F8FD9329BB6C860072F3E5 /* PasswordChangeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeReactor.swift; sourceTree = "<group>"; };
+		19F8FD9529BB756E0072F3E5 /* NewChangePasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputViewController.swift; sourceTree = "<group>"; };
+		19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputReactor.swift; sourceTree = "<group>"; };
 		19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSearchResponse.swift; sourceTree = "<group>"; };
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
 		19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackHanSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -741,6 +745,7 @@
 				19849B8629BA17EB00B1FA1F /* WithdrawalViewController.swift */,
 				1948E27229BB3F5100B8A0FB /* ProfileEditCompleteViewController.swift */,
 				19F8FD9129BB6C7E0072F3E5 /* PasswordChangeViewController.swift */,
+				19F8FD9529BB756E0072F3E5 /* NewChangePasswordInputViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 				19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */,
 				1948E27429BB400E00B8A0FB /* ProfileEditCompleteReactor.swift */,
 				19F8FD9329BB6C860072F3E5 /* PasswordChangeReactor.swift */,
+				19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1246,6 +1252,7 @@
 				19AB0083299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift in Sources */,
 				199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */,
 				19A962262991322800F952DA /* UIColor+.swift in Sources */,
+				19F8FD9829BB757B0072F3E5 /* NewChangePasswordInputReactor.swift in Sources */,
 				19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */,
 				199B9C63299CA53200877AAE /* ForgotPasswordReactor.swift in Sources */,
 				191B8EB529B4BFE800CF5C83 /* ReviewReelsViewController.swift in Sources */,
@@ -1381,6 +1388,7 @@
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
+				19F8FD9629BB756E0072F3E5 /* NewChangePasswordInputViewController.swift in Sources */,
 				19E0C78B29A36E3B003E1F10 /* MapService.swift in Sources */,
 				19849B7B29B9A08600B1FA1F /* SettingReactor.swift in Sources */,
 				19F10C7729A8CB9C0060F0BD /* RWAroundCollectionViewCell.swift in Sources */,

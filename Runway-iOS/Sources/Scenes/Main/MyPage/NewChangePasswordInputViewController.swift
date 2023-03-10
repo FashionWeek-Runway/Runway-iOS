@@ -1,8 +1,8 @@
 //
-//  NewPasswordInputViewController.swift
+//  NewChangePasswordInputViewController.swift
 //  Runway-iOS
 //
-//  Created by 김인환 on 2023/02/10.
+//  Created by 김인환 on 2023/03/10.
 //
 
 import UIKit
@@ -12,7 +12,7 @@ import RxCocoa
 import RxKeyboard
 import ReactorKit
 
-final class NewPasswordInputViewController: BaseViewController {
+final class NewChangePasswordInputViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
@@ -79,7 +79,7 @@ final class NewPasswordInputViewController: BaseViewController {
     
     // MARK: - intializer
     
-    init(with reactor: NewPasswordInputReactor) {
+    init(with reactor: NewChangePasswordInputReactor) {
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -98,9 +98,8 @@ final class NewPasswordInputViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         addBackButton()
-        addNavigationTitleLabel()
-        navigationTitleLabel.text = "비밀번호 찾기"
-        alertViewController.alertView.alertMode = .confirm
+        addNavigationTitleLabel("비밀번호 변경")
+        self.alertViewController.alertView.alertMode = .confirm
         
         let firstStackView = UIStackView(arrangedSubviews: [englishValidationLabel, numberValidationLabel, lengthValidationLabel])
         firstStackView.axis = .horizontal
@@ -164,14 +163,14 @@ final class NewPasswordInputViewController: BaseViewController {
 }
 
 
-extension NewPasswordInputViewController: View {
+extension NewChangePasswordInputViewController: View {
     
-    func bind(reactor: NewPasswordInputReactor) {
+    func bind(reactor: NewChangePasswordInputReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
 
-    private func bindAction(reactor: NewPasswordInputReactor) {
+    private func bindAction(reactor: NewChangePasswordInputReactor) {
         newPasswordField.textField.rx.value
             .orEmpty
             .map { Reactor.Action.passwordFieldInput($0) }
@@ -185,8 +184,13 @@ extension NewPasswordInputViewController: View {
             .disposed(by: disposeBag)
         
         alertViewController.alertView.confirmButton.rx.tap
-            .map { Reactor.Action.alertConfirmButtonDidTap }
-            .bind(to: reactor.action)
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.dismiss(animated: false) {
+                    let action = Reactor.Action.alertConfirmButtonDidTap
+                    self.reactor?.action.onNext(action)
+                }
+            })
             .disposed(by: disposeBag)
         
         confirmButton.rx.tap
@@ -195,7 +199,7 @@ extension NewPasswordInputViewController: View {
             .disposed(by: disposeBag)
     }
     
-    private func bindState(reactor: NewPasswordInputReactor) {
+    private func bindState(reactor: NewChangePasswordInputReactor) {
         reactor.state.map { $0.isPasswordContainEnglish }
             .bind(to: englishValidationLabel.isEnabled)
             .disposed(by: disposeBag)
@@ -221,7 +225,7 @@ extension NewPasswordInputViewController: View {
             .bind { [weak self] isShow in
                 guard let self = self else { return }
                 if isShow {
-                    self.present(self.alertViewController, animated: true)
+                    self.present(self.alertViewController, animated: false)
                 }
             }.disposed(by: disposeBag)
     }
