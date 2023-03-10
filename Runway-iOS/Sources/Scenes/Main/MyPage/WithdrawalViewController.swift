@@ -93,7 +93,14 @@ final class WithdrawalViewController: BaseViewController {
         return button
     }()
     
-
+    private let alertViewController: RWAlertViewController = {
+        let alert = RWAlertViewController()
+        alert.alertView.confirmButton.title = "확인"
+        alert.alertView.alertMode = .confirm
+        alert.alertView.titleLabel.text = "회원 탈퇴 완료"
+        alert.alertView.captionLabel.text = "15일 이전 돌아오시면 로그인이\n가능합니다. RUNWAY가 보고싶다면 언제든지 돌아오세요!"
+        return alert
+    }()
     // MARK: - initializer
     
     init(with reactor: WithdrawalReactor) {
@@ -109,6 +116,7 @@ final class WithdrawalViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setRx()
     }
     
     override func configureUI() {
@@ -175,6 +183,15 @@ final class WithdrawalViewController: BaseViewController {
         }
     
     }
+    
+    private func setRx() {
+        withdrawalButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self else { return }
+                self.present(self.alertViewController, animated: false)
+            }).disposed(by: disposeBag)
+    }
 }
 
 extension WithdrawalViewController: View {
@@ -196,6 +213,12 @@ extension WithdrawalViewController: View {
         
         agreeCheckBox.rx.tap
             .map { Reactor.Action.agreeCheckBoxDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        alertViewController.alertView.confirmButton.rx.tap
+            .do(onNext: { [weak self] in self?.dismiss(animated: false) })
+            .map { Reactor.Action.withdrawalButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         

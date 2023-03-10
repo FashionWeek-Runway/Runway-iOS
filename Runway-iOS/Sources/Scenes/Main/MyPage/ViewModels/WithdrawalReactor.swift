@@ -22,6 +22,7 @@ final class WithdrawalReactor: Reactor, Stepper {
         case viewDidLoad
         case backButtonDidTap
         case agreeCheckBoxDidTap
+        case withdrawalButtonDidTap
     }
     
     enum Mutation {
@@ -54,7 +55,6 @@ final class WithdrawalReactor: Reactor, Stepper {
         case .viewDidLoad:
             return provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder())
                 .map { .setNickname($0.result.nickname) }
-            return .empty()
             
         case .backButtonDidTap:
             steps.accept(AppStep.back(animated: true))
@@ -62,6 +62,32 @@ final class WithdrawalReactor: Reactor, Stepper {
             
         case .agreeCheckBoxDidTap:
             return .just(.toggleAgree)
+            
+        case .withdrawalButtonDidTap:
+            switch provider.appSettingService.lastLoginType {
+            case .apple:
+                provider.appleLoginService.login(with: [.fullName, .email]) { loginResult, error in
+                    if let error = error {
+                        print(error)
+                    }
+                    guard let code = loginResult?.authorizationCode,
+                          let oauthToken = String(data: code, encoding: .utf8) else { return }
+                    self.provider.userService.withdrawAppleUser(authorizationCode: oauthToken).data()
+                        .subscribe(onNext: { [weak self] _ in
+                            self?.provider.appSettingService.logout()
+                            DispatchQueue.main.async {
+                                self?.steps.accept(AppStep.userIsLoggedOut)
+                            }
+                        }).disposed(by: self.disposeBag)
+                }
+                return .empty()
+            default:
+                return provider.userService.withdrawUser()
+                    .data().flatMap { [weak self] _ in
+                        self?.provider.appSettingService.logout()
+                        return Observable<Mutation>.empty()
+                    }
+            }
         }
     }
     

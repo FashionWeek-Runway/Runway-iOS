@@ -160,6 +160,6 @@ final class MyPageFlow: Flow {
     
     private func back(animated: Bool) -> FlowContributors {
         self.rootViewController.popViewController(animated: animated)
-        return.none
+        return .none
     }
 }

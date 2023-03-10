@@ -110,4 +110,14 @@ final class UserService: APIService, AuthTokenHost {
         return request(.post, "users/refresh")
     }
     
+    func withdrawUser() -> Observable<DataRequest> {
+        return request(.patch, "users/active")
+    }
+    
+    func withdrawAppleUser(authorizationCode: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(authorizationCode, forKey: "code")
+        return request(.patch, "users/apple/active", parameters: params)
+    }
+    
 }
