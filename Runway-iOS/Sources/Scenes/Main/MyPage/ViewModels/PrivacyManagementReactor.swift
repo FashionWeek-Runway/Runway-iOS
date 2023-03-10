@@ -116,7 +116,7 @@ final class PrivacyManagementReactor: Reactor, Stepper {
                             print($0)
                         }).disposed(by: self.disposeBag)
                 }
-                UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.")
+                UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.", .bottom, 20.0)
                 return .just(.setAppleConnect(false))
             }
             

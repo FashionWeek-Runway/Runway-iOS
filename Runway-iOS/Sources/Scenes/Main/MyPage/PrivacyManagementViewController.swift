@@ -429,7 +429,7 @@ extension PrivacyManagementViewController: View {
                 if self?.unlinkAlertViewController.alertView.tag == 1 {
                     let action = Reactor.Action.kakaoConnectSwitch(false)
                     self?.reactor?.action.onNext(action)
-                    UIWindow.makeToastAnimation(message: "카카오 계정 연결이 해제되었습니다.")
+                    UIWindow.makeToastAnimation(message: "카카오 계정 연결이 해제되었습니다.", .bottom, 20.0)
                 } else {
                     let action = Reactor.Action.appleConnectSwitch(false)
                     self?.reactor?.action.onNext(action)
