@@ -15,7 +15,7 @@ struct AppleLoginResult {
     let identityToken: Data?
     let authorizationCode: Data?
 }
-
+// TODO: - Rx로 바꿔야 함
 final class AppleService: NSObject {
     
     static let shared = AppleService()

@@ -34,13 +34,15 @@ final class MyPageFlow: Flow {
         case .myPageTab:
             return coordinateToMyPageScreen()
         case .editProfile:
-            return coordinateToProfileSettingScreen()
+            return coordinateToProfileEditScreen()
         case .setting:
             return coordinateToSettingScreen()
         case .privacyManagementNeeded:
             return coordinateToPrivacyManagementScreen()
-        case .profileChangeCompleted:
-            return coordinateToProfileChangeCompletedScreen()
+        case .profileEditCompleted(let nickname, let styles, let imageURL):
+            return coordinateToProfileEditCompletedScreen(nickname: nickname, styles: styles, imageURL: imageURL)
+        case .confirmChangedProfile:
+            return backToMyPageScreen()
         case .userIsLoggedOut:
             return coordinateToMainLoginScreen()
         case .withdrawalStep:
@@ -85,16 +87,20 @@ final class MyPageFlow: Flow {
         }
     }
     
-    private func coordinateToProfileSettingScreen() -> FlowContributors {
-        let reactor = ProfileSettingReactor(provider: provider)
-        let viewController = ProfileSettingViewController(with: reactor)
+    private func coordinateToProfileEditScreen() -> FlowContributors {
+        let reactor = ProfileEditReactor(provider: provider)
+        let viewController = ProfileEditViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToProfileChangeCompletedScreen() -> FlowContributors {
-        return .none
+    private func coordinateToProfileEditCompletedScreen(nickname: String, styles: [String], imageURL: String) -> FlowContributors {
+        let reactor = ProfileEditCompleteReactor(provider: provider,
+                                                 nickname: nickname, styles: styles, imageURL: imageURL)
+        let viewController = ProfileEditCompleteViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
     private func coordinateToWithdrawalScreen() -> FlowContributors {
@@ -102,6 +108,10 @@ final class MyPageFlow: Flow {
         let viewController = WithdrawalViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func backToMyPageScreen() -> FlowContributors {
+        return .one(flowContributor: .forwardToCurrentFlow(withStep: AppStep.myPageTab))
     }
     
     private func coordinateToMainLoginScreen() -> FlowContributors {

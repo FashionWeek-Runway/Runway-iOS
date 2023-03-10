@@ -19,7 +19,7 @@ final class ProfileEditReactor: Reactor, Stepper {
     // MARK: - Events
     
     enum Action {
-        case viewDidLoad
+        case viewWillAppear
         case backButtonDidTap
         case setProfileImage(Data)
         case enterNickname(String)
@@ -65,9 +65,9 @@ final class ProfileEditReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
-            return provider.userService.mypageInformation()
-                .data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder())
+        case .viewWillAppear:
+            return provider.userService.existingProfile().data()
+                .decode(type: ExistingProfileResponse.self, decoder: JSONDecoder())
                 .flatMap { responseData -> Observable<Mutation> in
                     return Observable.concat([
                         .just(.setProfileImageURL(responseData.result.imageURL)),
@@ -77,7 +77,7 @@ final class ProfileEditReactor: Reactor, Stepper {
         case .backButtonDidTap:
             steps.accept(AppStep.back(animated: true))
             return .empty()
-
+            
         case .setProfileImage(let data):
             return .just(.setProfileImageData(data))
         case .enterNickname(let nickname):
@@ -89,7 +89,6 @@ final class ProfileEditReactor: Reactor, Stepper {
             return provider.signUpService.checkNicknameDuplicate(nickname: nickname).response()
                 .flatMap { response -> Observable<Mutation> in
                     if 200...299 ~= response.statusCode {
-//                        return provider.userService.editProfile(nickname: nickname, profileImageData: imageData)
                         return .empty()
                     } else {
                         return .just(.setUserNicknameIsDuplicate)

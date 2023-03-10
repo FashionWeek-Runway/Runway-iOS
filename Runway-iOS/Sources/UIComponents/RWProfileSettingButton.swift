@@ -11,7 +11,7 @@ final class RWProfileSettingButton: UIButton {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "icon_my_large"))
-        
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

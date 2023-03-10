@@ -30,7 +30,6 @@ final class ProfileEditViewController: BaseViewController {
     private let cameraPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
         picker.delegate = nil
-        picker.allowsEditing = true
         picker.sourceType = .camera
         return picker
     }()
@@ -38,7 +37,6 @@ final class ProfileEditViewController: BaseViewController {
     private let albumPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
         picker.delegate = nil
-        picker.allowsEditing = true
         picker.sourceType = .photoLibrary
         return picker
     }()
@@ -159,7 +157,7 @@ extension ProfileEditViewController: View {
     }
     
     private func bindAction(reactor: ProfileEditReactor) {
-        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+        rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -201,6 +199,10 @@ extension ProfileEditViewController: View {
         
         reactor.state.map { $0.nextButtonEnabled }
             .bind(to: saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.nickname }
+            .bind(to: nickNameField.textField.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.profileImageURL }

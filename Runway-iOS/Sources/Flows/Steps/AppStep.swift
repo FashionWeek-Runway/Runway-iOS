@@ -59,7 +59,8 @@ enum AppStep: Step {
     case editProfile
     case setting
     case privacyManagementNeeded
-    case profileChangeCompleted
+    case profileEditCompleted(String, [String], String)
+    case confirmChangedProfile
     case withdrawalStep
     case userIsLoggedOut
 }

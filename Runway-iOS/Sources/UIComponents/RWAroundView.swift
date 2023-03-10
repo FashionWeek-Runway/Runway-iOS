@@ -13,7 +13,7 @@ final class RWAroundView: UIView {
         let label = UILabel()
         label.textColor = .runwayBlack
         label.font = .body1M
-        label.text = "[지역명] 둘러보기"
+//        label.text = "[지역명] 둘러보기"
         return label
     }()
     

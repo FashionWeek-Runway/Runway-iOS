@@ -10,7 +10,7 @@ import RxSwift
 import Alamofire
 import RxAlamofire
 
-final class UserService: APIService {
+final class UserService: APIService, AuthTokenHost {
     
     func mypageInformation() -> Observable<DataRequest> {
         return request(.get, "users/")
@@ -57,11 +57,12 @@ final class UserService: APIService {
         return request(.get, "users/profile")
     }
     
-    func editProfile(nickname: String, profileImageData: Data?) -> Observable<UploadRequest> {
+    func editProfile(nickname: String, profileImageChange: Bool, profileImageData: Data?) -> Observable<UploadRequest> {
+        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "application/json", "X-AUTH-TOKEN": authToken]
+        
         var params = Parameters()
         params.updateValue(nickname, forKey: "nickname")
-        
-        let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "*/*"]
+        params.updateValue(profileImageChange ? 1 : 0, forKey: "basic")
         
         return self.session.rx.upload(multipartFormData: { data in
             for (key, value) in params {
