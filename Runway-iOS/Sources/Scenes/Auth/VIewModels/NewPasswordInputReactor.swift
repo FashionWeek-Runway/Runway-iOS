@@ -77,8 +77,8 @@ final class NewPasswordInputReactor: Reactor, Stepper {
         switch mutation {
         case .setPassword(let password):
             state.password = password
-            state.isPasswordContainEnglish = checkStringContainsEnglishExceptNumber(password)
-            state.isPasswordContainNumber = checkStringContainsNumberExceptEnglish(password)
+            state.isPasswordContainEnglish = checkStringContainsEnglish(password)
+            state.isPasswordContainNumber = checkStringContainsNumber(password)
             state.isPasswordLengthIsSuit = 8...16 ~= password.count
         case .setValidationPassword(let password):
             state.validationPassword = password
@@ -104,8 +104,8 @@ final class NewPasswordInputReactor: Reactor, Stepper {
         return state
     }
     
-    private func checkStringContainsEnglishExceptNumber(_ string: String) -> Bool {
-        let pattern = "^[a-zA-Z0-9]+$" // regular expression pattern to match English letters only
+    private func checkStringContainsEnglish(_ string: String) -> Bool {
+        let pattern = "[a-zA-Z]" // regular expression pattern to match English letters only
         
         if string.range(of: pattern, options: .regularExpression) != nil {
             return true
@@ -114,7 +114,7 @@ final class NewPasswordInputReactor: Reactor, Stepper {
         }
     }
     
-    private func checkStringContainsNumberExceptEnglish(_ string: String) -> Bool {
+    private func checkStringContainsNumber(_ string: String) -> Bool {
         let pattern = "[0-9]" // regular expression pattern to match any digit character
         
         if string.range(of: pattern, options: .regularExpression) != nil {
