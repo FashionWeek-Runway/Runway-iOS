@@ -104,8 +104,20 @@ final class PrivacyManagementReactor: Reactor, Stepper {
                 }
                 return .just(.setAppleConnect(true))
             } else {
-                return provider.userService.unlinkWithApple().data()
-                    .map { _ in .setAppleConnect(false)}
+                provider.appleLoginService.login(with: [.fullName, .email]) { loginResult, error in
+                    if let error = error {
+                        print(error)
+                    }
+                    
+                    guard let authorizationCode = loginResult?.authorizationCode,
+                          let code = String(data: authorizationCode, encoding: .utf8) else { return }
+                    self.provider.userService.unlinkWithApple(authorizationCode: code).data()
+                        .subscribe(onNext: { [weak self] in
+                            print($0)
+                        }).disposed(by: self.disposeBag)
+                }
+                UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.")
+                return .just(.setAppleConnect(false))
             }
             
         case .backButtonDidtap:

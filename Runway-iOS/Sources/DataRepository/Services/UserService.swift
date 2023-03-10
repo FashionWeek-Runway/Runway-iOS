@@ -37,8 +37,10 @@ final class UserService: APIService {
         return request(.post, "users/info/apple", parameters: params)
     }
     
-    func unlinkWithApple() -> Observable<DataRequest> {
-        return request(.delete, "users/info/apple")
+    func unlinkWithApple(authorizationCode: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(authorizationCode, forKey: "code")
+        return request(.delete, "users/info/apple", parameters: params)
     }
     
     func linkWithKakao(socialToken: String) -> Observable<DataRequest> {

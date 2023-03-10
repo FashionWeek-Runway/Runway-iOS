@@ -433,7 +433,6 @@ extension PrivacyManagementViewController: View {
                 } else {
                     let action = Reactor.Action.appleConnectSwitch(false)
                     self?.reactor?.action.onNext(action)
-                    UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.")
                 }
                 self?.dismiss(animated: false)
             }).disposed(by: disposeBag)
