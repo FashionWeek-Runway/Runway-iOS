@@ -100,7 +100,7 @@ final class ProfileEditReactor: Reactor, Stepper {
                             self.provider.userService.editProfile(nickname: nickname,
                                                                   profileImageChange: false,
                                                                   profileImageData: nil).subscribe(onNext: { [weak self] uploadRequest in
-                                uploadRequest
+//                                uploadRequest
 //                                guard let self else { return }
 //                                guard let data = uploadRequest.data else { return }
 //                                do {
