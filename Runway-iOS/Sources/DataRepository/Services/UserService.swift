@@ -27,7 +27,7 @@ final class UserService: APIService {
         return request(.get, "users/bookmark/review/detail/\(reviewId)")
     }
     
-    func personalInformation() -> Observable<DataRequest> {
+    func privacyInformation() -> Observable<DataRequest> {
         return request(.get, "users/info")
     }
     

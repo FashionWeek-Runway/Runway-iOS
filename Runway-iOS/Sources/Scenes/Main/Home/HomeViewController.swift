@@ -116,13 +116,13 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
-    private let noticeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "흥미로운 가게 소식을 알려드려요"
-        label.textColor = .runwayBlack
-        label.font = .headline4
-        return label
-    }()
+//    private let noticeLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "흥미로운 가게 소식을 알려드려요"
+//        label.textColor = .runwayBlack
+//        label.font = .headline4
+//        return label
+//    }()
     
     private let emptyNoticeImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_notice"))
@@ -137,16 +137,16 @@ final class HomeViewController: BaseViewController {
         return label
     }()
     
-    private let noticeCollectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        view.showsVerticalScrollIndicator = false
-        view.register(RWHomeNoticeCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeNoticeCollectionViewCell.identifier)
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 4
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        view.collectionViewLayout = layout
-        return view
-    }()
+//    private let noticeCollectionView: UICollectionView = {
+//        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+//        view.showsVerticalScrollIndicator = false
+//        view.register(RWHomeNoticeCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeNoticeCollectionViewCell.identifier)
+//        let layout = UICollectionViewFlowLayout()
+//        layout.minimumInteritemSpacing = 4
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+//        view.collectionViewLayout = layout
+//        return view
+//    }()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -194,7 +194,8 @@ final class HomeViewController: BaseViewController {
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
                                   similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel, userReviewCollectionView,
-                                  noticeLabel, noticeCollectionView])
+//                                  noticeLabel, noticeCollectionView
+                                  ])
         
         pagerCollectionView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
@@ -236,20 +237,21 @@ final class HomeViewController: BaseViewController {
             $0.top.equalTo(similiarUserReviewLabel.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(200)
+            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
         }
         
-        noticeLabel.snp.makeConstraints {
-            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(20)
-        }
-        
-        noticeCollectionView.snp.makeConstraints {
-            $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(266)
-            $0.bottom.equalToSuperview()
-        }
+//        noticeLabel.snp.makeConstraints {
+//            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
+//            $0.leading.equalToSuperview().offset(20)
+//        }
+//
+//        noticeCollectionView.snp.makeConstraints {
+//            $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
+//            $0.leading.equalToSuperview().offset(20)
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.height.equalTo(266)
+//            $0.bottom.equalToSuperview()
+//        }
         
         gradientTopArea.addSubviews([guideLabelText, categorySelectButton, showAllContentButton])
         guideLabelText.snp.makeConstraints {

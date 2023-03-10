@@ -389,6 +389,20 @@ extension PrivacyManagementViewController: View {
     }
     
     private func bindAction(reactor: PrivacyManagementReactor) {
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        kakaoConnectSwitch.rx.isOn
+            .map { Reactor.Action.kakaoConnectSwitch($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        appleConnectSwitch.rx.isOn
+            .map { Reactor.Action.appleConnectSwitch($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidtap }
             .bind(to: reactor.action)
@@ -401,5 +415,16 @@ extension PrivacyManagementViewController: View {
     }
     
     private func bindState(reactor: PrivacyManagementReactor) {
+        reactor.state.compactMap { $0.phoneNumber }
+            .bind(to: phoneNumberLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.iskakaoConnected }
+            .bind(to: kakaoConnectSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAppleConnected }
+            .bind(to: appleConnectSwitch.rx.isOn)
+            .disposed(by: disposeBag)
     }
 }
