@@ -33,6 +33,14 @@ final class MyPageFlow: Flow {
         switch step {
         case .myPageTab:
             return coordinateToMyPageScreen()
+        case .showRoomDetail(let storeId):
+            return coordinateToShowRoomDetailScreen(storeId: storeId)
+        case .editReviewImage(let storeId, let imageData):
+            return coordinateToEditReviewImageScreen(storeId: storeId, imageData: imageData)
+        case .userReviewReels(let reviewId):
+            return coordinateToUserReviewReelsScreen(reviewId: reviewId)
+        case .myReviewReels(let reviewId):
+            return coordinateToMyReviewReelsScreen(reviewId: reviewId)
         case .editProfile:
             return coordinateToProfileEditScreen()
         case .setting:
@@ -58,6 +66,38 @@ final class MyPageFlow: Flow {
         let reactor = MyPageReactor(provider: provider)
         let viewController = MyPageViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToShowRoomDetailScreen(storeId: Int) -> FlowContributors {
+        let reactor = ShowRoomDetailReactor(provider: provider, storeId: storeId)
+        let viewController = ShowRoomDetailViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToEditReviewImageScreen(storeId: Int, imageData: Data) -> FlowContributors {
+        let reactor = EditReviewReactor(provider: provider, storeId: storeId ,reviewImageData: imageData)
+        let viewController = EditReviewViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToMyReviewReelsScreen(reviewId: Int) -> FlowContributors {
+        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .myReview)
+        let viewController = ReviewReelsViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToUserReviewReelsScreen(reviewId: Int) -> FlowContributors {
+        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .bookmarkedReview)
+        let viewController = ReviewReelsViewController(with: reactor)
+        viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     

@@ -46,11 +46,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         return button
     }()
     
-    private let shareButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
-        return button
-    }()
+//    private let shareButton: UIButton = {
+//        let button = UIButton()
+//        button.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
+//        return button
+//    }()
     
     private let imageView: UIImageView = {
         let view = UIImageView()
@@ -295,19 +295,21 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.edges.equalTo(topArea.snp.edges)
         }
         
-        topArea.addSubviews([backButton, bookmarkButton, shareButton])
+        topArea.addSubviews([backButton, bookmarkButton,
+//                             shareButton
+                            ])
         backButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.bottom.equalToSuperview().offset(-15)
         }
         
-        shareButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-14)
-        }
+//        shareButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.bottom.equalToSuperview().offset(-14)
+//        }
         
         bookmarkButton.snp.makeConstraints {
-            $0.trailing.equalTo(shareButton.snp.leading).offset(-14)
+            $0.trailing.equalToSuperview().offset(-60)
             $0.bottom.equalToSuperview().offset(-14)
         }
         
@@ -467,7 +469,7 @@ final class ShowRoomDetailViewController: BaseViewController {
                     self.backButton.setBackgroundImage(UIImage(named: "icon_tab_back"), for: .normal)
                     self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_black"), for: .normal)
                     self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_black_selected"), for: .selected)
-                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share_black"), for: .normal)
+//                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share_black"), for: .normal)
                 } else {
                     self.topArea.backgroundColor = .clear
                     self.topAreaGradientView.isHidden = false
@@ -475,7 +477,7 @@ final class ShowRoomDetailViewController: BaseViewController {
                     self.backButton.setBackgroundImage(UIImage(named: "icon_tab_back_white"), for: .normal)
                     self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
                     self.bookmarkButton.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
-                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
+//                    self.shareButton.setBackgroundImage(UIImage(named: "icon_share"), for: .normal)
                 }
             }).disposed(by: disposeBag)
         

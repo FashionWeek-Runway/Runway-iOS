@@ -25,6 +25,10 @@ final class MyPageReactor: Reactor, Stepper {
         case myReviewCollectionViewReachesBottom
         case bookmarkedStoreCollectionViewReachesBottom
         case bookmarkedReviewCollectionViewReachesBottom
+        
+        case myReviewCollectionViewCellSelected(Int)
+        case bookmarkedStoreCollectionViewCellSelected(Int)
+        case bookmarkedReviewCollectionViewCellSelected(Int)
     }
     
     enum Mutation {
@@ -112,6 +116,18 @@ final class MyPageReactor: Reactor, Stepper {
         case .bookmarkedReviewCollectionViewReachesBottom:
             return currentState.bookmarkedReviewIsLast ? .empty() : provider.userService.bookmarkReviewList(page: currentState.bookmarkedReviewPage, size: 10).data().decode(type: BookmarkedReviewResponse.self, decoder: JSONDecoder())
                 .map { .appendBookmarkedReviewData($0.result) }
+            
+        case .myReviewCollectionViewCellSelected(let reviewId):
+            steps.accept(AppStep.myReviewReels(reviewId))
+            return .empty()
+            
+        case .bookmarkedStoreCollectionViewCellSelected(let storeId):
+            steps.accept(AppStep.showRoomDetail(storeId))
+            return .empty()
+            
+        case .bookmarkedReviewCollectionViewCellSelected(let reviewId):
+            steps.accept(AppStep.userReviewReels(reviewId))
+            return .empty()
         }
     }
     

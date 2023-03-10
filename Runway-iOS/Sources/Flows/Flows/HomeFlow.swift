@@ -58,6 +58,8 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
+    
+    
     private func coordinateToCategorySelectScreen(nickname: String) -> FlowContributors {
         let reactor = CategorySelectReactor(provider: provider, nickname: nickname)
         let viewController = CategorySelectViewController(with: reactor)
@@ -91,7 +93,7 @@ final class HomeFlow: Flow {
     }
     
     private func coordinateToReviewReelsScreen(reviewId: Int) -> FlowContributors {
-        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId)
+        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .home)
         let viewController = ReviewReelsViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)

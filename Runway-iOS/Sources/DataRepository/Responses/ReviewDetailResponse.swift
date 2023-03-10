@@ -16,7 +16,7 @@ struct ReviewDetailResponse: Codable {
 
 // MARK: - Result
 struct ReviewDetailResponseResult: Codable {
-    let isBookmarked: Bool
+    let isBookmarked: Bool?
     let bookmarkCount: Int
     let imageURL: String
     let isMine: Bool

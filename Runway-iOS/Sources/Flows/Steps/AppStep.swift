@@ -56,6 +56,7 @@ enum AppStep: Step {
     
     
     case myPageTab
+    case myReviewReels(Int)
     case editProfile
     case setting
     case privacyManagementNeeded

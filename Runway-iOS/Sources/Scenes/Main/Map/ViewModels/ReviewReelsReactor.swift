@@ -58,6 +58,8 @@ final class ReviewReelsReactor: Reactor, Stepper {
     enum TraverseMode {
         case home
         case store
+        case myReview
+        case bookmarkedReview
     }
     
     let traverseMode: TraverseMode
@@ -82,7 +84,18 @@ final class ReviewReelsReactor: Reactor, Stepper {
                 return provider.showRoomService.reviewDetail(reviewId: intialReviewId)
                     .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
                     .map { .setReviewData($0.result) }
+                
+            case .myReview:
+                return provider.userService.myReviewDetail(reviewId: intialReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .setReviewData($0.result) }
+                
+            case .bookmarkedReview:
+                return provider.userService.bookmarkReviewDetail(reviewId: intialReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .setReviewData($0.result) }
             }
+        
         case .swipeNextReview:
             guard let nextReviewId = currentState.nextReviewId else {
                 steps.accept(AppStep.back(animated: true))
@@ -96,6 +109,15 @@ final class ReviewReelsReactor: Reactor, Stepper {
                     .map { .appendReviewData($0.result) }
             case .store:
                 return provider.showRoomService.reviewDetail(reviewId: nextReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .appendReviewData($0.result) }
+                
+            case .myReview:
+                return provider.userService.myReviewDetail(reviewId: nextReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .appendReviewData($0.result) }
+            case .bookmarkedReview:
+                return provider.userService.bookmarkReviewDetail(reviewId: nextReviewId)
                     .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
                     .map { .appendReviewData($0.result) }
             }
@@ -113,6 +135,16 @@ final class ReviewReelsReactor: Reactor, Stepper {
                     .map { .insertFrontReviewData($0.result) }
             case .store:
                 return provider.showRoomService.reviewDetail(reviewId: previousReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .insertFrontReviewData($0.result) }
+                
+            case .myReview:
+                return provider.userService.myReviewDetail(reviewId: previousReviewId)
+                    .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
+                    .map { .insertFrontReviewData($0.result) }
+                
+            case .bookmarkedReview:
+                return provider.userService.bookmarkReviewDetail(reviewId: previousReviewId)
                     .data().decode(type: ReviewDetailResponse.self, decoder: JSONDecoder())
                     .map { .insertFrontReviewData($0.result) }
             }

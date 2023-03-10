@@ -437,6 +437,22 @@ extension MyPageViewController: View {
             .map { Reactor.Action.settingButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        myReviewCollectionView.rx.modelSelected(MyReviewResponseResultContent.self)
+            .map { Reactor.Action.myReviewCollectionViewCellSelected($0.reviewID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        storeCollectionView.rx.modelSelected(BookmarkedStoreResponseResultContent.self)
+            .map { Reactor.Action.bookmarkedStoreCollectionViewCellSelected($0.storeID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        userReviewCollectionView.rx.modelSelected(BookmarkedReviewResponseResultContent.self)
+            .map { Reactor.Action.bookmarkedReviewCollectionViewCellSelected($0.reviewID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindState(reactor: MyPageReactor) {
@@ -457,7 +473,7 @@ extension MyPageViewController: View {
             .do(onNext: { [weak self] datas in
                 if datas.isEmpty == true {
                     self?.myReviewCollectionView.isHidden = true
-                } else {
+                } else if self?.myReviewTabButton.isSelected == true {
                     self?.myReviewCollectionView.isHidden = false
                 }
             })

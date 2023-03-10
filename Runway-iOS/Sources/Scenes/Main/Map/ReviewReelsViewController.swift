@@ -155,7 +155,7 @@ extension ReviewReelsViewController: View {
                 cell.addressLabel.text = item.regionInfo
                 cell.usernameLabel.text = item.nickname
                 
-                cell.bookmarkButton.isSelected = item.isBookmarked
+                cell.bookmarkButton.isSelected = item.isBookmarked ?? false
                 if item.isMine {
                     cell.bookmarkButton.isHidden = true
                 }
