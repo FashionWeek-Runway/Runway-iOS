@@ -60,6 +60,8 @@ enum AppStep: Step {
     case editProfile
     case setting
     case privacyManagementNeeded
+    case passwordChange
+    case newPasswordInput
     case profileEditCompleted(String, [String], String)
     case confirmChangedProfile
     case withdrawalStep

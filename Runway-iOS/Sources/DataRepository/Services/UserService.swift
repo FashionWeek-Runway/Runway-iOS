@@ -76,6 +76,18 @@ final class UserService: APIService, AuthTokenHost {
         }, to: baseURL + "users/profile", method: .patch, headers: headers)
     }
     
+    func checkOriginalPassword(password: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(password, forKey: "password")
+        return request(.post, "users/password", parameters: params)
+    }
+    
+    func changePassword(password: String) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(password, forKey: "password")
+        return request(.patch, "users/password", parameters: params)
+    }
+    
     func myReview(page: Int, size: Int) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(page, forKey: "page")

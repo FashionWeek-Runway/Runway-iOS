@@ -30,6 +30,7 @@ final class PrivacyManagementReactor: Reactor, Stepper {
         case backButtonDidtap
         case kakaoConnectSwitch(Bool)
         case appleConnectSwitch(Bool)
+        case passwordChangeButtonDidTap
         case withdrawalButtonDidTap
     }
     
@@ -119,6 +120,10 @@ final class PrivacyManagementReactor: Reactor, Stepper {
                 UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.", .bottom, 20.0)
                 return .just(.setAppleConnect(false))
             }
+            
+        case .passwordChangeButtonDidTap:
+            steps.accept(AppStep.passwordChange)
+            return .empty()
             
         case .backButtonDidtap:
             steps.accept(AppStep.back(animated: true))

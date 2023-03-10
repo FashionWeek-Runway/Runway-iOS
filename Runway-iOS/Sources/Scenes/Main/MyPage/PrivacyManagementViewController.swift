@@ -417,6 +417,11 @@ extension PrivacyManagementViewController: View {
             })
             .disposed(by: disposeBag)
         
+        passwordChangeButton.rx.tap
+            .map { Reactor.Action.passwordChangeButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         unlinkAlertViewController.alertView.leadingButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in

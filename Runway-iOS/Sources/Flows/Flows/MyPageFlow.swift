@@ -47,6 +47,10 @@ final class MyPageFlow: Flow {
             return coordinateToSettingScreen()
         case .privacyManagementNeeded:
             return coordinateToPrivacyManagementScreen()
+        case .passwordChange:
+            return coordinateToPasswordChangeScreen()
+        case .newPasswordInput:
+            return coordinateToNewChangePasswordInputScreen()
         case .profileEditCompleted(let nickname, let styles, let imageURL):
             return coordinateToProfileEditCompletedScreen(nickname: nickname, styles: styles, imageURL: imageURL)
         case .confirmChangedProfile:
@@ -125,6 +129,21 @@ final class MyPageFlow: Flow {
             self.rootViewController.pushViewController(viewController, animated: true)
             return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
         }
+    }
+    
+    private func coordinateToPasswordChangeScreen() -> FlowContributors {
+        let reactor = PasswordChangeReactor(provider: provider)
+        let viewController = PasswordChangeViewController(with: reactor)
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToNewChangePasswordInputScreen() -> FlowContributors {
+//        let reactor = NewChangePasswordInputReactor(provider: provider)
+//        let viewController = NewChangePasswordInputViewController(with: reactor)
+//        self.rootViewController.pushViewController(viewController, animated: true)
+//        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+        return .none
     }
     
     private func coordinateToProfileEditScreen() -> FlowContributors {
