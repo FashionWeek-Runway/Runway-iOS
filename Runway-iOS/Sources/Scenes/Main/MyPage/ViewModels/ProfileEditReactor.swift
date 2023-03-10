@@ -12,6 +12,9 @@ import RxCocoa
 import RxFlow
 import ReactorKit
 
+import Alamofire
+import RxAlamofire
+
 import Kingfisher
 
 final class ProfileEditReactor: Reactor, Stepper {
@@ -92,22 +95,12 @@ final class ProfileEditReactor: Reactor, Stepper {
                         if let profileImageData = self.currentState.profileImageData {
                             self.provider.userService.editProfile(nickname: nickname,
                                                                   profileImageChange: true,
-                                                                  profileImageData: profileImageData).subscribe(onNext: { [weak self] uploadRequest in
-//                                guard let self else { return }
-//                                guard let data = uploadRequest.data else { return }
-//                                do {
-//                                    let decodedData = try JSONDecoder().decode(ProfileEditCompleteResponse.self, from: data)
-//                                    self.steps.accept(AppStep.profileEditCompleted(decodedData.result.nickname, decodedData.result.categoryList, decodedData.result.imageURL))
-//                                } catch {
-//                                    print(error)
-//                                }
-                                print(uploadRequest.data)
-
-                            }).disposed(by: self.disposeBag)
+                                                                  profileImageData: profileImageData)
                         } else {
                             self.provider.userService.editProfile(nickname: nickname,
                                                                   profileImageChange: false,
                                                                   profileImageData: nil).subscribe(onNext: { [weak self] uploadRequest in
+                                uploadRequest
 //                                guard let self else { return }
 //                                guard let data = uploadRequest.data else { return }
 //                                do {

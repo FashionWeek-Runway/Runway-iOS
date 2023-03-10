@@ -23,6 +23,9 @@ target 'Runway-iOS' do
   pod 'lottie-ios'
   pod 'RealmSwift', '~>10'
 
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+
   target 'Runway-iOSTests' do
     inherit! :search_paths
     # Pods for testing
