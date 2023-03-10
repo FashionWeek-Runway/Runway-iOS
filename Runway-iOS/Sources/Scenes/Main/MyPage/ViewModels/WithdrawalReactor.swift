@@ -85,6 +85,7 @@ final class WithdrawalReactor: Reactor, Stepper {
                 return provider.userService.withdrawUser()
                     .data().flatMap { [weak self] _ in
                         self?.provider.appSettingService.logout()
+                        self?.steps.accept(AppStep.userIsLoggedOut)
                         return Observable<Mutation>.empty()
                     }
             }
