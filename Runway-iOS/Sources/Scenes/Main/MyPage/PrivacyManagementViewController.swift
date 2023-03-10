@@ -143,13 +143,13 @@ final class PrivacyManagementViewController: BaseViewController {
         return view
     }()
     
-    private let logoutAlertViewController: RWAlertViewController = {
+    private let unlinkAlertViewController: RWAlertViewController = {
         let viewController = RWAlertViewController()
         viewController.alertView.alertMode = .twoAction
         viewController.alertView.leadingButton.title = "취소"
-        viewController.alertView.trailingButton.title = "로그아웃"
-        viewController.alertView.titleLabel.text = "로그아웃"
-        viewController.alertView.captionLabel.text = "RUNWAY의 힙한 매장을 볼 수 없어요.\n정말 로그아웃 하시겠어요?"
+        viewController.alertView.trailingButton.title = "연결 해제"
+        viewController.alertView.titleLabel.text = "계정 연결 해제"
+        viewController.alertView.captionLabel.text = "[SNS] 계정 연결을 해제하시겠습니까?"
         return viewController
     }()
     
@@ -179,7 +179,6 @@ final class PrivacyManagementViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setRx()
     }
     
     override func configureUI() {
@@ -376,10 +375,7 @@ final class PrivacyManagementViewController: BaseViewController {
         }
         
     }
-    
-    private func setRx() {
-        
-    }
+
 }
 
 extension PrivacyManagementViewController: View {
@@ -394,14 +390,53 @@ extension PrivacyManagementViewController: View {
             .disposed(by: disposeBag)
         
         kakaoConnectSwitch.rx.isOn
-            .map { Reactor.Action.kakaoConnectSwitch($0) }
-            .bind(to: reactor.action)
+            .asDriver()
+            .drive(onNext: {[weak self] isOn in
+                guard let self else { return }
+                if isOn {
+                    let action = Reactor.Action.kakaoConnectSwitch(true)
+                    self.reactor?.action.onNext(action)
+                } else {
+                    self.unlinkAlertViewController.alertView.tag = 1
+                    self.present(self.unlinkAlertViewController, animated: false)
+                }
+            })
             .disposed(by: disposeBag)
         
         appleConnectSwitch.rx.isOn
-            .map { Reactor.Action.appleConnectSwitch($0) }
-            .bind(to: reactor.action)
+            .asDriver()
+            .drive(onNext: {[weak self] isOn in
+                guard let self else { return }
+                if isOn {
+                    let action = Reactor.Action.appleConnectSwitch(true)
+                    self.reactor?.action.onNext(action)
+                } else {
+                    self.unlinkAlertViewController.alertView.tag = 2
+                    self.present(self.unlinkAlertViewController, animated: false)
+                }
+            })
             .disposed(by: disposeBag)
+        
+        unlinkAlertViewController.alertView.leadingButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.dismiss(animated: false)
+            }).disposed(by: disposeBag)
+        
+        unlinkAlertViewController.alertView.trailingButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                if self?.unlinkAlertViewController.alertView.tag == 1 {
+                    let action = Reactor.Action.kakaoConnectSwitch(false)
+                    self?.reactor?.action.onNext(action)
+                    UIWindow.makeToastAnimation(message: "카카오 계정 연결이 해제되었습니다.")
+                } else {
+                    let action = Reactor.Action.appleConnectSwitch(false)
+                    self?.reactor?.action.onNext(action)
+                    UIWindow.makeToastAnimation(message: "애플 계정 연결이 해제되었습니다.")
+                }
+                self?.dismiss(animated: false)
+            }).disposed(by: disposeBag)
         
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidtap }
