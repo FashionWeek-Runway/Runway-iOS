@@ -57,7 +57,7 @@ final class UserService: APIService, AuthTokenHost {
         return request(.get, "users/profile")
     }
     
-    func editProfile(nickname: String, profileImageChange: Bool, profileImageData: Data?) -> Observable<DataRequest> {
+    func editProfile(nickname: String, profileImageChange: Bool, profileImageData: Data?) -> Observable<UploadRequest> {
         let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "application/json", "X-AUTH-TOKEN": authToken]
         
         var params = Parameters()

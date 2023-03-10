@@ -35,11 +35,11 @@ final class EditReviewViewController: BaseViewController {
         return button
     }()
     
-    private let addTextButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "icon_add_text"), for: .normal)
-        return button
-    }()
+//    private let addTextButton: UIButton = {
+//        let button = UIButton()
+//        button.setBackgroundImage(UIImage(named: "icon_add_text"), for: .normal)
+//        return button
+//    }()
     
     // MARK: - initializer
     
@@ -62,7 +62,9 @@ final class EditReviewViewController: BaseViewController {
         super.configureUI()
         view.backgroundColor = .runwayBlack
         
-        view.addSubviews([imageView, backButton, addTextButton, registerButton])
+        view.addSubviews([imageView, backButton,
+//                          addTextButton,
+                          registerButton])
         imageView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalToSuperview().offset(view.getSafeArea().top)
@@ -75,10 +77,10 @@ final class EditReviewViewController: BaseViewController {
             $0.bottom.equalTo(navigationBarArea.snp.bottom).offset(-14)
         }
         
-        addTextButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(navigationBarArea.snp.bottom).offset(-10)
-        }
+//        addTextButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.bottom.equalTo(navigationBarArea.snp.bottom).offset(-10)
+//        }
         
         registerButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
