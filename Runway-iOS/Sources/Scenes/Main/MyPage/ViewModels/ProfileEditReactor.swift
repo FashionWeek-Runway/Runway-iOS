@@ -83,12 +83,42 @@ final class ProfileEditReactor: Reactor, Stepper {
         case .enterNickname(let nickname):
             return .just(.setUserNickname(nickname))
         case .saveButtonDidTap:
-            guard let imageData = currentState.profileImageData,
-                  let nickname = currentState.nickname else { return .empty() }
+            guard let nickname = currentState.nickname else { return .empty() }
             
-            return provider.signUpService.checkNicknameDuplicate(nickname: nickname).response()
-                .flatMap { response -> Observable<Mutation> in
+            return provider.signUpService.checkNicknameDuplicate(nickname: nickname).responseData()
+                .flatMap { [weak self] (response, data) -> Observable<Mutation> in
+                    guard let self else { return .empty() }
                     if 200...299 ~= response.statusCode {
+                        if let profileImageData = self.currentState.profileImageData {
+                            self.provider.userService.editProfile(nickname: nickname,
+                                                                  profileImageChange: true,
+                                                                  profileImageData: profileImageData).subscribe(onNext: { [weak self] uploadRequest in
+//                                guard let self else { return }
+//                                guard let data = uploadRequest.data else { return }
+//                                do {
+//                                    let decodedData = try JSONDecoder().decode(ProfileEditCompleteResponse.self, from: data)
+//                                    self.steps.accept(AppStep.profileEditCompleted(decodedData.result.nickname, decodedData.result.categoryList, decodedData.result.imageURL))
+//                                } catch {
+//                                    print(error)
+//                                }
+                                print(uploadRequest.data)
+
+                            }).disposed(by: self.disposeBag)
+                        } else {
+                            self.provider.userService.editProfile(nickname: nickname,
+                                                                  profileImageChange: false,
+                                                                  profileImageData: nil).subscribe(onNext: { [weak self] uploadRequest in
+//                                guard let self else { return }
+//                                guard let data = uploadRequest.data else { return }
+//                                do {
+//                                    let decodedData = try JSONDecoder().decode(ProfileEditCompleteResponse.self, from: data)
+//                                    self.steps.accept(AppStep.profileEditCompleted(decodedData.result.nickname, decodedData.result.categoryList, decodedData.result.imageURL))
+//                                } catch {
+//                                    print(error)
+//                                }
+
+                            }).disposed(by: self.disposeBag)
+                        }
                         return .empty()
                     } else {
                         return .just(.setUserNicknameIsDuplicate)
