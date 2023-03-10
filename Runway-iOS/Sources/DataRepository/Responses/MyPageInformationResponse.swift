@@ -16,7 +16,7 @@ struct MyPageInformationResponse: Codable {
 
 // MARK: - Result
 struct MyPageInformationResponseResult: Codable {
-    let imageURL: String
+    let imageURL: String?
     let nickname: String
     let ownerCheck: Bool
 

@@ -28,13 +28,13 @@ final class MyPageViewController: BaseViewController {
         return button
     }()
     
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.showsVerticalScrollIndicator = false
-        return view
-    }()
-    
-    private let containerView = UIView()
+//    private let scrollView: UIScrollView = {
+//        let view = UIScrollView()
+//        view.showsVerticalScrollIndicator = false
+//        return view
+//    }()
+//
+//    private let containerView = UIView()
     
     private let profileImageButton: UIButton = {
         let view = UIButton()
@@ -114,7 +114,6 @@ final class MyPageViewController: BaseViewController {
 
     private let myReviewEmptyImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_review"))
-        view.isHidden = true
         return view
     }()
     private let myReviewEmptyLabel: UILabel = {
@@ -123,7 +122,6 @@ final class MyPageViewController: BaseViewController {
         label.text = "내 스타일의 매장에 방문하고\n기록해보세요!"
         label.font = .body1
         label.textAlignment = .center
-        label.isHidden = true
         return label
     }()
     
@@ -223,26 +221,26 @@ final class MyPageViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-18)
         }
         
-        view.addSubviews([scrollView, myReviewEmptyImageView, myReviewEmptyLabel, storeEmptyImageView, storeEmptyLabel])
-        scrollView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(navigationBarArea.snp.bottom)
-            $0.bottom.equalToSuperview().offset(-(tabBarController?.tabBar.frame.height ?? 0.0))
-        }
+        view.addSubviews([myReviewEmptyImageView, myReviewEmptyLabel, storeEmptyImageView, storeEmptyLabel])
+//        scrollView.snp.makeConstraints {
+//            $0.horizontalEdges.equalToSuperview()
+//            $0.top.equalTo(navigationBarArea.snp.bottom)
+//            $0.bottom.equalToSuperview().offset(-(tabBarController?.tabBar.frame.height ?? 0.0))
+//        }
         
-        scrollView.addSubview(containerView)
-        containerView.snp.makeConstraints {
-            $0.width.centerX.verticalEdges.equalToSuperview()
-        }
+//        scrollView.addSubview(containerView)
+//        containerView.snp.makeConstraints {
+//            $0.width.centerX.verticalEdges.equalToSuperview()
+//        }
         
-        containerView.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
+        view.addSubviews([profileImageButton, penImageView, helloLabel, nicknameLabel, divider,
                                    myReviewTabButton, myReviewButtonBottomLine,storedTabButton, storedButtonBottomLine, divider2,
                                    myReviewCollectionView,
                                   segmentedControl, storeCollectionView, userReviewCollectionView])
 
         
         profileImageButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(2)
+            $0.top.equalTo(navigationBarArea.snp.bottom).offset(2)
             $0.leading.equalToSuperview().offset(20)
         }
         
@@ -253,7 +251,7 @@ final class MyPageViewController: BaseViewController {
         
         helloLabel.snp.makeConstraints {
             $0.leading.equalTo(profileImageButton.snp.trailing).offset(21)
-            $0.top.equalToSuperview().offset(8)
+            $0.top.equalTo(navigationBarArea.snp.bottom).offset(8)
         }
         
         nicknameLabel.snp.makeConstraints {
@@ -309,7 +307,6 @@ final class MyPageViewController: BaseViewController {
         myReviewEmptyLabel.snp.makeConstraints {
             $0.top.equalTo(myReviewEmptyImageView.snp.bottom).offset(17)
             $0.centerX.equalToSuperview()
-//            $0.bottom.equalToSuperview()
         }
         
         myReviewCollectionView.snp.makeConstraints {
@@ -330,18 +327,15 @@ final class MyPageViewController: BaseViewController {
         storeEmptyLabel.snp.makeConstraints {
             $0.top.equalTo(storeEmptyImageView.snp.bottom).offset(17)
             $0.centerX.equalToSuperview()
-//            $0.bottom.equalToSuperview()
         }
         
         storeCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
-            $0.height.equalTo(10)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
         
         userReviewCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
-//            $0.height.equalTo(10)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
     
@@ -369,9 +363,6 @@ final class MyPageViewController: BaseViewController {
                     self?.myReviewEmptyImageView.isHidden = true
                     self?.myReviewEmptyLabel.isHidden = true
                     self?.myReviewCollectionView.isHidden = false
-//                    self?.myReviewCollectionView.snp.updateConstraints {
-//                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
-//                    }
                 }
             }).disposed(by: disposeBag)
         
@@ -386,6 +377,7 @@ final class MyPageViewController: BaseViewController {
                 self?.segmentedControl.isHidden = false
                 self?.myReviewEmptyImageView.isHidden = true
                 self?.myReviewEmptyLabel.isHidden = true
+                self?.myReviewCollectionView.isHidden = true
                 
                 if self?.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true
                     || self?.reactor?.currentState.bookmarkedReviewDatas.isEmpty == true {
@@ -415,21 +407,10 @@ final class MyPageViewController: BaseViewController {
                     if $0 == 0 {
                         self?.storeCollectionView.isHidden = false
                         self?.userReviewCollectionView.isHidden = true
-//                        self?.containerView.snp.updateConstraints {
-//                            $0.bottom.equalTo(self?.storeCollectionView.snp.bottom)
-//                        }
-//                        self?.storeCollectionView.snp.updateConstraints {
-//                            $0.height.equalTo(CGFloat(UIScreen.getDeviceWidth() - 40.0) * 0.76)
-//                        }
+
                     } else {
                         self?.storeCollectionView.isHidden = true
                         self?.userReviewCollectionView.isHidden = false
-//                        self?.containerView.snp.updateConstraints {
-//                            $0.bottom.equalTo(self?.userReviewCollectionView.snp.bottom)
-//                        }
-//                        self?.userReviewCollectionView.snp.updateConstraints {
-//                            $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(self?.reactor?.currentState.bookmarkedReviewDa) / 3.0))
-//                        }
                     }
                 }
             }).disposed(by: disposeBag)
@@ -474,13 +455,10 @@ extension MyPageViewController: View {
         
         reactor.state.map { $0.myReviewDatas }
             .do(onNext: { [weak self] datas in
-                if datas.isEmpty {
-                    self?.myReviewEmptyImageView.isHidden = false
-                    self?.myReviewEmptyLabel.isHidden = false
+                if datas.isEmpty == true {
+                    self?.myReviewCollectionView.isHidden = true
                 } else {
-                    self?.myReviewCollectionView.snp.updateConstraints {
-                        $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
-                    }
+                    self?.myReviewCollectionView.isHidden = false
                 }
             })
             .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
@@ -493,11 +471,12 @@ extension MyPageViewController: View {
             .filter { $0.isEmpty == false }
                 
         bookmarkedStoreObservable
-        .do(onNext: { [weak self] datas in
-            self?.storeCollectionView.snp.updateConstraints {
-                $0.height.equalTo(CGFloat(UIScreen.getDeviceWidth() - 40.0) * 0.76 * CGFloat(datas.count))
-            }
-        }).bind(to: storeCollectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
+            .do(onNext: { [weak self] in
+                if $0.isEmpty {
+                    self?.storeCollectionView.isHidden = true
+                }
+            })
+            .bind(to: storeCollectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.storeImg) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeNameLabel.text = item.storeName
@@ -507,9 +486,9 @@ extension MyPageViewController: View {
         reactor.state.map { $0.bookmarkedReviewDatas }
             .filter { $0.isEmpty == false }
             .do(onNext: { [weak self] datas in
-//                self?.userReviewCollectionView.snp.updateConstraints {
-//                    $0.height.equalTo(((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 * ceil(Double(datas.count) / 3.0))
-//                }
+                if datas.isEmpty {
+                    self?.myReviewCollectionView.isHidden = true
+                }
             })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
