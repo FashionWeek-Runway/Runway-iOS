@@ -63,7 +63,7 @@ enum AppStep: Step {
     case passwordChange
     case newPasswordInput
     case userPasswordChanged
-    case profileEditCompleted(String, [String], String)
+    case profileEditCompleted(String, [String], String?)
     case confirmChangedProfile
     case withdrawalStep
     case userIsLoggedOut

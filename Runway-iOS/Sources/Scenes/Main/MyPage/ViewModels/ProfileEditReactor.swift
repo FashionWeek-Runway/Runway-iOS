@@ -93,26 +93,26 @@ final class ProfileEditReactor: Reactor, Stepper {
                     guard let self else { return .empty() }
                     if 200...299 ~= response.statusCode {
                         if let profileImageData = self.currentState.profileImageData {
-                            self.provider.userService.editProfile(nickname: nickname,
+                            return self.provider.userService.editProfile(nickname: nickname,
                                                                   profileImageChange: true,
-                                                                  profileImageData: profileImageData)
+                                                                  profileImageData: profileImageData).flatMap { [weak self] request in
+                                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
+                                    .flatMap { [weak self] responseData -> Observable<Mutation> in
+                                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
+                                        return .empty()
+                                    }
+                            }
                         } else {
-                            self.provider.userService.editProfile(nickname: nickname,
+                            return self.provider.userService.editProfile(nickname: nickname,
                                                                   profileImageChange: false,
-                                                                  profileImageData: nil).subscribe(onNext: { [weak self] uploadRequest in
-//                                uploadRequest
-//                                guard let self else { return }
-//                                guard let data = uploadRequest.data else { return }
-//                                do {
-//                                    let decodedData = try JSONDecoder().decode(ProfileEditCompleteResponse.self, from: data)
-//                                    self.steps.accept(AppStep.profileEditCompleted(decodedData.result.nickname, decodedData.result.categoryList, decodedData.result.imageURL))
-//                                } catch {
-//                                    print(error)
-//                                }
-
-                            }).disposed(by: self.disposeBag)
+                                                                  profileImageData: nil).flatMap { [weak self] request in
+                                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
+                                    .flatMap { [weak self] responseData -> Observable<Mutation> in
+                                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
+                                        return .empty()
+                                    }
+                            }
                         }
-                        return .empty()
                     } else {
                         return .just(.setUserNicknameIsDuplicate)
                     }

@@ -161,7 +161,7 @@ final class MyPageFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToProfileEditCompletedScreen(nickname: String, styles: [String], imageURL: String) -> FlowContributors {
+    private func coordinateToProfileEditCompletedScreen(nickname: String, styles: [String], imageURL: String?) -> FlowContributors {
         let reactor = ProfileEditCompleteReactor(provider: provider,
                                                  nickname: nickname, styles: styles, imageURL: imageURL)
         let viewController = ProfileEditCompleteViewController(with: reactor)

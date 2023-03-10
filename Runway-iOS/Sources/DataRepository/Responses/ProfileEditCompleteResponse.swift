@@ -19,7 +19,7 @@ struct ProfileEditCompleteResponse: Codable {
 struct ProfileEditCompleteResponseResult: Codable {
     let categoryList: [String]
     let nickname: String
-    let imageURL: String
+    let imageURL: String?
 
     enum CodingKeys: String, CodingKey {
         case categoryList

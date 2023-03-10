@@ -62,7 +62,7 @@ final class UserService: APIService, AuthTokenHost {
         
         var params = Parameters()
         params.updateValue(nickname, forKey: "nickname")
-        params.updateValue(profileImageChange ? 1 : 0, forKey: "basic")
+        params.updateValue(profileImageChange ? 0 : 1, forKey: "basic")
         
         return self.session.rx.upload(multipartFormData: { data in
             for (key, value) in params {

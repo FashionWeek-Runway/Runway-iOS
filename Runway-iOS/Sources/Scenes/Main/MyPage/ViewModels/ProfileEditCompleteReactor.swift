@@ -26,7 +26,7 @@ final class ProfileEditCompleteReactor: Reactor, Stepper {
     struct State{
         let nickname: String
         let styles: [String]
-        let imageURL: String
+        let imageURL: String?
     }
     
     private let disposeBag = DisposeBag()
@@ -37,7 +37,7 @@ final class ProfileEditCompleteReactor: Reactor, Stepper {
     let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
     let categoryForRequestId = [1: "미니멀", 2: "캐주얼", 3: "시티보이", 4: "스트릿", 5: "빈티지", 6: "페미닌"]
     
-    init(provider: ServiceProviderType, nickname: String, styles: [String], imageURL: String) {
+    init(provider: ServiceProviderType, nickname: String, styles: [String], imageURL: String?) {
         self.provider = provider
         self.initialState = State(nickname: nickname, styles: styles, imageURL: imageURL)
     }

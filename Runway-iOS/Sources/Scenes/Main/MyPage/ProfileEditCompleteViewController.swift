@@ -11,6 +11,8 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 
+import Kingfisher
+
 final class ProfileEditCompleteViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -113,6 +115,12 @@ extension ProfileEditCompleteViewController: View {
         reactor.state.map { $0.nickname }
             .bind(to: profileCard.nicknameLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.imageURL }
+            .bind(onNext: { [weak self] in
+                guard let url = URL(string: $0) else { return }
+                self?.profileCard.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+            }).disposed(by: disposeBag)
         
         reactor.state.map { $0.styles }
             .bind(onNext: { [weak self] in

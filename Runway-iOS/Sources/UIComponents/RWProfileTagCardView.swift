@@ -25,6 +25,8 @@ final class RWProfileTagCardView: UIView {
     
     let imageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_my_point"))
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.backgroundColor = .primary
         return view
     }()
