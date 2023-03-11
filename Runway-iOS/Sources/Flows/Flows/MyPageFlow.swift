@@ -39,6 +39,8 @@ final class MyPageFlow: Flow {
             return coordinateToEditReviewImageScreen(storeId: storeId, imageData: imageData)
         case .userReviewReels(let reviewId):
             return coordinateToUserReviewReelsScreen(reviewId: reviewId)
+        case .reportReview(let reviewId):
+            return coordinateToReviewReportingScreen(reviewId: reviewId)
         case .myReviewReels(let reviewId):
             return coordinateToMyReviewReelsScreen(reviewId: reviewId)
         case .editProfile:
@@ -103,6 +105,13 @@ final class MyPageFlow: Flow {
         let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .bookmarkedReview)
         let viewController = ReviewReelsViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
+        self.rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToReviewReportingScreen(reviewId: Int) -> FlowContributors {
+        let reactor = ReviewReportingReactor(provider: provider)
+        let viewController = ReviewReportingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
