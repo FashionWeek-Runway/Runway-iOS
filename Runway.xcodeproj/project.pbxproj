@@ -271,15 +271,15 @@
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
 		196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCell.swift; sourceTree = "<group>"; };
 		196662BC299B73F400BD0897 /* CategorySettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingReactor.swift; sourceTree = "<group>"; };
-		196AED3C298E5C16007A9E23 /* Runway-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runway-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		196AED3C298E5C16007A9E23 /* Runway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		196AED48298E5C16007A9E23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		196AED4B298E5C16007A9E23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		196AED4D298E5C16007A9E23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		196AED52298E5C17007A9E23 /* RunwayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunwayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSTests.swift; sourceTree = "<group>"; };
-		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		196AED5C298E5C17007A9E23 /* RunwayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunwayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAroundCollectionViewCellReactor.swift; sourceTree = "<group>"; };
@@ -567,9 +567,9 @@
 		196AED3D298E5C16007A9E23 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				196AED3C298E5C16007A9E23 /* Runway-iOS.app */,
-				196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */,
-				196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */,
+				196AED3C298E5C16007A9E23 /* Runway.app */,
+				196AED52298E5C17007A9E23 /* RunwayTests.xctest */,
+				196AED5C298E5C17007A9E23 /* RunwayUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -992,9 +992,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		196AED3B298E5C16007A9E23 /* Runway-iOS */ = {
+		196AED3B298E5C16007A9E23 /* Runway */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 196AED66298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOS" */;
+			buildConfigurationList = 196AED66298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway" */;
 			buildPhases = (
 				D0BEFC70A93E1C93A2644CF8 /* [CP] Check Pods Manifest.lock */,
 				196AED38298E5C16007A9E23 /* Sources */,
@@ -1007,14 +1007,14 @@
 			);
 			dependencies = (
 			);
-			name = "Runway-iOS";
+			name = Runway;
 			productName = "Runway-iOS";
-			productReference = 196AED3C298E5C16007A9E23 /* Runway-iOS.app */;
+			productReference = 196AED3C298E5C16007A9E23 /* Runway.app */;
 			productType = "com.apple.product-type.application";
 		};
-		196AED51298E5C17007A9E23 /* Runway-iOSTests */ = {
+		196AED51298E5C17007A9E23 /* RunwayTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 196AED69298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOSTests" */;
+			buildConfigurationList = 196AED69298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "RunwayTests" */;
 			buildPhases = (
 				336763C80709463F161A3DCC /* [CP] Check Pods Manifest.lock */,
 				196AED4E298E5C17007A9E23 /* Sources */,
@@ -1026,14 +1026,14 @@
 			dependencies = (
 				196AED54298E5C17007A9E23 /* PBXTargetDependency */,
 			);
-			name = "Runway-iOSTests";
+			name = RunwayTests;
 			productName = "Runway-iOSTests";
-			productReference = 196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */;
+			productReference = 196AED52298E5C17007A9E23 /* RunwayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		196AED5B298E5C17007A9E23 /* Runway-iOSUITests */ = {
+		196AED5B298E5C17007A9E23 /* RunwayUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 196AED6C298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOSUITests" */;
+			buildConfigurationList = 196AED6C298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "RunwayUITests" */;
 			buildPhases = (
 				1201AF73280BFDF78DD6054A /* [CP] Check Pods Manifest.lock */,
 				196AED58298E5C17007A9E23 /* Sources */,
@@ -1046,9 +1046,9 @@
 			dependencies = (
 				196AED5E298E5C17007A9E23 /* PBXTargetDependency */,
 			);
-			name = "Runway-iOSUITests";
+			name = RunwayUITests;
 			productName = "Runway-iOSUITests";
-			productReference = 196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */;
+			productReference = 196AED5C298E5C17007A9E23 /* RunwayUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1074,7 +1074,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 196AED37298E5C16007A9E23 /* Build configuration list for PBXProject "Runway-iOS" */;
+			buildConfigurationList = 196AED37298E5C16007A9E23 /* Build configuration list for PBXProject "Runway" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1087,9 +1087,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				196AED3B298E5C16007A9E23 /* Runway-iOS */,
-				196AED51298E5C17007A9E23 /* Runway-iOSTests */,
-				196AED5B298E5C17007A9E23 /* Runway-iOSUITests */,
+				196AED3B298E5C16007A9E23 /* Runway */,
+				196AED51298E5C17007A9E23 /* RunwayTests */,
+				196AED5B298E5C17007A9E23 /* RunwayUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1458,12 +1458,12 @@
 /* Begin PBXTargetDependency section */
 		196AED54298E5C17007A9E23 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 196AED3B298E5C16007A9E23 /* Runway-iOS */;
+			target = 196AED3B298E5C16007A9E23 /* Runway */;
 			targetProxy = 196AED53298E5C17007A9E23 /* PBXContainerItemProxy */;
 		};
 		196AED5E298E5C17007A9E23 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 196AED3B298E5C16007A9E23 /* Runway-iOS */;
+			target = 196AED3B298E5C16007A9E23 /* Runway */;
 			targetProxy = 196AED5D298E5C17007A9E23 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1688,7 +1688,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runway-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runway-iOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runway.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runway";
 			};
 			name = Debug;
 		};
@@ -1709,7 +1709,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runway-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runway-iOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runway.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runway";
 			};
 			name = Release;
 		};
@@ -1754,7 +1754,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		196AED37298E5C16007A9E23 /* Build configuration list for PBXProject "Runway-iOS" */ = {
+		196AED37298E5C16007A9E23 /* Build configuration list for PBXProject "Runway" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				196AED64298E5C17007A9E23 /* Debug */,
@@ -1763,7 +1763,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		196AED66298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOS" */ = {
+		196AED66298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				196AED67298E5C17007A9E23 /* Debug */,
@@ -1772,7 +1772,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		196AED69298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOSTests" */ = {
+		196AED69298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "RunwayTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				196AED6A298E5C17007A9E23 /* Debug */,
@@ -1781,7 +1781,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		196AED6C298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "Runway-iOSUITests" */ = {
+		196AED6C298E5C17007A9E23 /* Build configuration list for PBXNativeTarget "RunwayUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				196AED6D298E5C17007A9E23 /* Debug */,
