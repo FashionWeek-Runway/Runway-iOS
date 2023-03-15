@@ -72,16 +72,20 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         didSet {
             if isHiddenHelperViews {
                 showTabbar()
-                showSearchView()
+                showSearchBar()
                 bottomSheet.isHidden = false
                 searchButton.isHidden = false
                 storeSearchBottomSheet.isHidden = false
+                
+                searchButton.frame.origin.y = mapSearchBar.frame.height + 8
             } else {
                 hideTabbar()
-                hideSearchView()
+                hideSearchBar()
                 bottomSheet.isHidden = true
                 searchButton.isHidden = true
                 storeSearchBottomSheet.isHidden = true
+                
+                searchButton.frame.origin.y = view.getSafeArea().top
             }
         }
     }
@@ -254,7 +258,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    private func showSearchView() {
+    private func showSearchBar() {
         mapSearchBar.isHidden = false
         var frame = mapSearchBar.frame
         frame.origin.y = view.frame.origin.y
@@ -264,7 +268,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         }
     }
     
-    private func hideSearchView() {
+    private func hideSearchBar() {
         var frame = mapSearchBar.frame
         frame.origin.y = view.frame.origin.y - frame.size.height
         UIView.animate(withDuration: 0.3) {
