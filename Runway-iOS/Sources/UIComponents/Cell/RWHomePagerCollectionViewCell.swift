@@ -64,13 +64,13 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let bookmarkButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
-        button.isUserInteractionEnabled = false
-        return button
-    }()
+//    let bookmarkButton: UIButton = {
+//        let button = UIButton()
+//        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
+//        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
+//        button.isUserInteractionEnabled = false
+//        return button
+//    }()
     
     let storeNameLabel: UILabel = {
         let label = UILabel()
@@ -186,17 +186,19 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalToSuperview().offset(-20)
         }
         
-        clothesTagView.addSubviews([topCircleHole, topCircleHole, bookmarkButton, storeNameLabel, centerPointLineView, addressLabel, categoryTagStackView, barcodeImageView])
+        clothesTagView.addSubviews([topCircleHole, topCircleHole,
+//                                    bookmarkButton,
+                                    storeNameLabel, centerPointLineView, addressLabel, categoryTagStackView, barcodeImageView])
         topCircleHole.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(12)
             $0.top.equalToSuperview().offset(11)
         }
         
-        bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(11)
-            $0.trailing.equalToSuperview().offset(-11)
-        }
+//        bookmarkButton.snp.makeConstraints {
+//            $0.top.equalToSuperview().offset(11)
+//            $0.trailing.equalToSuperview().offset(-11)
+//        }
         
         barcodeImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
