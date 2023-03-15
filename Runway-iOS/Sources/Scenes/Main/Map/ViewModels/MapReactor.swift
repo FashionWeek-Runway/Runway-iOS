@@ -84,7 +84,8 @@ final class MapReactor: Reactor, Stepper {
     
     private let disposeBag = DisposeBag()
     
-    let categoryFilterList: [String] = ["bookmark"] + FashionCategory.List
+//    let categoryFilterList: [String] = ["bookmark"] + FashionCategory.List
+    let categoryFilterList: [String] = FashionCategory.List
     
     // 맵에 표시될 마커들을 캐싱
 //    let markerCache = NSCacheManager<MapMarkerData>()
