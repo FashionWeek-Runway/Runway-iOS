@@ -486,6 +486,29 @@ final class ShowRoomDetailViewController: BaseViewController {
             .drive(onNext: { [weak self] in
                 self?.presentActionSheet()
             }).disposed(by: disposeBag)
+        
+        instagramLabel.rx.tapGesture()
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let instagramId = self?.reactor?.currentState.instagramID,
+                      let url = URL(string: instagramId) else { return }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                }
+            }).disposed(by: disposeBag)
+        
+        webLabel.rx.tapGesture()
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let webLink = self?.reactor?.currentState.webSiteLink,
+                      let url = URL(string: webLink) else { return }
+                let webView = SFSafariViewController(url: url)
+                webView.modalPresentationStyle = .pageSheet
+                webView.dismissButtonStyle = .close
+                DispatchQueue.main.async {
+                    self?.present(webView, animated: true)
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func setUserReviewsIfEmpty() {
