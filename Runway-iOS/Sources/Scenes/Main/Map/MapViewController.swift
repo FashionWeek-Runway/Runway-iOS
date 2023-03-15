@@ -446,6 +446,7 @@ extension MapViewController: View {
                         marker.captionHaloColor = .white
                         
                         marker.touchHandler = { [weak self] (overlay) -> Bool in
+                            self?.isHiddenHelperViews = true
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
                             self?.reactor?.action.onNext(action)
                             self?.storeSearchBottomSheet.showSheet(atState: .expanded)
