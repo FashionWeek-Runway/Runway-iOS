@@ -88,6 +88,12 @@ final class IdentityVerificationViewController: BaseViewController {
         return field
     }()
     
+    private let divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray200
+        return view
+    }()
+    
     private let requestButton: RWButton = {
         let button = RWButton()
         button.title = "인증 문자 요청"
@@ -98,6 +104,7 @@ final class IdentityVerificationViewController: BaseViewController {
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
+        view.contentInsetAdjustmentBehavior = .never
         return view
     }()
     
@@ -131,10 +138,10 @@ final class IdentityVerificationViewController: BaseViewController {
         addNavigationTitleLabel("본인인증")
         self.progressBar.setProgress(0.166, animated: false)
         
-        self.view.addSubviews([scrollView, requestButton])
+        self.view.addSubviews([scrollView])
         
         scrollView.snp.makeConstraints {
-            $0.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.bottom.equalToSuperview()
             $0.top.equalTo(navigationBarArea.snp.bottom)
         }
         scrollView.addSubview(containerView)
@@ -148,7 +155,7 @@ final class IdentityVerificationViewController: BaseViewController {
                                                nameCaptionLabel, nameField, foreignPicker,
                                                genderCaptionLabel, genderRadioSelector,
                                               birthDayCaptionLabel, birthDayField,
-                                              PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField])
+                                              PhoneVerificationCaptionLabel, mobileCarrierPicker, phoneNumberField, divider, requestButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(60)
@@ -220,28 +227,34 @@ final class IdentityVerificationViewController: BaseViewController {
         requestButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+            $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom - 10)
+        }
+        
+        divider.snp.makeConstraints {
+            $0.bottom.equalTo(requestButton.snp.top).offset(-10)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(0.5)
         }
         
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
                 guard let self = self else { return }
                 let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
-                self.requestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
-                self.requestButton.snp.updateConstraints {
-                    $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
-                    if keyboardHeight > 0 {
-                        $0.leading.trailing.equalToSuperview()
-                    } else {
-                        $0.leading.equalToSuperview().offset(20)
-                        $0.trailing.equalToSuperview().offset(-20)
-                    }
-                }
-                
+//                self.requestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
+//                self.requestButton.snp.updateConstraints {
+//                    $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
+//                    if keyboardHeight > 0 {
+//                        $0.leading.trailing.equalToSuperview()
+//                    } else {
+//                        $0.leading.equalToSuperview().offset(20)
+//                        $0.trailing.equalToSuperview().offset(-20)
+//                    }
+//                }
+
                 let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
                 self.scrollView.contentInset = contentInset
                 self.scrollView.scrollIndicatorInsets = contentInset
-                
+
                 self.view.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
