@@ -86,10 +86,14 @@ final class RWRadioSelectorView: UIView {
                 if (self?.leadingOptionButton.isSelected == true) {
                     self?.selectedOption.accept(nil)
                     self?.leadingOptionButton.isSelected = false
+                    self?.leadingOptionButton.layer.borderColor = UIColor.gray300.cgColor
+                    self?.trailingOptionButton.layer.borderColor = UIColor.gray300.cgColor
                 } else {
                     self?.leadingOptionButton.isSelected = true
                     self?.selectedOption.accept(self?.leadingOptionButton.attributedTitle(for: .normal)?.string ?? "")
                     self?.trailingOptionButton.isSelected = false
+                    self?.leadingOptionButton.layer.borderColor = UIColor.primary.cgColor
+                    self?.trailingOptionButton.layer.borderColor = UIColor.gray300.cgColor
                 }
             }).disposed(by: disposeBag)
         
@@ -98,10 +102,14 @@ final class RWRadioSelectorView: UIView {
                 if (self?.trailingOptionButton.isSelected == true) {
                     self?.selectedOption.accept(nil)
                     self?.trailingOptionButton.isSelected = false
+                    self?.leadingOptionButton.layer.borderColor = UIColor.gray300.cgColor
+                    self?.trailingOptionButton.layer.borderColor = UIColor.gray300.cgColor
                 } else {
                     self?.trailingOptionButton.isSelected = true
                     self?.selectedOption.accept(self?.trailingOptionButton.attributedTitle(for: .normal)?.string ?? "")
                     self?.leadingOptionButton.isSelected = false
+                    self?.leadingOptionButton.layer.borderColor = UIColor.gray300.cgColor
+                    self?.trailingOptionButton.layer.borderColor = UIColor.primary.cgColor
                 }
             }).disposed(by: disposeBag)
     }
