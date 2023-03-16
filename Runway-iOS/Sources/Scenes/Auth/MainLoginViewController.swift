@@ -11,22 +11,39 @@ import RxFlow
 
 final class MainLoginViewController: BaseViewController {
     
-    private let logoImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "logo"))
-        return view
-    }()
-    
     private let logoTextImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "logo_text"))
         return view
     }()
     
-    private let guideTextLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "간편하게 가입하기"
-        label.font = .body1
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.text = "내 손 안의 간편한\n패션 쇼핑 지도"
         label.textColor = .white
+        label.font = .body1B
         return label
+    }()
+    
+    private let streetImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "image_street_short"))
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private let bottomArea: UIView = {
+        let view = UIView()
+        view.backgroundColor = .onboardBlueDown
+        return view
+    }()
+    
+    private let enterImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "enter_image"))
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     private let kakaoLoginButton: UIButton = {
@@ -67,23 +84,33 @@ final class MainLoginViewController: BaseViewController {
     
     override func configureUI() {
         super.configureUI()
-        self.view.backgroundColor = .runwayBlack
-        
-        self.view.addSubviews([logoImageView, logoTextImageView, guideTextLabel])
-        
-        logoImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(-4)
-        }
+        self.view.backgroundColor = .onboardBlue
+        self.view.addSubviews([logoTextImageView, titleLabel, streetImage, bottomArea, enterImage])
         
         logoTextImageView.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(12)
+            $0.top.equalToSuperview().offset(view.getSafeArea().top + 83)
             $0.centerX.equalToSuperview()
         }
         
-        guideTextLabel.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(logoTextImageView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-173)
+        }
+        
+        streetImage.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(35)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(UIScreen.getDeviceWidth() * 0.772)
+        }
+        
+        bottomArea.snp.makeConstraints {
+            $0.top.equalTo(streetImage.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        enterImage.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-177)
         }
         
         let buttonStackView = UIStackView(arrangedSubviews: [kakaoLoginButton, appleLoginButton, phoneLoginButton])
@@ -93,7 +120,7 @@ final class MainLoginViewController: BaseViewController {
         
         buttonStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(guideTextLabel.snp.bottom).offset(20)
+            $0.top.equalTo(enterImage.snp.bottom).offset(20)
         }
     }
 }

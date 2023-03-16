@@ -29,9 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        self.window?.rootViewController = LaunchScreenViewController()
+        coordinatorLogStart()
+        self.window?.rootViewController = LaunchScreenViewController(with: window, coordinator: coordinator)
         self.window?.makeKeyAndVisible()
-//        coordinatorLogStart()
 //        coordinateToAppFlow(with: windowScene)
     }
 
@@ -71,25 +71,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    private func coordinateToAppFlow(with windowScene: UIWindowScene) {
-        let window = UIWindow(windowScene: windowScene)
-        self.window = window
-        
-        let provider: ServiceProviderType = DataRepository.shared
-        let appFlow = AppFlow(with: window, provider: provider)
-        let appStepper = AppStepper(provider: provider)
-        
-        coordinator.coordinate(flow: appFlow, with: appStepper)
-        
-        if provider.appSettingService.isLoggedIn == true {
-            appStepper.steps.accept(AppStep.userIsLoggedIn)
-        } else {
-            appStepper.steps.accept(AppStep.loginRequired)
-        }
-        
-        window.makeKeyAndVisible()
-    }
-    
+//    private func coordinateToAppFlow(with windowScene: UIWindowScene) {
+//        let window = UIWindow(windowScene: windowScene)
+//        self.window = window
+//
+//        let provider: ServiceProviderType = DataRepository.shared
+//        let appFlow = AppFlow(with: window, provider: provider)
+//        let appStepper = AppStepper(provider: provider)
+//
+//        coordinator.coordinate(flow: appFlow, with: appStepper)
+//
+//        if provider.appSettingService.isLoggedIn == true {
+//            appStepper.steps.accept(AppStep.userIsLoggedIn)
+//        } else {
+//            appStepper.steps.accept(AppStep.loginRequired)
+//        }
+//
+//        window.makeKeyAndVisible()
+//    }
+//
     private func coordinatorLogStart() {
         coordinator.rx.willNavigate
             .subscribe(onNext: { flow, step in
@@ -97,7 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("➡️ will navigate to flow = \(currentFlow) and step = \(step)")
             })
             .disposed(by: disposeBag)
-        
+
         // didNavigate
     }
 }

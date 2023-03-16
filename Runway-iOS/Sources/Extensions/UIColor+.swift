@@ -48,6 +48,8 @@ extension UIColor {
     static let blue900 = UIColor(hex: "#1D47FF")
     
     static let onboardBlue = UIColor(hex: "#305EF4")
+    
+    static let onboardBlueDown = UIColor(hex: "#1645DD")
 }
 
 extension UIColor {
