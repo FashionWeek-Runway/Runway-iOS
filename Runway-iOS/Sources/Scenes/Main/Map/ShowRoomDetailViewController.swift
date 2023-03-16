@@ -93,6 +93,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         button.setImage(UIImage(named: "icon_copy"), for: .normal)
         button.imageEdgeInsets.right = 2
         button.setAttributedTitle(NSAttributedString(string: "복사", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.blue500]), for: .normal)
+        button.contentHorizontalAlignment = .leading
         return button
     }()
     
@@ -339,11 +340,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         addressLabel.snp.makeConstraints {
             $0.leading.equalTo(locationIcon.snp.trailing).offset(8)
             $0.top.equalTo(tagCollectionView.snp.bottom).offset(16)
-            $0.trailing.equalToSuperview().offset(-100)
         }
         
         copyButton.snp.makeConstraints {
             $0.leading.equalTo(addressLabel.snp.trailing).offset(8)
+            $0.trailing.greaterThanOrEqualToSuperview().offset(-20)
             $0.centerY.equalTo(locationIcon.snp.centerY)
         }
         

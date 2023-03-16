@@ -20,6 +20,7 @@
 		191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */; };
 		191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
+		19330B3729C3A378009414F0 /* logo_moving.json in Resources */ = {isa = PBXBuildFile; fileRef = 19330B3629C3A378009414F0 /* logo_moving.json */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
 		19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */; };
@@ -42,6 +43,7 @@
 		1941DFE429B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */; };
 		1941DFE629B2522B00C7F5BA /* RWContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */; };
 		1948130429AF61DC00C1110D /* RegionAroundMapSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */; };
+		19488EA029C31A5E002540F9 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19488E9F29C31A5E002540F9 /* LaunchScreenViewController.swift */; };
 		1948E26F29BAE8F400B8A0FB /* UserPrivacyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948E26E29BAE8F400B8A0FB /* UserPrivacyResponse.swift */; };
 		1948E27129BB3EA400B8A0FB /* ExistingProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948E27029BB3EA400B8A0FB /* ExistingProfileResponse.swift */; };
 		1948E27329BB3F5100B8A0FB /* ProfileEditCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948E27229BB3F5100B8A0FB /* ProfileEditCompleteViewController.swift */; };
@@ -59,7 +61,6 @@
 		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
-		196AED4C298E5C16007A9E23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AED4A298E5C16007A9E23 /* LaunchScreen.storyboard */; };
 		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
@@ -235,6 +236,7 @@
 		191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportingReactor.swift; sourceTree = "<group>"; };
 		191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		19330B3629C3A378009414F0 /* logo_moving.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = logo_moving.json; path = ../../../../../Downloads/logo_moving.json; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
 		19345E8029955FC300E1EF9A /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWStoreBlogReviewTableViewCell.swift; sourceTree = "<group>"; };
 		1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWContentSizedTableView.swift; sourceTree = "<group>"; };
 		1948130329AF61DC00C1110D /* RegionAroundMapSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionAroundMapSearchResponse.swift; sourceTree = "<group>"; };
+		19488E9F29C31A5E002540F9 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		1948E26E29BAE8F400B8A0FB /* UserPrivacyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPrivacyResponse.swift; sourceTree = "<group>"; };
 		1948E27029BB3EA400B8A0FB /* ExistingProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingProfileResponse.swift; sourceTree = "<group>"; };
 		1948E27229BB3F5100B8A0FB /* ProfileEditCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCompleteViewController.swift; sourceTree = "<group>"; };
@@ -275,7 +278,6 @@
 		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		196AED48298E5C16007A9E23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		196AED4B298E5C16007A9E23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		196AED4D298E5C16007A9E23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSTests.swift; sourceTree = "<group>"; };
@@ -846,7 +848,6 @@
 			isa = PBXGroup;
 			children = (
 				19A96238299158FD00F952DA /* Assets */,
-				196AED4A298E5C16007A9E23 /* LaunchScreen.storyboard */,
 				196AED4D298E5C16007A9E23 /* Info.plist */,
 				19A9622B2991529600F952DA /* Fonts */,
 			);
@@ -865,6 +866,7 @@
 				19A9621E29912FD800F952DA /* Extensions */,
 				196AED3F298E5C16007A9E23 /* AppDelegate.swift */,
 				196AED41298E5C16007A9E23 /* SceneDelegate.swift */,
+				19488E9F29C31A5E002540F9 /* LaunchScreenViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -895,6 +897,7 @@
 		19A962392991590900F952DA /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				19330B3629C3A378009414F0 /* logo_moving.json */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -1100,10 +1103,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				199B9C83299D579400877AAE /* icon_my_large.png in Resources */,
-				196AED4C298E5C16007A9E23 /* LaunchScreen.storyboard in Resources */,
 				19A962312991566A00F952DA /* SpoqaHanSansNeo-Light.otf in Resources */,
 				19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */,
 				19A962352991566A00F952DA /* SpoqaHanSansNeo-Medium.otf in Resources */,
+				19330B3729C3A378009414F0 /* logo_moving.json in Resources */,
 				196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */,
 				19A962322991566A00F952DA /* SpoqaHanSansNeo-Bold.otf in Resources */,
 				199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */,
@@ -1361,6 +1364,7 @@
 				191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
+				19488EA029C31A5E002540F9 /* LaunchScreenViewController.swift in Sources */,
 				19E0C7A929A3C540003E1F10 /* Reactive+CLLocationManager.swift in Sources */,
 				19E0C78D29A36F8C003E1F10 /* CategoryMapFilterData.swift in Sources */,
 				19849B7929B9A08000B1FA1F /* SettingViewController.swift in Sources */,
@@ -1467,17 +1471,6 @@
 			targetProxy = 196AED5D298E5C17007A9E23 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		196AED4A298E5C16007A9E23 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				196AED4B298E5C16007A9E23 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		196AED64298E5C17007A9E23 /* Debug */ = {
@@ -1607,13 +1600,13 @@
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runway-iOS/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "런웨이";
+				INFOPLIST_KEY_CFBundleDisplayName = Runway;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSCameraUsageDescription = "프로필 사진, 쇼룸 리뷰 등록 등을 위한 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변 지도의 쇼룸 데이터 표시를 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진, 쇼룸 리뷰 등록 등을 위한 앨범 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -1646,13 +1639,13 @@
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runway-iOS/Resources/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "런웨이";
+				INFOPLIST_KEY_CFBundleDisplayName = Runway;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSCameraUsageDescription = "프로필 사진, 쇼룸 리뷰 등록 등을 위한 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변 지도의 쇼룸 데이터 표시를 위해 위치권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "프로필 사진, 쇼룸 리뷰 등록 등을 위한 앨범 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;

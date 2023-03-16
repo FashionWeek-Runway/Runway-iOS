@@ -76,8 +76,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 bottomSheet.isHidden = false
                 searchButton.isHidden = false
                 storeSearchBottomSheet.isHidden = false
-                
                 searchButton.frame.origin.y = mapSearchBar.frame.height + 8
+                searchButton.snp.updateConstraints {
+                    $0.top.equalTo(mapSearchBar.snp.bottom).offset(8)
+                }
             } else {
                 hideTabbar()
                 hideSearchBar()
@@ -86,6 +88,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
                 storeSearchBottomSheet.isHidden = true
                 
                 searchButton.frame.origin.y = view.getSafeArea().top
+                
+                searchButton.snp.updateConstraints {
+                    $0.top.equalTo(mapSearchBar.snp.bottom).offset(8)
+                }
             }
         }
     }
