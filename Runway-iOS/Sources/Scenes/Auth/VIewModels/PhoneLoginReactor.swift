@@ -28,7 +28,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
     enum Mutation {
         case setPhoneNumber(String)
         case setPassword(String)
-        case setAccoutNotExist
+        case setLoginError(String?)
         
         case setUserLogIn
     }
@@ -40,6 +40,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
         var phoneNumber: String? = nil
         
         var shouldAlertAccountNotExist = false
+        var loginErrorMessage: String? = nil
     }
     
     private let disposeBag = DisposeBag()
@@ -77,10 +78,7 @@ final class PhoneLoginReactor: Reactor, Stepper {
                     return .empty()
                 } catch {
                     let responseData = try JSONDecoder().decode(BaseResponse.self, from: data) as BaseResponse
-                    if responseData.message?.contains("존재하지 않는") == true {
-                        return .just(.setAccoutNotExist)
-                    }
-                    return .empty()
+                    return .just(.setLoginError(responseData.message))
                 }
             }
         case .signUpButtonDidTap:
@@ -97,12 +95,15 @@ final class PhoneLoginReactor: Reactor, Stepper {
     func reduce(state: State, mutation: Mutation) -> State {
         var state = state
         state.shouldAlertAccountNotExist = false
+        state.loginErrorMessage = nil
+        
         switch mutation {
         case .setPassword(let password):
             state.password = password
         case .setPhoneNumber(let phoneNumber):
             state.phoneNumber = String.limitedLengthString(phoneNumber, length: 11)
-        case .setAccoutNotExist:
+        case .setLoginError(let message):
+            state.loginErrorMessage = message
             state.shouldAlertAccountNotExist = true
         default:
             break

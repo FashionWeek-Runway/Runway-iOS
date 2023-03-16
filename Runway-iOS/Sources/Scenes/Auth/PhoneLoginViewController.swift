@@ -24,7 +24,6 @@ final class PhoneLoginViewController: BaseViewController {
         let field = RWTextField()
         field.placeholder = "전화번호 입력"
         field.textField.keyboardType = .phonePad
-//        field.textField.key
         return field
     }()
     
@@ -204,6 +203,7 @@ extension PhoneLoginViewController: View {
         
         reactor.state.map { $0.shouldAlertAccountNotExist }
             .subscribe(onNext: { [weak self] show in
+                self?.accountNotExistAlert.text = self?.reactor?.currentState.loginErrorMessage
                 self?.accountNotExistAlert.isHidden = !show
             }).disposed(by: disposeBag)
         
