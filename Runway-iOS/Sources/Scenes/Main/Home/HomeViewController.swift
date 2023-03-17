@@ -408,6 +408,7 @@ extension HomeViewController: View {
                  self?.emptyReviewDescriptionLabel].forEach {
                     $0?.isHidden = !reviews.isEmpty
                 }
+                self?.userReviewCollectionView.isHidden = reviews.isEmpty
             })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let imageUrl = URL(string: item.imageURL) else { return }
