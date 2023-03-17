@@ -116,24 +116,24 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
-//    private let noticeLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "흥미로운 가게 소식을 알려드려요"
-//        label.textColor = .runwayBlack
-//        label.font = .headline4
-//        return label
-//    }()
+    private let noticeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "흥미로운 가게 소식을 알려드려요"
+        label.textColor = .runwayBlack
+        label.font = .headline4
+        return label
+    }()
     
     private let emptyNoticeImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_notice"))
-        view.isHidden = true
+//        view.isHidden = true
         return view
     }()
     private let emptyNoticeLabel: UILabel = {
         let label = UILabel()
         label.text = "소식 준비 중이에요"
         label.font = .body1
-        label.isHidden = true
+//        label.isHidden = true
         return label
     }()
     
@@ -194,6 +194,7 @@ final class HomeViewController: BaseViewController {
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
                                   similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel, userReviewCollectionView,
+                                   noticeLabel, emptyNoticeLabel, emptyNoticeImageView
 //                                  noticeLabel, noticeCollectionView
                                   ])
         
@@ -237,13 +238,24 @@ final class HomeViewController: BaseViewController {
             $0.top.equalTo(similiarUserReviewLabel.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(200)
-            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
+//            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
         }
         
-//        noticeLabel.snp.makeConstraints {
-//            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
-//            $0.leading.equalToSuperview().offset(20)
-//        }
+        noticeLabel.snp.makeConstraints {
+            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        // 임시
+        emptyNoticeImageView.snp.makeConstraints {
+            $0.top.equalTo(noticeLabel.snp.bottom).offset(25)
+            $0.centerX.equalToSuperview()
+        }
+        
+        emptyNoticeLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyNoticeImageView.snp.bottom).offset(14)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
+        }
 //
 //        noticeCollectionView.snp.makeConstraints {
 //            $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
