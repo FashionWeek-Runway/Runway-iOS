@@ -20,7 +20,7 @@ final class MainLoginViewController: BaseViewController {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.text = "내 손 안의 간편한\n패션 쇼핑 지도"
+        label.text = "내 손 안에 간편한\n패션 쇼핑 지도"
         label.textColor = .white
         label.font = .body1B
         return label

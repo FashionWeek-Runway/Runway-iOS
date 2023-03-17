@@ -644,7 +644,7 @@
 			path = Flows;
 			sourceTree = "<group>";
 		};
-		199B9C5D299C8B2C00877AAE /* VIewModels */ = {
+		199B9C5D299C8B2C00877AAE /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				19345E942995686300E1EF9A /* MainLoginReactor.swift */,
@@ -660,7 +660,7 @@
 				199B9C80299D3F7500877AAE /* PasswordInputReactor.swift */,
 				19AB0082299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift */,
 			);
-			path = VIewModels;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		199B9C6C299D00CC00877AAE /* Traits */ = {
@@ -905,7 +905,7 @@
 		19A9623A29915B2100F952DA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				199B9C5D299C8B2C00877AAE /* VIewModels */,
+				199B9C5D299C8B2C00877AAE /* ViewModels */,
 				196662B9299B6C0D00BD0897 /* Cells */,
 				19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */,
 				19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */,
