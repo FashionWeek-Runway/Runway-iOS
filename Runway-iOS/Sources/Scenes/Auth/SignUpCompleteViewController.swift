@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 import Kingfisher
+import Lottie
 
 final class SignUpCompleteViewController: BaseViewController {
     
@@ -30,6 +31,14 @@ final class SignUpCompleteViewController: BaseViewController {
         label.textAlignment = .center
         label.textColor = .gray500
         return label
+    }()
+    
+    private let animationView: AnimationView = {
+        let view = AnimationView(name: "confetti")
+        view.loopMode = .playOnce
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        return view
     }()
     
     private let profileCard = RWProfileTagCardView()
@@ -59,15 +68,28 @@ final class SignUpCompleteViewController: BaseViewController {
         self.view.backgroundColor = .runwayBlack
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animationView.play()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileCardScaleAnimation()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        animationView.stop()
+    }
+    
     override func configureUI() {
         super.configureUI()
         
-        self.view.addSubviews([guideTextLabel, captionlabel, profileCard, homeButton])
+        self.view.addSubviews([animationView, guideTextLabel, captionlabel, profileCard, homeButton])
+        animationView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         guideTextLabel.snp.makeConstraints {
             $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()

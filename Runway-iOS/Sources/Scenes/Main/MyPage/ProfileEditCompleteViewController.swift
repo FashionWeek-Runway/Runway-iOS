@@ -12,8 +12,17 @@ import RxSwift
 import RxCocoa
 
 import Kingfisher
+import Lottie
 
 final class ProfileEditCompleteViewController: BaseViewController {
+    
+    private let animationView: AnimationView = {
+        let view = AnimationView(name: "confetti")
+        view.loopMode = .playOnce
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        return view
+    }()
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
@@ -50,15 +59,30 @@ final class ProfileEditCompleteViewController: BaseViewController {
         self.view.backgroundColor = .runwayBlack
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animationView.play()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileCardScaleAnimation()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        animationView.stop()
+    }
+    
+    
     override func configureUI() {
         super.configureUI()
         
-        self.view.addSubviews([guideTextLabel, profileCard, confirmButton])
+        self.view.addSubviews([animationView, guideTextLabel, profileCard, confirmButton])
+        animationView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         guideTextLabel.snp.makeConstraints {
             $0.top.equalTo(self.navigationBarArea.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()

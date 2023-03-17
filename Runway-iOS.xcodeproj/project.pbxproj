@@ -58,6 +58,7 @@
 		196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B7299B561900BD0897 /* RWProfileSettingButton.swift */; };
 		196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */; };
 		196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BC299B73F400BD0897 /* CategorySettingReactor.swift */; };
+		196A3E3A29C4F5830091C7EB /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 196A3E3929C4F5830091C7EB /* confetti.json */; };
 		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
@@ -274,6 +275,7 @@
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
 		196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStyleCollectionViewCell.swift; sourceTree = "<group>"; };
 		196662BC299B73F400BD0897 /* CategorySettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingReactor.swift; sourceTree = "<group>"; };
+		196A3E3929C4F5830091C7EB /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		196AED3C298E5C16007A9E23 /* Runway-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runway-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -897,6 +899,7 @@
 		19A962392991590900F952DA /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				196A3E3929C4F5830091C7EB /* confetti.json */,
 				1917586929C4920D0025F21D /* logo_moving.json */,
 			);
 			path = Animations;
@@ -1103,6 +1106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				199B9C83299D579400877AAE /* icon_my_large.png in Resources */,
+				196A3E3A29C4F5830091C7EB /* confetti.json in Resources */,
 				19A962312991566A00F952DA /* SpoqaHanSansNeo-Light.otf in Resources */,
 				19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */,
 				19A962352991566A00F952DA /* SpoqaHanSansNeo-Medium.otf in Resources */,
