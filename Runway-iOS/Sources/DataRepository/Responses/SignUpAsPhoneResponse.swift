@@ -17,13 +17,15 @@ struct SignUpAsPhoneResponse: Codable {
 
 // MARK: - Result
 struct SignUpAsPhoneResponseResult: Codable {
-    let accessToken, categoryList, imgURL, nickname: String
+    let accessToken, nickname: String
+    let imageURL: String?
+    let categoryList: [String]
     let refreshToken: String
     let userID: Int
 
     enum CodingKeys: String, CodingKey {
         case accessToken, categoryList
-        case imgURL = "imgUrl"
+        case imageURL = "imgUrl"
         case nickname, refreshToken
         case userID = "userId"
     }

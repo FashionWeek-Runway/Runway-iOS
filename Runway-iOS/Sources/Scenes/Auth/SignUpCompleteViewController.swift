@@ -10,6 +10,8 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 
+import Kingfisher
+
 final class SignUpCompleteViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -42,8 +44,6 @@ final class SignUpCompleteViewController: BaseViewController {
     // MARK: - initializer
     
     init(with reactor: SignUpCompleteReactor) {
-        self.profileCard.nicknameLabel.text = reactor.initialState.nickname
-        self.profileCard.styles = reactor.initialState.styles
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -130,6 +130,18 @@ extension SignUpCompleteViewController: View {
     }
     
     private func bindState(reactor: SignUpCompleteReactor) {
-
+        reactor.state.map { $0.nickname }
+            .bind(to: profileCard.nicknameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.styles }
+            .bind(to: profileCard.rx.styles)
+            .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.imageURL }
+            .bind(onNext: { [weak self] imageURL in
+                guard let url = URL(string: imageURL) else { return }
+                self?.profileCard.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+            }).disposed(by: disposeBag)
     }
 }

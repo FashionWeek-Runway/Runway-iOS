@@ -131,20 +131,18 @@ final class CategorySettingReactor: Reactor, Stepper {
                 }).disposed(by: disposeBag)
             case .phone:
                 provider.signUpService.signUpAsPhoneData?.categoryList = selectedCategoryIndex
-                provider.signUpService.signUpAsPhone().subscribe(onNext: { [weak self] request in
-                    do {
-                        guard let requestData = request.data else { return }
-                        let data = try JSONDecoder().decode(SignUpAsPhoneResponse.self, from: requestData)
-                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
-                        self?.provider.appSettingService.authToken = data.result.accessToken
-                        self?.provider.appSettingService.lastLoginType = .phone
-                        self?.provider.appSettingService.isLoggedIn = true
-                    } catch {
-                        print(error)
+                return provider.signUpService.signUpAsPhone().flatMap { $0.rx.data() }
+                    .decode(type: SignUpAsPhoneResponse.self, decoder: JSONDecoder())
+                    .flatMap {
+                        self.provider.appSettingService.refreshToken = $0.result.refreshToken
+                        self.provider.appSettingService.refreshToken = $0.result.refreshToken
+                        self.provider.appSettingService.authToken = $0.result.accessToken
+                        self.provider.appSettingService.lastLoginType = .phone
+                        self.provider.appSettingService.isLoggedIn = true
+                        self.steps.accept(AppStep.signUpIsCompleted(nickname: $0.result.nickname, styles: $0.result.categoryList, imageURL: $0.result.imageURL))
+                        return Observable<Mutation>.empty()
                     }
-                }).disposed(by: disposeBag)
             }
-            steps.accept(AppStep.signUpIsCompleted)
             return .empty()
         }
     }

@@ -26,7 +26,7 @@ final class SignUpCompleteReactor: Reactor, Stepper {
     struct State{
         let nickname: String
         let styles: [String]
-        let imageData: Data?
+        let imageURL: String?
     }
     
     private let disposeBag = DisposeBag()
@@ -34,25 +34,26 @@ final class SignUpCompleteReactor: Reactor, Stepper {
     let provider: ServiceProviderType
     let steps = PublishRelay<Step>()
     
-    init(provider: ServiceProviderType) {
+    init(provider: ServiceProviderType, nickname: String, styles: [String], imageURL: String?) {
         self.provider = provider
-        let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
-        let categoryForRequestId = [1: "미니멀", 2: "캐주얼", 3: "시티보이", 4: "스트릿", 5: "빈티지", 6: "페미닌"]
-        if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
-            self.initialState = State(nickname: nickname,
-                                      styles: provider.signUpService.signUpAsKakaoData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
-                                      imageData: provider.signUpService.signUpAsKakaoData?.profileImageData)
-        } else if let nickname = provider.signUpService.signUpAsPhoneData?.nickname { // phone
-            self.initialState = State(nickname: nickname,
-                                      styles: provider.signUpService.signUpAsPhoneData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
-                                      imageData: provider.signUpService.signUpAsPhoneData?.profileImageData)
-        } else if let nickname = provider.signUpService.signUpAsAppleData?.nickname { // apple
-            self.initialState = State(nickname: nickname,
-                                      styles: provider.signUpService.signUpAsAppleData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
-                                      imageData: provider.signUpService.signUpAsAppleData?.profileImageData)
-        } else { // 오류케이스
-            self.initialState = State(nickname: "", styles: [], imageData: nil)
-        }
+//        let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
+//        let categoryForRequestId = [1: "미니멀", 2: "캐주얼", 3: "시티보이", 4: "스트릿", 5: "빈티지", 6: "페미닌"]
+//        if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
+//            self.initialState = State(nickname: nickname,
+//                                      styles: provider.signUpService.signUpAsKakaoData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
+//                                      imageData: provider.signUpService.signUpAsKakaoData?.profileImageData)
+//        } else if let nickname = provider.signUpService.signUpAsPhoneData?.nickname { // phone
+//            self.initialState = State(nickname: nickname,
+//                                      styles: provider.signUpService.signUpAsPhoneData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
+//                                      imageData: provider.signUpService.signUpAsPhoneData?.profileImageData)
+//        } else if let nickname = provider.signUpService.signUpAsAppleData?.nickname { // apple
+//            self.initialState = State(nickname: nickname,
+//                                      styles: provider.signUpService.signUpAsAppleData?.categoryList?.compactMap { categoryForRequestId[$0] } ?? [],
+//                                      imageData: provider.signUpService.signUpAsAppleData?.profileImageData)
+//        } else { // 오류케이스
+//            self.initialState = State(nickname: "", styles: [], imageData: nil)
+//        }
+        self.initialState = State(nickname: nickname, styles: styles, imageURL: imageURL)
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

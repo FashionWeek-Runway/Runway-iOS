@@ -40,7 +40,7 @@ enum AppStep: Step {
     
     case profileSettingIsRequired
     case categorySettingIsRequired
-    case signUpIsCompleted
+    case signUpIsCompleted(nickname: String, styles: [String], imageURL: String?)
     
     // Main
     case homeTab

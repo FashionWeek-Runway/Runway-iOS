@@ -77,8 +77,8 @@ final class LoginFlow: Flow {
             
         case .categorySettingIsRequired:
             return coordinateToCategorySettingScreen()
-        case .signUpIsCompleted:
-            return coordinateToSignUpCompleteScreen()
+        case .signUpIsCompleted(let nickname, let styles, let imageURL):
+            return coordinateToSignUpCompleteScreen(nickname: nickname, styles: styles, imageURL: imageURL)
         default:
             return .none
         }
@@ -183,8 +183,8 @@ final class LoginFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToSignUpCompleteScreen() -> FlowContributors {
-        let reactor = SignUpCompleteReactor(provider: provider)
+    private func coordinateToSignUpCompleteScreen(nickname: String, styles: [String], imageURL: String?) -> FlowContributors {
+        let reactor = SignUpCompleteReactor(provider: provider, nickname: nickname, styles: styles, imageURL: imageURL)
         let viewController = SignUpCompleteViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
