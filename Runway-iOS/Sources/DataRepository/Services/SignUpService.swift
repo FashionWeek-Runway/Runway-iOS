@@ -34,8 +34,8 @@ final class SignUpService: APIService {
         
         guard let categoryList = signUpAsKakaoData?.categoryList,
               let nickname = signUpAsKakaoData?.nickname,
-              let socialID = signUpAsKakaoData?.socialID,
-              let imageData = signUpAsKakaoData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+              let socialID = signUpAsKakaoData?.socialID
+        else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
@@ -50,10 +50,12 @@ final class SignUpService: APIService {
             for (key, value) in params {
                 data.append("\(value)".data(using: .utf8)!, withName: key)
             }
-            data.append(imageData,
-                        withName: "multipartFile",
-                        fileName: nickname + ".png",
-                        mimeType: "image/png")
+            if let imageData = self.signUpAsKakaoData?.profileImageData {
+                data.append(imageData,
+                            withName: "multipartFile",
+                            fileName: nickname + ".png",
+                            mimeType: "image/png")
+            }
         }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
     }
     
@@ -61,8 +63,8 @@ final class SignUpService: APIService {
         
         guard let categoryList = signUpAsAppleData?.categoryList,
               let nickname = signUpAsAppleData?.nickname,
-              let socialID = signUpAsAppleData?.socialID,
-              let imageData = signUpAsAppleData?.profileImageData else { return .error(RequestError.requestFieldIsNil) }
+              let socialID = signUpAsAppleData?.socialID
+        else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
         params.updateValue(categoryList.map { String($0) }.joined(separator: ","), forKey: "categoryList")
@@ -77,10 +79,12 @@ final class SignUpService: APIService {
             for (key, value) in params {
                 data.append("\(value)".data(using: .utf8)!, withName: key)
             }
-            data.append(imageData,
-                        withName: "multipartFile",
-                        fileName: nickname + ".png",
-                        mimeType: "image/png")
+            if let imageData = self.signUpAsAppleData?.profileImageData {
+                data.append(imageData,
+                            withName: "multipartFile",
+                            fileName: nickname + ".png",
+                            mimeType: "image/png")
+            }
         }, to: baseURL + "login/signup/kakao", method: .post, headers: headers)
     }
 
@@ -91,9 +95,7 @@ final class SignUpService: APIService {
               let name = signUpAsPhoneData?.name,
               let nickname = signUpAsPhoneData?.nickname,
               let phoneNumber = signUpAsPhoneData?.phone,
-              let password = signUpAsPhoneData?.password,
-              let imageData = signUpAsPhoneData?.profileImageData
-                
+              let password = signUpAsPhoneData?.password
         else { return .error(RequestError.requestFieldIsNil) }
 
         var params = Parameters()
@@ -111,11 +113,12 @@ final class SignUpService: APIService {
             for (key, value) in params {
                 data.append("\(value)".data(using: .utf8)!, withName: key)
             }
-            
-            data.append(UIImage(data: imageData)!.jpegData(compressionQuality: 0.5)!,
-                        withName: "multipartFile",
-                        fileName: nickname + ".jpg",
-                        mimeType: "image/jpg")
+            if let imageData = self.signUpAsPhoneData?.profileImageData {
+                data.append(UIImage(data: imageData)!.jpegData(compressionQuality: 0.5)!,
+                            withName: "multipartFile",
+                            fileName: nickname + ".jpg",
+                            mimeType: "image/jpg")
+            }
         }, to: baseURL + "login/signup", method: .post, headers: headers)
     }
     

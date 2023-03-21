@@ -24,10 +24,17 @@ final class RWProfileTagCardView: UIView {
     }()
     
     let imageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "icon_my_point"))
+        let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.backgroundColor = .primary
+        return view
+    }()
+    
+    let defaultProfileImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "icon_my_point"))
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         return view
     }()
     
@@ -172,7 +179,7 @@ final class RWProfileTagCardView: UIView {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(174)
         }
-        topArea.addSubviews([imageView, topBlackHole])
+        topArea.addSubviews([imageView, defaultProfileImageView, topBlackHole])
         
         topArea.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
@@ -187,6 +194,11 @@ final class RWProfileTagCardView: UIView {
         topBlackHole.snp.makeConstraints {
             $0.width.height.equalTo(20)
             $0.top.equalTo(14)
+            $0.centerX.equalToSuperview()
+        }
+        
+        defaultProfileImageView.snp.makeConstraints {
+            $0.top.equalTo(topBlackHole.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
         

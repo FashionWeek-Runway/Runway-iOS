@@ -81,14 +81,13 @@ final class ProfileSettingReactor: Reactor, Stepper {
         case .enterNickname(let nickname):
             return .just(.setNickname(nickname))
         case .nextButtonDidTap:
-            guard let imageData = currentState.profileImageData,
-                  let nickname = currentState.nickname else { return .empty() }
+            guard let nickname = currentState.nickname else { return .empty() }
             
-            provider.signUpService.signUpAsPhoneData?.profileImageData = imageData
+            provider.signUpService.signUpAsPhoneData?.profileImageData = currentState.profileImageData
             provider.signUpService.signUpAsPhoneData?.nickname = nickname
-            provider.signUpService.signUpAsKakaoData?.profileImageData = imageData
+            provider.signUpService.signUpAsKakaoData?.profileImageData = currentState.profileImageData
             provider.signUpService.signUpAsKakaoData?.nickname = nickname
-            provider.signUpService.signUpAsAppleData?.profileImageData = imageData
+            provider.signUpService.signUpAsAppleData?.profileImageData = currentState.profileImageData
             provider.signUpService.signUpAsAppleData?.nickname = nickname
             
             return provider.signUpService.checkNicknameDuplicate(nickname: nickname).response()

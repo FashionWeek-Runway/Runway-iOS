@@ -57,7 +57,7 @@ final class PolicyAgreementViewController: BaseViewController {
     private let usagePolicyAgreeLabel: UILabel = {
         let label = UILabel()
         label.text = "이용약관 동의 (필수)"
-        label.font = .body1M
+        label.font = .body2
         return label
     }()
     
@@ -77,7 +77,7 @@ final class PolicyAgreementViewController: BaseViewController {
     private let privacyPolicyAgreeLabel: UILabel = {
         let label = UILabel()
         label.text = "개인정보 처리 방침 동의 (필수)"
-        label.font = .body1M
+        label.font = .body2
         return label
     }()
     
@@ -97,7 +97,7 @@ final class PolicyAgreementViewController: BaseViewController {
     private let locationPolicyAgreeLabel: UILabel = {
         let label = UILabel()
         label.text = "위치정보 이용 약관 동의 (필수)"
-        label.font = .body1M
+        label.font = .body2
         return label
     }()
     
@@ -117,7 +117,7 @@ final class PolicyAgreementViewController: BaseViewController {
     private let marketingAgreeLabel: UILabel = {
         let label = UILabel()
         label.text = "마케팅 정보 수신 동의 (선택)"
-        label.font = .body1M
+        label.font = .body2
         return label
     }()
     
@@ -172,14 +172,15 @@ final class PolicyAgreementViewController: BaseViewController {
                                                                  marketingAgreeLabel])
         policyLabelStackView.axis = .vertical
         policyLabelStackView.alignment = .leading
-        policyLabelStackView.spacing = 20
+        policyLabelStackView.distribution = .equalCentering
         
         let detailButtonStackView = UIStackView(arrangedSubviews: [usagePolicyDetailButton,
                                                                   privacyPolicyDetailButton,
                                                                   locationPolicyDetailButton,
                                                                   marketingDetailButton])
         detailButtonStackView.axis = .vertical
-        detailButtonStackView.spacing = 16
+//        detailButtonStackView.spacing = 16
+        detailButtonStackView.distribution = .equalCentering
         
         self.view.addSubviews([guideTextLabel, allAgreeButton, allAgreeLabel,
                                divider,
@@ -203,7 +204,8 @@ final class PolicyAgreementViewController: BaseViewController {
         
         divider.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(allAgreeLabel.snp.bottom).offset(21)
         }
         
@@ -215,11 +217,13 @@ final class PolicyAgreementViewController: BaseViewController {
         policyLabelStackView.snp.makeConstraints {
             $0.leading.equalTo(bottomPolicyButtonStackView.snp.trailing).offset(12)
             $0.top.equalTo(divider.snp.bottom).offset(22)
+            $0.bottom.equalTo(bottomPolicyButtonStackView.snp.bottom)
         }
         
         detailButtonStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-26)
             $0.top.equalTo(divider.snp.bottom).offset(17)
+            $0.bottom.equalTo(bottomPolicyButtonStackView.snp.bottom)
         }
         
         nextButton.snp.makeConstraints {

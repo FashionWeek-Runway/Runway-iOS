@@ -162,6 +162,7 @@ extension SignUpCompleteViewController: View {
         
         reactor.state.compactMap { $0.imageURL }
             .bind(onNext: { [weak self] imageURL in
+                self?.profileCard.defaultProfileImageView.isHidden = true
                 guard let url = URL(string: imageURL) else { return }
                 self?.profileCard.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             }).disposed(by: disposeBag)
