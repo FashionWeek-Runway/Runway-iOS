@@ -19,7 +19,7 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
     let bottomGradientView: UIView = {
         let view = UIView(frame: CGRect(x: 0,
                                         y: ((UIScreen.getDeviceWidth() - 6.0) / 3.0) * 1.53 - 29,
-                                        width: (UIScreen.getDeviceHeight() - 6) / 3.0 ,
+                                        width: (UIScreen.getDeviceWidth() - 6) / 3.0 ,
                                         height: 29))
         view.setGradientBackground(colorTop: .clear, colorBottom: .black.withAlphaComponent(0.2))
         return view
@@ -63,6 +63,7 @@ final class RWReviewCollectionViewCell: UICollectionViewCell {
         
         bottomGradientView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.height.equalTo(29)
         }

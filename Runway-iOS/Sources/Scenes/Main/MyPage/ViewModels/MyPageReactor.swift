@@ -82,15 +82,15 @@ final class MyPageReactor: Reactor, Stepper {
                         return .setProfileData(responseData.result)
                     }),
                 
-                provider.userService.myReview(page: 0, size: 10).data().decode(type: MyReviewResponse.self, decoder: JSONDecoder())
+                provider.userService.myReview(page: 0, size: 30).data().decode(type: MyReviewResponse.self, decoder: JSONDecoder())
                     .map({ responseData -> Mutation in
                         return .setMyReviewData(responseData.result)
                     }),
                 
-                provider.userService.bookmarkShowRooms(page: 0, size: 10).data().decode(type: BookmarkedStoreResponse.self, decoder: JSONDecoder())
+                provider.userService.bookmarkShowRooms(page: 0, size: 30).data().decode(type: BookmarkedStoreResponse.self, decoder: JSONDecoder())
                     .map { .setBookmarkedStoreData($0.result) },
                 
-                provider.userService.bookmarkReviewList(page: 0, size: 10).data().decode(type: BookmarkedReviewResponse.self, decoder: JSONDecoder())
+                provider.userService.bookmarkReviewList(page: 0, size: 30).data().decode(type: BookmarkedReviewResponse.self, decoder: JSONDecoder())
                     .map { return .setBookmarkedReviewData($0.result)}
             ])
             
