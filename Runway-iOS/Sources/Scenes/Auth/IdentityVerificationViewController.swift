@@ -129,6 +129,9 @@ final class IdentityVerificationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showUserAgeCheckModal()
+        setNameFieldKeyboardToolbar()
+        setBirthDayFieldKeyboardToolbar()
+        setPhoneNumberFieldKeyboardToolbar()
     }
     
     override func configureUI() {
@@ -285,6 +288,85 @@ final class IdentityVerificationViewController: BaseViewController {
             }))
             self.present(alert, animated: true)
         }
+    }
+    
+    private func setNameFieldKeyboardToolbar() {
+        let toolbar = UIToolbar()
+        
+        let downButton = UIBarButtonItem(image: UIImage(systemName: "chevron.down"), style: .plain, target: nil, action: nil)
+        downButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.birthDayField.textField.becomeFirstResponder()
+            }).disposed(by: disposeBag)
+        
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
+        doneButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
+        
+        toolbar.sizeToFit()
+        toolbar.setItems([downButton, flexibleSpaceButton, doneButton], animated: false)
+        nameField.textField.inputAccessoryView = toolbar
+    }
+    
+    private func setBirthDayFieldKeyboardToolbar() {
+        let toolbar = UIToolbar()
+        
+        let downButton = UIBarButtonItem(image: UIImage(systemName: "chevron.down"), style: .plain, target: nil, action: nil)
+        downButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.phoneNumberField.textField.becomeFirstResponder()
+            }).disposed(by: disposeBag)
+        
+        let upButton = UIBarButtonItem(image: UIImage(systemName: "chevron.up"), style: .plain, target: nil, action: nil)
+        upButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.nameField.textField.becomeFirstResponder()
+            }).disposed(by: disposeBag)
+        
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
+        doneButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
+        
+        toolbar.sizeToFit()
+        toolbar.setItems([downButton, upButton, flexibleSpaceButton, doneButton], animated: false)
+        birthDayField.textField.inputAccessoryView = toolbar
+    }
+    
+    private func setPhoneNumberFieldKeyboardToolbar() {
+        let toolbar = UIToolbar()
+        
+        let upButton = UIBarButtonItem(image: UIImage(systemName: "chevron.up"), style: .plain, target: nil, action: nil)
+        upButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.birthDayField.textField.becomeFirstResponder()
+            }).disposed(by: disposeBag)
+        
+        let flexibleSpaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: nil, action: nil)
+        doneButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.view.endEditing(true)
+            }).disposed(by: disposeBag)
+        
+        toolbar.sizeToFit()
+        toolbar.setItems([upButton, flexibleSpaceButton, doneButton], animated: false)
+        phoneNumberField.textField.inputAccessoryView = toolbar
     }
     
 }
