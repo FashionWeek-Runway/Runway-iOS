@@ -24,23 +24,24 @@ final class ProfileEditReactor: Reactor, Stepper {
     enum Action {
         case viewWillAppear
         case backButtonDidTap
-        case setProfileImage(Data)
+        case setProfileImage(Data?)
         case enterNickname(String)
         case saveButtonDidTap
     }
     
     enum Mutation {
-        case setProfileImageData(Data)
-        case setProfileImageURL(String)
+        case setProfileImageData(Data?)
+        case setProfileImageURL(String?)
+        case setOriginalNickname(String?)
         case setUserNickname(String?)
         case setUserNicknameIsDuplicate
     }
     
     struct State {
         var profileImageURL: String? = nil
-        
         var showActionSheet: Bool = false
         
+        var originalNickname: String?
         var nickname: String?
         var profileImageData: Data?
         var nextButtonEnabled: Bool = false
@@ -72,9 +73,11 @@ final class ProfileEditReactor: Reactor, Stepper {
             return provider.userService.existingProfile().data()
                 .decode(type: ExistingProfileResponse.self, decoder: JSONDecoder())
                 .flatMap { responseData -> Observable<Mutation> in
+                    print(responseData)
                     return Observable.concat([
-                        .just(.setProfileImageURL(responseData.result.imageURL)),
-                        .just(.setUserNickname(responseData.result.nickname))
+                        .just(.setProfileImageURL(responseData.result.imageURL ?? nil)),
+                        .just(.setUserNickname(responseData.result.nickname)),
+                        .just(.setOriginalNickname(responseData.result.nickname))
                     ])
                 }
         case .backButtonDidTap:
@@ -88,35 +91,19 @@ final class ProfileEditReactor: Reactor, Stepper {
         case .saveButtonDidTap:
             guard let nickname = currentState.nickname else { return .empty() }
             
-            return provider.signUpService.checkNicknameDuplicate(nickname: nickname).responseData()
-                .flatMap { [weak self] (response, data) -> Observable<Mutation> in
-                    guard let self else { return .empty() }
-                    if 200...299 ~= response.statusCode {
-                        if let profileImageData = self.currentState.profileImageData {
-                            return self.provider.userService.editProfile(nickname: nickname,
-                                                                  profileImageChange: true,
-                                                                  profileImageData: profileImageData).flatMap { [weak self] request in
-                                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
-                                    .flatMap { [weak self] responseData -> Observable<Mutation> in
-                                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
-                                        return .empty()
-                                    }
-                            }
+            if nickname != currentState.originalNickname {
+                return provider.signUpService.checkNicknameDuplicate(nickname: nickname).responseData()
+                    .flatMap { [weak self] (response, data) -> Observable<Mutation> in
+                        guard let self else { return .empty() }
+                        if 200...299 ~= response.statusCode {
+                            return self.editProfile()
                         } else {
-                            return self.provider.userService.editProfile(nickname: nickname,
-                                                                  profileImageChange: false,
-                                                                  profileImageData: nil).flatMap { [weak self] request in
-                                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
-                                    .flatMap { [weak self] responseData -> Observable<Mutation> in
-                                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
-                                        return .empty()
-                                    }
-                            }
+                            return .just(.setUserNicknameIsDuplicate)
                         }
-                    } else {
-                        return .just(.setUserNicknameIsDuplicate)
                     }
-                }
+            } else {
+                return editProfile()
+            }
         }
     }
     
@@ -159,6 +146,8 @@ final class ProfileEditReactor: Reactor, Stepper {
             } else {
                 state.isNickNameValidate = true
             }
+        case .setOriginalNickname(let nickname):
+            state.originalNickname = nickname
         case .setProfileImageURL(let url):
             state.profileImageURL = url
         case .setProfileImageData(let data):
@@ -177,6 +166,32 @@ final class ProfileEditReactor: Reactor, Stepper {
             return String(str[..<index])
         } else {
             return str
+        }
+    }
+    
+    private func editProfile() -> Observable<Mutation> {
+        guard let nickname = currentState.nickname else { return .empty() }
+        
+        if let profileImageData = self.currentState.profileImageData {
+            return self.provider.userService.editProfile(nickname: nickname,
+                                                  profileImageChange: true,
+                                                  profileImageData: profileImageData).flatMap { [weak self] request in
+                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
+                    .flatMap { [weak self] responseData -> Observable<Mutation> in
+                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
+                        return .empty()
+                    }
+            }
+        } else {
+            return self.provider.userService.editProfile(nickname: nickname,
+                                                  profileImageChange: false,
+                                                  profileImageData: nil).flatMap { [weak self] request in
+                return request.rx.data().decode(type: ProfileEditCompleteResponse.self, decoder: JSONDecoder())
+                    .flatMap { [weak self] responseData -> Observable<Mutation> in
+                        self?.steps.accept(AppStep.profileEditCompleted(responseData.result.nickname, responseData.result.categoryList, responseData.result.imageURL))
+                        return .empty()
+                    }
+            }
         }
     }
 }

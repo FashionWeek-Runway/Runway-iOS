@@ -113,6 +113,15 @@ final class ProfileEditViewController: BaseViewController {
     
     private func presentActionSheet() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        if reactor?.currentState.profileImageData != nil {
+            alertController.addAction(UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: { _ in
+                self.profileSettingView.profileImageView.image = UIImage(named: "icon_my_large")
+                let action = Reactor.Action.setProfileImage(nil)
+                self.reactor?.action.onNext(action)
+            }))
+        }
+        
         alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             
@@ -127,7 +136,6 @@ final class ProfileEditViewController: BaseViewController {
         alertController.addAction(UIAlertAction(title: "사진 가져오기", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
-                print(status)
                 switch status {
                 case .authorized, .limited:
                     DispatchQueue.main.async {
@@ -138,6 +146,7 @@ final class ProfileEditViewController: BaseViewController {
                 }
             }
         }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(alertController, animated: true)
     }
     
@@ -201,24 +210,26 @@ extension ProfileEditViewController: View {
             .bind(to: saveButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.nickname }
+        reactor.state.compactMap { $0.nickname }
             .bind(to: nickNameField.textField.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.profileImageURL }
+            .distinctUntilChanged()
             .bind(onNext: { [weak self] imageURL in
                 guard let url = URL(string: imageURL) else { return }
-                self?.profileSettingView.profileImageView.kf.setImage(with: ImageResource(downloadURL: url))
+                self?.profileSettingView.profileImageView.kf.setImage(with: ImageResource(downloadURL: url), completionHandler: { [weak self] result in
+                    switch result {
+                    case .success(let imageResult):
+                        let action = Reactor.Action.setProfileImage(imageResult.image.pngData())
+                        self?.reactor?.action.onNext(action)
+                    case .failure(let error):
+                        print(error)
+                    }
+                })
             }).disposed(by: disposeBag)
         
-        reactor.state.compactMap { $0.profileImageData }
-            .subscribe(on: MainScheduler.asyncInstance)
-            .map { UIImage(data: $0) }
-            .bind(to: profileSettingView.profileImageView.rx.image)
-            .disposed(by: disposeBag)
-        
         reactor.state.map { $0.isNickNameDuplicate }
-            .subscribe(on: MainScheduler.instance)
             .bind { [weak self] isShow in
                 if isShow {
                     self?.nickNameField.errorText = "이미 존재하는 닉네임입니다."

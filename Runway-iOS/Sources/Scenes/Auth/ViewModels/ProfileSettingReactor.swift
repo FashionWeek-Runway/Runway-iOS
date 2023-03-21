@@ -19,14 +19,12 @@ final class ProfileSettingReactor: Reactor, Stepper {
     enum Action {
         case viewDidLoad
         case backButtonDidTap
-        case profileImageButtonDidTap
-        case setImage(Data?)
+        case setProfileImage(Data?)
         case enterNickname(String)
         case nextButtonDidTap
     }
     
     enum Mutation {
-        case showActionSheet
         case setProfileImageData(Data?)
         case setNickname(String?)
         case setNickNameDuplicate
@@ -72,26 +70,13 @@ final class ProfileSettingReactor: Reactor, Stepper {
                         return Mutation.setProfileImageData(data)
                     }
                 return imageLoadMutation
-            } else { // 이미지 URL이 없는 경우(기본이미지)
-                do {
-                    if let imagePath = Bundle.main.path(forResource: "icon_my_large", ofType: "png") {
-                        let imageData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
-                        // Use imageData as needed
-                        return .just(Mutation.setProfileImageData(imageData))
-                    } else {
-                        // Image not found in bundle
-                        return .empty()
-                    }
-                } catch {
-                    return .empty()
-                }
+            } else {
+                return .just(.setProfileImageData(nil))
             }
         case .backButtonDidTap:
             steps.accept(AppStep.back(animated: true))
             return .empty()
-        case .profileImageButtonDidTap:
-            return .just(.showActionSheet)
-        case .setImage(let data):
+        case .setProfileImage(let data):
             return .just(.setProfileImageData(data))
         case .enterNickname(let nickname):
             return .just(.setNickname(nickname))
@@ -157,9 +142,6 @@ final class ProfileSettingReactor: Reactor, Stepper {
             } else {
                 state.isNickNameValidate = true
             }
-            
-        case .showActionSheet:
-            state.showActionSheet = true
         case .setProfileImageData(let data):
             state.profileImageData = data
             state.showActionSheet = false

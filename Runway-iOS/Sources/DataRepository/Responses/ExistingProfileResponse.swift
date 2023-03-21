@@ -17,7 +17,8 @@ struct ExistingProfileResponse: Codable {
 
 // MARK: - Result
 struct ExistingProfileResponseResult: Codable {
-    let imageURL, nickname: String
+    let nickname: String
+    let imageURL: String?
 
     enum CodingKeys: String, CodingKey {
         case imageURL = "imgUrl"

@@ -74,6 +74,7 @@ final class ProfileSettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setRx()
     }
     
     override func configureUI() {
@@ -126,8 +127,24 @@ final class ProfileSettingViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func setRx() {
+        profileSettingView.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.presentActionSheet()
+            }).disposed(by: disposeBag)
+    }
+    
     private func presentActionSheet() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if reactor?.currentState.profileImageData != nil {
+            alertController.addAction(UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: { _ in
+                self.profileSettingView.profileImageView.image = UIImage(named: "icon_my_large")
+                let action = Reactor.Action.setProfileImage(nil)
+                self.reactor?.action.onNext(action)
+            }))
+        }
+        
         alertController.addAction(UIAlertAction(title: "사진 촬영", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             
@@ -153,6 +170,7 @@ final class ProfileSettingViewController: BaseViewController {
                 }
             }
         }))
+        alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(alertController, animated: true)
     }
 }
@@ -170,11 +188,6 @@ extension ProfileSettingViewController: View {
         
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidTap }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        profileSettingView.rx.tap
-            .map { Reactor.Action.profileImageButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -199,17 +212,13 @@ extension ProfileSettingViewController: View {
             .bind(onNext: { _ in self.dismiss(animated: true) })
             .disposed(by: disposeBag)
         
-        Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
-            .bind(onNext: { _ in self.dismiss(animated: true)})
-            .disposed(by: disposeBag)
-        
         // bind action
         Observable.merge([cameraPickerController.rx.didFinishPickingMediaWithInfo, albumPickerController.rx.didFinishPickingMediaWithInfo])
             .bind(onNext: { [weak self] info in
                 self?.dismiss(animated: true, completion: {
                     guard let image = info[.editedImage] as? UIImage, let imageData = image.fixedOrientation().pngData() else { return }
                     self?.profileSettingView.profileImageView.image = image
-                    let action = Reactor.Action.setImage(imageData)
+                    let action = Reactor.Action.setProfileImage(imageData)
                     self?.reactor?.action.onNext(action)
                 })
             }).disposed(by: disposeBag)
@@ -231,7 +240,6 @@ extension ProfileSettingViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.profileImageData }
-            .subscribe(on: MainScheduler.asyncInstance)
             .map { UIImage(data: $0) }
             .bind(to: profileSettingView.profileImageView.rx.image)
             .disposed(by: disposeBag)
