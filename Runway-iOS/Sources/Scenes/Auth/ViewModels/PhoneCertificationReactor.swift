@@ -124,6 +124,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
     func formattedTimerText(timeSecond: Int) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .dropLeading
         return formatter.string(from: TimeInterval(timeSecond)) ?? "0:00"
     }
 }

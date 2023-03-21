@@ -60,14 +60,15 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         return label
     }()
     
-    private let reSendButton: UIButton = {
+    private let resendButton: UIButton = {
         let button = UIButton(type: .custom)
         button.backgroundColor = .primary
         button.layer.cornerRadius = 4
         button.clipsToBounds = true
         button.setBackgroundColor(.blue100, for: .normal)
-        button.setTitleColor(.primary, for: .normal)
+        button.setBackgroundColor(.gray100, for: .disabled)
         button.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.gray500]), for: .disabled)
         return button
     }()
     
@@ -113,7 +114,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
         
-        verificationNumberInputField.addSubviews([timerLabel, reSendButton])
+        verificationNumberInputField.addSubviews([timerLabel, resendButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -148,7 +149,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        reSendButton.snp.makeConstraints {
+        resendButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-6)
             $0.trailing.equalToSuperview()
             $0.width.equalTo(67)
@@ -156,7 +157,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         }
         
         timerLabel.snp.makeConstraints {
-            $0.trailing.equalTo(reSendButton.snp.leading).offset(-14)
+            $0.trailing.equalTo(resendButton.snp.leading).offset(-14)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(29)
         }
@@ -209,7 +210,7 @@ extension PhoneCertificationNumberInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        reSendButton.rx.tap
+        resendButton.rx.tap
             .map { Reactor.Action.resendButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -227,6 +228,10 @@ extension PhoneCertificationNumberInputViewController: View {
         
         reactor.state.compactMap { $0.timerText }
             .bind(to: timerLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.timeSecond == 0 }
+            .bind(to: resendButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.invalidCertification }
