@@ -91,10 +91,7 @@ extension AllStoreViewController: View {
                 cell.locationLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
                                                                          attributes: [.foregroundColor: UIColor.gray50, .font: UIFont.caption]), for: .normal)
                 
-                
-                if item.isBookmarked {
-                    cell.bookmarkButton.isSelected = true
-                }
+                cell.bookmarkButton.isSelected = item.isBookmarked
                 
                 let categories = item.categoryList.compactMap { $0 }
                 

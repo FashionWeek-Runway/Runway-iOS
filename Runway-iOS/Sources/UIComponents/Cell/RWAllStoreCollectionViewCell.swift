@@ -20,7 +20,6 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
         button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
-        button.isUserInteractionEnabled = false
         return button
     }()
     

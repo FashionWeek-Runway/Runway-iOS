@@ -165,6 +165,9 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
             newValue.forEach { $0.mapView = mapView.mapView }
         }
     }
+    
+    private var previousSelectedMarker: NMFMarker? = nil
+    private var previousSelectedMarkerImage: NMFOverlayImage? = nil
 
     // MARK: - initializer
     
@@ -433,7 +436,7 @@ extension MapViewController: View {
                 }
             }.disposed(by: disposeBag)
         
-        reactor.state.map { $0.mapMarkers }
+        reactor.pulse(\.$mapMarkers)
             .subscribe(onNext: { [weak self] markerData in
                 DispatchQueue.global(qos: .default).async {
                     let markers = markerData.map { data in
@@ -447,10 +450,15 @@ extension MapViewController: View {
                         marker.captionHaloColor = .white
                         
                         marker.touchHandler = { [weak self] (overlay) -> Bool in
-                            self?.isHiddenHelperViews = true
+                            guard let self else { return true }
+                            self.previousSelectedMarker?.iconImage = self.previousSelectedMarkerImage ?? NMFOverlayImage(name: "marker")
+                            self.previousSelectedMarker = marker
+                            self.previousSelectedMarkerImage = marker.iconImage
+                            marker.iconImage = NMFOverlayImage(name: data.bookmark ? "icon_seleted_bookmark" : "marker_highlight")
+                            self.isHiddenHelperViews = true
                             let action = Reactor.Action.selectMapMarkerData(data.storeID)
-                            self?.reactor?.action.onNext(action)
-                            self?.storeSearchBottomSheet.showSheet(atState: .expanded)
+                            self.reactor?.action.onNext(action)
+                            self.storeSearchBottomSheet.showSheet(atState: .expanded)
                             return true
                         }
                         return marker

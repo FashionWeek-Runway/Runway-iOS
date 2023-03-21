@@ -54,7 +54,7 @@ final class MapReactor: Reactor, Stepper {
     
     struct State {
         
-        var mapMarkers: [MapWithCategorySearchResponseResult] = []
+        @Pulse var mapMarkers: [MapWithCategorySearchResponseResult] = []
         var mapMarkerSelectData: StoreInfo? = nil
         var aroundDatas: [AroundMapSearchResponseResultContent] = []
         
