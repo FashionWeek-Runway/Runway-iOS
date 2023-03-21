@@ -213,14 +213,14 @@ final class ShowRoomDetailViewController: BaseViewController {
         return view
     }()
     
-    private let moreButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "더보기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray900]), for: .normal)
-        button.setImage(UIImage(named: "icon_down_black"), for: .normal)
-        button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets.left = 10
-        return button
-    }()
+//    private let moreButton: UIButton = {
+//        let button = UIButton()
+//        button.setAttributedTitle(NSAttributedString(string: "더보기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray900]), for: .normal)
+//        button.setImage(UIImage(named: "icon_down_black"), for: .normal)
+//        button.semanticContentAttribute = .forceRightToLeft
+//        button.imageEdgeInsets.left = 10
+//        return button
+//    }()
     
     private let cameraPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
@@ -284,7 +284,8 @@ final class ShowRoomDetailViewController: BaseViewController {
                                    webIcon, webLabel, divider,
                                    userReviewLabel, reviewRegisterButton, reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel,
                                    reviewCollectionView,
-                                   divider2, blogReviewLabel, blogReviewTableView, moreButton
+                                   divider2, blogReviewLabel, blogReviewTableView,
+//                                   moreButton
                                   ])
         
         topArea.snp.makeConstraints {
@@ -441,14 +442,15 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(blogReviewLabel.snp.bottom).offset(16)
             $0.height.equalTo(136)
-        }
-        
-        moreButton.snp.makeConstraints {
-            $0.top.equalTo(blogReviewTableView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(44)
             $0.bottom.equalToSuperview().offset(-50)
         }
+        
+//        moreButton.snp.makeConstraints {
+//            $0.top.equalTo(blogReviewTableView.snp.bottom)
+//            $0.horizontalEdges.equalToSuperview()
+//            $0.height.equalTo(44)
+//            $0.bottom.equalToSuperview().offset(-50)
+//        }
     }
     
     private func setRx() {
