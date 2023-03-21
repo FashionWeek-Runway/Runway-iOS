@@ -116,7 +116,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             }
             
         case .reviewCellDidTap(let reviewId):
-            steps.accept(AppStep.userReviewReels(reviewId))
+            steps.accept(AppStep.userReviewReels(Id: reviewId, mode: .store))
             return .empty()
             
         case .pickingReviewImage(let imageData):

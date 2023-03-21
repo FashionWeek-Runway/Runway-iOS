@@ -41,8 +41,8 @@ final class HomeFlow: Flow {
             return coordinateToShowRoomDetailScreen(storeId: storeId)
         case .editReviewImage(let storeId, let imageData):
             return coordinateToEditReviewImageScreen(storeId: storeId, imageData: imageData)
-        case .userReviewReels(let reviewId):
-            return coordinateToReviewReelsScreen(reviewId: reviewId)
+        case .userReviewReels(let reviewId, let mode):
+            return coordinateToReviewReelsScreen(reviewId: reviewId, mode: mode)
         case .reportReview(let reviewId):
             return coordinateToReviewReportingScreen(reviewId: reviewId)
         case .back(let animated):
@@ -94,8 +94,18 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
     
-    private func coordinateToReviewReelsScreen(reviewId: Int) -> FlowContributors {
-        let reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .home)
+    private func coordinateToReviewReelsScreen(reviewId: Int, mode: AppStep.ReviewReelsMode) -> FlowContributors {
+        var reactor: ReviewReelsReactor
+        switch mode {
+        case .home:
+            reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .home)
+        case .store:
+            reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .store)
+        case .myReview:
+            reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .myReview)
+        case .bookmarkedReview:
+            reactor = ReviewReelsReactor(provider: provider, intialReviewId: reviewId, mode: .bookmarkedReview)
+        }
         let viewController = ReviewReelsViewController(with: reactor)
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)

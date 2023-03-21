@@ -51,12 +51,10 @@ enum AppStep: Step {
     case mapSearch((Double, Double))
     case showRoomDetail(Int)
     case editReviewImage(Int, Data)
-    case userReviewReels(Int)
     case reportReview(Int)
     
     
     case myPageTab
-    case myReviewReels(Int)
     case editProfile
     case setting
     case privacyManagementNeeded
@@ -67,4 +65,14 @@ enum AppStep: Step {
     case confirmChangedProfile
     case withdrawalStep
     case userIsLoggedOut
+    
+    
+    case userReviewReels(Id: Int, mode: ReviewReelsMode)
+    
+    enum ReviewReelsMode {
+        case home
+        case store
+        case myReview
+        case bookmarkedReview
+    }
 }

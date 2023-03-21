@@ -68,7 +68,7 @@ final class HomeReactor: Reactor, Stepper {
                 provider.homeService.home(type: .home).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setPagerData($0.result)
                 },
-                provider.homeService.review(page: 0, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
+                provider.homeService.review(page: 0, size: 30).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
                     return Mutation.setUserReview($0.result)
                 },
                 provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder()).map {
@@ -95,7 +95,7 @@ final class HomeReactor: Reactor, Stepper {
             }
             
         case .userReviewCellDidTap(let reviewId):
-            steps.accept(AppStep.userReviewReels(reviewId))
+            steps.accept(AppStep.userReviewReels(Id: reviewId, mode: .home))
             return .empty()
         }
     }
@@ -114,6 +114,7 @@ final class HomeReactor: Reactor, Stepper {
                                                                  bookmarkCount: 0,
                                                                  cellType: .showMoreShop)]
         case .setUserReview(let result):
+            state.userReviewPage = 0
             state.userReview = result.contents
             state.userReviewIsLast = result.isLast
             if !result.isLast {

@@ -327,7 +327,7 @@ extension HomeViewController: View {
                 guard let self else { return }
                 let width = self.userReviewCollectionView.frame.width
                 let contentWidth = self.userReviewCollectionView.contentSize.width
-                let reachesEnd = (self.userReviewCollectionView.contentOffset.y) > contentWidth - width
+                let reachesEnd = (self.userReviewCollectionView.contentOffset.x) >= contentWidth - width
                 
                 if reachesEnd {
                     self.reactor?.action.onNext(.userReviewCollectionViewReachesEnd)

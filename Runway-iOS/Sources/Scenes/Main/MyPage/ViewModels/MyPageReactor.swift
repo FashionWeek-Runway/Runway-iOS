@@ -77,7 +77,6 @@ final class MyPageReactor: Reactor, Stepper {
         switch action {
         case .viewWillAppear:
             return Observable.concat([
-                
                 provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder())
                     .map({ responseData -> Mutation in
                         return .setProfileData(responseData.result)
@@ -118,7 +117,7 @@ final class MyPageReactor: Reactor, Stepper {
                 .map { .appendBookmarkedReviewData($0.result) }
             
         case .myReviewCollectionViewCellSelected(let reviewId):
-            steps.accept(AppStep.myReviewReels(reviewId))
+            steps.accept(AppStep.userReviewReels(Id: reviewId, mode: .myReview))
             return .empty()
             
         case .bookmarkedStoreCollectionViewCellSelected(let storeId):
@@ -126,7 +125,7 @@ final class MyPageReactor: Reactor, Stepper {
             return .empty()
             
         case .bookmarkedReviewCollectionViewCellSelected(let reviewId):
-            steps.accept(AppStep.userReviewReels(reviewId))
+            steps.accept(AppStep.userReviewReels(Id: reviewId, mode: .bookmarkedReview))
             return .empty()
         }
     }
