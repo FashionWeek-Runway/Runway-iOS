@@ -22,14 +22,16 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         case resendButtonDidTap
         case confirmButtonDidTap
         
-        
-        case setTimer(String)
+        case timer(Int)
     }
     
     enum Mutation {
         case setVerificationNumber(String)
         case setInvalidCertification
         case setTimerText(String)
+        
+        case setTimeIntiailly
+        case setTime
     }
     
     struct State{
@@ -40,6 +42,7 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
         var invalidCertification = true
         
         var timerText: String? = nil
+        var timeSecond = 180
     }
     
     // MARK: - Properties
@@ -63,15 +66,12 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            startTimer(initialSecond: 180)
             provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
-                .subscribe(onNext: { (response, data) in
-                    print(response)
-                })
+                .subscribe()
                 .disposed(by: disposeBag)
             return .empty()
-        case .setTimer(let string):
-            return .just(.setTimerText(string))
+        case .timer(let string):
+            return .just(.setTime)
         case .backButtonDidTap:
             steps.accept(AppStep.back(animated: true))
             return .empty()
@@ -79,14 +79,17 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
             return .just(.setVerificationNumber(string))
         case .resendButtonDidTap:
             steps.accept(AppStep.toast("인증번호를 다시 보냈습니다."))
-            return provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
-                .flatMap({ (response, data) -> Observable<Mutation> in
-                    if 200...299 ~= response.statusCode {
-                        return .empty()
-                    } else {
-                        return .empty()
-                    }
-                })
+            return Observable.concat([
+                provider.signUpService.sendVerificationMessage(phoneNumber: initialState.phoneNumber).responseData()
+                    .flatMap({ (response, data) -> Observable<Mutation> in
+                        if 200...299 ~= response.statusCode {
+                            return .empty()
+                        } else {
+                            return .empty()
+                        }
+                    }),
+                Observable.just(.setTimeIntiailly)
+            ])
         case .confirmButtonDidTap:
             guard let number = currentState.verificationNumber else { return .empty() }
             return provider.signUpService.checkVerificationNumber(verificationNumber: number,
@@ -113,31 +116,25 @@ final class ForgotPasswordPhoneCertificationNumberInputReactor: Reactor, Stepper
             state.invalidCertification = true
         case .setTimerText(let timerText):
             state.timerText = timerText
+        case .setTimeIntiailly:
+            state.timeSecond = 180
+        case .setTime:
+            state.timeSecond -= 1
+            if state.timeSecond <= 0 {
+                // TODO: - 시간 만료시 해야할 동작
+                state.timeSecond = 0
+            }
+            state.timerText = formattedTimerText(timeSecond: state.timeSecond)
         }
         state.isRequestEnabled = state.verificationNumber?.count == 6
         return state
     }
     
-    private func startTimer(initialSecond: Int) {
-        if let timer = self.timer, timer.isValid {
-            timer.invalidate()
-        }
-        timeSecond = initialSecond
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(callBackTimer), userInfo: nil, repeats: true)
-    }
-    
-    @objc private func callBackTimer() {
+    private func formattedTimerText(timeSecond: Int) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
-        guard let timeString = formatter.string(from: TimeInterval(timeSecond)) else { return }
-        action.onNext(.setTimer(timeString))
-        
-        if timeSecond == 0 {
-            timer?.invalidate()
-            timer = nil
-        } else {
-            timeSecond -= 1
-        }
+        formatter.zeroFormattingBehavior = .dropLeading
+        return formatter.string(from: TimeInterval(timeSecond)) ?? "0:00"
     }
 }
 

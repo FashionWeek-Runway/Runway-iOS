@@ -60,14 +60,14 @@ final class ForgotPasswordPhoneCertificationNumberInputViewController: BaseViewC
         return label
     }()
     
-    private let reSendButton: UIButton = {
+    private let resendButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = .primary
         button.layer.cornerRadius = 4
         button.clipsToBounds = true
         button.setBackgroundColor(.blue100, for: .normal)
-        button.setTitleColor(.primary, for: .normal)
+        button.setBackgroundColor(.gray100, for: .disabled)
         button.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.primary]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "재요청", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.gray500]), for: .disabled)
         return button
     }()
     
@@ -78,6 +78,9 @@ final class ForgotPasswordPhoneCertificationNumberInputViewController: BaseViewC
         button.isEnabled = false
         return button
     }()
+    
+    private let timerObservable: Observable<Int>? = Observable<Int>
+        .interval(.seconds(1), scheduler: MainScheduler.instance)
     
     // MARK: - intializer
     
@@ -109,7 +112,7 @@ final class ForgotPasswordPhoneCertificationNumberInputViewController: BaseViewC
         
         self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
         
-        verificationNumberInputField.addSubviews([timerLabel, reSendButton])
+        verificationNumberInputField.addSubviews([timerLabel, resendButton])
         
         guideTextLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -144,7 +147,7 @@ final class ForgotPasswordPhoneCertificationNumberInputViewController: BaseViewC
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        reSendButton.snp.makeConstraints {
+        resendButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-6)
             $0.trailing.equalToSuperview()
             $0.width.equalTo(67)
@@ -152,7 +155,7 @@ final class ForgotPasswordPhoneCertificationNumberInputViewController: BaseViewC
         }
         
         timerLabel.snp.makeConstraints {
-            $0.trailing.equalTo(reSendButton.snp.leading).offset(-14)
+            $0.trailing.equalTo(resendButton.snp.leading).offset(-14)
             $0.centerY.equalToSuperview()
             $0.width.equalTo(29)
         }
@@ -189,6 +192,10 @@ extension ForgotPasswordPhoneCertificationNumberInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        timerObservable?.map { Reactor.Action.timer($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         backButton.rx.tap
             .map { Reactor.Action.backButtonDidTap }
             .bind(to: reactor.action)
@@ -200,7 +207,7 @@ extension ForgotPasswordPhoneCertificationNumberInputViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        reSendButton.rx.tap
+        resendButton.rx.tap
             .map { Reactor.Action.resendButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -214,6 +221,10 @@ extension ForgotPasswordPhoneCertificationNumberInputViewController: View {
     private func bindState(reactor: ForgotPasswordPhoneCertificationNumberInputReactor) {
         reactor.state.map { $0.isRequestEnabled }
             .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.timeSecond == 0 }
+            .bind(to: resendButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         reactor.state.compactMap { $0.timerText }

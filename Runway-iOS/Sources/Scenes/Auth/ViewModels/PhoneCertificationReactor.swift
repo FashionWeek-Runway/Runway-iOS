@@ -121,7 +121,7 @@ final class PhoneCertificationReactor: Reactor, Stepper {
         return state
     }
     
-    func formattedTimerText(timeSecond: Int) -> String {
+    private func formattedTimerText(timeSecond: Int) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = .dropLeading

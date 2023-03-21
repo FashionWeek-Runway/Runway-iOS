@@ -62,7 +62,6 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     
     private let resendButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = .primary
         button.layer.cornerRadius = 4
         button.clipsToBounds = true
         button.setBackgroundColor(.blue100, for: .normal)
