@@ -421,21 +421,16 @@ extension MapViewController: View {
         reactor.state.map { $0.mapCategoryFilters }
             .bind(to: mapSearchBar.categoryCollectionView.rx.items) { collectionView, index, item in
                 let indexPath = IndexPath(item: index, section: 0)
-//                if index == 0 {
-//                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewBookmarkCell else { return UICollectionViewCell() }
-//                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
-//                    return cell
-//                } else {
-//                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewCell else { return UICollectionViewCell() }
-//                    cell.titleLabel.text = item
-//                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
-//                    return cell
-//                }
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewCell else { return UICollectionViewCell() }
-                cell.titleLabel.text = item
-                cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
-                return cell
-                
+                if index == 0 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewBookmarkCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewBookmarkCell else { return UICollectionViewCell() }
+                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWMapSearchBarCollectionViewCell.identifier, for: indexPath) as? RWMapSearchBarCollectionViewCell else { return UICollectionViewCell() }
+                    cell.titleLabel.text = item
+                    cell.setSelectedLayout(reactor.currentState.mapFilterSelected[item] ?? false)
+                    return cell
+                }
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapMarkers }
