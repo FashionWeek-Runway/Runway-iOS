@@ -54,7 +54,7 @@ final class AppSettingService {
     
     var isFirstAppLaunch: Bool {
         get {
-            let isFirstLaunch = !UserDefaults.standard.bool(forKey: "hasBeenLaunchedAppBefore")
+            let isFirstLaunch = UserDefaults.standard.bool(forKey: "hasBeenLaunchedAppBefore")
             if isFirstLaunch {
                 UserDefaults.standard.set(true, forKey: "hasBeenLaunchedAppBefore")
             }
