@@ -149,6 +149,11 @@ extension CategorySettingViewController: View {
         reactor.state.map { $0.isNextButtonEnabled }
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.isLoading }
+            .bind(onNext: { [weak self] isLoading in
+                isLoading ? self?.showLoading() : self?.hideLoading()
+            }).disposed(by: disposeBag)
     }
 }
 

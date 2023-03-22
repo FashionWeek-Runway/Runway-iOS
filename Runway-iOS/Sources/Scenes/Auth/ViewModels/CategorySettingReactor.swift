@@ -28,15 +28,18 @@ final class CategorySettingReactor: Reactor, Stepper {
     enum Mutation {
         case emitIntialCategory
         case selectCategory(String)
+        case setLoading(Bool)
     }
     
     struct State {
-        var nickname: String? = nil
+        let nickname: String
         var isNextButtonEnabled: Bool = false
 
         
-        var isSelected: [String: Bool]
-        var categories: [String]
+        var isSelected: [String: Bool] = Dictionary(uniqueKeysWithValues: FashionCategory.List.map { ($0, false) })
+        var categories: [String] = FashionCategory.List
+        
+        var isLoading: Bool = false
     }
     
     enum SignUpAs {
@@ -55,7 +58,6 @@ final class CategorySettingReactor: Reactor, Stepper {
     let initialState: State
     let signUpAs: SignUpAs
     
-    let categories = ["미니멀", "캐주얼", "스트릿", "빈티지", "페미닌", "시티보이"]
     let categoryForRequestId = ["미니멀": 1, "캐주얼": 2, "시티보이": 3, "스트릿": 4, "빈티지": 5, "페미닌": 6]
     
     // MARK: - initializer
@@ -64,23 +66,17 @@ final class CategorySettingReactor: Reactor, Stepper {
         self.provider = provider
         
         if let nickname = provider.signUpService.signUpAsKakaoData?.nickname { // kakao
-            self.initialState = State(nickname: nickname,
-                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
-                                      categories: categories)
+            self.initialState = State(nickname: nickname)
             self.signUpAs = .kakao
         } else if let nickname = provider.signUpService.signUpAsPhoneData?.nickname { // phone
-            self.initialState = State(nickname: nickname,
-                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
-                                      categories: categories)
+            self.initialState = State(nickname: nickname)
             self.signUpAs = .phone
         } else if let nickname = provider.signUpService.signUpAsAppleData?.nickname { // apple
-            self.initialState = State(nickname: nickname,
-                                      isSelected: Dictionary(uniqueKeysWithValues: categories.map { ($0, false) }),
-                                      categories: categories)
+            self.initialState = State(nickname: nickname)
             self.signUpAs = .apple
         } else { // 오류케이스
             self.signUpAs = .phone
-            self.initialState = State(isSelected: [:], categories: categories)
+            self.initialState = State(nickname: "")
             
         }
     }
@@ -99,36 +95,57 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .nextButtonDidTap:
             let selectedCategoryIndex = currentState.categories.filter({ currentState.isSelected[$0] == true })
                 .map { categoryForRequestId[$0] }.compactMap { $0 }
+            let selectedCategories = Array(currentState.isSelected.filter { $0.value == true }.keys)
             
             switch signUpAs {
             case .kakao:
                 provider.signUpService.signUpAsKakaoData?.categoryList = selectedCategoryIndex
-                provider.signUpService.signUpAsKakao().subscribe(onNext: { [weak self] request in
-                    do {
-                        guard let requestData = request.data else { return }
-                        let data = try JSONDecoder().decode(SocialSignUpResponse.self, from: requestData)
-                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
-                        self?.provider.appSettingService.authToken = data.result.accessToken
-                        self?.provider.appSettingService.lastLoginType = .kakao
-                        self?.provider.appSettingService.isLoggedIn = true
-                    } catch {
-                        print(error)
-                    }
-                }).disposed(by: disposeBag)
+                
+                return Observable.concat([
+                    .just(.setLoading(true)),
+                    
+                    provider.signUpService.signUpAsKakao().flatMap { $0.rx.data() }
+                        .decode(type: SocialSignUpResponse.self, decoder: JSONDecoder())
+                        .flatMap { data -> Observable<Mutation> in
+                            
+                            self.provider.appSettingService.refreshToken = data.result.refreshToken
+                            self.provider.appSettingService.authToken = data.result.accessToken
+                            self.provider.appSettingService.lastLoginType = .kakao
+                            self.provider.appSettingService.isLoggedIn = true
+                            
+                            self.steps.accept(AppStep.signUpIsCompleted(nickname: self.currentState.nickname,
+                                                                        styles: selectedCategories,
+                                                                        imageURL: data.result.imageURL))
+                            
+                            return .just(.setLoading(false))
+                            
+                        }
+                ])
+    
             case .apple:
+                
                 provider.signUpService.signUpAsAppleData?.categoryList = selectedCategoryIndex
-                provider.signUpService.signUpAsApple().subscribe(onNext: { [weak self] request in
-                    do {
-                        guard let requestData = request.data else { return }
-                        let data = try JSONDecoder().decode(SocialSignUpResponse.self, from: requestData)
-                        self?.provider.appSettingService.refreshToken = data.result.refreshToken
-                        self?.provider.appSettingService.authToken = data.result.accessToken
-                        self?.provider.appSettingService.lastLoginType = .apple
-                        self?.provider.appSettingService.isLoggedIn = true
-                    } catch {
-                        print(error)
-                    }
-                }).disposed(by: disposeBag)
+                
+                return Observable.concat([
+                    .just(.setLoading(true)),
+                    
+                    provider.signUpService.signUpAsApple().flatMap { $0.rx.data() }
+                        .decode(type: SocialSignUpResponse.self, decoder: JSONDecoder())
+                        .flatMap { data -> Observable<Mutation> in
+                            
+                            self.provider.appSettingService.refreshToken = data.result.refreshToken
+                            self.provider.appSettingService.authToken = data.result.accessToken
+                            self.provider.appSettingService.lastLoginType = .apple
+                            self.provider.appSettingService.isLoggedIn = true
+                            self.steps.accept(AppStep.signUpIsCompleted(nickname: self.currentState.nickname,
+                                                                        styles: selectedCategories,
+                                                                        imageURL: data.result.imageURL))
+                            
+                            return .just(.setLoading(false))
+                            
+                        }
+                ])
+                
             case .phone:
                 provider.signUpService.signUpAsPhoneData?.categoryList = selectedCategoryIndex
                 return provider.signUpService.signUpAsPhone().flatMap { $0.rx.data() }
@@ -139,11 +156,12 @@ final class CategorySettingReactor: Reactor, Stepper {
                         self.provider.appSettingService.authToken = $0.result.accessToken
                         self.provider.appSettingService.lastLoginType = .phone
                         self.provider.appSettingService.isLoggedIn = true
-                        self.steps.accept(AppStep.signUpIsCompleted(nickname: $0.result.nickname, styles: $0.result.categoryList, imageURL: $0.result.imageURL))
-                        return Observable<Mutation>.empty()
+                        self.steps.accept(AppStep.signUpIsCompleted(nickname: self.currentState.nickname,
+                                                                    styles: selectedCategories,
+                                                                    imageURL: $0.result.imageURL))
+                        return Observable.just(Mutation.setLoading(false))
                     }
             }
-            return .empty()
         }
     }
     
@@ -155,6 +173,8 @@ final class CategorySettingReactor: Reactor, Stepper {
         case .selectCategory(let category):
             newState.isSelected[category]?.toggle()
             newState.isNextButtonEnabled = newState.isSelected.contains(where: { $0.value == true })
+        case .setLoading(let bool):
+            newState.isLoading = bool
         }
         
         return newState

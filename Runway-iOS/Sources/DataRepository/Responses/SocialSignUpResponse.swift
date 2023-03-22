@@ -18,14 +18,14 @@ struct SocialSignUpResponse: Decodable {
 struct SocialSignUpResult: Decodable {
     let userID: Int
     let accessToken, refreshToken: String
-    let imgURL: String?
+    let imageURL: String?
     let nickname: String?
     let categoryList: [String]?
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
         case accessToken, refreshToken
-        case imgURL = "imgUrl"
+        case imageURL = "imgUrl"
         case nickname, categoryList
     }
 }
