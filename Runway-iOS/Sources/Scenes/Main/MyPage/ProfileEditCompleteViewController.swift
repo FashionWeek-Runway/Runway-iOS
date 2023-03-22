@@ -16,8 +16,8 @@ import Lottie
 
 final class ProfileEditCompleteViewController: BaseViewController {
     
-    private let animationView: AnimationView = {
-        let view = AnimationView(name: "confetti")
+    private let animationView: LottieAnimationView = {
+        let view = LottieAnimationView(name: "confetti")
         view.loopMode = .playOnce
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true

@@ -33,8 +33,8 @@ final class SignUpCompleteViewController: BaseViewController {
         return label
     }()
     
-    private let animationView: AnimationView = {
-        let view = AnimationView(name: "confetti")
+    private let animationView: LottieAnimationView = {
+        let view = LottieAnimationView(name: "confetti")
         view.loopMode = .playOnce
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true

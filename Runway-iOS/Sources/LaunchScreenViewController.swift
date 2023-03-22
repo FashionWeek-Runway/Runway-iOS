@@ -12,8 +12,8 @@ import RxFlow
 
 final class LaunchScreenViewController: UIViewController {
     
-    private let animationView: AnimationView = {
-        let view = AnimationView(name: "logo_moving")
+    private let animationView: LottieAnimationView = {
+        let view = LottieAnimationView(name: "logo_moving")
         view.loopMode = .playOnce
         view.contentMode = .scaleAspectFill
         return view
@@ -85,7 +85,5 @@ final class LaunchScreenViewController: UIViewController {
         } else {
             appStepper.steps.accept(AppStep.loginRequired)
         }
-        
-        window.makeKeyAndVisible()
     }
 }
