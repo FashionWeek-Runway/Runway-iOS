@@ -87,6 +87,7 @@
 		19849B8929BA17F200B1FA1F /* WithdrawalReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */; };
 		198AB8E729AF94C5002BB5DF /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */; };
 		198AB8E929AF9503002BB5DF /* MapSearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */; };
+		198B9DF629CAA77000D9A0F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 198B9DF529CAA77000D9A0F8 /* GoogleService-Info.plist */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
 		198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B229980136000457CE /* RWCheckLabelView.swift */; };
 		19917EF12994DC440016A175 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF02994DC440016A175 /* AppStep.swift */; };
@@ -146,7 +147,6 @@
 		19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */; };
 		19CA8D7429ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */; };
 		19CA8D7629ABE15300FE18E3 /* RWMapMarkerSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */; };
-		19CF651A29C9A4A6005B794A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 19CF651929C9A4A5005B794A /* GoogleService-Info.plist */; };
 		19E0C76C29A2751C003E1F10 /* SignUpAsAppleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */; };
 		19E0C77029A27FEF003E1F10 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */; };
 		19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E0C77129A2A673003E1F10 /* MainFlow.swift */; };
@@ -310,6 +310,7 @@
 		19849B8829BA17F200B1FA1F /* WithdrawalReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalReactor.swift; sourceTree = "<group>"; };
 		198AB8E629AF94C5002BB5DF /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactor.swift; sourceTree = "<group>"; };
+		198B9DF529CAA77000D9A0F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
 		198CA2B229980136000457CE /* RWCheckLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWCheckLabelView.swift; sourceTree = "<group>"; };
 		19917EF02994DC440016A175 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
@@ -370,7 +371,6 @@
 		19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		19CA8D7329ABDF4C00FE18E3 /* MapMarkerSelectResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerSelectResponse.swift; sourceTree = "<group>"; };
 		19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapMarkerSelectView.swift; sourceTree = "<group>"; };
-		19CF651929C9A4A5005B794A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19E0C76B29A2751C003E1F10 /* SignUpAsAppleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsAppleData.swift; sourceTree = "<group>"; };
 		19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
 		19E0C77129A2A673003E1F10 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
@@ -578,7 +578,7 @@
 		196AED3E298E5C16007A9E23 /* Runway-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				19CF651929C9A4A5005B794A /* GoogleService-Info.plist */,
+				198B9DF529CAA77000D9A0F8 /* GoogleService-Info.plist */,
 				19F46023299EBF5C0034D39E /* Runway-iOS.entitlements */,
 				19A9622A2991527F00F952DA /* Sources */,
 				19A962292991527500F952DA /* Resources */,
@@ -1110,7 +1110,7 @@
 				19A962322991566A00F952DA /* SpoqaHanSansNeo-Bold.otf in Resources */,
 				199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */,
 				1917586A29C4920D0025F21D /* logo_moving.json in Resources */,
-				19CF651A29C9A4A6005B794A /* GoogleService-Info.plist in Resources */,
+				198B9DF629CAA77000D9A0F8 /* GoogleService-Info.plist in Resources */,
 				19A962332991566A00F952DA /* SpoqaHanSansNeo-Regular.otf in Resources */,
 				19A962342991566A00F952DA /* SpoqaHanSansNeo-Thin.otf in Resources */,
 			);
