@@ -85,5 +85,7 @@ final class LaunchScreenViewController: UIViewController {
         } else {
             appStepper.steps.accept(AppStep.loginRequired)
         }
+        
+        window.makeKeyAndVisible()
     }
 }
