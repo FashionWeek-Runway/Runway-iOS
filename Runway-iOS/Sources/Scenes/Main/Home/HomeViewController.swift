@@ -316,8 +316,13 @@ extension HomeViewController: View {
             .disposed(by: disposeBag)
         
         pagerCollectionView.rx.modelSelected(HomeStoreResponseResult.self)
-            .filter { $0.cellType == .store }
-            .map { Reactor.Action.pagerCellDidTap($0.storeID) }
+            .map {
+                if $0.cellType == .store {
+                    return Reactor.Action.pagerCellDidTap($0.storeID)
+                } else {
+                    return Reactor.Action.showAllContentButtonDidTap
+                }
+            }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
