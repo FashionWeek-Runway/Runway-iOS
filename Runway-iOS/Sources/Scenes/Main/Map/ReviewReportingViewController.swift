@@ -228,6 +228,13 @@ final class ReviewReportingViewController: BaseViewController {
             $0.height.equalToSuperview().priority(.high)
         }
         
+        [isSpamButton, isInappropreatedButton, isHarmfulButton, isAbuseButton, isLieButton, isEtcButton]
+            .forEach { button in
+                button.snp.makeConstraints {
+                    $0.width.height.equalTo(24)
+                }
+            }
+        
         let reasonUI = [(isSpamButton, spamLabel),
                         (isInappropreatedButton, inappropreatedLabel),
                         (isHarmfulButton, harmfulLabel),
@@ -239,6 +246,7 @@ final class ReviewReportingViewController: BaseViewController {
             stackView.spacing = 12
             stackView.axis = .horizontal
             stackView.alignment = .center
+            
             return stackView
         }
         
