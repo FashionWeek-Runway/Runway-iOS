@@ -20,7 +20,6 @@
 		191B8EBB29B4DB7500CF5C83 /* ReviewDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */; };
 		191B8EBD29B4E84800CF5C83 /* ReviewReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */; };
 		191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */; };
-		191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */; };
 		19281D2629AA9CBD0043E565 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19281D2529AA9CBD0043E565 /* UIImageView+.swift */; };
 		19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */; };
 		19345E7F29955F8500E1EF9A /* MainLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */; };
@@ -54,6 +53,9 @@
 		194F954B2993BFCB0016DDFF /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954A2993BFCB0016DDFF /* LoginResponse.swift */; };
 		194F95502993C63F0016DDFF /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F954F2993C63F0016DDFF /* DataRepository.swift */; };
 		194F95532993CE480016DDFF /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194F95522993CE480016DDFF /* RequestError.swift */; };
+		1963A80229CCABC800C98337 /* RWReviewTextEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */; };
+		1963A80429CCAE0400C98337 /* RWSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80329CCAE0400C98337 /* RWSlider.swift */; };
+		1963A80829CCC39B00C98337 /* RWReviewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80729CCC39B00C98337 /* RWReviewTextView.swift */; };
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
 		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
 		196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B7299B561900BD0897 /* RWProfileSettingButton.swift */; };
@@ -234,7 +236,6 @@
 		191B8EBA29B4DB7500CF5C83 /* ReviewDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDetailResponse.swift; sourceTree = "<group>"; };
 		191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportingViewController.swift; sourceTree = "<group>"; };
 		191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportingReactor.swift; sourceTree = "<group>"; };
-		191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewReelsCollectionViewCellReactor.swift; sourceTree = "<group>"; };
 		19281D2529AA9CBD0043E565 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		19345E7C2994F54400E1EF9A /* PhoneLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneLoginViewController.swift; sourceTree = "<group>"; };
 		19345E7E29955F8500E1EF9A /* MainLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +269,9 @@
 		194F954A2993BFCB0016DDFF /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		194F954F2993C63F0016DDFF /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		194F95522993CE480016DDFF /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewTextEditView.swift; sourceTree = "<group>"; };
+		1963A80329CCAE0400C98337 /* RWSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSlider.swift; sourceTree = "<group>"; };
+		1963A80729CCC39B00C98337 /* RWReviewTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewTextView.swift; sourceTree = "<group>"; };
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
@@ -724,7 +728,6 @@
 		19A2552029B61377001EF3DD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				191B8EC029B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift */,
 				19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */,
 				19E0C77E29A2AC19003E1F10 /* MapReactor.swift */,
 				198AB8E829AF9503002BB5DF /* MapSearchReactor.swift */,
@@ -823,6 +826,9 @@
 				19CA8D7529ABE15300FE18E3 /* RWMapMarkerSelectView.swift */,
 				1941DFE529B2522B00C7F5BA /* RWContentSizedTableView.swift */,
 				191B8EB629B4C37600CF5C83 /* RWReviewReelsCollectionViewCell.swift */,
+				1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */,
+				1963A80329CCAE0400C98337 /* RWSlider.swift */,
+				1963A80729CCC39B00C98337 /* RWReviewTextView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1335,6 +1341,7 @@
 				199B9C65299CE81C00877AAE /* IdentityVerificationReactor.swift in Sources */,
 				199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */,
 				1948E27329BB3F5100B8A0FB /* ProfileEditCompleteViewController.swift in Sources */,
+				1963A80829CCC39B00C98337 /* RWReviewTextView.swift in Sources */,
 				196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */,
 				19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */,
 				196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */,
@@ -1361,7 +1368,6 @@
 				19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
-				191B8EC129B4F97300CF5C83 /* RWReviewReelsCollectionViewCellReactor.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
 				19488EA029C31A5E002540F9 /* LaunchScreenViewController.swift in Sources */,
@@ -1402,6 +1408,8 @@
 				19F10C7D29A8D9560060F0BD /* AroundMapSearchResponse.swift in Sources */,
 				19FF9B3E29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift in Sources */,
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
+				1963A80429CCAE0400C98337 /* RWSlider.swift in Sources */,
+				1963A80229CCABC800C98337 /* RWReviewTextEditView.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
