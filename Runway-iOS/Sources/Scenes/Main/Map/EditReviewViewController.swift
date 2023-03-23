@@ -150,6 +150,7 @@ final class EditReviewViewController: BaseViewController {
     }
     
     private func setTextEditMode() {
+        view.bringSubviewToFront(textEditView)
         textEditView.fadeIn(duration: 0.3)
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = true }
         
@@ -168,8 +169,10 @@ final class EditReviewViewController: BaseViewController {
             default:
                 break
             }
-        } else { // 새로 생성
+            self.view.bringSubviewToFront(selectedTextView)
+        } else { // text 새로 생성
             let textView = RWReviewTextView(frame: CGRect(x: 20, y: self.navigationBarArea.frame.maxY + 44, width: UIScreen.getDeviceWidth() - 40, height: 303))
+            textView.inputAccessoryView = RWColorInputAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.getDeviceWidth(), height: 46))
             self.textEditView.editCancelButton.isHidden = false
             
             textView.rx.didBeginEditing
@@ -187,7 +190,7 @@ final class EditReviewViewController: BaseViewController {
                 .drive(onNext: { [weak self] panGesture in
                     switch panGesture.state {
                     case .began:
-                        self?.cancelTextEditMode()
+                        self?.completeTextEditMode()
                     case .changed:
                         let delta = panGesture.translation(in: textView.superview)
                         var position = textView.center
@@ -204,8 +207,14 @@ final class EditReviewViewController: BaseViewController {
             self.view.addSubview(textView)
             self.selectedTextView = textView
         }
-        
         self.selectedTextView?.becomeFirstResponder()
+    }
+    
+    private func setColorEditMode() {
+        textEditView.colorPalleteButton.isHidden = true
+        textEditView.alignmentButton.snp.updateConstraints {
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func cancelTextEditMode() {
@@ -227,6 +236,9 @@ final class EditReviewViewController: BaseViewController {
         }
         self.selectedTextView?.resignFirstResponder()
         self.selectedTextView?.tag = 1 // 기존에 존재하는 textview임을 설정하는 플래그
+        if let textView = selectedTextView {
+            self.view.addSubview(textView)
+        }
         if let selectedTextViewOrigin = self.selectedTextViewOrigin {
             UIView.animate(withDuration: 0.3) {
                 self.selectedTextView?.frame.origin = selectedTextViewOrigin

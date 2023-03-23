@@ -56,6 +56,8 @@
 		1963A80229CCABC800C98337 /* RWReviewTextEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */; };
 		1963A80429CCAE0400C98337 /* RWSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80329CCAE0400C98337 /* RWSlider.swift */; };
 		1963A80829CCC39B00C98337 /* RWReviewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80729CCC39B00C98337 /* RWReviewTextView.swift */; };
+		1963A80A29CCE95200C98337 /* RWColorChipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80929CCE95200C98337 /* RWColorChipButton.swift */; };
+		1963A80C29CCEBBD00C98337 /* RWColorInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963A80B29CCEBBD00C98337 /* RWColorInputAccessoryView.swift */; };
 		196662B0299A69BD00BD0897 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662AF299A69BD00BD0897 /* UIWindow+.swift */; };
 		196662B2299A6AE200BD0897 /* RWToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B1299A6AE200BD0897 /* RWToastView.swift */; };
 		196662B8299B561900BD0897 /* RWProfileSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662B7299B561900BD0897 /* RWProfileSettingButton.swift */; };
@@ -272,6 +274,8 @@
 		1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewTextEditView.swift; sourceTree = "<group>"; };
 		1963A80329CCAE0400C98337 /* RWSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWSlider.swift; sourceTree = "<group>"; };
 		1963A80729CCC39B00C98337 /* RWReviewTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewTextView.swift; sourceTree = "<group>"; };
+		1963A80929CCE95200C98337 /* RWColorChipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWColorChipButton.swift; sourceTree = "<group>"; };
+		1963A80B29CCEBBD00C98337 /* RWColorInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWColorInputAccessoryView.swift; sourceTree = "<group>"; };
 		196662AF299A69BD00BD0897 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		196662B1299A6AE200BD0897 /* RWToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWToastView.swift; sourceTree = "<group>"; };
 		196662B7299B561900BD0897 /* RWProfileSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileSettingButton.swift; sourceTree = "<group>"; };
@@ -829,6 +833,8 @@
 				1963A80129CCABC800C98337 /* RWReviewTextEditView.swift */,
 				1963A80329CCAE0400C98337 /* RWSlider.swift */,
 				1963A80729CCC39B00C98337 /* RWReviewTextView.swift */,
+				1963A80929CCE95200C98337 /* RWColorChipButton.swift */,
+				1963A80B29CCEBBD00C98337 /* RWColorInputAccessoryView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1428,6 +1434,7 @@
 				1948E27729BB4C8A00B8A0FB /* ProfileEditCompleteResponse.swift in Sources */,
 				19345E892995613300E1EF9A /* PolicyAgreementViewController.swift in Sources */,
 				19E0C79F29A39F1C003E1F10 /* MapModel.swift in Sources */,
+				1963A80A29CCE95200C98337 /* RWColorChipButton.swift in Sources */,
 				196D23AC29A4FB5200E262FB /* RWMapSearchBarCollectionViewBookmarkCell.swift in Sources */,
 				199B9C5F299C92DB00877AAE /* SocialSignUpResponse.swift in Sources */,
 				19E0C78329A2AF90003E1F10 /* HomeFlow.swift in Sources */,
@@ -1441,6 +1448,7 @@
 				198372DA29BAD89100F01CB7 /* BookmarkedReviewResponse.swift in Sources */,
 				19FF9B2829B7684600C48BD7 /* HomeStoreResponse.swift in Sources */,
 				19E88C3829ACAF6500B111CE /* ShowRoomDetailViewController.swift in Sources */,
+				1963A80C29CCEBBD00C98337 /* RWColorInputAccessoryView.swift in Sources */,
 				199B9C69299CE88400877AAE /* SignUpCompleteReactor.swift in Sources */,
 				19E0C7A329A3B1D0003E1F10 /* RxNMFMapViewTouchDelegateProxy.swift in Sources */,
 				19345E91299561CA00E1EF9A /* SignUpCompleteViewController.swift in Sources */,
