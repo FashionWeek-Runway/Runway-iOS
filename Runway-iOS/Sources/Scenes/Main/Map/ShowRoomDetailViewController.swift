@@ -149,7 +149,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         button.setAttributedTitle(NSAttributedString(string: "후기 작성", attributes: [.font: UIFont.body1M,
                                                                                    .foregroundColor: UIColor.primary]), for: .normal)
         button.setImage(UIImage(named: "icon_camera"), for: .normal)
-        button.imageEdgeInsets.right = 6
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -6, bottom: 0, right: 6)
         return button
     }()
     
