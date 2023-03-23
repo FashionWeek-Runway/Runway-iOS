@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class RWMapSearchHistoryTableViewCell: UITableViewCell {
     
@@ -38,6 +40,8 @@ final class RWMapSearchHistoryTableViewCell: UITableViewCell {
     
     static let identifier = "RWSearchHistoryTableViewCell"
     
+    var disposeBag = DisposeBag()
+    
     // MARK: - initializer
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,7 +54,8 @@ final class RWMapSearchHistoryTableViewCell: UITableViewCell {
     }
     
     private func configureUI() {
-        addSubviews([iconImageView, titleLabel, dateLabel, removeButton])
+        addSubviews([iconImageView, titleLabel, dateLabel])
+        contentView.addSubview(removeButton)
         iconImageView.snp.makeConstraints {
             $0.leading.top.equalToSuperview()
             $0.width.height.equalTo(24)
@@ -71,6 +76,10 @@ final class RWMapSearchHistoryTableViewCell: UITableViewCell {
             $0.trailing.equalTo(removeButton.snp.leading)
             $0.centerY.equalTo(titleLabel.snp.centerY)
         }
-        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
 }

@@ -29,6 +29,7 @@ final class MapSearchReactor: Reactor, Stepper {
     enum Action {
         case viewDidLoad
         case backButtonDidtap
+        case historyRemoveButtonDidTap(MapSearchHistory)
         case historyAllClearButtonDidTap
         case searchFieldInput(String)
         case selectSearchItem(Int)
@@ -70,6 +71,22 @@ final class MapSearchReactor: Reactor, Stepper {
         case .backButtonDidtap:
             steps.accept(AppStep.back(animated: false))
             return .empty()
+            
+        case .historyRemoveButtonDidTap(let history):
+            do {
+                try provider.realm?.write {
+                    provider.realm?.delete(history)
+                }
+            } catch {
+                print(error)
+            }
+            
+            let histories = provider.realm?.objects(MapSearchHistory.self).sorted(byKeyPath: "date", ascending: false)
+            var historyContainer = [MapSearchHistory]()
+            histories?.forEach {
+                historyContainer.append($0)
+            }
+            return .just(.setSearchHistories(historyContainer))
             
         case .historyAllClearButtonDidTap:
             do {

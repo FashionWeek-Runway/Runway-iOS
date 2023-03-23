@@ -366,6 +366,10 @@ extension MapSearchViewController: View {
                 formatter.dateFormat = "MM.dd"
                 cell.dateLabel.text = formatter.string(from: item.date)
                 cell.iconImageView.image = item.isStore ? UIImage(named: "icon_search_store_small") : UIImage(named: "icon_search_location_small")
+                cell.removeButton.rx.tap
+                    .map { Reactor.Action.historyRemoveButtonDidTap(item) }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.mapKeywordSearchData }.share()
