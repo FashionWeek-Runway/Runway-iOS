@@ -1,5 +1,5 @@
 //
-//  RWColorChipButton.swift
+//  RWColorChipCell.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/03/24.
@@ -7,13 +7,9 @@
 
 import UIKit
 
-final class RWColorChipButton: UIButton {
+final class RWColorChipCell: UICollectionViewCell {
     
-    override var isSelected: Bool {
-        didSet {
-            self.layer.borderWidth = isSelected ? 3 : 1
-        }
-    }
+    static let identifier = "RWColorChipCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,10 +25,6 @@ final class RWColorChipButton: UIButton {
         self.clipsToBounds = true
         self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = 1
-        
-        self.snp.makeConstraints {
-            $0.width.height.equalTo(30)
-        }
     }
     
 }

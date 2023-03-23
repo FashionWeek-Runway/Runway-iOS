@@ -142,6 +142,12 @@ final class EditReviewViewController: BaseViewController {
                 }
             }).disposed(by: disposeBag)
         
+        textEditView.colorPalleteButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.setColorEditMode()
+            }).disposed(by: disposeBag)
+        
         textEditView.editCompleteButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
@@ -169,11 +175,27 @@ final class EditReviewViewController: BaseViewController {
             default:
                 break
             }
+            
             self.view.bringSubviewToFront(selectedTextView)
         } else { // text 새로 생성
-            let textView = RWReviewTextView(frame: CGRect(x: 20, y: self.navigationBarArea.frame.maxY + 44, width: UIScreen.getDeviceWidth() - 40, height: 303))
-            textView.inputAccessoryView = RWColorInputAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.getDeviceWidth(), height: 46))
             self.textEditView.editCancelButton.isHidden = false
+            
+            let textView = RWReviewTextView(frame: CGRect(x: 20, y: self.navigationBarArea.frame.maxY + 44, width: UIScreen.getDeviceWidth() - 40, height: 303))
+            let colorPalleteView = RWColorInputAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: 320, height: 46))
+            textView.inputAccessoryView = colorPalleteView
+            textView.inputAccessoryView?.isHidden = false
+            
+            colorPalleteView.collectionView.rx.itemSelected
+                .asDriver()
+                .drive(onNext: { [weak self] indexPath in
+                    let selectButton = colorPalleteView.collectionView.cellForItem(at: indexPath)
+                    textView.textColor = selectButton?.backgroundColor
+                    selectButton?.layer.borderWidth = 3
+                    
+                    let previousButton = colorPalleteView.collectionView.cellForItem(at: colorPalleteView.previousSelectedCellIndexPath)
+                    previousButton?.layer.borderWidth = 1
+                    colorPalleteView.previousSelectedCellIndexPath = indexPath
+                }).disposed(by: disposeBag)
             
             textView.rx.didBeginEditing
                 .asDriver()
@@ -215,6 +237,7 @@ final class EditReviewViewController: BaseViewController {
         textEditView.alignmentButton.snp.updateConstraints {
             $0.centerX.equalToSuperview()
         }
+        self.selectedTextView?.inputAccessoryView?.isHidden = false
     }
     
     private func cancelTextEditMode() {

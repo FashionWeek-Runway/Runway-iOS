@@ -7,55 +7,33 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class RWColorInputAccessoryView: UIView {
     
-    let whiteButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(.white, for: .normal)
-        return button
+    let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        collectionView.register(RWColorChipCell.self, forCellWithReuseIdentifier: RWColorChipCell.identifier)
+        collectionView.backgroundColor = .clear
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 30, height: 30)
+        layout.minimumInteritemSpacing = (UIScreen.main.bounds.width - 250.0) / 6.0
+        collectionView.collectionViewLayout = layout
+        return collectionView
     }()
     
-    let blackButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(.runwayBlack, for: .normal)
-        return button
-    }()
+    private let disposeBag = DisposeBag()
     
-    let blueButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(.primary, for: .normal)
-        return button
-    }()
-    
-    let greenButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(.point, for: .normal)
-        return button
-    }()
-    
-    let yellowButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(UIColor(hex: "#FBFF28"), for: .normal)
-        return button
-    }()
-    
-    let redButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(UIColor(hex: "#FC3A56"), for: .normal)
-        return button
-    }()
-    
-    let violetButton: RWColorChipButton = {
-        let button = RWColorChipButton()
-        button.setBackgroundColor(UIColor(hex: "#D700E7"), for: .normal)
-        return button
-    }()
+    var previousSelectedCellIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     
     // MARK: - initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        setRx()
     }
     
     required init?(coder: NSCoder) {
@@ -67,17 +45,19 @@ final class RWColorInputAccessoryView: UIView {
     private func configureUI() {
         self.backgroundColor = .clear
         
-        let buttons = [whiteButton, blackButton, blueButton, greenButton, yellowButton, redButton, violetButton]
-        let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.distribution = .equalSpacing
-        
-        addSubview(stackView)
-        stackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(21)
-            $0.trailing.equalToSuperview().offset(-21)
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-16)
+            $0.height.equalTo(30)
         }
+    }
+    
+    private func setRx() {
+        Observable.of([UIColor.white, UIColor.runwayBlack, UIColor.primary, UIColor.point, UIColor(hex: "#FBFF28"), UIColor(hex: "#FC3A56"), UIColor(hex: "#D700E7")])
+            .bind(to: collectionView.rx.items(cellIdentifier: RWColorChipCell.identifier, cellType: RWColorChipCell.self)) { indexPath, item, cell in
+                cell.backgroundColor = item
+            }.disposed(by: disposeBag)
     }
 }
