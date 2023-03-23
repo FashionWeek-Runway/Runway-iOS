@@ -34,6 +34,14 @@ final class RWReviewTextEditView: UIView {
         return button
     }()
     
+    let slider: RWSlider = {
+        let slider = RWSlider(frame: CGRect(x: 20, y: 65, width: 24, height: 240))
+        slider.slider.maximumValue = 28.0
+        slider.slider.minimumValue = 12.0
+        slider.slider.value = 18.0
+        return slider
+    }()
+    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -47,7 +55,7 @@ final class RWReviewTextEditView: UIView {
     
     private func configureUI() {
         self.backgroundColor = .runwayBlack.withAlphaComponent(0.5)
-        addSubviews([editCancelButton, alignmentButton, colorPalleteButton, editCompleteButton])
+        addSubviews([editCancelButton, alignmentButton, colorPalleteButton, editCompleteButton, slider])
         
         editCancelButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -67,6 +75,11 @@ final class RWReviewTextEditView: UIView {
         editCompleteButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalToSuperview().offset(13)
+        }
+        
+        slider.snp.makeConstraints {
+            $0.height.equalTo(240)
+            $0.width.equalTo(24)
         }
     }
     

@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ReactorKit
+import RxKeyboard
 
 final class EditReviewViewController: BaseViewController {
     
@@ -46,8 +47,6 @@ final class EditReviewViewController: BaseViewController {
         button.setBackgroundImage(UIImage(named: "icon_add_text"), for: .normal)
         return button
     }()
-    
-    
     
     private var selectedTextView: RWReviewTextView? = nil
     private var selectedTextViewOrigin: CGPoint? = nil
@@ -153,6 +152,38 @@ final class EditReviewViewController: BaseViewController {
             .drive(onNext: { [weak self] in
                 self?.selectedTextView?.endEditing(true)
             }).disposed(by: disposeBag)
+        
+        // 일단 나중에
+//        textEditView.slider.slider.rx.tapGesture()
+//            .asDriver()
+//            .drive(onNext: { [weak self] in
+//                UIView.animate(withDuration: 0.3) {
+//                    self?.textEditView.slider.frame.origin.x = 10
+//                } completion: { isDone in
+//                    UIView.animate(withDuration: 0.3) {
+//                        self?.textEditView.slider.frame.origin.x = -10
+//                    }
+//                }
+//            }).disposed(by: disposeBag)
+        
+        textEditView.slider.slider.rx.value
+            .asDriver()
+            .map { CGFloat($0) }
+            .drive(onNext: { [weak self] in
+                guard let self = self, let selectedTextView = self.selectedTextView else { return }
+                selectedTextView.font = selectedTextView.font?.withSize($0)
+            })
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [weak self] keyboardHeight in
+                guard let self = self else { return }
+//                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : 0
+                
+                self.textEditView.slider.frame.origin.y = UIScreen.getDeviceHeight() - 135 - 240 - keyboardHeight
+                self.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setTextEditMode() {
@@ -164,6 +195,10 @@ final class EditReviewViewController: BaseViewController {
             self.textEditView.editCancelButton.isHidden = true
             UIView.animate(withDuration: 0.3) {
                 selectedTextView.frame = CGRect(x: 20, y: self.navigationBarArea.frame.maxY + 44, width: UIScreen.getDeviceWidth() - 40, height: 303)
+            } completion: { isDone in
+                UIView.animate(withDuration: 0.3) {
+                    self.textEditView.slider.frame.origin.x = -10
+                }
             }
             switch selectedTextView.textAlignment {
             case .left:
@@ -187,7 +222,7 @@ final class EditReviewViewController: BaseViewController {
             
             colorPalleteView.collectionView.rx.itemSelected
                 .asDriver()
-                .drive(onNext: { [weak self] indexPath in
+                .drive(onNext: { indexPath in
                     let selectButton = colorPalleteView.collectionView.cellForItem(at: indexPath)
                     textView.textColor = selectButton?.backgroundColor
                     selectButton?.layer.borderWidth = 3
@@ -248,15 +283,19 @@ final class EditReviewViewController: BaseViewController {
     
     private func cancelTextEditMode() {
         textEditView.fadeOut(duration: 0.3)
+        textEditView.slider.frame = CGRect(x: 20, y: 65, width: 24, height: 240)
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = false}
         
         selectedTextView?.removeFromSuperview()
         selectedTextView = nil
         selectedTextViewOrigin = nil
+        
     }
     
     private func completeTextEditMode() {
-        textEditView.fadeOut(duration: 0.3)
+        textEditView.fadeOut(duration: 0.3) { isDone in
+            self.textEditView.slider.frame = CGRect(x: 20, y: 65, width: 24, height: 240)
+        }
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = false}
         
         self.selectedTextView?.sizeToFit()
@@ -292,7 +331,7 @@ extension EditReviewViewController: View {
         
         registerButton.rx.tap
             .do(onNext: { UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")})
-            .map { Reactor.Action.registerButtonDidTap(self.imageView.asImage().pngData())}
+            .map { Reactor.Action.registerButtonDidTap(self.view.asImage().pngData())}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

@@ -310,8 +310,12 @@ final class ShowRoomDetailViewController: BaseViewController {
 //            $0.bottom.equalToSuperview().offset(-14)
 //        }
         
+//        bookmarkButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().offset(-60)
+//            $0.bottom.equalToSuperview().offset(-14)
+//        }
         bookmarkButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-60)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-14)
         }
         
