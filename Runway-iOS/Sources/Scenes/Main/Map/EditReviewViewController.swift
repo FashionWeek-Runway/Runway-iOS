@@ -151,7 +151,7 @@ final class EditReviewViewController: BaseViewController {
         textEditView.editCompleteButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
-                self?.completeTextEditMode()
+                self?.selectedTextView?.endEditing(true)
             }).disposed(by: disposeBag)
     }
     
@@ -183,7 +183,7 @@ final class EditReviewViewController: BaseViewController {
             let textView = RWReviewTextView(frame: CGRect(x: 20, y: self.navigationBarArea.frame.maxY + 44, width: UIScreen.getDeviceWidth() - 40, height: 303))
             let colorPalleteView = RWColorInputAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: 320, height: 46))
             textView.inputAccessoryView = colorPalleteView
-            textView.inputAccessoryView?.isHidden = false
+            textView.inputAccessoryView?.isHidden = true
             
             colorPalleteView.collectionView.rx.itemSelected
                 .asDriver()
@@ -205,6 +205,12 @@ final class EditReviewViewController: BaseViewController {
                     self?.setTextEditMode()
                 })
                 .disposed(by: disposeBag)
+            
+            textView.rx.didEndEditing
+                .asDriver()
+                .drive(onNext: { [weak self] in
+                    self?.completeTextEditMode()
+                }).disposed(by: disposeBag)
             
             textView.rx.panGesture()
                 .observe(on:MainScheduler.asyncInstance)
