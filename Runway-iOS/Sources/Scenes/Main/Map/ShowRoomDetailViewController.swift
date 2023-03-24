@@ -410,7 +410,6 @@ final class ShowRoomDetailViewController: BaseViewController {
         }
         
         reviewEmptyImageView.snp.makeConstraints {
-            $0.width.height.equalTo(100)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(divider.snp.bottom).offset(69)
         }
