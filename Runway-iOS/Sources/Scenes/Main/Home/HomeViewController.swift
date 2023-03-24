@@ -367,7 +367,7 @@ extension HomeViewController: View {
                         attributes: [
                             .strokeColor: UIColor.white,
                             .foregroundColor: UIColor.primary,
-                            .strokeWidth: -1.0,
+                            .strokeWidth: -4.0,
                             .font: UIFont.font(.blackHanSansRegular, ofSize: 26)
                         ]
                     )

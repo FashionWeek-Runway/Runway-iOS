@@ -18,7 +18,7 @@ final class RWSlider: UIView {
         let slider = UISlider()
         slider.maximumTrackTintColor = .clear
         slider.minimumTrackTintColor = .clear
-        slider.transform = slider.transform.rotated(by: CGFloat(0.5 * Float.pi))
+        slider.transform = slider.transform.rotated(by: CGFloat(-0.5 * Float.pi))
         return slider
     }()
     
