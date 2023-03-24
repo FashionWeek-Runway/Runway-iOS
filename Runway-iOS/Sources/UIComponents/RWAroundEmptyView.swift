@@ -9,7 +9,7 @@ import UIKit
 
 final class RWAroundEmptyView: UIView {
     
-    private let iconImageView = UIImageView(image: UIImage(named: "AppIcon"))
+    private let iconImageView = UIImageView(image: UIImage(named: "icon_store_empty"))
     
     private let guideTextLabel: UILabel = {
         let label = UILabel()
