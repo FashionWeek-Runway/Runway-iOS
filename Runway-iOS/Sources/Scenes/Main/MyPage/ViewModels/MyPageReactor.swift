@@ -141,6 +141,7 @@ final class MyPageReactor: Reactor, Stepper {
         case.setMyReviewData(let data):
             state.myReviewDatas = data.contents
             state.myReviewIsLast = data.isLast
+            state.myReviewPage = 0
             if !data.isLast {
                 state.myReviewPage += 1
             }
@@ -155,6 +156,7 @@ final class MyPageReactor: Reactor, Stepper {
         case .setBookmarkedStoreData(let result):
             state.bookmarkedStoreDatas = result.contents
             state.bookmarkedStoreIsLast = result.isLast
+            state.bookmarkedStorePage = 0
             if !result.isLast {
                 state.bookmarkedStorePage += 1
             }
@@ -169,6 +171,7 @@ final class MyPageReactor: Reactor, Stepper {
         case .setBookmarkedReviewData(let data):
             state.bookmarkedReviewDatas = data.contents
             state.bookmarkedReviewIsLast = data.isLast
+            state.bookmarkedReviewPage = 0
             if !data.isLast {
                 state.bookmarkedReviewPage += 1
             }

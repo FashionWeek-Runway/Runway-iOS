@@ -189,6 +189,20 @@ final class MyPageViewController: BaseViewController {
         return view
     }()
     
+    private let userReviewEmptyImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "icon_empty_bookmark_mypage"))
+        view.isHidden = true
+        return view
+    }()
+    private let userReviewEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "마음에 드는 사용자 후기를 저장해보세요"
+        label.font = .body1
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+    
     
     // MARK: - initializer
     
@@ -206,6 +220,7 @@ final class MyPageViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        showMyReviewDatas()
     }
     
     override func configureUI() {
@@ -221,7 +236,7 @@ final class MyPageViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-18)
         }
         
-        view.addSubviews([myReviewEmptyImageView, myReviewEmptyLabel, storeEmptyImageView, storeEmptyLabel])
+        view.addSubviews([myReviewEmptyImageView, myReviewEmptyLabel, storeEmptyImageView, storeEmptyLabel, userReviewEmptyImageView, userReviewEmptyLabel])
 //        scrollView.snp.makeConstraints {
 //            $0.horizontalEdges.equalToSuperview()
 //            $0.top.equalTo(navigationBarArea.snp.bottom)
@@ -320,7 +335,7 @@ final class MyPageViewController: BaseViewController {
         }
         
         storeEmptyImageView.snp.makeConstraints {
-            $0.top.equalTo(divider2.snp.bottom).offset(58)
+            $0.top.equalTo(divider2.snp.bottom).offset(88)
             $0.centerX.equalToSuperview()
         }
         
@@ -334,6 +349,16 @@ final class MyPageViewController: BaseViewController {
             $0.horizontalEdges.bottom.equalToSuperview()
         }
         
+        userReviewEmptyImageView.snp.makeConstraints {
+            $0.top.equalTo(divider2.snp.bottom).offset(88)
+            $0.centerX.equalToSuperview()
+        }
+        
+        userReviewEmptyLabel.snp.makeConstraints {
+            $0.top.equalTo(userReviewEmptyImageView.snp.bottom).offset(17)
+            $0.centerX.equalToSuperview()
+        }
+        
         userReviewCollectionView.snp.makeConstraints {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(10)
             $0.horizontalEdges.bottom.equalToSuperview()
@@ -345,25 +370,7 @@ final class MyPageViewController: BaseViewController {
         myReviewTabButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
-                self?.myReviewTabButton.isSelected = true
-                self?.myReviewButtonBottomLine.isHidden = false
-                self?.storedTabButton.isSelected = false
-                self?.storedButtonBottomLine.isHidden = true
-                
-                self?.segmentedControl.isHidden = true
-                self?.storeEmptyImageView.isHidden = true
-                self?.storeEmptyLabel.isHidden = true
-                self?.storeCollectionView.isHidden = true
-                self?.userReviewCollectionView.isHidden = true
-                
-                if self?.reactor?.currentState.myReviewDatas.isEmpty == true {
-                    self?.myReviewEmptyImageView.isHidden = false
-                    self?.myReviewEmptyLabel.isHidden = false
-                } else {
-                    self?.myReviewEmptyImageView.isHidden = true
-                    self?.myReviewEmptyLabel.isHidden = true
-                    self?.myReviewCollectionView.isHidden = false
-                }
+                self?.showMyReviewDatas()
             }).disposed(by: disposeBag)
         
         storedTabButton.rx.tap
@@ -379,24 +386,10 @@ final class MyPageViewController: BaseViewController {
                 self?.myReviewEmptyLabel.isHidden = true
                 self?.myReviewCollectionView.isHidden = true
                 
-                if self?.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true
-                    || self?.reactor?.currentState.bookmarkedReviewDatas.isEmpty == true {
-                    self?.segmentedControl.isHidden = true
-                    self?.storeEmptyImageView.isHidden = false
-                    self?.storeEmptyLabel.isHidden = false
-                    self?.storeCollectionView.isHidden = true
-                    self?.userReviewCollectionView.isHidden = true
+                if self?.segmentedControl.selectedSegmentIndex == 0 {
+                    self?.showStoreDatas()
                 } else {
-                    self?.segmentedControl.isHidden = false
-                    self?.storeEmptyImageView.isHidden = true
-                    self?.storeEmptyImageView.isHidden = true
-                    if self?.segmentedControl.selectedSegmentIndex == 0 {
-                        self?.storeCollectionView.isHidden = false
-                        self?.userReviewCollectionView.isHidden = true
-                    } else {
-                        self?.storeCollectionView.isHidden = true
-                        self?.userReviewCollectionView.isHidden = false
-                    }
+                    self?.showUserReviewDatas()
                 }
             }).disposed(by: disposeBag)
         
@@ -405,15 +398,65 @@ final class MyPageViewController: BaseViewController {
             .drive(onNext: { [weak self] in
                 if self?.storedTabButton.isSelected == true {
                     if $0 == 0 {
-                        self?.storeCollectionView.isHidden = false
-                        self?.userReviewCollectionView.isHidden = true
-
+                        self?.showStoreDatas()
                     } else {
-                        self?.storeCollectionView.isHidden = true
-                        self?.userReviewCollectionView.isHidden = false
+                        self?.showUserReviewDatas()
                     }
                 }
             }).disposed(by: disposeBag)
+    }
+    
+    private func showMyReviewDatas() {
+        self.myReviewTabButton.isSelected = true
+        self.myReviewButtonBottomLine.isHidden = false
+        self.storedTabButton.isSelected = false
+        self.storedButtonBottomLine.isHidden = true
+        
+        self.segmentedControl.isHidden = true
+        self.storeEmptyImageView.isHidden = true
+        self.storeEmptyLabel.isHidden = true
+        self.storeCollectionView.isHidden = true
+        self.userReviewEmptyImageView.isHidden = true
+        self.userReviewEmptyLabel.isHidden = true
+        self.userReviewCollectionView.isHidden = true
+        
+        if self.reactor?.currentState.myReviewDatas.isEmpty == true {
+            self.myReviewEmptyImageView.isHidden = false
+            self.myReviewEmptyLabel.isHidden = false
+            self.myReviewCollectionView.isHidden = true
+        } else {
+            self.myReviewEmptyImageView.isHidden = true
+            self.myReviewEmptyLabel.isHidden = true
+            self.myReviewCollectionView.isHidden = false
+        }
+    }
+    
+    private func showStoreDatas() {
+        self.userReviewEmptyImageView.isHidden = true
+        self.userReviewEmptyLabel.isHidden = true
+        self.userReviewCollectionView.isHidden = true
+        
+        if self.reactor?.currentState.bookmarkedStoreDatas.isEmpty == true {
+            self.storeEmptyImageView.isHidden = false
+            self.storeEmptyLabel.isHidden = false
+            self.storeCollectionView.isHidden = true
+        } else {
+            self.storeCollectionView.isHidden = false
+        }
+    }
+    
+    private func showUserReviewDatas() {
+        self.storeEmptyImageView.isHidden = true
+        self.storeEmptyLabel.isHidden = true
+        self.storeCollectionView.isHidden = true
+        
+        if self.reactor?.currentState.bookmarkedReviewDatas.isEmpty == true {
+            self.userReviewEmptyImageView.isHidden = false
+            self.userReviewEmptyLabel.isHidden = false
+            self.userReviewCollectionView.isHidden = true
+        } else {
+            self.userReviewCollectionView.isHidden = false
+        }
     }
 }
 
@@ -471,10 +514,8 @@ extension MyPageViewController: View {
         
         reactor.state.map { $0.myReviewDatas }
             .do(onNext: { [weak self] datas in
-                if datas.isEmpty == true {
-                    self?.myReviewCollectionView.isHidden = true
-                } else if self?.myReviewTabButton.isSelected == true {
-                    self?.myReviewCollectionView.isHidden = false
+                if self?.myReviewTabButton.isSelected == true {
+                    self?.showMyReviewDatas()
                 }
             })
             .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
@@ -484,12 +525,11 @@ extension MyPageViewController: View {
             }.disposed(by: disposeBag)
         
         let bookmarkedStoreObservable = reactor.state.map { $0.bookmarkedStoreDatas }
-            .filter { $0.isEmpty == false }
                 
         bookmarkedStoreObservable
-            .do(onNext: { [weak self] in
-                if $0.isEmpty {
-                    self?.storeCollectionView.isHidden = true
+            .do(onNext: { [weak self] _ in
+                if self?.storedTabButton.isSelected == true && self?.segmentedControl.selectedSegmentIndex == 0 {
+                    self?.showStoreDatas()
                 }
             })
             .bind(to: storeCollectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
@@ -500,10 +540,9 @@ extension MyPageViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.bookmarkedReviewDatas }
-            .filter { $0.isEmpty == false }
             .do(onNext: { [weak self] datas in
-                if datas.isEmpty {
-                    self?.myReviewCollectionView.isHidden = true
+                if self?.storedTabButton.isSelected == true && self?.segmentedControl.selectedSegmentIndex == 1 {
+                    self?.showUserReviewDatas()
                 }
             })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
