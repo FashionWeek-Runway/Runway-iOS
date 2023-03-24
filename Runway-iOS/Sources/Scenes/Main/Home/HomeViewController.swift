@@ -397,7 +397,15 @@ extension HomeViewController: View {
                             cell.categoryTagStackView.addArrangedSubview(button)
                         }
                     }
-//                    cell.bookmarkButton.isSelected = item.isBookmarked
+                    cell.bookmarkButton.isSelected = item.isBookmarked
+                    cell.bookmarkButton.rx.tap
+                        .asDriver()
+                        .drive(onNext: { _ in
+                            cell.bookmarkButton.isSelected.toggle()
+                            let action = Reactor.Action.pagerBookmarkButtonDidTap(item.storeID)
+                            reactor.action.onNext(action)
+                        }).disposed(by: cell.disposeBag)
+                    
                     cell.addressLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
                                                                             attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.white]), for: .normal)
                 case .showMoreShop: // last cell

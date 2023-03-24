@@ -23,6 +23,7 @@ final class HomeReactor: Reactor, Stepper {
         case viewWillAppear
         case categorySelectButtonDidTap
         case showAllContentButtonDidTap
+        case pagerBookmarkButtonDidTap(Int)
         case pagerCellDidTap(Int)
         case userReviewCollectionViewReachesEnd
         case userReviewCellDidTap(Int)
@@ -79,6 +80,12 @@ final class HomeReactor: Reactor, Stepper {
         case .showAllContentButtonDidTap:
             steps.accept(AppStep.showAllStore)
             return .empty()
+            
+        case .pagerBookmarkButtonDidTap(let storeId):
+            return provider.showRoomService.storeBookmark(storeId: storeId)
+                .flatMap { response -> Observable<Mutation> in
+                    return .empty()
+                }
             
         case .pagerCellDidTap(let storeId):
             steps.accept(AppStep.showRoomDetail(storeId))

@@ -64,13 +64,12 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-//    let bookmarkButton: UIButton = {
-//        let button = UIButton()
-//        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
-//        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
-//        button.isUserInteractionEnabled = false
-//        return button
-//    }()
+    let bookmarkButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
+        return button
+    }()
     
     let storeNameLabel: UILabel = {
         let label = UILabel()
@@ -117,7 +116,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RWHomePagerCollectionViewCell"
     
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
     enum CellMode {
         case store
@@ -187,7 +186,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         }
         
         clothesTagView.addSubviews([topCircleHole, topCircleHole,
-//                                    bookmarkButton,
+                                    bookmarkButton,
                                     storeNameLabel, centerPointLineView, addressLabel, categoryTagStackView, barcodeImageView])
         topCircleHole.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -195,10 +194,10 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
             $0.top.equalToSuperview().offset(11)
         }
         
-//        bookmarkButton.snp.makeConstraints {
-//            $0.top.equalToSuperview().offset(11)
-//            $0.trailing.equalToSuperview().offset(-11)
-//        }
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(11)
+            $0.trailing.equalToSuperview().offset(-11)
+        }
         
         barcodeImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -236,5 +235,6 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
             $0.removeFromSuperview()
         }
         self.cellMode = .store
+        disposeBag = DisposeBag()
     }
 }
