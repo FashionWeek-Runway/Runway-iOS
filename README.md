@@ -8,10 +8,16 @@
 
 ---
 <img width="526" alt="대지 1@4x 1" src="https://user-images.githubusercontent.com/46420281/227476808-80d481f2-a55f-4522-ba0e-efc7b8b7d8b4.png">
----
 
-## 아키텍처
+## ⚒ 아키텍처
 
 | ReactorKit, RxFlow 기반의 MVVM-C 아키텍처
-
+> **MVVM(ReactorKit)**
  ![image](https://user-images.githubusercontent.com/46420281/227477622-78ab297d-f315-4048-ae9b-e40e7d925272.png)
+ - MVVM을 도입하여 View는 화면을 그리는데에 집중하고, ViewModel을 통해 Side Effect와 State를 처리하도록 했습니다.
+ - UIKit 요소가 없어도 뷰에 보여질 값들을 ViewModel을 통해 단독으로 단위 테스트하여 확인하고 검증할 수 있게 했습니다.
+> **Coordinator**
+ - RxFlow를 사용하여 화면전환을 정의하고, ViewModel에서 Step을 통해 화면전환을 처리하도록 했습니다. 
+ - 각 Flow에서 각 클래스의 생성과 의존성 주입을 구현하여, 클래스간 결합도를 낮추고 변경 가능성을 줄였습니다.
+ 
+ 
