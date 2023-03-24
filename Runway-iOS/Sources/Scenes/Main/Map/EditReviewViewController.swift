@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ReactorKit
-import RxKeyboard
 
 final class EditReviewViewController: BaseViewController {
     
@@ -174,22 +173,13 @@ final class EditReviewViewController: BaseViewController {
                 selectedTextView.font = selectedTextView.font?.withSize($0)
             })
             .disposed(by: disposeBag)
-        
-        RxKeyboard.instance.visibleHeight
-            .drive(onNext: { [weak self] keyboardHeight in
-                guard let self = self else { return }
-//                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : 0
-                
-                self.textEditView.slider.frame.origin.y = UIScreen.getDeviceHeight() - 135 - 240 - keyboardHeight
-                self.view.layoutIfNeeded()
-            })
-            .disposed(by: disposeBag)
     }
     
     private func setTextEditMode() {
         view.bringSubviewToFront(textEditView)
         textEditView.fadeIn(duration: 0.3)
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = true }
+        self.cancelColorEditMode()
         
         if let selectedTextView = self.selectedTextView { // 기존 text 편집
             self.textEditView.editCancelButton.isHidden = true
@@ -281,9 +271,17 @@ final class EditReviewViewController: BaseViewController {
         self.selectedTextView?.inputAccessoryView?.isHidden = false
     }
     
+    private func cancelColorEditMode() {
+        textEditView.colorPalleteButton.isHidden = false
+        textEditView.alignmentButton.snp.updateConstraints {
+            $0.centerX.equalToSuperview().offset(-20)
+        }
+        self.selectedTextView?.inputAccessoryView?.isHidden = true
+    }
+    
     private func cancelTextEditMode() {
         textEditView.fadeOut(duration: 0.3)
-        textEditView.slider.frame = CGRect(x: 20, y: 65, width: 24, height: 240)
+        textEditView.slider.frame.origin.x = 20
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = false}
         
         selectedTextView?.removeFromSuperview()
@@ -294,7 +292,7 @@ final class EditReviewViewController: BaseViewController {
     
     private func completeTextEditMode() {
         textEditView.fadeOut(duration: 0.3) { isDone in
-            self.textEditView.slider.frame = CGRect(x: 20, y: 65, width: 24, height: 240)
+            self.textEditView.slider.frame.origin.x = 20
         }
         [backButton, addTextButton, registerButton].forEach { $0.isHidden = false}
         

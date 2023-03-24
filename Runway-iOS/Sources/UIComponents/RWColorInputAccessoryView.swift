@@ -19,7 +19,8 @@ final class RWColorInputAccessoryView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 30, height: 30)
-        layout.minimumInteritemSpacing = (UIScreen.main.bounds.width - 250.0) / 6.0
+//        layout.minimumInteritemSpacing = (UIScreen.main.bounds.width - 250.0) / 6.0
+        layout.minimumInteritemSpacing = 18.33
         collectionView.collectionViewLayout = layout
         return collectionView
     }()

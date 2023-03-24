@@ -42,6 +42,7 @@ final class RWReviewTextEditView: UIView {
         return slider
     }()
     
+    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -78,6 +79,7 @@ final class RWReviewTextEditView: UIView {
         }
         
         slider.snp.makeConstraints {
+            $0.top.equalTo(editCancelButton.snp.bottom).offset(42)
             $0.height.equalTo(240)
             $0.width.equalTo(24)
         }
