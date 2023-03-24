@@ -303,7 +303,7 @@ final class EditReviewViewController: BaseViewController {
             self.selectedTextView?.contentSize = fitSize
         }
         self.selectedTextView?.resignFirstResponder()
-        self.selectedTextView?.tag = 1 // 기존에 존재하는 textview임을 설정하는 플래그
+        
         if let textView = selectedTextView {
             self.view.addSubview(textView)
         }
@@ -330,16 +330,26 @@ extension EditReviewViewController: View {
             .disposed(by: disposeBag)
         
         registerButton.rx.tap
-            .do(onNext: { UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")})
-            .map { Reactor.Action.registerButtonDidTap(self.view.asImage().pngData())}
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")
+                self?.backButton.isHidden = true
+                self?.exitButton.isHidden = true
+                self?.addTextButton.isHidden = true
+                let action = Reactor.Action.registerButtonDidTap(self?.view.asImage(bounds: self?.imageView.frame).jpegData(compressionQuality: 0.4))
+                self?.reactor?.action.onNext(action)
+            }).disposed(by: disposeBag)
     }
     
     private func bindState(reactor: EditReviewReactor) {
         reactor.state.map { $0.reviewImageData }
             .bind(onNext: { [weak self] in
                 self?.imageView.image = UIImage(data: $0)
+            }).disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoading }
+            .bind(onNext: { [weak self] isLoading in
+                isLoading ? self?.showLoading() : self?.hideLoading()
             }).disposed(by: disposeBag)
     }
 }

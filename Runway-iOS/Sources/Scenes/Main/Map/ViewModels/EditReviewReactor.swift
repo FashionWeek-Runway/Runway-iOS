@@ -24,10 +24,12 @@ final class EditReviewReactor: Reactor, Stepper {
     }
     
     enum Mutation {
+        case setLoading(Bool)
     }
     
     struct State {
         var reviewImageData: Data
+        var isLoading: Bool = false
     }
     
     // MARK: - Properties
@@ -55,15 +57,29 @@ final class EditReviewReactor: Reactor, Stepper {
             return .empty()
         case .registerButtonDidTap(let imageData):
             guard let imageData = imageData else { return .empty() }
-            return provider.showRoomService.storeReview(storeId: storeId, imageData: imageData).flatMap { [weak self] request -> Observable<Mutation> in
-                self?.steps.accept(AppStep.back(animated: false))
-                return .empty()
-            }
+            
+            return Observable.concat([
+                .just(.setLoading(true)),
+                
+                provider.showRoomService.storeReview(storeId: storeId, imageData: imageData)
+                    .flatMap { $0.rx.data() }.decode(type: BaseResponse.self, decoder: JSONDecoder())
+                    .map { _ in
+                        self.steps.accept(AppStep.back(animated: false))
+                        return .setLoading(false)
+                    }
+            ])
         }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
-
+        var state = state
+        
+        switch mutation {
+        case .setLoading(let isLoading):
+            state.isLoading = isLoading
+        }
+        
+        return state
     }
 }
 

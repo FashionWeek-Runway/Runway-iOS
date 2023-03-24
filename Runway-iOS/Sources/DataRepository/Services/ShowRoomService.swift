@@ -50,8 +50,8 @@ final class ShowRoomService: APIService, AuthTokenHost {
         return self.session.rx.upload(multipartFormData: { data in
             data.append(imageData,
                         withName: "img",
-                        fileName: "\(UUID(uuidString: String(storeId)))" + ".png",
-                        mimeType: "image/png")
+                        fileName: "\(UUID(uuidString: String(storeId)))" + ".jpg",
+                        mimeType: "image/jpeg")
         }, to: baseURL + "stores/review/img/\(storeId)", method: .post, headers: headers)
     }
     
