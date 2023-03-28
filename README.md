@@ -11,19 +11,25 @@
 
 ## ⚒ 아키텍처
 
-| ReactorKit, RxFlow 기반의 MVVM-C 아키텍처
+| 전체 아키텍처
 
 ![runway_architecture](https://user-images.githubusercontent.com/46420281/228124620-0e3f8f20-13f2-47b8-88f5-09b435e9dbfc.png)
 ---
 > **MVVM(ReactorKit)**
 
  ![image](https://user-images.githubusercontent.com/46420281/227477622-78ab297d-f315-4048-ae9b-e40e7d925272.png)
- - MVVM을 도입하여 View는 화면을 그리는데에 집중하고, ViewModel을 통해 Side Effect와 State를 처리하도록 하여 기존의 MVC 방식의 문제인 Massive ViewController 문제를 해결했습니다.
+ - MVVM을 도입하여 View는 화면을 그리는데에 집중하고, ViewModel을 통해 Side Effect와 State를 처리하도록 했습니다.
+   - 이를 통해 기존의 MVC 방식의 문제인 Massive ViewController 문제를 해결하고자 했습니다.
  - UIKit 요소가 없어도 뷰에 보여질 값들을 ViewModel을 통해 단독으로 단위 테스트하여 확인하고 검증할 수 있게 했습니다.
-   - 이를 위해 ViewModel에는 UIKit을 import 하지 않았습니다.
+   - 이를 위해 ViewModel은 UIKit을 import 하지 않는 원칙을 지키며 구현했습니다.
  
 > **Coordinator**
  - RxFlow를 사용하여 화면전환을 정의하고, ViewModel에서 Step을 통해 Coordinator(Flow)에서 화면전환을 처리하도록 했습니다. 
  - 각 Flow에서 각 클래스의 생성과 의존성 주입을 구현하여, 클래스간 결합도를 낮추고 변경 가능성을 줄였습니다.
  
- 
+> **Repository Pattern**
+- Repository Pattern을 통해 데이터를 요청하는 역할을 ViewModel에서 분리하여 ViewModel이 비즈니스 로직 처리 역할에 집중하도록 했습니다.
+- Repository는 ServiceProvider 라는 프로토콜로 추상화하여 ViewModel과의 결합을 느슨히 하여 변경 가능성을 낮추었습니다.
+- 여러 ViewModel 에서 일관된 인터페이스를 통해 데이터를 요청할 수 있게 했습니다.
+
+
