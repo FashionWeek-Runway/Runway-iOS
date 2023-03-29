@@ -7,6 +7,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class RWAllStoreCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
@@ -48,6 +51,8 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
     }()
     
     static let identifier = "RWAllStoreCollectionViewCell"
+    
+    var disposeBag = DisposeBag()
     
     // MARK: - initializer
     
@@ -93,5 +98,6 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         tagStackView.arrangedSubviews.forEach {
             $0.removeFromSuperview()
         }
+        disposeBag = DisposeBag()
     }
 }

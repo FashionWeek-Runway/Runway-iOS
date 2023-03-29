@@ -7,6 +7,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 // - 추후 boxcube layout으로 개선해보기
 final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
@@ -89,6 +92,8 @@ final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "RWReviewReelsView"
     
+    var disposeBag = DisposeBag()
+    
     // MARK: - initializer
     
     override init(frame: CGRect) {
@@ -165,6 +170,11 @@ final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview().offset(-6)
             $0.top.equalToSuperview().offset(13)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
 }

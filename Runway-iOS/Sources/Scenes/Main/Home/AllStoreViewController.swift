@@ -84,7 +84,6 @@ extension AllStoreViewController: View {
     private func bindState(reactor: AllStoreReactor) {
         reactor.state.map { $0.storeDatas }
             .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { [weak self] indexPath, item, cell in
-                guard let self else { return }
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeNameLabel.text = item.storeName
@@ -125,7 +124,7 @@ extension AllStoreViewController: View {
                     .drive(onNext: {
                         cell.bookmarkButton.isSelected.toggle()
                         reactor.action.onNext(Reactor.Action.bookmarkButtonDidTap(item.storeID))
-                    }).disposed(by: self.disposeBag)
+                    }).disposed(by: cell.disposeBag)
                 
             }.disposed(by: disposeBag)
     }

@@ -164,17 +164,17 @@ extension ReviewReelsViewController: View {
                     .do(onNext: { cell.bookmarkButton.isSelected.toggle() })
                     .map { Reactor.Action.bookmarkButtonDidTap(item.reviewID) }
                     .bind(to: reactor.action)
-                    .disposed(by: self.disposeBag)
+                    .disposed(by: cell.disposeBag)
                 
                 cell.exitButton.rx.tap
                     .map { Reactor.Action.exitButtonDidTap }
                     .bind(to: reactor.action)
-                    .disposed(by: self.disposeBag)
+                    .disposed(by: cell.disposeBag)
                 
                 cell.bottomStoreButton.rx.tap
                     .map { Reactor.Action.showRoomButtonDidTap(item.storeID) }
                     .bind(to: reactor.action)
-                    .disposed(by: self.disposeBag)
+                    .disposed(by: cell.disposeBag)
                 
                 cell.etcButton.rx.tap
                     .asDriver()
@@ -184,7 +184,7 @@ extension ReviewReelsViewController: View {
                         } else {
                             self?.presentReportActionSheet(reviewId: item.reviewID)
                         }
-                    }).disposed(by: self.disposeBag)
+                    }).disposed(by: cell.disposeBag)
                 
             }.disposed(by: disposeBag)
     }
