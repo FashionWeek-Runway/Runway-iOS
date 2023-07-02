@@ -19,6 +19,7 @@ final class MapFlow: Flow {
     private let rootViewController: UINavigationController = {
         let navigationController = UINavigationController()
         navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.interactivePopGestureRecognizer?.isEnabled = true
         return navigationController
     }()
     

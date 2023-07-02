@@ -161,7 +161,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
     // 표시될 마커들을 담아두기
     private var markers: [NMFMarker] = [] {
         willSet {
-            markers.forEach { $0.mapView = nil }
+            markers.forEach {
+                $0.touchHandler = nil
+                $0.mapView = nil
+            }
             newValue.forEach { $0.mapView = mapView.mapView }
         }
     }
