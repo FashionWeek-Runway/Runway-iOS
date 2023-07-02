@@ -178,6 +178,7 @@
 		19E88C3A29ACAF7500B111CE /* ShowRoomDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */; };
 		19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */; };
 		19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */; };
+		19F07AF22A51DC98004417E2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F07AF12A51DC98004417E2 /* NavigationController.swift */; };
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarkerData.swift */; };
@@ -405,6 +406,7 @@
 		19E88C3929ACAF7500B111CE /* ShowRoomDetailReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRoomDetailReactor.swift; sourceTree = "<group>"; };
 		19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchTableViewCell.swift; sourceTree = "<group>"; };
+		19F07AF12A51DC98004417E2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarkerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerData.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 				1963A80729CCC39B00C98337 /* RWReviewTextView.swift */,
 				1963A80929CCE95200C98337 /* RWColorChipCell.swift */,
 				1963A80B29CCEBBD00C98337 /* RWColorInputAccessoryView.swift */,
+				19F07AF12A51DC98004417E2 /* NavigationController.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1427,6 +1430,7 @@
 				19FF9B3429B7AFEA00C48BD7 /* FashionCategory.swift in Sources */,
 				19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
+				19F07AF22A51DC98004417E2 /* NavigationController.swift in Sources */,
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,

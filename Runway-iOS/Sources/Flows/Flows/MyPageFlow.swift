@@ -16,8 +16,8 @@ final class MyPageFlow: Flow {
     
     var provider: ServiceProviderType
     
-    private let rootViewController: UINavigationController = {
-        let navigationController = UINavigationController()
+    private let rootViewController: NavigationController = {
+        let navigationController = NavigationController()
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.interactivePopGestureRecognizer?.isEnabled = true
         return navigationController
