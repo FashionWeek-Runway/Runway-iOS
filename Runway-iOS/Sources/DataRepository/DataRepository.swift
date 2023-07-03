@@ -28,9 +28,10 @@ protocol ServiceProviderType {
 }
 
 final class DataRepository: ServiceProviderType {
-    static let shared = DataRepository()
     
     let backgroundScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
+    
+    static let shared = DataRepository()
     
     private init() {
         self.disposeBag = DisposeBag()

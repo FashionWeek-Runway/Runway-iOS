@@ -179,6 +179,7 @@
 		19E88C3C29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */; };
 		19E88C3E29ACF3F100B111CE /* RWMapSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */; };
 		19F07AF22A51DC98004417E2 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F07AF12A51DC98004417E2 /* NavigationController.swift */; };
+		19F07AF52A51DEB3004417E2 /* MapSearchReactorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F07AF42A51DEB3004417E2 /* MapSearchReactorTest.swift */; };
 		19F10C6F29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */; };
 		19F10C7129A67BE80060F0BD /* NSCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7029A67BE80060F0BD /* NSCacheManager.swift */; };
 		19F10C7329A680100060F0BD /* MapMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F10C7229A680100060F0BD /* MapMarkerData.swift */; };
@@ -407,6 +408,7 @@
 		19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchTableViewCell.swift; sourceTree = "<group>"; };
 		19F07AF12A51DC98004417E2 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		19F07AF42A51DEB3004417E2 /* MapSearchReactorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchReactorTest.swift; sourceTree = "<group>"; };
 		19F10C6E29A60FCC0060F0BD /* MapWithCategorySearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWithCategorySearchResponse.swift; sourceTree = "<group>"; };
 		19F10C7029A67BE80060F0BD /* NSCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCacheManager.swift; sourceTree = "<group>"; };
 		19F10C7229A680100060F0BD /* MapMarkerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerData.swift; sourceTree = "<group>"; };
@@ -601,6 +603,7 @@
 		196AED55298E5C17007A9E23 /* Runway-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				19F07AF32A51DE96004417E2 /* Map */,
 				196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */,
 			);
 			path = "Runway-iOSTests";
@@ -985,6 +988,14 @@
 				19F10C7229A680100060F0BD /* MapMarkerData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		19F07AF32A51DE96004417E2 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				19F07AF42A51DEB3004417E2 /* MapSearchReactorTest.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		64E03AECFFB4A359DADC4FD1 /* Pods */ = {
@@ -1469,6 +1480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */,
+				19F07AF52A51DEB3004417E2 /* MapSearchReactorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
