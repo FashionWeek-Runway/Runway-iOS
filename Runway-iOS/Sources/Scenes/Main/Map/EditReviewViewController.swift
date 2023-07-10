@@ -330,12 +330,13 @@ extension EditReviewViewController: View {
         registerButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
+                guard let self else { return }
                 UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")
-                self?.backButton.isHidden = true
-                self?.exitButton.isHidden = true
-                self?.addTextButton.isHidden = true
-                let action = Reactor.Action.registerButtonDidTap(self?.view.asImage(bounds: self?.imageView.frame).jpegData(compressionQuality: 0.4))
-                self?.reactor?.action.onNext(action)
+                self.backButton.isHidden = true
+                self.exitButton.isHidden = true
+                self.addTextButton.isHidden = true
+                let action = Reactor.Action.registerButtonDidTap(self.view.asImage(bounds: self.imageView.frame).pngData())
+                self.reactor?.action.onNext(action)
             }).disposed(by: disposeBag)
     }
     

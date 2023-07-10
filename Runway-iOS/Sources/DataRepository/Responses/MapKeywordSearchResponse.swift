@@ -35,6 +35,17 @@ struct KeywordSearchItem: Codable {
     }
 }
 
+extension KeywordSearchItem: Equatable {
+    static func == (lhs: KeywordSearchItem, rhs: KeywordSearchItem) -> Bool {
+        return lhs.address == rhs.address &&
+        lhs.region == rhs.region &&
+        lhs.storeName == rhs.storeName &&
+        lhs.regionID == rhs.regionID &&
+        lhs.storeID == rhs.storeID &&
+        lhs.distance == rhs.distance
+    }
+}
+
 //// MARK: - RegionSearchList
 //struct RegionSearchList: Codable {
 //    let address, region: String

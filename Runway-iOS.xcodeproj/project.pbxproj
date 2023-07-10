@@ -66,7 +66,6 @@
 		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
-		196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
 		196AED63298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */; };
 		196CE20B29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196CE20A29A92CC6000809C1 /* RWAroundCollectionViewCellReactor.swift */; };
@@ -191,6 +190,8 @@
 		19F8FD9429BB6C860072F3E5 /* PasswordChangeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9329BB6C860072F3E5 /* PasswordChangeReactor.swift */; };
 		19F8FD9629BB756E0072F3E5 /* NewChangePasswordInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9529BB756E0072F3E5 /* NewChangePasswordInputViewController.swift */; };
 		19F8FD9829BB757B0072F3E5 /* NewChangePasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */; };
+		19F917692A59047E00090099 /* DataRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F917682A59047E00090099 /* DataRepositoryMock.swift */; };
+		19F9176E2A5906E200090099 /* HomeServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F9176D2A5906E200090099 /* HomeServiceMock.swift */; };
 		19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */; };
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
 		19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */; };
@@ -293,7 +294,6 @@
 		196AED48298E5C16007A9E23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		196AED4D298E5C16007A9E23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSTests.swift; sourceTree = "<group>"; };
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
 		196AED62298E5C17007A9E23 /* Runway_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -421,6 +421,8 @@
 		19F8FD9329BB6C860072F3E5 /* PasswordChangeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeReactor.swift; sourceTree = "<group>"; };
 		19F8FD9529BB756E0072F3E5 /* NewChangePasswordInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputViewController.swift; sourceTree = "<group>"; };
 		19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputReactor.swift; sourceTree = "<group>"; };
+		19F917682A59047E00090099 /* DataRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepositoryMock.swift; sourceTree = "<group>"; };
+		19F9176D2A5906E200090099 /* HomeServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceMock.swift; sourceTree = "<group>"; };
 		19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSearchResponse.swift; sourceTree = "<group>"; };
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
 		19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackHanSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -603,8 +605,8 @@
 		196AED55298E5C17007A9E23 /* Runway-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				19F917672A59045900090099 /* Stubs */,
 				19F07AF32A51DE96004417E2 /* Map */,
-				196AED56298E5C17007A9E23 /* Runway_iOSTests.swift */,
 			);
 			path = "Runway-iOSTests";
 			sourceTree = "<group>";
@@ -996,6 +998,23 @@
 				19F07AF42A51DEB3004417E2 /* MapSearchReactorTest.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		19F917672A59045900090099 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				19F9176A2A59061900090099 /* Services */,
+				19F917682A59047E00090099 /* DataRepositoryMock.swift */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		19F9176A2A59061900090099 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				19F9176D2A5906E200090099 /* HomeServiceMock.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		64E03AECFFB4A359DADC4FD1 /* Pods */ = {
@@ -1479,7 +1498,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				196AED57298E5C17007A9E23 /* Runway_iOSTests.swift in Sources */,
+				19F9176E2A5906E200090099 /* HomeServiceMock.swift in Sources */,
+				19F917692A59047E00090099 /* DataRepositoryMock.swift in Sources */,
 				19F07AF52A51DEB3004417E2 /* MapSearchReactorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

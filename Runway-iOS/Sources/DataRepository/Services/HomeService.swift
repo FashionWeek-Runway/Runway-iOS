@@ -11,12 +11,20 @@ import RxCocoa
 import Alamofire
 import RxAlamofire
 
-final class HomeService: APIService {
-    
-    enum HomeEndpointType: Int {
-        case home = 0
-        case all = 1
-    }
+enum HomeEndpointType: Int {
+    case home = 0
+    case all = 1
+}
+
+protocol HomeServiceProtocol {
+    func home(type: HomeEndpointType) -> Observable<DataRequest>
+    func categories() -> Observable<DataRequest>
+    func categorySelect(categories: [Int]) -> Observable<DataRequest>
+    func review(page: Int, size: Int) -> Observable<DataRequest>
+    func reviewDetail(reviewId: Int) -> Observable<DataRequest>
+}
+
+final class HomeService: APIService, HomeServiceProtocol {
     
     func home(type: HomeEndpointType) -> Observable<DataRequest> {
         var params = Parameters()
