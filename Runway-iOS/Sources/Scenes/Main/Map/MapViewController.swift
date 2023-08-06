@@ -440,37 +440,38 @@ extension MapViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.pulse(\.$mapMarkers)
-            .subscribe(onNext: { [weak self] markerData in
-                DispatchQueue.global(qos: .default).async {
-                    let markers = markerData.map { data in
-                        let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
-                        marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
-                        marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
-                        marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
-                        marker.captionText = data.storeName
-                        marker.captionTextSize = 10
-                        marker.captionColor = .runwayBlack
-                        marker.captionHaloColor = .white
-                        
-                        marker.touchHandler = { [weak self] (overlay) -> Bool in
-                            guard let self else { return true }
-                            self.previousSelectedMarker?.iconImage = self.previousSelectedMarkerImage ?? NMFOverlayImage(name: "marker")
-                            self.previousSelectedMarker = marker
-                            self.previousSelectedMarkerImage = marker.iconImage
-                            marker.iconImage = NMFOverlayImage(name: data.bookmark ? "icon_seleted_bookmark" : "marker_highlight")
-                            self.isHiddenHelperViews = true
-                            let action = Reactor.Action.selectMapMarkerData(data.storeID)
-                            self.reactor?.action.onNext(action)
-                            self.storeSearchBottomSheet.showSheet(atState: .expanded)
-                            return true
-                        }
-                        return marker
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+            .compactMap({ [weak self] markerData in
+                return markerData.map { data in
+                    let marker = NMFMarker(position: NMGLatLng(lat: data.latitude, lng: data.longitude))
+                    marker.iconImage = NMFOverlayImage(name: data.bookmark ? "bookmark_marker" : "marker")
+                    marker.width = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.height = CGFloat(NMF_MARKER_SIZE_AUTO)
+                    marker.captionText = data.storeName
+                    marker.captionTextSize = 10
+                    marker.captionColor = .runwayBlack
+                    marker.captionHaloColor = .white
+                    
+                    marker.touchHandler = { [weak self] (overlay) -> Bool in
+                        guard let self else { return true }
+                        self.previousSelectedMarker?.iconImage = self.previousSelectedMarkerImage ?? NMFOverlayImage(name: "marker")
+                        self.previousSelectedMarker = marker
+                        self.previousSelectedMarkerImage = marker.iconImage
+                        marker.iconImage = NMFOverlayImage(name: data.bookmark ? "icon_seleted_bookmark" : "marker_highlight")
+                        self.isHiddenHelperViews = true
+                        let action = Reactor.Action.selectMapMarkerData(data.storeID)
+                        self.reactor?.action.onNext(action)
+                        self.storeSearchBottomSheet.showSheet(atState: .expanded)
+                        return true
                     }
-                    DispatchQueue.main.async {
-                        self?.markers = markers
-                    }
+                    return marker
                 }
+            })
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] markers in
+                self?.markers = markers
             }).disposed(by: disposeBag)
+        
         
         reactor.state.map { $0.aroundDatas }
             .do(onNext: { [weak self] in

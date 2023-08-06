@@ -350,13 +350,9 @@ extension HomeViewController: View {
             .do(onNext: { [weak self] data in
                 guard let self, data.count > 0 else { return }
                 let percentage = CGFloat(data.count) / 100
-                DispatchQueue.main.async {
-                    self.pageProgressBar.setProgress(Float(percentage), animated: false)
-                }
+                self.pageProgressBar.setProgress(Float(percentage), animated: false)
             })
-            .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell
-                in
-                
+            .bind(to: pagerCollectionView.rx.items(cellIdentifier: RWHomePagerCollectionViewCell.identifier, cellType: RWHomePagerCollectionViewCell.self)) { indexPath, item, cell in
                 switch item.cellType {
                 case .store:
                     cell.cellMode = .store
