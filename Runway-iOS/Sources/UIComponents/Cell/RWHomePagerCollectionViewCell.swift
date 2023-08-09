@@ -42,6 +42,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         label.textColor = .point
         label.numberOfLines = 3
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
     
@@ -128,9 +129,15 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
             switch cellMode {
             case .store:
                 self.imageView.isHidden = false
+                self.showMoreShopLabel.isHidden = true
+                self.showMoreCardImageView.isHidden = true
+                self.backgroundColor = .white
                 
             case .showMoreShop:
                 self.imageView.isHidden = true
+                self.showMoreShopLabel.isHidden = false
+                self.showMoreCardImageView.isHidden = false
+                self.backgroundColor = .runwayBlack
             }
         }
     }
@@ -147,7 +154,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        self.backgroundColor = .black
+        self.backgroundColor = .white
         addSubviews([showMoreCardImageView, imageView])
         showMoreCardImageView.addSubviews([showMoreTopCircleHole, showMoreShopLabel, showMoreBarcodeImageView])
         showMoreCardImageView.snp.makeConstraints {
@@ -159,7 +166,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         
         showMoreTopCircleHole.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(12)
+            $0.height.width.equalTo(12)
             $0.top.equalToSuperview().offset(11)
         }
         
@@ -185,12 +192,13 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalToSuperview().offset(-20)
         }
         
-        clothesTagView.addSubviews([topCircleHole, topCircleHole,
+        clothesTagView.addSubviews([topCircleHole,
                                     bookmarkButton,
                                     storeNameLabel, centerPointLineView, addressLabel, categoryTagStackView, barcodeImageView])
         topCircleHole.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(12)
+            $0.width.equalTo(12)
             $0.top.equalToSuperview().offset(11)
         }
         
