@@ -52,10 +52,23 @@ final class ShowRoomDetailViewController: BaseViewController {
 //        return button
 //    }()
     
-    private let imageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
+    private let mainImageCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWMainStoreImageCollectionViewCell.self, forCellWithReuseIdentifier: RWMainStoreImageCollectionViewCell.identifier)
+        view.showsHorizontalScrollIndicator = false
+        view.isPagingEnabled = true
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceWidth() * 0.75)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        view.collectionViewLayout = layout
+        return view
+    }()
+    
+    private let mainImageCollectionViewGradientView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: 21))
+//        view.backgroundColor = .white
         return view
     }()
     
@@ -259,7 +272,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topAreaGradientView.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
-        setGradientImageView()
+        mainImageCollectionViewGradientView.setGradientBackground(colorTop: .clear, colorBottom: .white)
     }
     
     override func configureUI() {
@@ -275,7 +288,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.width.centerX.top.bottom.equalToSuperview()
         }
         
-        containerView.addSubviews([imageView,
+        containerView.addSubviews([mainImageCollectionView, mainImageCollectionViewGradientView,
                                    showRoomTitleLabel, tagCollectionView,
                                    locationIcon, addressLabel, copyButton,
                                    timeIcon, timeLabel,
@@ -319,14 +332,20 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-14)
         }
         
-        imageView.snp.makeConstraints {
+        mainImageCollectionView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalToSuperview()
             $0.height.equalTo(UIScreen.getDeviceWidth() * 0.75)
         }
         
+        mainImageCollectionViewGradientView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(21)
+            $0.bottom.equalTo(mainImageCollectionView.snp.bottom)
+        }
+        
         showRoomTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(16)
+            $0.top.equalTo(mainImageCollectionView.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(20)
         }
         
@@ -527,17 +546,6 @@ final class ShowRoomDetailViewController: BaseViewController {
         reviewCollectionView.isHidden = false
     }
     
-    private func setGradientImageView() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientLayer.locations = [0, 1]
-        gradientLayer.frame = CGRect(x: 0, y: imageView.frame.height-21, width: imageView.bounds.width, height: 21)
-        
-        imageView.layer.addSublayer(gradientLayer)
-    }
-    
     private func showbookmarkToast() {
         let toastMessage = RWToastView(message: "매장이 저장되었습니다")
         self.view.addSubview(toastMessage)
@@ -658,12 +666,19 @@ extension ShowRoomDetailViewController: View {
     }
     
     private func bindState(reactor: ShowRoomDetailReactor) {
-        reactor.state.compactMap { $0.mainImageURL }
+//        reactor.state.map { $0.mainImageUrlList }
+//            .distinctUntilChanged()
+//            .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { indexPath, item, cell in
+//                cell.storeImageView.kf.setImage(with: URL(string: item))
+//            }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.mainImageUrlList }
             .distinctUntilChanged()
-            .bind(onNext: {[weak self] in
-                guard let url = URL(string: $0) else { return }
-                self?.imageView.kf.setImage(with: ImageResource(downloadURL: url))
-            }).disposed(by: disposeBag)
+            .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { IndexPath, item, cell in
+                cell.storeImageView.image = nil
+                cell.storeImageView.kf.setImage(with: URL(string: item))
+            }.disposed(by: disposeBag)
+        
         
         reactor.state.map { $0.title }
             .distinctUntilChanged()

@@ -36,7 +36,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
     }
 
     struct State {
-        var mainImageURL: String? = nil
+        var mainImageUrlList: [String] = []
         var title: String = ""
         var categories: [String] = []
         var address: String = ""
@@ -133,7 +133,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
 
         switch mutation {
         case .setStoreDetailInfo(let result):
-            state.mainImageURL = result.imageURLList.first
+            state.mainImageUrlList = result.imageURLList
             state.title = result.storeName
             state.categories = result.category
             state.address = result.address
