@@ -218,6 +218,7 @@ extension ProfileEditViewController: View {
             .distinctUntilChanged()
             .bind(onNext: { [weak self] imageURL in
                 guard let url = URL(string: imageURL) else { return }
+                self?.profileSettingView.profileImageView.kf.indicatorType = .activity
                 self?.profileSettingView.profileImageView.kf.setImage(with: ImageResource(downloadURL: url), completionHandler: { [weak self] result in
                     switch result {
                     case .success(let imageResult):

@@ -676,6 +676,7 @@ extension ShowRoomDetailViewController: View {
             .distinctUntilChanged()
             .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { IndexPath, item, cell in
                 cell.storeImageView.image = nil
+                cell.storeImageView.kf.indicatorType = .activity
                 cell.storeImageView.kf.setImage(with: URL(string: item))
             }.disposed(by: disposeBag)
         
@@ -732,6 +733,7 @@ extension ShowRoomDetailViewController: View {
             })
             .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.1) else { return }
+                cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.reviewId = item.0
             }.disposed(by: disposeBag)
@@ -748,6 +750,7 @@ extension ShowRoomDetailViewController: View {
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.selectionStyle = .none
+                cell.blogImageView.kf.indicatorType = .activity
                 cell.blogImageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
                                                                            attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)

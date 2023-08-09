@@ -150,6 +150,7 @@ extension ReviewReelsViewController: View {
                 }
                 
                 guard let imageURL = URL(string: item.imageURL) else { return }
+                cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageURL))
                 cell.storeNameLabel.text = item.storeName
                 cell.addressLabel.text = item.regionInfo

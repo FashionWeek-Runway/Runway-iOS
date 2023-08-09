@@ -144,6 +144,7 @@ extension ProfileEditCompleteViewController: View {
             .bind(onNext: { [weak self] in
                 self?.profileCard.defaultProfileImageView.isHidden = true
                 guard let url = URL(string: $0) else { return }
+                self?.profileCard.imageView.kf.indicatorType = .activity
                 self?.profileCard.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             }).disposed(by: disposeBag)
         

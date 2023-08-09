@@ -481,6 +481,7 @@ extension MapViewController: View {
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImageURL) else { return }
+                cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
@@ -490,6 +491,7 @@ extension MapViewController: View {
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImage) else { return }
+                cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
@@ -500,6 +502,7 @@ extension MapViewController: View {
                 self?.storeSearchBottomSheet.searchResultView.tagRelay.accept(data.category)
                 self?.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self?.storeSearchBottomSheet.searchResultView.storeId = data.storeID
+                self?.storeSearchBottomSheet.searchResultView.imageView.kf.indicatorType = .activity
                 self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
             })
             .disposed(by: disposeBag)
@@ -549,6 +552,7 @@ extension MapViewController: View {
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 guard let url = URL(string: data.storeImage) else { return }
+                self.storeSearchBottomSheet.searchResultView.imageView.kf.indicatorType = .activity
                 self.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: url)
                 self.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self.storeSearchBottomSheet.searchResultView.storeId = data.storeID

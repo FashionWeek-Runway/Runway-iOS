@@ -357,6 +357,7 @@ extension HomeViewController: View {
                 case .store:
                     cell.cellMode = .store
                     guard let imageUrl = URL(string: item.imageURL) else { return }
+                    cell.imageView.kf.indicatorType = .activity
                     cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
                     cell.storeNameLabel.attributedText = NSAttributedString(
                         string: item.storeName,
@@ -421,6 +422,7 @@ extension HomeViewController: View {
             })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let imageUrl = URL(string: item.imageURL) else { return }
+                cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
