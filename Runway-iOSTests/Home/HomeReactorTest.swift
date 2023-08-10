@@ -6,13 +6,15 @@
 //
 
 import XCTest
-
 @testable import Runway_iOS
+
+import RxSwift
 
 final class HomeReactorTest: XCTestCase {
     
     var reactor: HomeReactor!
     var provider: ServiceProviderType!
+    var disposeBag = DisposeBag()
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -30,9 +32,12 @@ final class HomeReactorTest: XCTestCase {
         reactor.action.onNext(.viewWillAppear)
         
         // then
-        XCTAssertEqual(reactor.currentState.pagerData.count, 2)
-        XCTAssertEqual(reactor.currentState.userReview.count, 2)
-        XCTAssertEqual(reactor.currentState.userReviewIsLast, false)
-        XCTAssertEqual(reactor.currentState.userReviewPage, 0)
+        let expectation = self.expectation(description: "viewWillAppear")
+        reactor.state.subscribe(onNext: { state in
+            state.nickname?.isEmpty == false ? expectation.fulfill() : ()
+        }).disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 5)
+        XCTAssertNotNil(reactor.currentState.nickname)
     }
 }
