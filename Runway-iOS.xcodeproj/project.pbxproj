@@ -210,7 +210,7 @@
 		19FF9B3C29B7B92C00C48BD7 /* AllStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */; };
 		19FF9B3E29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */; };
 		4265AA2E7C7490B9D64D985C /* Pods_Runway_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAF284793DF86B5B38112CA /* Pods_Runway_iOS.framework */; };
-		55B011CAADD2D11FBB27A76C /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C10BC7308681505E473995 /* Pods_Runway_iOSTests.framework */; };
+		6015F24F749B42EECBD76E2A /* Pods_Runway_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22FC5EABC8923B894B864173 /* Pods_Runway_iOSTests.framework */; };
 		B395647BA77E59E50EECF3D3 /* Pods_Runway_iOS_Runway_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 142684472B62BEEB03277E49 /* Pods_Runway_iOS_Runway_iOSUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -443,11 +443,16 @@
 		19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStoreViewController.swift; sourceTree = "<group>"; };
 		19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAllStoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4B9666714515EFDEF62642 /* Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSUITests/Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		22FC5EABC8923B894B864173 /* Pods_Runway_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		589A15601A5AB11F780F4438 /* Pods-Runway-iOS-Runway-iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSUITests.release.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSUITests/Pods-Runway-iOS-Runway-iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
-		65C10BC7308681505E473995 /* Pods_Runway_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6398968B7AA29F7912BCC8B9 /* Pods_Runway_iOS_ReactorTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS_ReactorTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C8E8D93AB3304BE20D4C40C /* Pods-Runway-iOS-Runway-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSTests.release.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSTests/Pods-Runway-iOS-Runway-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		77AED1C6743160CB19255D8B /* Pods-Runway-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		890E5F2D7676BDBE112746AF /* Pods-Runway-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS.release.xcconfig"; path = "Target Support Files/Pods-Runway-iOS/Pods-Runway-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		9A28017CA71BBE028940B5A5 /* Pods-Runway-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.release.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		CA17A4A16758D62DCB36F7CE /* Pods-Runway-iOS_ReactorTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS_ReactorTest.release.xcconfig"; path = "Target Support Files/Pods-Runway-iOS_ReactorTest/Pods-Runway-iOS_ReactorTest.release.xcconfig"; sourceTree = "<group>"; };
+		E63F3868889444EAFA86CE7D /* Pods-Runway-iOS_ReactorTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS_ReactorTest.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS_ReactorTest/Pods-Runway-iOS_ReactorTest.debug.xcconfig"; sourceTree = "<group>"; };
+		E9EFF658A41CFD81F6FA37F1 /* Pods-Runway-iOS-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOS-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOS-Runway-iOSTests/Pods-Runway-iOS-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBAF284793DF86B5B38112CA /* Pods_Runway_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -464,7 +469,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B011CAADD2D11FBB27A76C /* Pods_Runway_iOSTests.framework in Frameworks */,
+				6015F24F749B42EECBD76E2A /* Pods_Runway_iOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1045,10 @@
 				589A15601A5AB11F780F4438 /* Pods-Runway-iOS-Runway-iOSUITests.release.xcconfig */,
 				17DDBC4CEC8E9B0A7A656335 /* Pods-Runway-iOSTests.debug.xcconfig */,
 				9A28017CA71BBE028940B5A5 /* Pods-Runway-iOSTests.release.xcconfig */,
+				E63F3868889444EAFA86CE7D /* Pods-Runway-iOS_ReactorTest.debug.xcconfig */,
+				CA17A4A16758D62DCB36F7CE /* Pods-Runway-iOS_ReactorTest.release.xcconfig */,
+				E9EFF658A41CFD81F6FA37F1 /* Pods-Runway-iOS-Runway-iOSTests.debug.xcconfig */,
+				6C8E8D93AB3304BE20D4C40C /* Pods-Runway-iOS-Runway-iOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1049,7 +1058,8 @@
 			children = (
 				EBAF284793DF86B5B38112CA /* Pods_Runway_iOS.framework */,
 				142684472B62BEEB03277E49 /* Pods_Runway_iOS_Runway_iOSUITests.framework */,
-				65C10BC7308681505E473995 /* Pods_Runway_iOSTests.framework */,
+				6398968B7AA29F7912BCC8B9 /* Pods_Runway_iOS_ReactorTest.framework */,
+				22FC5EABC8923B894B864173 /* Pods_Runway_iOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1123,7 +1133,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					196AED3B298E5C16007A9E23 = {
@@ -1141,11 +1151,11 @@
 			};
 			buildConfigurationList = 196AED37298E5C16007A9E23 /* Build configuration list for PBXProject "Runway-iOS" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = 196AED33298E5C16007A9E23;
 			productRefGroup = 196AED3D298E5C16007A9E23 /* Products */;
@@ -1670,6 +1680,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K2VAN9GH96;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runway-iOS/Resources/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runway;
@@ -1709,6 +1720,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Runway-iOS/Resources/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Runway;
@@ -1742,13 +1754,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 17DDBC4CEC8E9B0A7A656335 /* Pods-Runway-iOSTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1763,13 +1775,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A28017CA71BBE028940B5A5 /* Pods-Runway-iOSTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1784,7 +1796,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A4B9666714515EFDEF62642 /* Pods-Runway-iOS-Runway-iOSUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
@@ -1803,7 +1815,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 589A15601A5AB11F780F4438 /* Pods-Runway-iOS-Runway-iOSUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
