@@ -37,7 +37,7 @@ final class HomeReactorTest: XCTestCase {
             state.nickname?.isEmpty == false ? expectation.fulfill() : ()
         }).disposed(by: disposeBag)
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 5  )
         XCTAssertNotNil(reactor.currentState.nickname)
     }
 }

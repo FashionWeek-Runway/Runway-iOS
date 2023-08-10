@@ -194,6 +194,7 @@
 		19F8FD9829BB757B0072F3E5 /* NewChangePasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */; };
 		19F917692A59047E00090099 /* DataRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F917682A59047E00090099 /* DataRepositoryMock.swift */; };
 		19F9176E2A5906E200090099 /* HomeServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F9176D2A5906E200090099 /* HomeServiceMock.swift */; };
+		19FAEB722A85363900BB45CA /* LoginServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FAEB712A85363900BB45CA /* LoginServiceTest.swift */; };
 		19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */; };
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
 		19FF9B2429B6DC4900C48BD7 /* BlackHanSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */; };
@@ -427,6 +428,7 @@
 		19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputReactor.swift; sourceTree = "<group>"; };
 		19F917682A59047E00090099 /* DataRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepositoryMock.swift; sourceTree = "<group>"; };
 		19F9176D2A5906E200090099 /* HomeServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceMock.swift; sourceTree = "<group>"; };
+		19FAEB712A85363900BB45CA /* LoginServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceTest.swift; sourceTree = "<group>"; };
 		19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSearchResponse.swift; sourceTree = "<group>"; };
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
 		19FF9B2329B6DC4900C48BD7 /* BlackHanSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackHanSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 		196AED55298E5C17007A9E23 /* Runway-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				19FAEB702A85361400BB45CA /* Services */,
 				19762E172A804500000F4D3A /* Home */,
 				19F917672A59045900090099 /* Stubs */,
 				19F07AF32A51DE96004417E2 /* Map */,
@@ -1032,6 +1035,14 @@
 			isa = PBXGroup;
 			children = (
 				19F9176D2A5906E200090099 /* HomeServiceMock.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		19FAEB702A85361400BB45CA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				19FAEB712A85363900BB45CA /* LoginServiceTest.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1525,6 +1536,7 @@
 			files = (
 				19F9176E2A5906E200090099 /* HomeServiceMock.swift in Sources */,
 				19762E1B2A804524000F4D3A /* HomeReactorTest.swift in Sources */,
+				19FAEB722A85363900BB45CA /* LoginServiceTest.swift in Sources */,
 				19F917692A59047E00090099 /* DataRepositoryMock.swift in Sources */,
 				19F07AF52A51DEB3004417E2 /* MapSearchReactorTest.swift in Sources */,
 			);
