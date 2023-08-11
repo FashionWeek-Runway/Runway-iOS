@@ -71,6 +71,12 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         return button
     }()
     
+    private let divider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray200
+        return view
+    }()
+    
     private let confirmButton: RWButton = {
         let button = RWButton()
         button.title = "인증 확인"
@@ -111,7 +117,7 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         progressBar.setProgress(0.33, animated: false)
         phoneNumberLabel.text = reactor?.initialState.phoneNumber ?? ""
         
-        self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, confirmButton])
+        self.view.addSubviews([guideTextLabel, guideTextLabel2, phoneNumberLabel, guideTextLabel3, verificationNumberInputField, divider, confirmButton])
         
         verificationNumberInputField.addSubviews([timerLabel, resendButton])
         
@@ -142,6 +148,12 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
         }
         
+        divider.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(1)
+            $0.bottom.equalTo(confirmButton.snp.top).offset(-10)
+        }
+        
         confirmButton.snp.makeConstraints {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(10)
             $0.leading.equalToSuperview().offset(20)
@@ -164,16 +176,9 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
                 guard let self = self else { return }
-                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
-                self.confirmButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
+                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom - 10 : -10
                 self.confirmButton.snp.updateConstraints {
                     $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
-                    if keyboardHeight > 0 {
-                        $0.leading.trailing.equalToSuperview()
-                    } else {
-                        $0.leading.equalToSuperview().offset(20)
-                        $0.trailing.equalToSuperview().offset(-20)
-                    }
                 }
                 self.view.layoutIfNeeded()
             })
