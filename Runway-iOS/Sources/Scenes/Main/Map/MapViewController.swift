@@ -344,6 +344,10 @@ extension MapViewController: View {
     
     private func bindAction(reactor: MapReactor) {
         
+        rx.viewWillAppear.map { Reactor.Action.searchButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         mapSearchBar.searchView.rx.gesture(.tap())
             .when(.recognized)
             .map { _ in Reactor.Action.searchFieldDidTap }
