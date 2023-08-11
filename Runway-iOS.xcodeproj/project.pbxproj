@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190A5E0A2A85ACF3001E3925 /* RequestAuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190A5E092A85ACF3001E3925 /* RequestAuthInterceptor.swift */; };
+		190A5E0C2A863AF9001E3925 /* TokenRefreshResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190A5E0B2A863AF9001E3925 /* TokenRefreshResponse.swift */; };
 		1917586A29C4920D0025F21D /* logo_moving.json in Resources */ = {isa = PBXBuildFile; fileRef = 1917586929C4920D0025F21D /* logo_moving.json */; };
 		191B8EA929B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */; };
 		191B8EAB29B3B9B900CF5C83 /* MyPageInformationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B8EAA29B3B9B900CF5C83 /* MyPageInformationResponse.swift */; };
@@ -235,6 +237,8 @@
 /* Begin PBXFileReference section */
 		142684472B62BEEB03277E49 /* Pods_Runway_iOS_Runway_iOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runway_iOS_Runway_iOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17DDBC4CEC8E9B0A7A656335 /* Pods-Runway-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runway-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Runway-iOSTests/Pods-Runway-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		190A5E092A85ACF3001E3925 /* RequestAuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAuthInterceptor.swift; sourceTree = "<group>"; };
+		190A5E0B2A863AF9001E3925 /* TokenRefreshResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshResponse.swift; sourceTree = "<group>"; };
 		1917586929C4920D0025F21D /* logo_moving.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo_moving.json; sourceTree = "<group>"; };
 		191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		191B8EAA29B3B9B900CF5C83 /* MyPageInformationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInformationResponse.swift; sourceTree = "<group>"; };
@@ -547,6 +551,7 @@
 				1948E26E29BAE8F400B8A0FB /* UserPrivacyResponse.swift */,
 				1948E27029BB3EA400B8A0FB /* ExistingProfileResponse.swift */,
 				1948E27629BB4C8A00B8A0FB /* ProfileEditCompleteResponse.swift */,
+				190A5E0B2A863AF9001E3925 /* TokenRefreshResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1001,6 +1006,7 @@
 			children = (
 				19A962482991666D00F952DA /* HeaderInterceptor.swift */,
 				19A9624129915F0300F952DA /* AuthHeaderInterceptor.swift */,
+				190A5E092A85ACF3001E3925 /* RequestAuthInterceptor.swift */,
 			);
 			path = Interceptor;
 			sourceTree = "<group>";
@@ -1411,6 +1417,7 @@
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */,
+				190A5E0A2A85ACF3001E3925 /* RequestAuthInterceptor.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
 				19849B8729BA17EB00B1FA1F /* WithdrawalViewController.swift in Sources */,
@@ -1467,6 +1474,7 @@
 				19849B7D29B9A84300B1FA1F /* PolicyURL.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
+				190A5E0C2A863AF9001E3925 /* TokenRefreshResponse.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
 				199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */,
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,

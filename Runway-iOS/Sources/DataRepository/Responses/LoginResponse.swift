@@ -12,11 +12,11 @@ struct LoginResponse: Decodable {
     let code: String
     let isSuccess: Bool
     let message: String
-    let result: Result
+    let result: LoginResult
 }
 
 // MARK: - Result
-struct Result: Decodable {
+struct LoginResult: Decodable {
     let accessToken, refreshToken: String
     let profileImageURL, kakaoID: String?
     let userID: Int?
