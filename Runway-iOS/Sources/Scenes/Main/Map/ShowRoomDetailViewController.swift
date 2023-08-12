@@ -6,9 +6,9 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import ReactorKit
+
+import SkeletonView
 
 import Kingfisher
 import SafariServices
@@ -74,9 +74,12 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let showRoomTitleLabel: UILabel = {
         let label = UILabel()
+        label.text = "Store Name"
         label.textColor = .runwayBlack
         label.font = .headline2
         label.numberOfLines = 0
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     
@@ -93,12 +96,20 @@ final class ShowRoomDetailViewController: BaseViewController {
         return view
     }()
     
-    private let locationIcon = UIImageView(image: UIImage(named: "icon_map_storedetail"))
+    private let locationIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_map_storedetail"))
+        imageView.isSkeletonable = true
+        imageView.showSkeleton()
+        return imageView
+    }()
     private let addressLabel: UILabel = {
         let label = UILabel()
+        label.text = "Address: Dummy Label, Dummy Text"
         label.textColor = .runwayBlack
         label.font = .body2
         label.numberOfLines = 0
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     private let copyButton: UIButton = {
@@ -110,36 +121,68 @@ final class ShowRoomDetailViewController: BaseViewController {
         return button
     }()
     
-    private let timeIcon = UIImageView(image: UIImage(named: "icon_time_storedetail"))
+    private let timeIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_time_storedetail"))
+        imageView.isSkeletonable = true
+        imageView.showSkeleton()
+        return imageView
+    }()
     private let timeLabel: UILabel = {
         let label = UILabel()
+        label.text = "Time: 00:00~00:00"
         label.textColor = .runwayBlack
         label.font = .body2
         label.numberOfLines = 0
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     
-    private let phoneIcon = UIImageView(image: UIImage(named: "icon_call_storedetail"))
+    private let phoneIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_call_storedetail"))
+        imageView.isSkeletonable = true
+        imageView.showSkeleton()
+        return imageView
+    }()
     private let phoneLabel: UILabel = {
         let label = UILabel()
+        label.text = "Phone: 000-0000-0000"
         label.textColor = .runwayBlack
         label.font = .body2
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     
-    private let instagramIcon = UIImageView(image: UIImage(named: "icon_instagram_storedetail"))
+    private let instagramIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_instagram_storedetail"))
+        imageView.isSkeletonable = true
+        imageView.showSkeleton()
+        return imageView
+    }()
     private let instagramLabel: UILabel = {
         let label = UILabel()
+        label.text = "Instagram: @dummy"
         label.textColor = .runwayBlack
         label.font = .body2
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     
-    private let webIcon = UIImageView(image: UIImage(named: "icon_web_storedetail"))
+    private let webIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_web_storedetail"))
+        imageView.isSkeletonable = true
+        imageView.showSkeleton()
+        return imageView
+    }()
     private let webLabel: UILabel = {
         let label = UILabel()
+        label.text = "Web: dummy.com"
         label.textColor = .runwayBlack
         label.font = .body2
+        label.isSkeletonable = true
+        label.showAnimatedSkeleton()
         return label
     }()
     
@@ -363,11 +406,12 @@ final class ShowRoomDetailViewController: BaseViewController {
         
         addressLabel.snp.makeConstraints {
             $0.leading.equalTo(locationIcon.snp.trailing).offset(8)
+//            $0.leading.equalToSuperview().offset(46)
             $0.top.equalTo(tagCollectionView.snp.bottom).offset(16)
         }
         
         copyButton.snp.makeConstraints {
-            $0.leading.equalTo(addressLabel.snp.trailing).offset(8)
+//            $0.leading.equalTo(addressLabel.snp.trailing).offset(8)
             $0.trailing.greaterThanOrEqualToSuperview().offset(-20)
             $0.centerY.equalTo(locationIcon.snp.centerY)
         }
@@ -597,6 +641,10 @@ extension ShowRoomDetailViewController: View {
     }
     
     private func bindAction(reactor: ShowRoomDetailReactor) {
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -666,12 +714,6 @@ extension ShowRoomDetailViewController: View {
     }
     
     private func bindState(reactor: ShowRoomDetailReactor) {
-//        reactor.state.map { $0.mainImageUrlList }
-//            .distinctUntilChanged()
-//            .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { indexPath, item, cell in
-//                cell.storeImageView.kf.setImage(with: URL(string: item))
-//            }.disposed(by: disposeBag)
-        
         reactor.state.map { $0.mainImageUrlList }
             .distinctUntilChanged()
             .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { IndexPath, item, cell in
@@ -682,14 +724,22 @@ extension ShowRoomDetailViewController: View {
         
         
         reactor.state.map { $0.title }
+            .filter { $0 != "" }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.showRoomTitleLabel.hideSkeleton()
+            })
             .bind(to: showRoomTitleLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.categories }
             .distinctUntilChanged()
             .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
+//                cell.label.text = "# " + item
                 cell.label.text = "# " + item
+                cell.isSkeletonable = true
+                cell.setCellLayout(isSkeleton: true)
+                cell.showAnimatedSkeleton()
             }
             .disposed(by: disposeBag)
         
@@ -723,7 +773,7 @@ extension ShowRoomDetailViewController: View {
             .bind(to: bookmarkButton.rx.isSelected)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.userReviewImages }
+        reactor.state.map { $0.userReviewImages.map { ($0.reviewID, $0.imgURL) } }
             .do(onNext: { [weak self] in
                 if $0.isEmpty {
                     self?.setUserReviewsIfEmpty()
@@ -732,31 +782,40 @@ extension ShowRoomDetailViewController: View {
                 }
             })
             .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
-                guard let url = URL(string: item.1) else { return }
-                cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
-                cell.reviewId = item.0
+                if item.0 == 0 && item.1 == "Dummy" {
+                    cell.showAnimatedSkeleton()
+                } else {
+                    guard let url = URL(string: item.1) else { return }
+                    cell.hideSkeleton()
+                    cell.imageView.kf.indicatorType = .activity
+                    cell.imageView.kf.setImage(with: url)
+                    cell.reviewId = item.0
+                }
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
-            .filter { !$0.isEmpty }
+            .debug()
             .do(onNext: {[weak self] items in
-                DispatchQueue.main.async {
-                    self?.blogReviewTableView.snp.updateConstraints {
-                        $0.height.equalTo(items.count * 136)
-                    }
+                guard !items.isEmpty else { return }
+                self?.blogReviewTableView.snp.updateConstraints {
+                    $0.height.equalTo(items.count * 136)
                 }
             })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
-                guard let url = URL(string: item.imageURL) else { return }
-                cell.selectionStyle = .none
-                cell.blogImageView.kf.indicatorType = .activity
-                cell.blogImageView.kf.setImage(with: ImageResource(downloadURL: url))
-                cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
-                                                                           attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
-                cell.titleLabel.text = item.title
-                cell.descriptionLabel.text = item.content
-                cell.webURL = item.webURL
+                if item.title == "" {
+                    cell.showAnimatedSkeleton()
+                } else {
+                    guard let url = URL(string: item.imageURL) else { return }
+                    cell.hideSkeleton()
+                    cell.selectionStyle = .none
+                    cell.blogImageView.kf.indicatorType = .activity
+                    cell.blogImageView.kf.setImage(with: url)
+                    cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
+                                                                               attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
+                    cell.titleLabel.text = item.title
+                    cell.descriptionLabel.text = item.content
+                    cell.webURL = item.webURL
+                }
             }.disposed(by: disposeBag)
     }
 }

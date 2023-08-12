@@ -27,4 +27,13 @@ struct ShowRoomBlogsResponseResult: Codable {
         case title, content
         case imageCount = "imgCnt"
     }
+    
+    static func dummies() -> [ShowRoomBlogsResponseResult] {
+        return [ShowRoomBlogsResponseResult(webURL: "", imageURL: "", imageCount: 0, title: "", content: ""),
+                ShowRoomBlogsResponseResult(webURL: "", imageURL: "", imageCount: 0, title: "", content: ""),
+                ShowRoomBlogsResponseResult(webURL: "", imageURL: "", imageCount: 0, title: "", content: ""),
+                ShowRoomBlogsResponseResult(webURL: "", imageURL: "", imageCount: 0, title: "", content: ""),
+                ShowRoomBlogsResponseResult(webURL: "", imageURL: "", imageCount: 0, title: "", content: "")
+        ]
+    }
 }

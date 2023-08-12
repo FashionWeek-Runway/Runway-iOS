@@ -13,6 +13,7 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.isSkeletonable = true
         return view
     }()
     
@@ -30,6 +31,8 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
         label.font = .body1M
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
+        label.skeletonTextNumberOfLines = 1
+        label.isSkeletonable = true
         return label
     }()
     
@@ -39,6 +42,8 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
         label.font = .body2
         label.numberOfLines = 4
         label.lineBreakMode = .byTruncatingTail
+        label.isSkeletonable = true
+        label.skeletonTextNumberOfLines = 4
         return label
     }()
     
@@ -58,8 +63,11 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
     }
     
     private func configureUI() {
-        addSubviews([titleLabel, descriptionLabel, blogImageView])
+        contentView.addSubviews([titleLabel, descriptionLabel, blogImageView])
         blogImageView.addSubview(imageCountLabel)
+        
+        isSkeletonable = true
+        contentView.isSkeletonable = true
         
         blogImageView.snp.makeConstraints {
             $0.width.height.equalTo(108)

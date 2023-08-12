@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class RWTagCollectionViewCell: UICollectionViewCell {
     
@@ -13,6 +14,7 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
         let view = UILabel()
         view.font = .font(.spoqaHanSansNeoMedium, ofSize: 12)
         view.textColor = .blue600
+        view.isSkeletonable = true
         return view
     }()
     
@@ -28,18 +30,34 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = .blue200.withAlphaComponent(0.5)
-        layer.borderColor = UIColor.blue200.cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 4
+        
         clipsToBounds = true
         isUserInteractionEnabled = false
+        layer.borderWidth = 1
+        layer.cornerRadius = 4
+        isSkeletonable = true
+        contentView.isSkeletonable = true
         
-        addSubview(label)
+        contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(8)
             $0.trailing.equalToSuperview().offset(-8)
             $0.centerY.equalToSuperview()
+        }
+    }
+    
+    func setCellLayout(isSkeleton: Bool = false) {
+        if isSkeleton {
+            backgroundColor = .clear
+            layer.borderColor = nil
+            layer.borderWidth = 0
+            showAnimatedSkeleton()
+        } else {
+            backgroundColor = .blue200.withAlphaComponent(0.5)
+            layer.borderWidth = 1
+            layer.cornerRadius = 4
+            layer.borderColor = UIColor.blue200.cgColor
+            hideSkeleton()
         }
     }
 }

@@ -32,7 +32,9 @@ final class RWUserReviewCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        addSubviews([imageView])
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+        contentView.addSubviews([imageView])
         
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
