@@ -29,16 +29,4 @@ struct ShowRoomDetailResponseResult: Codable {
         case imageURLList = "imgUrlList"
         case category, storeName, address, storeTime, storePhone, instagram, webSite, bookmark
     }
-    
-    static let dummy = ShowRoomDetailResponseResult(storeID: 0,
-                                                    imageURLList: ["Dummy", "Dummy", "Dummy", "Dummy"],
-                                                    category: ["Dummies", "Dummies", "Dummies", "Dummies"],
-                                                    storeName: "Dummy",
-                                                    address: "Address: Dummy Label, Dummy Text",
-                                                    storeTime: "Dummy",
-                                                    storePhone: "010-0000-0000",
-                                                    instagram: "@Dummy",
-                                                    webSite: "www.Dummy.com",
-                                                    bookmark: false)
-    
 }
