@@ -358,7 +358,7 @@ extension HomeViewController: View {
                     cell.cellMode = .store
                     guard let imageUrl = URL(string: item.imageURL) else { return }
                     cell.imageView.kf.indicatorType = .activity
-                    cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
+                    cell.imageView.kf.setImage(with: imageUrl)
                     cell.storeNameLabel.attributedText = NSAttributedString(
                         string: item.storeName,
                         attributes: [

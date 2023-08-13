@@ -33,17 +33,10 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
         
         clipsToBounds = true
         isUserInteractionEnabled = false
-        layer.borderWidth = 1
-        layer.cornerRadius = 4
         isSkeletonable = true
         contentView.isSkeletonable = true
         
         contentView.addSubview(label)
-        label.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(8)
-            $0.trailing.equalToSuperview().offset(-8)
-            $0.centerY.equalToSuperview()
-        }
     }
     
     func setCellLayout(isSkeleton: Bool = false) {
@@ -51,13 +44,27 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
             backgroundColor = .clear
             layer.borderColor = nil
             layer.borderWidth = 0
+            layer.cornerRadius = 0
             showAnimatedSkeleton()
+            label.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
         } else {
             backgroundColor = .blue200.withAlphaComponent(0.5)
             layer.borderWidth = 1
             layer.cornerRadius = 4
             layer.borderColor = UIColor.blue200.cgColor
             hideSkeleton()
+            
+            label.snp.makeConstraints {
+                $0.leading.equalToSuperview().offset(8)
+                $0.trailing.equalToSuperview().offset(-8)
+                $0.centerY.equalToSuperview()
+            }
         }
+    }
+    
+    override func prepareForReuse() {
+        label.snp.removeConstraints()
     }
 }

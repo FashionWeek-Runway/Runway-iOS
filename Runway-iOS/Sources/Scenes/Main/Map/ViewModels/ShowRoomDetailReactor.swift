@@ -77,6 +77,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             
         case .viewDidLoad:
             return Observable.concat([
+//                .just(.setStoreDetailInfo(ShowRoomDetailResponseResult.dummy)),
                 .just(.setStoreReview(UserReviewResponseResult(isLast: false, contents: UserReviewResponseResultContent.dummies()))),
                 .just(.setBlogReviews(ShowRoomBlogsResponseResult.dummies()))
             ])

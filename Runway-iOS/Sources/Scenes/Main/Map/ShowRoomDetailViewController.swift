@@ -68,18 +68,18 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let mainImageCollectionViewGradientView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: 21))
-//        view.backgroundColor = .white
         return view
     }()
     
     private let showRoomTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Store Name"
         label.textColor = .runwayBlack
         label.font = .headline2
         label.numberOfLines = 0
         label.isSkeletonable = true
+        label.text = "아더 성수 스페이스"
         label.showAnimatedSkeleton()
+        label.skeletonTextNumberOfLines = 1
         return label
     }()
     
@@ -99,15 +99,15 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let locationIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_map_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showSkeleton()
+        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let addressLabel: UILabel = {
         let label = UILabel()
-        label.text = "Address: Dummy Label, Dummy Text"
         label.textColor = .runwayBlack
         label.font = .body2
         label.numberOfLines = 0
+        label.text = "서울특별시 성동구 아차산로 13길 11"
         label.isSkeletonable = true
         label.showAnimatedSkeleton()
         return label
@@ -124,12 +124,12 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let timeIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_time_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showSkeleton()
+        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Time: 00:00~00:00"
+        label.text = "월 - 일 08:00 ~ 21:00"
         label.textColor = .runwayBlack
         label.font = .body2
         label.numberOfLines = 0
@@ -141,12 +141,12 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let phoneIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_call_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showSkeleton()
+        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let phoneLabel: UILabel = {
         let label = UILabel()
-        label.text = "Phone: 000-0000-0000"
+        label.text = "0507-1489-0251"
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
@@ -157,12 +157,12 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let instagramIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_instagram_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showSkeleton()
+        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let instagramLabel: UILabel = {
         let label = UILabel()
-        label.text = "Instagram: @dummy"
+        label.text = "[인스타그램 아이디]"
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
@@ -173,12 +173,12 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let webIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_web_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showSkeleton()
+        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let webLabel: UILabel = {
         let label = UILabel()
-        label.text = "Web: dummy.com"
+        label.text = "[웹사이트 링크]"
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
@@ -316,6 +316,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         super.viewDidAppear(animated)
         topAreaGradientView.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
         mainImageCollectionViewGradientView.setGradientBackground(colorTop: .clear, colorBottom: .white)
+        containerView.showAnimatedSkeleton()
     }
     
     override func configureUI() {
@@ -504,6 +505,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(20)
         }
         
+        blogReviewTableView.snp.removeConstraints()
         blogReviewTableView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(blogReviewLabel.snp.bottom).offset(16)
@@ -726,45 +728,78 @@ extension ShowRoomDetailViewController: View {
         reactor.state.map { $0.title }
             .filter { $0 != "" }
             .distinctUntilChanged()
-            .do(onNext: { [weak self] _ in
+            .do(onNext: { [weak self] event in
                 self?.showRoomTitleLabel.hideSkeleton()
             })
             .bind(to: showRoomTitleLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.categories }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
             .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
 //                cell.label.text = "# " + item
-                cell.label.text = "# " + item
-                cell.isSkeletonable = true
-                cell.setCellLayout(isSkeleton: true)
-                cell.showAnimatedSkeleton()
+                if item == "Dummy" {
+                    cell.isSkeletonable = true
+                    cell.setCellLayout(isSkeleton: true)
+                    cell.showAnimatedSkeleton()
+                    cell.label.text = item
+                } else {
+                    cell.hideSkeleton()
+                    cell.setCellLayout(isSkeleton: false)
+                    cell.label.text = "# " + item
+                }
+//                cell.label.text = "# " + item
             }
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.address }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.locationIcon.hideSkeleton()
+                self?.addressLabel.hideSkeleton()
+            })
             .bind(to: addressLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.timeInfo }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.timeIcon.hideSkeleton()
+                self?.timeLabel.hideSkeleton()
+            })
             .bind(to: timeLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.phoneNumber }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.phoneIcon.hideSkeleton()
+                self?.phoneLabel.hideSkeleton()
+            })
             .bind(to: phoneLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.instagramID }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.instagramIcon.hideSkeleton()
+                self?.instagramLabel.hideSkeleton()
+            })
             .bind(to: instagramLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.webSiteLink }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.webIcon.hideSkeleton()
+                self?.webLabel.hideSkeleton()
+            })
             .bind(to: webLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -794,7 +829,6 @@ extension ShowRoomDetailViewController: View {
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
-            .debug()
             .do(onNext: {[weak self] items in
                 guard !items.isEmpty else { return }
                 self?.blogReviewTableView.snp.updateConstraints {
