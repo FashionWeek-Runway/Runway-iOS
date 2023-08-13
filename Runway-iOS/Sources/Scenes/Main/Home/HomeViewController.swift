@@ -423,7 +423,7 @@ extension HomeViewController: View {
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let imageUrl = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageUrl))
+                cell.imageView.kf.setImage(with: imageUrl)
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         

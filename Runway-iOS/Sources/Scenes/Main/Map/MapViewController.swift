@@ -486,7 +486,7 @@ extension MapViewController: View {
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         
@@ -496,7 +496,7 @@ extension MapViewController: View {
                 cell.tagRelay.accept(item.category)
                 guard let url = URL(string: item.storeImage) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.storeId = item.storeID
             }.disposed(by: disposeBag)
         
@@ -507,7 +507,7 @@ extension MapViewController: View {
                 self?.storeSearchBottomSheet.searchResultView.storeNameLabel.text = data.storeName
                 self?.storeSearchBottomSheet.searchResultView.storeId = data.storeID
                 self?.storeSearchBottomSheet.searchResultView.imageView.kf.indicatorType = .activity
-                self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                self?.storeSearchBottomSheet.searchResultView.imageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
         

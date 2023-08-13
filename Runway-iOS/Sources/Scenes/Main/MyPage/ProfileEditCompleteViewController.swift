@@ -145,7 +145,7 @@ extension ProfileEditCompleteViewController: View {
                 self?.profileCard.defaultProfileImageView.isHidden = true
                 guard let url = URL(string: $0) else { return }
                 self?.profileCard.imageView.kf.indicatorType = .activity
-                self?.profileCard.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                self?.profileCard.imageView.kf.setImage(with: url)
             }).disposed(by: disposeBag)
         
         reactor.state.map { $0.styles }

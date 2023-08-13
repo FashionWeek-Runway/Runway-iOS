@@ -507,7 +507,7 @@ extension MyPageViewController: View {
         reactor.state.compactMap { $0.profileImageURL }
             .bind(onNext: { [weak self] imageURL in
                 guard let url = URL(string: imageURL) else { return }
-                self?.profileImageButton.kf.setBackgroundImage(with: ImageResource(downloadURL: url), for: .normal,
+                self?.profileImageButton.kf.setBackgroundImage(with: url, for: .normal,
                                                                options: [.processor(ResizingImageProcessor(referenceSize: CGSize(width: 60, height: 60)))])
             })
             .disposed(by: disposeBag)
@@ -521,7 +521,7 @@ extension MyPageViewController: View {
             .bind(to: myReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         
@@ -536,7 +536,7 @@ extension MyPageViewController: View {
             .bind(to: storeCollectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.storeImg) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.storeNameLabel.text = item.storeName
                 cell.tagRelay.accept(item.category)
             }.disposed(by: disposeBag)
@@ -550,7 +550,7 @@ extension MyPageViewController: View {
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWReviewCollectionViewCell.identifier, cellType: RWReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         

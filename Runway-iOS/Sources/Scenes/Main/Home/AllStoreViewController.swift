@@ -86,7 +86,7 @@ extension AllStoreViewController: View {
             .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { [weak self] indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: url))
+                cell.imageView.kf.setImage(with: url)
                 cell.storeNameLabel.text = item.storeName
                 cell.locationLabel.setAttributedTitle(NSAttributedString(string: item.regionInfo,
                                                                          attributes: [.foregroundColor: UIColor.gray50, .font: UIFont.caption]), for: .normal)

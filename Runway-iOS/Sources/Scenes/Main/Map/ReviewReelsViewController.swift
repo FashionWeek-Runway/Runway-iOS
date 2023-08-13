@@ -146,12 +146,12 @@ extension ReviewReelsViewController: View {
             .bind(to: collectionView.rx.items(cellIdentifier: RWReviewReelsCollectionViewCell.identifier, cellType: RWReviewReelsCollectionViewCell.self)) { indexPath, item, cell in
 //                guard let reactor = self.reactor else { return }
                 if let profileImageURL = item.profileImageURL, let url = URL(string: profileImageURL) {
-                    cell.profileImageView.kf.setImage(with: ImageResource(downloadURL: url))
+                    cell.profileImageView.kf.setImage(with: url)
                 }
                 
                 guard let imageURL = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: ImageResource(downloadURL: imageURL))
+                cell.imageView.kf.setImage(with: imageURL)
                 cell.storeNameLabel.text = item.storeName
                 cell.addressLabel.text = item.regionInfo
                 cell.usernameLabel.text = item.nickname
