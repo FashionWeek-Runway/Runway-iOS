@@ -108,7 +108,7 @@ final class HomeViewController: BaseViewController {
     private let userReviewCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.showsHorizontalScrollIndicator = false
-        view.register(RWHomeUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeUserReviewCollectionViewCell.identifier)
+        view.register(RWUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWUserReviewCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
         layout.scrollDirection = .horizontal
@@ -186,7 +186,7 @@ final class HomeViewController: BaseViewController {
     private lazy var skeletonUserReviewCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.showsHorizontalScrollIndicator = false
-        view.register(RWHomeUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeUserReviewCollectionViewCell.skeletonIdentifier)
+        view.register(RWUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWUserReviewCollectionViewCell.skeletonIdentifier)
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
         layout.scrollDirection = .horizontal
@@ -475,7 +475,7 @@ extension HomeViewController: View {
                 }
                 self?.userReviewCollectionView.isHidden = reviews.isEmpty
             })
-            .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
+            .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 guard let imageUrl = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: imageUrl)
@@ -495,7 +495,7 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
         case 1:
             return RWHomePagerCollectionViewCell.skeletonIdentifier
         case 2:
-            return RWHomeUserReviewCollectionViewCell.skeletonIdentifier
+            return RWUserReviewCollectionViewCell.skeletonIdentifier
         default:
             return ""
         }
@@ -520,7 +520,7 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
             cell.showAnimatedSkeleton()
             return cell
         case 2:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWHomeUserReviewCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWHomeUserReviewCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWUserReviewCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWUserReviewCollectionViewCell else { return UICollectionViewCell() }
             cell.showAnimatedSkeleton()
             return cell
         default:

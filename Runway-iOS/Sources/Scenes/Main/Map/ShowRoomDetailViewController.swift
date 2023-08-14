@@ -211,7 +211,7 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let reviewCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        view.register(RWHomeUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeUserReviewCollectionViewCell.identifier)
+        view.register(RWUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWUserReviewCollectionViewCell.identifier)
         view.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         view.showsHorizontalScrollIndicator = false
         let layout = UICollectionViewFlowLayout()
@@ -816,7 +816,7 @@ extension ShowRoomDetailViewController: View {
                     self?.setUserReviews()
                 }
             })
-            .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWHomeUserReviewCollectionViewCell.identifier, cellType: RWHomeUserReviewCollectionViewCell.self)) { indexPath, item, cell in
+            .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
                 if item.0 == 0 && item.1 == "Dummy" {
                     cell.showAnimatedSkeleton()
                 } else {
@@ -826,6 +826,7 @@ extension ShowRoomDetailViewController: View {
                     cell.imageView.kf.setImage(with: url)
                     cell.reviewId = item.0
                 }
+                cell.locationIcon.isHidden = true
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }

@@ -38,7 +38,6 @@
 		1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939390329A14E3E0037810A /* AppleLoginResponse.swift */; };
 		1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */; };
 		193EEB042996C4B50093831A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EEB032996C4B50093831A /* BaseViewController.swift */; };
-		1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */; };
 		1941DFE029B2465400C7F5BA /* UserReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */; };
 		1941DFE229B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */; };
 		1941DFE429B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */; };
@@ -201,7 +200,7 @@
 		19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */; };
 		19FF9B2829B7684600C48BD7 /* HomeStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */; };
 		19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */; };
-		19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */; };
+		19FF9B2C29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */; };
 		19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */; };
 		19FF9B3029B7ABB600C48BD7 /* CategorySelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */; };
 		19FF9B3229B7ABEE00C48BD7 /* CategorySelectReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */; };
@@ -266,7 +265,6 @@
 		1939390329A14E3E0037810A /* AppleLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginResponse.swift; sourceTree = "<group>"; };
 		1939390529A168FD0037810A /* SignUpAsPhoneResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAsPhoneResponse.swift; sourceTree = "<group>"; };
 		193EEB032996C4B50093831A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		1941DFDF29B2465400C7F5BA /* UserReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReviewResponse.swift; sourceTree = "<group>"; };
 		1941DFE129B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRoomBlogsResponse.swift; sourceTree = "<group>"; };
 		1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWStoreBlogReviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -435,7 +433,7 @@
 		19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomePagerCollectionViewCell.swift; sourceTree = "<group>"; };
 		19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreResponse.swift; sourceTree = "<group>"; };
 		19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewResponse.swift; sourceTree = "<group>"; };
-		19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeNoticeCollectionViewCell.swift; sourceTree = "<group>"; };
 		19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectViewController.swift; sourceTree = "<group>"; };
 		19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectReactor.swift; sourceTree = "<group>"; };
@@ -644,11 +642,10 @@
 				19CA8D7129ABB8C900FE18E3 /* RWTagCollectionViewCell.swift */,
 				19E88C3B29ACF0D900B111CE /* RWMapSearchHistoryTableViewCell.swift */,
 				19E88C3D29ACF3F000B111CE /* RWMapSearchTableViewCell.swift */,
-				1941DFDD29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift */,
 				1941DFE329B24DA800C7F5BA /* RWStoreBlogReviewTableViewCell.swift */,
 				191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */,
 				19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */,
-				19FF9B2B29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift */,
+				19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */,
 				19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */,
 				19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */,
 				19E4E4D52A83AD7100A83205 /* RWMainStoreImageCollectionViewCell.swift */,
@@ -1384,7 +1381,7 @@
 				191B8EB129B4AED500CF5C83 /* UIImage+.swift in Sources */,
 				19849B7F29B9C08600B1FA1F /* ProfileEditViewController.swift in Sources */,
 				19E0C78729A36943003E1F10 /* UserService.swift in Sources */,
-				19FF9B2C29B7761700C48BD7 /* RWHomeUserReviewCollectionViewCell.swift in Sources */,
+				19FF9B2C29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift in Sources */,
 				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
@@ -1401,7 +1398,6 @@
 				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
-				1941DFDE29B23EA700C7F5BA /* RWUserReviewCollectionViewCell.swift in Sources */,
 				190A5E0A2A85ACF3001E3925 /* RequestAuthInterceptor.swift in Sources */,
 				19917EF42994DFC40016A175 /* AppFlow.swift in Sources */,
 				199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */,
