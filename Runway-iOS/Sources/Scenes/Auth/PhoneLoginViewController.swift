@@ -63,9 +63,6 @@ final class PhoneLoginViewController: BaseViewController {
     
     private var accountNotExistAlert: UILabel = {
         let label = UILabel()
-        label.layer.cornerRadius = 20
-        label.layer.masksToBounds = true
-        label.backgroundColor = UIColor(hex: "#EF5B52", alpha: 0.1)
         label.text = "존재하지 않는 계정입니다."
         label.font = UIFont.body2
         label.textColor = UIColor.error
@@ -137,10 +134,10 @@ final class PhoneLoginViewController: BaseViewController {
         }
         
         accountNotExistAlert.snp.makeConstraints {
-            $0.bottom.equalTo(loginButton.snp.top).offset(-47)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(40)
-            $0.width.equalTo(188)
+            $0.centerY.equalTo(navigationBarArea.snp.bottom).offset(10)
+//            $0.height.equalTo(40)
+//            $0.width.equalTo(188)
         }
     }
 }
