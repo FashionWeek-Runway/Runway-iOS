@@ -22,6 +22,7 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
         button.setBackgroundColor(.runwayBlack.withAlphaComponent(0.5), for: .normal)
         button.setInsets(forContentPadding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4), imageTitlePadding: 0.0)
         button.isUserInteractionEnabled = false
+        button.isHiddenWhenSkeletonIsActive = true
         return button
     }()
     
@@ -48,6 +49,7 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
     }()
     
     static let identifier = "RWStoreBlogReviewTableViewCell"
+    static let skeletonIdentifier = identifier + "-skeleton"
     
     var webURL: String? = nil
     
@@ -67,7 +69,6 @@ final class RWStoreBlogReviewTableViewCell: UITableViewCell {
         blogImageView.addSubview(imageCountLabel)
         
         isSkeletonable = true
-        contentView.isSkeletonable = true
         
         blogImageView.snp.makeConstraints {
             $0.width.height.equalTo(108)

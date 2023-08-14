@@ -19,7 +19,6 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
     // MARK: - Events
 
     enum Action {
-        case viewDidLoad
         case viewWillAppear
         case backButtonDidTap
         case bookmarkButtonDidTap
@@ -37,9 +36,9 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
     }
 
     struct State {
-        var mainImageUrlList: [String] = ["Dummy", "Dummy", "Dummy", "Dummy"]
+        var mainImageUrlList: [String] = []
         var title: String = ""
-        var categories: [String] = ["Dummy", "Dummy", "Dummy", "Dummy"]
+        var categories: [String] = []
         var address: String = ""
         var timeInfo: String = ""
         var phoneNumber: String = ""
@@ -47,8 +46,8 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         var webSiteLink: String = ""
         var isBookmark: Bool = false
         
-        var userReviewImages: [UserReviewResponseResultContent] = UserReviewResponseResultContent.dummies()
-        var blogReviews: [ShowRoomBlogsResponseResult] = ShowRoomBlogsResponseResult.dummies()
+        var userReviewImages: [UserReviewResponseResultContent] = []
+        var blogReviews: [ShowRoomBlogsResponseResult] = []
         
         var userReviewPage: Int = 0
         var userReviewIsLast: Bool = false
@@ -74,13 +73,6 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-            
-        case .viewDidLoad:
-            return Observable.concat([
-//                .just(.setStoreDetailInfo(ShowRoomDetailResponseResult.dummy)),
-                .just(.setStoreReview(UserReviewResponseResult(isLast: false, contents: UserReviewResponseResultContent.dummies()))),
-                .just(.setBlogReviews(ShowRoomBlogsResponseResult.dummies()))
-            ])
             
         case .viewWillAppear:
             return Observable.concat([

@@ -78,8 +78,8 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.numberOfLines = 0
         label.isSkeletonable = true
         label.text = "아더 성수 스페이스"
-        label.showAnimatedSkeleton()
         label.skeletonTextNumberOfLines = 1
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     
@@ -99,7 +99,6 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let locationIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_map_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let addressLabel: UILabel = {
@@ -109,7 +108,8 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.numberOfLines = 0
         label.text = "서울특별시 성동구 아차산로 13길 11"
         label.isSkeletonable = true
-        label.showAnimatedSkeleton()
+        label.skeletonTextLineHeight = .relativeToFont
+        label.lastLineFillPercent = 70
         return label
     }()
     private let copyButton: UIButton = {
@@ -124,7 +124,6 @@ final class ShowRoomDetailViewController: BaseViewController {
     private let timeIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_time_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let timeLabel: UILabel = {
@@ -134,14 +133,14 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.font = .body2
         label.numberOfLines = 0
         label.isSkeletonable = true
-        label.showAnimatedSkeleton()
+        label.skeletonTextNumberOfLines = 1
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     
     private let phoneIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_call_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let phoneLabel: UILabel = {
@@ -150,14 +149,13 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
-        label.showAnimatedSkeleton()
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     
     private let instagramIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_instagram_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let instagramLabel: UILabel = {
@@ -166,14 +164,13 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
-        label.showAnimatedSkeleton()
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     
     private let webIcon = {
         let imageView = UIImageView(image: UIImage(named: "icon_web_storedetail"))
         imageView.isSkeletonable = true
-        imageView.showAnimatedSkeleton()
         return imageView
     }()
     private let webLabel: UILabel = {
@@ -182,7 +179,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.textColor = .runwayBlack
         label.font = .body2
         label.isSkeletonable = true
-        label.showAnimatedSkeleton()
+        label.skeletonTextLineHeight = .relativeToFont
         return label
     }()
     
@@ -294,6 +291,54 @@ final class ShowRoomDetailViewController: BaseViewController {
         return picker
     }()
     
+    // MARK: - SkeletonViews
+    
+    private let mainImageSkeletonView: UIView = {
+        let view = UIView()
+        view.isSkeletonable = true
+        view.showAnimatedSkeleton()
+        return view
+    }()
+    
+    private lazy var skeletonTagCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWTagCollectionViewCell.self, forCellWithReuseIdentifier: RWTagCollectionViewCell.skeletonIdentifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 59, height: 24)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.scrollDirection = .horizontal
+        view.showsHorizontalScrollIndicator = false
+        view.collectionViewLayout = layout
+        view.dataSource = self
+        view.tag = 1
+        return view
+    }()
+    
+    private lazy var skeletonReviewCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWUserReviewCollectionViewCell.skeletonIdentifier)
+        view.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        view.showsHorizontalScrollIndicator = false
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 6
+        layout.itemSize = CGSize(width: 132, height: 200)
+        layout.scrollDirection = .horizontal
+        view.collectionViewLayout = layout
+        view.dataSource = self
+        view.tag = 2
+        return view
+    }()
+    
+    private lazy var skeletonBlogReviewTableView: UITableView = {
+        let view = UITableView()
+        view.register(RWStoreBlogReviewTableViewCell.self, forCellReuseIdentifier: RWStoreBlogReviewTableViewCell.skeletonIdentifier)
+        view.showsHorizontalScrollIndicator = false
+        view.rowHeight = 136
+        view.dataSource = self
+        return view
+    }()
+    
     // MARK: - initializer
     
     init(with reactor: ShowRoomDetailReactor) {
@@ -316,7 +361,6 @@ final class ShowRoomDetailViewController: BaseViewController {
         super.viewDidAppear(animated)
         topAreaGradientView.setGradientBackground(colorTop: .runwayBlack.withAlphaComponent(0.3), colorBottom: .clear)
         mainImageCollectionViewGradientView.setGradientBackground(colorTop: .clear, colorBottom: .white)
-        containerView.showAnimatedSkeleton()
     }
     
     override func configureUI() {
@@ -519,6 +563,37 @@ final class ShowRoomDetailViewController: BaseViewController {
 //            $0.height.equalTo(44)
 //            $0.bottom.equalToSuperview().offset(-50)
 //        }
+        
+        configureSkeletonUI()
+    }
+    
+    private func configureSkeletonUI() {
+        containerView.addSubviews([mainImageSkeletonView, skeletonTagCollectionView, skeletonReviewCollectionView, skeletonBlogReviewTableView])
+        mainImageSkeletonView.snp.makeConstraints {
+            $0.edges.equalTo(mainImageCollectionView)
+        }
+        
+        skeletonTagCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(tagCollectionView)
+        }
+        
+        skeletonReviewCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(reviewCollectionView)
+        }
+        
+        skeletonBlogReviewTableView.snp.makeConstraints {
+            $0.edges.equalTo(blogReviewTableView)
+        }
+        
+        [mainImageSkeletonView, showRoomTitleLabel,
+         locationIcon, addressLabel,
+         timeIcon, timeLabel,
+         phoneIcon, phoneLabel,
+         instagramIcon, instagramLabel,
+         webIcon, webLabel].forEach {
+            $0.showAnimatedSkeleton()
+            $0.layoutSkeletonIfNeeded()
+        }
     }
     
     private func setRx() {
@@ -643,10 +718,6 @@ extension ShowRoomDetailViewController: View {
     }
     
     private func bindAction(reactor: ShowRoomDetailReactor) {
-        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
         rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -717,7 +788,12 @@ extension ShowRoomDetailViewController: View {
     
     private func bindState(reactor: ShowRoomDetailReactor) {
         reactor.state.map { $0.mainImageUrlList }
+            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.mainImageSkeletonView.hideSkeleton()
+                self?.mainImageSkeletonView.isHidden = true
+            })
             .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { IndexPath, item, cell in
                 cell.storeImageView.image = nil
                 cell.storeImageView.kf.indicatorType = .activity
@@ -735,21 +811,16 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.categories }
-            .filter { !$0.isEmpty }
             .distinctUntilChanged()
+            .filter { !$0.isEmpty }
+            .do(onNext: { [weak self] _ in
+                self?.skeletonTagCollectionView.hideSkeleton()
+                self?.skeletonTagCollectionView.isHidden = true
+            })
             .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
-//                cell.label.text = "# " + item
-                if item == "Dummy" {
-                    cell.isSkeletonable = true
-                    cell.setCellLayout(isSkeleton: true)
-                    cell.showAnimatedSkeleton()
-                    cell.label.text = item
-                } else {
-                    cell.hideSkeleton()
-                    cell.setCellLayout(isSkeleton: false)
-                    cell.label.text = "# " + item
-                }
-//                cell.label.text = "# " + item
+                cell.hideSkeleton()
+                cell.setCellLayout(isSkeleton: false)
+                cell.label.text = "# " + item
             }
             .disposed(by: disposeBag)
         
@@ -809,7 +880,10 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.userReviewImages.map { ($0.reviewID, $0.imgURL) } }
+            .filter { !$0.isEmpty }
             .do(onNext: { [weak self] in
+                self?.skeletonReviewCollectionView.hideSkeleton()
+                self?.skeletonReviewCollectionView.isHidden = true
                 if $0.isEmpty {
                     self?.setUserReviewsIfEmpty()
                 } else {
@@ -817,20 +891,19 @@ extension ShowRoomDetailViewController: View {
                 }
             })
             .bind(to: reviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
-                if item.0 == 0 && item.1 == "Dummy" {
-                    cell.showAnimatedSkeleton()
-                } else {
-                    guard let url = URL(string: item.1) else { return }
-                    cell.hideSkeleton()
-                    cell.imageView.kf.indicatorType = .activity
-                    cell.imageView.kf.setImage(with: url)
-                    cell.reviewId = item.0
-                }
+                guard let url = URL(string: item.1) else { return }
+                cell.hideSkeleton()
+                cell.imageView.kf.indicatorType = .activity
+                cell.imageView.kf.setImage(with: url)
+                cell.reviewId = item.0
                 cell.locationIcon.isHidden = true
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
+            .filter { !$0.isEmpty }
             .do(onNext: {[weak self] items in
+                self?.skeletonBlogReviewTableView.hideSkeleton()
+                self?.skeletonBlogReviewTableView.isHidden = true
                 guard !items.isEmpty else { return }
                 self?.blogReviewTableView.snp.updateConstraints {
                     $0.height.equalTo(items.count * 136)
@@ -852,5 +925,56 @@ extension ShowRoomDetailViewController: View {
                     cell.webURL = item.webURL
                 }
             }.disposed(by: disposeBag)
+    }
+}
+
+extension ShowRoomDetailViewController: SkeletonCollectionViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        switch skeletonView.tag {
+        case 1: return RWTagCollectionViewCell.skeletonIdentifier
+        case 2: return RWUserReviewCollectionViewCell.skeletonIdentifier
+        default: return ""
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView.tag {
+        case 1: return 4
+        case 2: return 3
+        default: return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView.tag {
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWTagCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWTagCollectionViewCell else { return UICollectionViewCell() }
+            cell.setCellLayout(isSkeleton: true)
+            return cell
+        case 2:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWUserReviewCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWUserReviewCollectionViewCell else { return UICollectionViewCell() }
+            cell.showAnimatedSkeleton()
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
+    }
+}
+
+extension ShowRoomDetailViewController: SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        RWStoreBlogReviewTableViewCell.skeletonIdentifier
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RWStoreBlogReviewTableViewCell.skeletonIdentifier, for: indexPath) as? RWStoreBlogReviewTableViewCell else { return UITableViewCell() }
+        cell.showAnimatedSkeleton()
+        return cell
     }
 }

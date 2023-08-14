@@ -29,10 +29,4 @@ struct UserReviewResponseResultContent: Codable {
         case reviewID = "reviewId"
         case imgURL = "imgUrl"
     }
-    
-    static func dummies() -> [UserReviewResponseResultContent] {
-        return [Self.init(reviewID: 0, imgURL: "Dummy"),
-                Self.init(reviewID: 0, imgURL: "Dummy"),
-                Self.init(reviewID: 0, imgURL: "Dummy")]
-    }
 }
