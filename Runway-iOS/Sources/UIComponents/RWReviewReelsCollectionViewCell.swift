@@ -107,7 +107,7 @@ final class RWReviewReelsCollectionViewCell: UICollectionViewCell {
     
     private func configureUI() {
         self.backgroundColor = .runwayBlack
-        addSubviews([imageView, profileImageView, usernameLabel, etcButton, exitButton, bookmarkButton, bottomStoreButton])
+        contentView.addSubviews([imageView, profileImageView, usernameLabel, etcButton, exitButton, bookmarkButton, bottomStoreButton])
         
         imageView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
