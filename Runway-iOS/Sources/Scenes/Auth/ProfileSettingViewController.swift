@@ -109,8 +109,8 @@ final class ProfileSettingViewController: BaseViewController {
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [weak self] keyboardHeight in
                 guard let self = self else { return }
-                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -10
-                self.nextButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
+                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom - 10 : -10
+//                self.nextButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
                 self.nextButton.snp.updateConstraints {
                     $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
                 }
