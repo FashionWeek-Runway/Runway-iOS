@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class RWAroundView: UIView {
     
@@ -30,6 +31,20 @@ final class RWAroundView: UIView {
         return view
     }()
     
+    lazy var skeletonCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 20
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        view.showsVerticalScrollIndicator = false
+        view.collectionViewLayout = layout
+        view.bounces = false
+        view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier + "-Skeleton")
+        view.dataSource = self
+        return view
+    }()
+    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -42,7 +57,8 @@ final class RWAroundView: UIView {
     }
     
     private func configureUI() {
-        self.addSubviews([regionLabel, collectionView])
+        self.addSubviews([regionLabel, collectionView, skeletonCollectionView])
+//        collectionView.addSubview(skeletonCollectionView)
         
         regionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(6)
@@ -55,5 +71,25 @@ final class RWAroundView: UIView {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(regionLabel.snp.bottom).offset(20)
         }
+        
+        skeletonCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(collectionView)
+        }
+    }
+}
+
+extension RWAroundView: SkeletonCollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        2
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return RWAroundCollectionViewCell.identifier + "-Skeleton"
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWAroundCollectionViewCell.identifier + "-Skeleton", for: indexPath) as? RWAroundCollectionViewCell else { return UICollectionViewCell() }
+        cell.showAnimatedSkeleton()
+        return cell
     }
 }

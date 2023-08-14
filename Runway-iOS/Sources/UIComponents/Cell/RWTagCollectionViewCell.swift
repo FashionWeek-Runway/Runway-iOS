@@ -12,13 +12,16 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
     
     let label: UILabel = {
         let view = UILabel()
+        view.text = "# 시티보이"
         view.font = .font(.spoqaHanSansNeoMedium, ofSize: 12)
         view.textColor = .blue600
         view.isSkeletonable = true
+        view.skeletonTextLineHeight = .relativeToFont
         return view
     }()
     
     static let identifier = "RWTagCollectionViewCell"
+    static let skeletonIdentifier = "RWTagCollectionViewCell-skeleton"
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,25 +33,19 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        
         clipsToBounds = true
         isUserInteractionEnabled = false
         isSkeletonable = true
-        contentView.isSkeletonable = true
         
-        contentView.addSubview(label)
+        addSubview(label)
+        label.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     func setCellLayout(isSkeleton: Bool = false) {
         if isSkeleton {
-            backgroundColor = .clear
-            layer.borderColor = nil
-            layer.borderWidth = 0
-            layer.cornerRadius = 0
             showAnimatedSkeleton()
-            label.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
         } else {
             backgroundColor = .blue200.withAlphaComponent(0.5)
             layer.borderWidth = 1
@@ -56,15 +53,11 @@ final class RWTagCollectionViewCell: UICollectionViewCell {
             layer.borderColor = UIColor.blue200.cgColor
             hideSkeleton()
             
-            label.snp.makeConstraints {
+            label.snp.remakeConstraints {
                 $0.leading.equalToSuperview().offset(8)
                 $0.trailing.equalToSuperview().offset(-8)
                 $0.centerY.equalToSuperview()
             }
         }
-    }
-    
-    override func prepareForReuse() {
-        label.snp.removeConstraints()
     }
 }
