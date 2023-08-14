@@ -16,6 +16,7 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.isSkeletonable = true
         return view
     }()
     
@@ -23,6 +24,7 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "icon_tab_bookmark"), for: .normal)
         button.setBackgroundImage(UIImage(named: "icon_tab_bookmark_selected"), for: .selected)
+        button.isHiddenWhenSkeletonIsActive = true
         return button
     }()
     
@@ -31,6 +33,7 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         label.font = .body2B
         label.textColor = .white
         label.numberOfLines = 0
+        label.isHiddenWhenSkeletonIsActive = true
         return label
     }()
     
@@ -39,6 +42,7 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         button.isUserInteractionEnabled = false
         button.setImage(UIImage(named: "icon_location_small"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 2)
+        button.isHiddenWhenSkeletonIsActive = true
         return button
     }()
     
@@ -47,10 +51,12 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
         view.axis = .horizontal
         view.spacing = 4
         view.alignment = .fill
+        view.isHiddenWhenSkeletonIsActive = true
         return view
     }()
     
     static let identifier = "RWAllStoreCollectionViewCell"
+    static let skeletonIdentifier = identifier + "-skeleton"
     
     var disposeBag = DisposeBag()
     
@@ -66,6 +72,7 @@ final class RWAllStoreCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        isSkeletonable = true
         addSubviews([imageView, bookmarkButton, tagStackView, locationLabel, storeNameLabel])
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()

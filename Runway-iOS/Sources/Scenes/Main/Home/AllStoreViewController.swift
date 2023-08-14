@@ -12,6 +12,8 @@ import ReactorKit
 
 import Kingfisher
 
+import SkeletonView
+
 final class AllStoreViewController: BaseViewController {
     
     private let collectionView: UICollectionView = {
@@ -27,6 +29,21 @@ final class AllStoreViewController: BaseViewController {
         return view
     }()
     
+    // MARK: - Skeleton Views
+    
+    private lazy var skeletonCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWAllStoreCollectionViewCell.self, forCellWithReuseIdentifier: RWAllStoreCollectionViewCell.skeletonIdentifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: (UIScreen.getDeviceWidth() - 2.0) / 2.0,
+                                 height: ((UIScreen.getDeviceWidth() - 2.0) / 2.0 * 1.32))
+        layout.minimumInteritemSpacing = 2.0
+        layout.minimumLineSpacing = 2.0
+        view.collectionViewLayout = layout
+        view.dataSource = self
+        return view
+    }()
     
     // MARK: - initializer
     
@@ -54,6 +71,15 @@ final class AllStoreViewController: BaseViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(navigationBarArea.snp.bottom)
             $0.bottom.horizontalEdges.equalToSuperview()
+        }
+        
+        configureSkeletonUI()
+    }
+    
+    private func configureSkeletonUI() {
+        view.addSubview(skeletonCollectionView)
+        skeletonCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(collectionView)
         }
     }
 }
@@ -83,7 +109,12 @@ extension AllStoreViewController: View {
     
     private func bindState(reactor: AllStoreReactor) {
         reactor.state.map { $0.storeDatas }
-            .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { [weak self] indexPath, item, cell in
+            .skip(1)
+            .do(onNext: { [weak self] _ in
+                self?.skeletonCollectionView.hideSkeleton()
+                self?.skeletonCollectionView.isHidden = true
+            })
+            .bind(to: collectionView.rx.items(cellIdentifier: RWAllStoreCollectionViewCell.identifier, cellType: RWAllStoreCollectionViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
                 cell.imageView.kf.setImage(with: url)
@@ -128,5 +159,21 @@ extension AllStoreViewController: View {
                     }).disposed(by: cell.disposeBag)
                 
             }.disposed(by: disposeBag)
+    }
+}
+
+extension AllStoreViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return RWAllStoreCollectionViewCell.skeletonIdentifier
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWAllStoreCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWAllStoreCollectionViewCell else { return UICollectionViewCell() }
+        cell.showAnimatedSkeleton()
+        return cell
     }
 }
