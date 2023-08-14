@@ -479,6 +479,7 @@ extension MapViewController: View {
         
         reactor.state.map { $0.aroundDatas }
             .do(onNext: { [weak self] in
+                self?.bottomSheet.aroundView.skeletonCollectionView.isHidden = true
                 self?.bottomSheet.aroundEmptyView.isHidden = !$0.isEmpty
             })
             .bind(to: bottomSheet.aroundView.collectionView.rx.items(cellIdentifier: RWAroundCollectionViewCell.identifier, cellType: RWAroundCollectionViewCell.self)) { indexPath, item, cell in

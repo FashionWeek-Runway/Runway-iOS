@@ -117,6 +117,7 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
             })
             .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
                 cell.label.text = "# " + item
+                cell.setCellLayout(isSkeleton: false)
             }
             .disposed(by: disposeBag)
     }

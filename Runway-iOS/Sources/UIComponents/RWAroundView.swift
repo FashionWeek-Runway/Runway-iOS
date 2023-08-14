@@ -58,7 +58,6 @@ final class RWAroundView: UIView {
     
     private func configureUI() {
         self.addSubviews([regionLabel, collectionView, skeletonCollectionView])
-//        collectionView.addSubview(skeletonCollectionView)
         
         regionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(6)
