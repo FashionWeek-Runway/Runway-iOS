@@ -97,14 +97,14 @@ final class ProfileEditViewController: BaseViewController {
                 self.saveButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
                 self.saveButton.snp.updateConstraints {
                     $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
-                    if keyboardHeight > 0 {
-                        $0.leading.trailing.equalToSuperview()
-                        self.profileSettingView.toSmallScale()
-                    } else {
-                        self.profileSettingView.toLargeScale()
-                        $0.leading.equalToSuperview().offset(20)
-                        $0.trailing.equalToSuperview().offset(-20)
-                    }
+//                    if keyboardHeight > 0 {
+//                        $0.leading.trailing.equalToSuperview()
+//                        self.profileSettingView.toSmallScale()
+//                    } else {
+//                        self.profileSettingView.toLargeScale()
+//                        $0.leading.equalToSuperview().offset(20)
+//                        $0.trailing.equalToSuperview().offset(-20)
+//                    }
                 }
                 self.view.layoutIfNeeded()
             })

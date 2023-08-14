@@ -103,12 +103,6 @@ final class ForgotPasswordViewController: BaseViewController {
                 self.verificationMessageRequestButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
                 self.verificationMessageRequestButton.snp.updateConstraints {
                     $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
-                    if keyboardHeight > 0 {
-                        $0.leading.trailing.equalToSuperview()
-                    } else {
-                        $0.leading.equalToSuperview().offset(20)
-                        $0.trailing.equalToSuperview().offset(-20)
-                    }
                 }
                 self.view.layoutIfNeeded()
             })

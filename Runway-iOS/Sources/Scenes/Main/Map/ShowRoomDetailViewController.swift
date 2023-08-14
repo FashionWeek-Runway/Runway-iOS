@@ -165,6 +165,8 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.font = .body2
         label.isSkeletonable = true
         label.skeletonTextLineHeight = .relativeToFont
+        label.isUserInteractionEnabled = true
+        label.isUserInteractionDisabledWhenSkeletonIsActive = true
         return label
     }()
     
@@ -180,6 +182,8 @@ final class ShowRoomDetailViewController: BaseViewController {
         label.font = .body2
         label.isSkeletonable = true
         label.skeletonTextLineHeight = .relativeToFont
+        label.isUserInteractionEnabled = true
+        label.isUserInteractionDisabledWhenSkeletonIsActive = true
         return label
     }()
     
@@ -883,7 +887,6 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.userReviewImages.map { ($0.reviewID, $0.imgURL) } }
-            .filter { !$0.isEmpty }
             .do(onNext: { [weak self] in
                 self?.skeletonReviewCollectionView.hideSkeleton()
                 self?.skeletonReviewCollectionView.isHidden = true
@@ -903,7 +906,6 @@ extension ShowRoomDetailViewController: View {
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
-            .filter { !$0.isEmpty }
             .do(onNext: {[weak self] items in
                 self?.skeletonBlogReviewTableView.hideSkeleton()
                 self?.skeletonBlogReviewTableView.isHidden = true

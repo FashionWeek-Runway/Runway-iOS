@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxKeyboard
 import ReactorKit
 
 final class PhoneLoginViewController: BaseViewController {
@@ -36,12 +35,6 @@ final class PhoneLoginViewController: BaseViewController {
         return field
     }()
     
-    private let forgotPasswordButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setAttributedTitle(NSAttributedString(string: "비밀번호 찾기", attributes: [.font: UIFont.body2M]), for: .normal)
-        return button
-    }()
-    
     private let loginButton: RWButton = {
         let button = RWButton()
         button.title = "로그인"
@@ -50,10 +43,21 @@ final class PhoneLoginViewController: BaseViewController {
         return button
     }()
     
-    private let signUpButton: RWButton = {
-        let button = RWButton()
-        button.title = "회원가입"
-        button.type = .secondary
+    private let forgotPasswordButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setAttributedTitle(NSAttributedString(string: "비밀번호 찾기", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.gray700]), for: .normal)
+        return button
+    }()
+    
+    private let splitView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray200
+        return view
+    }()
+    
+    private let signUpButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setAttributedTitle(NSAttributedString(string: "회원가입", attributes: [.font: UIFont.body2M, .foregroundColor: UIColor.gray700]), for: .normal)
         return button
     }()
     
@@ -90,7 +94,7 @@ final class PhoneLoginViewController: BaseViewController {
         super.configureUI()
         addBackButton()
         
-        self.view.addSubviews([loginLabel, phoneNumberField, passwordField, forgotPasswordButton, loginButton, signUpButton, accountNotExistAlert])
+        self.view.addSubviews([loginLabel, phoneNumberField, passwordField, forgotPasswordButton, loginButton, splitView, signUpButton, accountNotExistAlert])
         accountNotExistAlert.isHidden = true
         
         loginLabel.snp.makeConstraints {
@@ -109,21 +113,27 @@ final class PhoneLoginViewController: BaseViewController {
             $0.leading.trailing.equalTo(phoneNumberField)
         }
         
+        loginButton.snp.makeConstraints {
+            $0.top.equalTo(passwordField.snp.bottom).offset(40)
+            $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().offset(-23)
+        }
+        
+        splitView.snp.makeConstraints {
+            $0.centerX.equalTo(loginButton)
+            $0.top.equalTo(loginButton.snp.bottom).offset(26.5)
+            $0.width.equalTo(1)
+            $0.height.equalTo(11)
+        }
+        
         forgotPasswordButton.snp.makeConstraints {
-            $0.top.equalTo(passwordField.snp.bottom).offset(21)
-            $0.trailing.equalToSuperview().offset(-19)
+            $0.centerY.equalTo(splitView)
+            $0.trailing.equalTo(splitView.snp.leading).offset(-16)
         }
         
         signUpButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-            $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalToSuperview().offset(-23)
-        }
-        
-        loginButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-70)
-            $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalToSuperview().offset(-23)
+            $0.centerY.equalTo(splitView)
+            $0.leading.equalTo(splitView.snp.trailing).offset(16)
         }
         
         accountNotExistAlert.snp.makeConstraints {
@@ -132,26 +142,7 @@ final class PhoneLoginViewController: BaseViewController {
             $0.height.equalTo(40)
             $0.width.equalTo(188)
         }
-        
-        RxKeyboard.instance.visibleHeight
-            .drive(onNext: { [weak self] keyboardHeight in
-                guard let self = self else { return }
-                let height = keyboardHeight > 0 ? -keyboardHeight + self.view.safeAreaInsets.bottom : -70
-                self.loginButton.layer.cornerRadius = keyboardHeight > 0 ? 0 : 4.0
-                self.loginButton.snp.updateConstraints {
-                    $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(height)
-                    if keyboardHeight > 0 {
-                        $0.leading.trailing.equalToSuperview()
-                    } else {
-                        $0.leading.equalToSuperview().offset(17)
-                        $0.trailing.equalToSuperview().offset(-23)
-                    }
-                }
-                self.view.layoutIfNeeded()
-            })
-            .disposed(by: disposeBag)
     }
-    
 }
 
 extension PhoneLoginViewController: View {
