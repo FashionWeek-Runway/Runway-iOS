@@ -75,6 +75,7 @@
 		196D23AC29A4FB5200E262FB /* RWMapSearchBarCollectionViewBookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AB29A4FB5200E262FB /* RWMapSearchBarCollectionViewBookmarkCell.swift */; };
 		196D23AE29A51F4200E262FB /* RWBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AD29A51F4200E262FB /* RWBottomSheet.swift */; };
 		196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D23AF29A5273F00E262FB /* UIScreen+.swift */; };
+		1975D82B2A8A26BD0013F19A /* RWLoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1975D82A2A8A26BC0013F19A /* RWLoadingButton.swift */; };
 		19762E1B2A804524000F4D3A /* HomeReactorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19762E1A2A804524000F4D3A /* HomeReactorTest.swift */; };
 		1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1979591129939D5F009A4DDE /* APIServiceURL.swift */; };
 		197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */; };
@@ -306,6 +307,7 @@
 		196D23AB29A4FB5200E262FB /* RWMapSearchBarCollectionViewBookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWMapSearchBarCollectionViewBookmarkCell.swift; sourceTree = "<group>"; };
 		196D23AD29A51F4200E262FB /* RWBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWBottomSheet.swift; sourceTree = "<group>"; };
 		196D23AF29A5273F00E262FB /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		1975D82A2A8A26BC0013F19A /* RWLoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWLoadingButton.swift; sourceTree = "<group>"; };
 		19762E1A2A804524000F4D3A /* HomeReactorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactorTest.swift; sourceTree = "<group>"; };
 		1979591129939D5F009A4DDE /* APIServiceURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceURL.swift; sourceTree = "<group>"; };
 		197F7D94299A40B900D6B9A4 /* RWRadioSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWRadioSelector.swift; sourceTree = "<group>"; };
@@ -857,6 +859,7 @@
 				1963A80929CCE95200C98337 /* RWColorChipCell.swift */,
 				1963A80B29CCEBBD00C98337 /* RWColorInputAccessoryView.swift */,
 				19F07AF12A51DC98004417E2 /* NavigationController.swift */,
+				1975D82A2A8A26BC0013F19A /* RWLoadingButton.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -1484,6 +1487,7 @@
 				19FF9B3429B7AFEA00C48BD7 /* FashionCategory.swift in Sources */,
 				19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */,
 				1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */,
+				1975D82B2A8A26BD0013F19A /* RWLoadingButton.swift in Sources */,
 				19F07AF22A51DC98004417E2 /* NavigationController.swift in Sources */,
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
@@ -1693,7 +1697,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1733,7 +1737,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1760,7 +1764,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1781,7 +1785,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K2VAN9GH96;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fashionweek.Runway-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -26,8 +26,9 @@ final class EditReviewViewController: BaseViewController {
         return view
     }()
     
-    private let registerButton: UIButton = {
-        let button = UIButton()
+    private let registerButton: RWLoadingButton = {
+        let button = RWLoadingButton()
+//        button.configuration?.showsActivityIndicator = true
         button.layer.cornerRadius = 4
         button.clipsToBounds = true
         button.layer.borderWidth = 0.5
@@ -35,9 +36,6 @@ final class EditReviewViewController: BaseViewController {
         button.setBackgroundColor(.gray900, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "등록",
                                                      attributes: [.foregroundColor: UIColor.point, .font: UIFont.body2B]), for: .normal)
-        button.setImage(UIImage(named: "icon_right_point"), for: .normal)
-        button.semanticContentAttribute = .forceRightToLeft
-        button.imageEdgeInsets.left = 4
         return button
     }()
     
@@ -331,7 +329,6 @@ extension EditReviewViewController: View {
             .asDriver()
             .drive(onNext: { [weak self] in
                 guard let self else { return }
-                UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")
                 self.backButton.isHidden = true
                 self.exitButton.isHidden = true
                 self.addTextButton.isHidden = true
@@ -348,7 +345,13 @@ extension EditReviewViewController: View {
         
         reactor.state.map { $0.isLoading }
             .bind(onNext: { [weak self] isLoading in
-                isLoading ? self?.showLoading() : self?.hideLoading()
+                isLoading ? self?.registerButton.startLoading() : self?.registerButton.stopLoading()
             }).disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isUploadDone }
+            .filter { $0 == true }
+            .bind(onNext: { [weak self] _ in
+                UIWindow.makeToastAnimation(message: "후기가 등록되었습니다.")
+            })
     }
 }

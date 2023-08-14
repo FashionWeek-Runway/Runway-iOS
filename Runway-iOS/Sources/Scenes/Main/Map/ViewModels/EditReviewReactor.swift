@@ -25,11 +25,13 @@ final class EditReviewReactor: Reactor, Stepper {
     
     enum Mutation {
         case setLoading(Bool)
+        case setUploadDone(Bool)
     }
     
     struct State {
         var reviewImageData: Data
         var isLoading: Bool = false
+        var isUploadDone: Bool = false
     }
     
     // MARK: - Properties
@@ -63,9 +65,12 @@ final class EditReviewReactor: Reactor, Stepper {
                 
                 provider.showRoomService.storeReview(storeId: storeId, imageData: imageData)
                     .flatMap { $0.rx.data() }.decode(type: BaseResponse.self, decoder: JSONDecoder())
-                    .map { _ in
+                    .flatMap { _ in
                         self.steps.accept(AppStep.back(animated: false))
-                        return .setLoading(false)
+                        return Observable<Mutation>.concat([
+                            .just(.setLoading(false)),
+                            .just(.setUploadDone(true))
+                        ])
                     }
             ])
         }
@@ -75,6 +80,8 @@ final class EditReviewReactor: Reactor, Stepper {
         var state = state
         
         switch mutation {
+        case .setUploadDone(let isUploaded):
+            state.isUploadDone = isUploaded
         case .setLoading(let isLoading):
             state.isLoading = isLoading
         }
