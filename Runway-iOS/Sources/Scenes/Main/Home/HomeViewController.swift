@@ -11,6 +11,8 @@ import RxCocoa
 import ReactorKit
 import Kingfisher
 
+import SkeletonView
+
 final class HomeViewController: BaseViewController {
     
     private let pagerCollectionView: UICollectionView = {
@@ -161,6 +163,42 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
+    // MARK: - SkeletonViews
+    private lazy var skeletonPagerCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.register(RWHomePagerCollectionViewCell.self, forCellWithReuseIdentifier: RWHomePagerCollectionViewCell.skeletonIdentifier)
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        view.isPagingEnabled = true
+        view.bounces = false
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: UIScreen.getDeviceWidth(), height: UIScreen.getDeviceWidth() * 1.48)
+        view.collectionViewLayout = layout
+        view.dataSource = self
+        view.tag = 1
+        return view
+    }()
+    
+    private lazy var skeletonUserReviewCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.showsHorizontalScrollIndicator = false
+        view.register(RWHomeUserReviewCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeUserReviewCollectionViewCell.skeletonIdentifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 4
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        layout.itemSize = CGSize(width: 132, height: 200)
+        view.collectionViewLayout = layout
+        view.dataSource = self
+        view.tag = 2
+        return view
+    }()
+    
+    
     // MARK: - initializer
     
     init(with reactor: HomeReactor) {
@@ -281,6 +319,19 @@ final class HomeViewController: BaseViewController {
             $0.bottom.equalToSuperview().offset(-22.5)
         }
         
+        configureSkeletonUI()
+    }
+    
+    private func configureSkeletonUI() {
+        containerView.addSubviews([skeletonPagerCollectionView, skeletonUserReviewCollectionView])
+        
+        skeletonPagerCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(pagerCollectionView)
+        }
+        
+        skeletonUserReviewCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(userReviewCollectionView)
+        }
     }
     
     private func setRx() {
@@ -347,7 +398,9 @@ extension HomeViewController: View {
     
     private func bindState(reactor: HomeReactor) {
         reactor.state.map { $0.pagerData }
+            .skip(1)
             .do(onNext: { [weak self] data in
+                self?.skeletonPagerCollectionView.isHidden = true
                 guard let self, data.count > 0 else { return }
                 let percentage = CGFloat(data.count) / 100
                 self.pageProgressBar.setProgress(Float(percentage), animated: false)
@@ -412,7 +465,9 @@ extension HomeViewController: View {
             }.disposed(by: disposeBag)
         
         reactor.state.map { $0.userReview }
+            .skip(1)
             .do(onNext: { [weak self] reviews in
+                self?.skeletonUserReviewCollectionView.isHidden = true
                 [self?.emptyReviewImageView,
                  self?.emptyReviewTitleLabel,
                  self?.emptyReviewDescriptionLabel].forEach {
@@ -431,5 +486,45 @@ extension HomeViewController: View {
             .bind(onNext: { [weak self] nickname in
                 self?.guideLabelText.text = "\(nickname)님의\n취향을 가득 담은 매장"
             }).disposed(by: disposeBag)
+    }
+}
+
+extension HomeViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        switch skeletonView.tag {
+        case 1:
+            return RWHomePagerCollectionViewCell.skeletonIdentifier
+        case 2:
+            return RWHomeUserReviewCollectionViewCell.skeletonIdentifier
+        default:
+            return ""
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView.tag {
+        case 1:
+            return 1
+        case 2:
+            return 3
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView.tag {
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWHomePagerCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWHomePagerCollectionViewCell else { return UICollectionViewCell() }
+            cell.cellMode = .skeleton
+            cell.showAnimatedSkeleton()
+            return cell
+        case 2:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWHomeUserReviewCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWHomeUserReviewCollectionViewCell else { return UICollectionViewCell() }
+            cell.showAnimatedSkeleton()
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
     }
 }

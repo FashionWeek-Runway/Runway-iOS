@@ -17,6 +17,7 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.isUserInteractionEnabled = true
+        view.isSkeletonable = true
         return view
     }()
     
@@ -116,12 +117,14 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
     
     
     static let identifier = "RWHomePagerCollectionViewCell"
+    static let skeletonIdentifier = identifier + "-skeleton"
     
     var disposeBag = DisposeBag()
     
     enum CellMode {
         case store
         case showMoreShop
+        case skeleton
     }
     
     var cellMode: CellMode = .store {
@@ -138,6 +141,15 @@ final class RWHomePagerCollectionViewCell: UICollectionViewCell {
                 self.showMoreShopLabel.isHidden = false
                 self.showMoreCardImageView.isHidden = false
                 self.backgroundColor = .runwayBlack
+            
+            case .skeleton:
+                self.imageView.isHidden = false
+                self.showMoreShopLabel.isHidden = true
+                self.showMoreCardImageView.isHidden = true
+                self.showMoreTopCircleHole.isHidden = true
+                self.showMoreBarcodeImageView.isHidden = true
+                self.barcodeImageView.isHidden = true
+                isSkeletonable = true
             }
         }
     }

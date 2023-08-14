@@ -13,10 +13,15 @@ final class RWHomeUserReviewCollectionViewCell: UICollectionViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.isSkeletonable = true
         return view
     }()
     
-    private let locationIcon = UIImageView(image: UIImage(named: "icon_location_small"))
+    private let locationIcon = {
+        let imageView = UIImageView(image: UIImage(named: "icon_location_small"))
+        imageView.isSkeletonable = true
+        return imageView
+    }()
     
     let addressLabel: UILabel = {
         let label = UILabel()
@@ -26,6 +31,9 @@ final class RWHomeUserReviewCollectionViewCell: UICollectionViewCell {
     }()
     
     static let identifier = "RWHomeUserReviewCollectionViewCell"
+    static let skeletonIdentifier = identifier + "-skeleton"
+    
+    var reviewId: Int? = nil
     
     // MARK: - initializer
     
@@ -39,6 +47,7 @@ final class RWHomeUserReviewCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        isSkeletonable = true
         addSubviews([imageView, locationIcon, addressLabel])
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()

@@ -38,9 +38,9 @@ final class HomeReactor: Reactor, Stepper {
     
     struct State {
         var nickname: String? = nil
-        var pagerData: [HomeStoreResponseResult] = []
+        @Pulse var pagerData: [HomeStoreResponseResult] = []
         
-        var userReview: [HomeReviewResponseResultContent] = []
+        @Pulse var userReview: [HomeReviewResponseResultContent] = []
         var userReviewIsLast: Bool = false
         var userReviewPage: Int = 0
         
