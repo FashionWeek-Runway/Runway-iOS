@@ -82,6 +82,7 @@ final class RWMapMarkerSelectView: UIView {
     private func bindCollectionView() {
         tagRelay
             .bind(to: tagCollectionView.rx.items(cellIdentifier: RWTagCollectionViewCell.identifier, cellType: RWTagCollectionViewCell.self)) { indexPath, item, cell in
+                cell.setCellLayout(isSkeleton: false)
                 cell.label.text = "# " + item
             }
             .disposed(by: disposeBag)
