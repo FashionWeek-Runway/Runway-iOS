@@ -554,7 +554,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(blogReviewLabel.snp.bottom).offset(16)
             $0.height.equalTo(136)
-            $0.bottom.equalToSuperview().offset(-50)
+//            $0.bottom.equalToSuperview().offset(-50)
         }
         
 //        moreButton.snp.makeConstraints {
@@ -582,7 +582,10 @@ final class ShowRoomDetailViewController: BaseViewController {
         }
         
         skeletonBlogReviewTableView.snp.makeConstraints {
-            $0.edges.equalTo(blogReviewTableView)
+            $0.horizontalEdges.equalTo(blogReviewTableView)
+            $0.top.equalTo(blogReviewTableView)
+            $0.height.equalTo(540)
+            $0.bottom.equalToSuperview()
         }
         
         [mainImageSkeletonView, showRoomTitleLabel,
