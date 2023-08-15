@@ -62,6 +62,7 @@ final class RWAroundCollectionViewCell: UICollectionViewCell {
     var numberOfSkeletonTagViews: Int = 4
     
     static let identifier = "RWAroundCollectionViewCell"
+    static let skeletonIdentifier = identifier + "-skeleton"
     
     let tagRelay = PublishRelay<[String]>()
     

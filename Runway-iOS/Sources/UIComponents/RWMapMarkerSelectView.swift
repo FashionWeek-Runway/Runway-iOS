@@ -27,7 +27,7 @@ final class RWMapMarkerSelectView: UIView {
         return label
     }()
     
-    let tagCollectionView: UICollectionView = {
+    private let tagCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.register(RWTagCollectionViewCell.self, forCellWithReuseIdentifier: RWTagCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
@@ -38,6 +38,12 @@ final class RWMapMarkerSelectView: UIView {
         view.showsHorizontalScrollIndicator = false
         view.collectionViewLayout = layout
         return view
+    }()
+    
+    let directionButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "button_directions"), for: .normal)
+        return button
     }()
     
     let tagRelay = PublishRelay<[String]>()
@@ -59,7 +65,7 @@ final class RWMapMarkerSelectView: UIView {
     }
     
     private func configureUI() {
-        addSubviews([imageView, storeNameLabel, tagCollectionView])
+        addSubviews([imageView, storeNameLabel, tagCollectionView, directionButton])
         
         imageView.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
@@ -76,6 +82,11 @@ final class RWMapMarkerSelectView: UIView {
             $0.top.equalTo(storeNameLabel.snp.bottom).offset(6)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(24)
+        }
+        
+        directionButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalTo(tagCollectionView)
         }
     }
     

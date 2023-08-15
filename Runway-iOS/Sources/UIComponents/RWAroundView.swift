@@ -40,7 +40,7 @@ final class RWAroundView: UIView {
         view.showsVerticalScrollIndicator = false
         view.collectionViewLayout = layout
         view.bounces = false
-        view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.identifier + "-Skeleton")
+        view.register(RWAroundCollectionViewCell.self, forCellWithReuseIdentifier: RWAroundCollectionViewCell.skeletonIdentifier)
         view.dataSource = self
         return view
     }()
@@ -87,7 +87,7 @@ extension RWAroundView: SkeletonCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWAroundCollectionViewCell.identifier + "-Skeleton", for: indexPath) as? RWAroundCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RWAroundCollectionViewCell.skeletonIdentifier, for: indexPath) as? RWAroundCollectionViewCell else { return UICollectionViewCell() }
         cell.showAnimatedSkeleton()
         return cell
     }
