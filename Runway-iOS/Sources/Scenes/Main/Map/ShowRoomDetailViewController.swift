@@ -591,7 +591,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.height.equalTo(540)
             $0.bottom.equalToSuperview()
         }
-        
+        view.layoutIfNeeded()
         [mainImageSkeletonView, showRoomTitleLabel,
          locationIcon, addressLabel,
          timeIcon, timeLabel,
