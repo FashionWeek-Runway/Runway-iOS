@@ -83,6 +83,14 @@ final class ShowRoomDetailViewController: BaseViewController {
         return label
     }()
     
+    private let getDirectionButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "button_directions"), for: .normal)
+        button.isSkeletonable = true
+        button.isHiddenWhenSkeletonIsActive = true
+        return button
+    }()
+    
     private let tagCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.register(RWTagCollectionViewCell.self, forCellWithReuseIdentifier: RWTagCollectionViewCell.identifier)
@@ -118,6 +126,8 @@ final class ShowRoomDetailViewController: BaseViewController {
         button.imageEdgeInsets.right = 2
         button.setAttributedTitle(NSAttributedString(string: "복사", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.blue500]), for: .normal)
         button.contentHorizontalAlignment = .leading
+        button.isSkeletonable = true
+        button.isHiddenWhenSkeletonIsActive = true
         return button
     }()
     
@@ -381,7 +391,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         }
         
         containerView.addSubviews([mainImageCollectionView, mainImageCollectionViewGradientView,
-                                   showRoomTitleLabel, tagCollectionView,
+                                   showRoomTitleLabel, tagCollectionView, getDirectionButton,
                                    locationIcon, addressLabel, copyButton,
                                    timeIcon, timeLabel,
                                    phoneIcon, phoneLabel,
@@ -439,6 +449,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         showRoomTitleLabel.snp.makeConstraints {
             $0.top.equalTo(mainImageCollectionView.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(20)
+        }
+        
+        getDirectionButton.snp.makeConstraints {
+            $0.top.equalTo(mainImageCollectionView.snp.bottom).offset(26)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         tagCollectionView.snp.makeConstraints {
@@ -592,8 +607,8 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.bottom.equalToSuperview()
         }
         view.layoutIfNeeded()
-        [mainImageSkeletonView, showRoomTitleLabel,
-         locationIcon, addressLabel,
+        [mainImageSkeletonView, showRoomTitleLabel, getDirectionButton,
+         locationIcon, addressLabel, copyButton,
          timeIcon, timeLabel,
          phoneIcon, phoneLabel,
          instagramIcon, instagramLabel,
@@ -744,6 +759,11 @@ extension ShowRoomDetailViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        getDirectionButton.rx.tap
+            .map { Reactor.Action.directionButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         blogReviewTableView.rx.modelSelected(ShowRoomBlogsResponseResult.self)
             .asDriver()
             .drive(onNext: { [weak self] item in
@@ -836,6 +856,8 @@ extension ShowRoomDetailViewController: View {
             .do(onNext: { [weak self] _ in
                 self?.locationIcon.hideSkeleton()
                 self?.addressLabel.hideSkeleton()
+                self?.copyButton.hideSkeleton()
+                self?.getDirectionButton.hideSkeleton()
             })
             .bind(to: addressLabel.rx.text)
             .disposed(by: disposeBag)
@@ -906,7 +928,6 @@ extension ShowRoomDetailViewController: View {
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
-            .skip(1)
             .do(onNext: {[weak self] items in
                 guard let self = self else { return }
                 self.skeletonBlogReviewTableView.hideSkeleton()
@@ -921,20 +942,16 @@ extension ShowRoomDetailViewController: View {
                 }
             })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
-                if item.title == "" {
-                    cell.showAnimatedSkeleton()
-                } else {
-                    guard let url = URL(string: item.imageURL) else { return }
-                    cell.hideSkeleton()
-                    cell.selectionStyle = .none
-                    cell.blogImageView.kf.indicatorType = .activity
-                    cell.blogImageView.kf.setImage(with: url)
-                    cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
-                                                                               attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
-                    cell.titleLabel.text = item.title
-                    cell.descriptionLabel.text = item.content
-                    cell.webURL = item.webURL
-                }
+                guard let url = URL(string: item.imageURL) else { return }
+                cell.hideSkeleton()
+                cell.selectionStyle = .none
+                cell.blogImageView.kf.indicatorType = .activity
+                cell.blogImageView.kf.setImage(with: url)
+                cell.imageCountLabel.setAttributedTitle(NSAttributedString(string: "\(item.imageCount)",
+                                                                           attributes: [.font: UIFont.caption, .foregroundColor: UIColor.white]), for: .normal)
+                cell.titleLabel.text = item.title
+                cell.descriptionLabel.text = item.content
+                cell.webURL = item.webURL
             }.disposed(by: disposeBag)
     }
 }

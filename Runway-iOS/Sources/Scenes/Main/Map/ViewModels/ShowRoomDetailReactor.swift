@@ -22,6 +22,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case viewWillAppear
         case backButtonDidTap
         case bookmarkButtonDidTap
+        case directionButtonDidTap
         case userReviewScrollReachesBottom
         case reviewCellDidTap(Int)
         case pickingReviewImage(Data?)
@@ -99,6 +100,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             steps.accept(AppStep.back(animated: true))
             return .empty()
             
+        case .directionButtonDidTap:
+            
+            return .empty()
+            
         case .bookmarkButtonDidTap:
             provider.showRoomService.storeBookmark(storeId: storeId)
                 .subscribe(onNext: { [weak self] _ in
@@ -164,5 +169,18 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         }
         
         return state
+    }
+    
+    private func showNaverMap(lat: Double, lng: Double) {
+        // 자동차 길찾기 + 도착지 좌표 + 앱 번들 id
+        guard let url = URL(string: "nmap://route/car?dlat=\(lat)&dlng=\(lng)&appname=com.example.myApp") else { return }
+        // 네이버지도 앱스토어 url
+        guard let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8") else { return }
+
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.open(appStoreURL)
+        }
     }
 }
