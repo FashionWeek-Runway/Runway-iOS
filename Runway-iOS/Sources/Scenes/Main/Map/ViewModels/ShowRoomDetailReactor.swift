@@ -85,8 +85,8 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
                             .data().decode(type: ShowRoomBlogsResponse.self, decoder: JSONDecoder())
                             .flatMap { blogData -> Observable<Mutation> in
                                 Observable.concat([
-                                    .just(.setBlogReviews(blogData.result)),
                                     .just(.setStoreDetailInfo(data.result)),
+                                    .just(.setBlogReviews(blogData.result)),
                                 ])
                             }
                     },

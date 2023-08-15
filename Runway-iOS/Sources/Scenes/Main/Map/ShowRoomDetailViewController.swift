@@ -599,7 +599,6 @@ final class ShowRoomDetailViewController: BaseViewController {
          instagramIcon, instagramLabel,
          webIcon, webLabel].forEach {
             $0.showAnimatedSkeleton()
-            $0.layoutSkeletonIfNeeded()
         }
     }
     
@@ -809,8 +808,8 @@ extension ShowRoomDetailViewController: View {
         
         
         reactor.state.map { $0.title }
-            .filter { $0 != "" }
             .distinctUntilChanged()
+            .filter { $0 != "" }
             .do(onNext: { [weak self] event in
                 self?.showRoomTitleLabel.hideSkeleton()
             })
@@ -832,7 +831,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.address }
-            .filter { !$0.isEmpty }
+            .filter { $0 != "" }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
                 self?.locationIcon.hideSkeleton()
@@ -842,7 +841,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.timeInfo }
-            .filter { !$0.isEmpty }
+            .filter { $0 != "" }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
                 self?.timeIcon.hideSkeleton()
@@ -852,7 +851,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.phoneNumber }
-            .filter { !$0.isEmpty }
+            .filter { $0 != "" }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
                 self?.phoneIcon.hideSkeleton()
@@ -862,7 +861,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.instagramID }
-            .filter { !$0.isEmpty }
+            .filter { $0 != "" }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
                 self?.instagramIcon.hideSkeleton()
@@ -872,7 +871,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.webSiteLink }
-            .filter { !$0.isEmpty }
+            .filter { $0 != "" }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
                 self?.webIcon.hideSkeleton()
@@ -887,6 +886,7 @@ extension ShowRoomDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.userReviewImages.map { ($0.reviewID, $0.imgURL) } }
+            .skip(1)
             .do(onNext: { [weak self] in
                 self?.skeletonReviewCollectionView.hideSkeleton()
                 self?.skeletonReviewCollectionView.isHidden = true
@@ -906,12 +906,15 @@ extension ShowRoomDetailViewController: View {
             }.disposed(by: disposeBag)
 
         reactor.state.map { $0.blogReviews }
+            .skip(1)
             .do(onNext: {[weak self] items in
                 self?.skeletonBlogReviewTableView.hideSkeleton()
                 self?.skeletonBlogReviewTableView.isHidden = true
                 guard !items.isEmpty else { return }
+                self?.skeletonBlogReviewTableView.snp.removeConstraints()
                 self?.blogReviewTableView.snp.updateConstraints {
                     $0.height.equalTo(items.count * 136)
+                    $0.bottom.equalToSuperview()
                 }
             })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
