@@ -908,11 +908,14 @@ extension ShowRoomDetailViewController: View {
         reactor.state.map { $0.blogReviews }
             .skip(1)
             .do(onNext: {[weak self] items in
-                self?.skeletonBlogReviewTableView.hideSkeleton()
-                self?.skeletonBlogReviewTableView.isHidden = true
+                guard let self = self else { return }
+                self.skeletonBlogReviewTableView.hideSkeleton()
+                self.skeletonBlogReviewTableView.isHidden = true
                 guard !items.isEmpty else { return }
-                self?.skeletonBlogReviewTableView.snp.removeConstraints()
-                self?.blogReviewTableView.snp.updateConstraints {
+                self.skeletonBlogReviewTableView.snp.removeConstraints()
+                self.blogReviewTableView.snp.remakeConstraints {
+                    $0.horizontalEdges.equalToSuperview()
+                    $0.top.equalTo(self.blogReviewLabel.snp.bottom).offset(16)
                     $0.height.equalTo(items.count * 136)
                     $0.bottom.equalToSuperview()
                 }
