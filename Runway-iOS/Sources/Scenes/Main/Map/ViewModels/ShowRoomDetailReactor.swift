@@ -46,6 +46,8 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         var instagramID: String = ""
         var webSiteLink: String = ""
         var isBookmark: Bool = false
+        var latitude: Double? = nil
+        var longitude: Double? = nil
         
         var userReviewImages: [UserReviewResponseResultContent] = []
         var blogReviews: [ShowRoomBlogsResponseResult] = []
@@ -101,7 +103,8 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             return .empty()
             
         case .directionButtonDidTap:
-            
+            guard let lat = currentState.latitude, let lng = currentState.longitude else { return .empty() }
+            showNaverMap(lat: lat, lng: lng)
             return .empty()
             
         case .bookmarkButtonDidTap:
@@ -146,6 +149,9 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             state.instagramID = result.instagram
             state.webSiteLink = result.webSite
             state.isBookmark = result.bookmark
+            state.latitude = result.latitude
+            state.longitude = result.longitude
+            
         case .setIsBookMark(let isSelected):
             state.isBookmark = isSelected
             
@@ -173,7 +179,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
     
     private func showNaverMap(lat: Double, lng: Double) {
         // 자동차 길찾기 + 도착지 좌표 + 앱 번들 id
-        guard let url = URL(string: "nmap://route/car?dlat=\(lat)&dlng=\(lng)&appname=com.example.myApp") else { return }
+        guard let url = URL(string: "nmap://route/walk?dlat=\(lat)&dlng=\(lng)&appname=com.fashionweek.Runway-iOS") else { return }
         // 네이버지도 앱스토어 url
         guard let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8") else { return }
 

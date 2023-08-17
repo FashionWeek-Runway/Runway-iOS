@@ -22,11 +22,12 @@ struct ShowRoomDetailResponseResult: Codable {
     let category: [String]
     let storeName, address, storeTime, storePhone: String
     let instagram, webSite: String
+    let latitude, longitude: Double
     let bookmark: Bool
     
     enum CodingKeys: String, CodingKey {
         case storeID = "storeId"
         case imageURLList = "imgUrlList"
-        case category, storeName, address, storeTime, storePhone, instagram, webSite, bookmark
+        case category, storeName, address, storeTime, storePhone, instagram, webSite, latitude, longitude, bookmark
     }
 }
