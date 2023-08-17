@@ -421,7 +421,7 @@ extension MapViewController: View {
             .disposed(by: disposeBag)
         
         storeSearchBottomSheet.searchResultView.directionButton.rx.tap
-            .map { Reactor.Action.backButtonDidTap }
+            .map { Reactor.Action.directionButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         

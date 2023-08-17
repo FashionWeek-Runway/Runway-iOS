@@ -39,10 +39,12 @@ struct StoreInfo: Codable {
     let category: [String]
     let storeName: String
     let distance: Double?
+    let latitude: Double?
+    let longitude: Double?
 
     enum CodingKeys: String, CodingKey {
         case storeID = "storeId"
         case storeImage = "storeImg"
-        case category, storeName, distance
+        case category, storeName, distance, latitude, longitude
     }
 }
