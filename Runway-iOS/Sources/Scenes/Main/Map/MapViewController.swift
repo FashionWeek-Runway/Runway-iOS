@@ -420,6 +420,11 @@ extension MapViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        storeSearchBottomSheet.searchResultView.directionButton.rx.tap
+            .map { Reactor.Action.backButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         regionSearchBottomSheet.aroundView.collectionView.rx.modelSelected(StoreInfo.self)
             .map { Reactor.Action.storeCellSelected($0.storeID) }
             .bind(to: reactor.action)

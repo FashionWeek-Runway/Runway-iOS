@@ -32,6 +32,8 @@ final class MapReactor: Reactor, Stepper {
         case bottomSheetScrollReachesBottom
         case regionSearchBottomSheetScrollReachesBottom
         
+        case directionButtonDidTap
+        
         case storeCellSelected(Int)
     }
     
@@ -85,9 +87,6 @@ final class MapReactor: Reactor, Stepper {
     private let disposeBag = DisposeBag()
     
     let categoryFilterList: [String] = ["bookmark"] + FashionCategory.List
-    
-    // 맵에 표시될 마커들을 캐싱
-//    let markerCache = NSCacheManager<MapMarkerData>()
     
     var mapPosition: (Double, Double)? = nil
     
@@ -191,6 +190,10 @@ final class MapReactor: Reactor, Stepper {
         case .mapViewCameraPositionDidChanged(let position):
             // TODO: - 추후 마커단위로 로드할 수 있게 개선
             self.mapPosition = position
+            return .empty()
+            
+        case .directionButtonDidTap:
+            
             return .empty()
             
         case .storeCellSelected(let storeId):
