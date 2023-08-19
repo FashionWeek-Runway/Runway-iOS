@@ -48,6 +48,8 @@ final class HomeFlow: Flow {
             return coordinateToReviewReportingScreen(reviewId: reviewId)
         case .back(let animated):
             return backScreen(animated: animated)
+        case .openNaverMap(let title, let latitude, let longitude):
+            return showNaverMap(storeName: title, lat: latitude, lng: longitude)
         default:
             break
         }

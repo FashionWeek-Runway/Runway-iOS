@@ -104,13 +104,12 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             
         case .directionButtonDidTap:
             guard let lat = currentState.latitude, let lng = currentState.longitude else { return .empty() }
-            showNaverMap(lat: lat, lng: lng)
+            steps.accept(AppStep.openNaverMap(title: currentState.title, lat: lat, lng: lng))
             return .empty()
             
         case .bookmarkButtonDidTap:
             provider.showRoomService.storeBookmark(storeId: storeId)
-                .subscribe(onNext: { [weak self] _ in
-                }).disposed(by: disposeBag)
+                .subscribe().disposed(by: disposeBag)
             return .just(.setIsBookMark(!currentState.isBookmark))
             
         case .userReviewScrollReachesBottom:
@@ -175,18 +174,5 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         }
         
         return state
-    }
-    
-    private func showNaverMap(lat: Double, lng: Double) {
-        // 자동차 길찾기 + 도착지 좌표 + 앱 번들 id
-        guard let url = URL(string: "nmap://route/walk?dlat=\(lat)&dlng=\(lng)&appname=com.fashionweek.Runway-iOS") else { return }
-        // 네이버지도 앱스토어 url
-        guard let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8") else { return }
-
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            UIApplication.shared.open(appStoreURL)
-        }
     }
 }

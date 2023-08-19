@@ -128,27 +128,27 @@ final class HomeViewController: BaseViewController {
     
     private let emptyNoticeImageView: UIImageView = {
         let view = UIImageView(image: UIImage(named: "icon_empty_notice"))
-//        view.isHidden = true
+        view.isHidden = true
         return view
     }()
     private let emptyNoticeLabel: UILabel = {
         let label = UILabel()
         label.text = "소식 준비 중이에요"
         label.font = .body1
-//        label.isHidden = true
+        label.isHidden = true
         return label
     }()
     
-//    private let noticeCollectionView: UICollectionView = {
-//        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
-//        view.showsVerticalScrollIndicator = false
-//        view.register(RWHomeNoticeCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeNoticeCollectionViewCell.identifier)
-//        let layout = UICollectionViewFlowLayout()
-//        layout.minimumInteritemSpacing = 4
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-//        view.collectionViewLayout = layout
-//        return view
-//    }()
+    private let noticeCollectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        view.showsVerticalScrollIndicator = false
+        view.register(RWHomeInstagramCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeInstagramCollectionViewCell.identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 4
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        view.collectionViewLayout = layout
+        return view
+    }()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()

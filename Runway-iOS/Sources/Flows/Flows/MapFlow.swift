@@ -47,6 +47,8 @@ final class MapFlow: Flow {
             return coordinateToReviewReportingScreen(reviewId: reviewId)
         case .back(let animated):
             return back(animated: animated)
+        case .openNaverMap(let title, let latitude, let longitude):
+            return showNaverMap(storeName: title, lat: latitude, lng: longitude)
         default:
             return .none
         }

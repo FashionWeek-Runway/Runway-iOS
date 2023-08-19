@@ -202,7 +202,7 @@
 		19FF9B2829B7684600C48BD7 /* HomeStoreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */; };
 		19FF9B2A29B7731100C48BD7 /* HomeReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */; };
 		19FF9B2C29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */; };
-		19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */; };
+		19FF9B2E29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2D29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift */; };
 		19FF9B3029B7ABB600C48BD7 /* CategorySelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */; };
 		19FF9B3229B7ABEE00C48BD7 /* CategorySelectReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */; };
 		19FF9B3429B7AFEA00C48BD7 /* FashionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF9B3329B7AFEA00C48BD7 /* FashionCategory.swift */; };
@@ -436,7 +436,7 @@
 		19FF9B2729B7684600C48BD7 /* HomeStoreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreResponse.swift; sourceTree = "<group>"; };
 		19FF9B2929B7731100C48BD7 /* HomeReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReviewResponse.swift; sourceTree = "<group>"; };
 		19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWUserReviewCollectionViewCell.swift; sourceTree = "<group>"; };
-		19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeNoticeCollectionViewCell.swift; sourceTree = "<group>"; };
+		19FF9B2D29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWHomeInstagramCollectionViewCell.swift; sourceTree = "<group>"; };
 		19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectViewController.swift; sourceTree = "<group>"; };
 		19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectReactor.swift; sourceTree = "<group>"; };
 		19FF9B3329B7AFEA00C48BD7 /* FashionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionCategory.swift; sourceTree = "<group>"; };
@@ -648,7 +648,7 @@
 				191B8EA829B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift */,
 				19FF9B2529B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift */,
 				19FF9B2B29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift */,
-				19FF9B2D29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift */,
+				19FF9B2D29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift */,
 				19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */,
 				19E4E4D52A83AD7100A83205 /* RWMainStoreImageCollectionViewCell.swift */,
 			);
@@ -1427,7 +1427,7 @@
 				196D23AA29A4F80000E262FB /* RWMapSearchBarCollectionViewCell.swift in Sources */,
 				19345E85299560D900E1EF9A /* IdentityVerificationViewController.swift in Sources */,
 				191B8EAF29B491E100CF5C83 /* EditReviewReactor.swift in Sources */,
-				19FF9B2E29B77F6F00C48BD7 /* RWHomeNoticeCollectionViewCell.swift in Sources */,
+				19FF9B2E29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift in Sources */,
 				19FF9B3829B7B8FE00C48BD7 /* AllStoreReactor.swift in Sources */,
 				19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */,
 				19BF2C772993FC4200F1134D /* AppleService.swift in Sources */,

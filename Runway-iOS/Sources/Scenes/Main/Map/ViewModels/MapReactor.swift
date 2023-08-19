@@ -196,8 +196,8 @@ final class MapReactor: Reactor, Stepper {
             guard let selectedMarkerData = currentState.mapMarkerSelectData,
                   let lat = selectedMarkerData.latitude,
                   let lng = selectedMarkerData.longitude else { return .empty() }
-            
-            showNaverMap(lat: lat, lng: lng)
+
+            steps.accept(AppStep.openNaverMap(title: selectedMarkerData.storeName, lat: lat, lng: lng))
             return .empty()
             
         case .storeCellSelected(let storeId):
@@ -299,18 +299,5 @@ final class MapReactor: Reactor, Stepper {
             state.storeSearchInfo = nil
         }
         return state
-    }
-    
-    private func showNaverMap(lat: Double, lng: Double) {
-        // 자동차 길찾기 + 도착지 좌표 + 앱 번들 id
-        guard let url = URL(string: "nmap://route/walk?dlat=\(lat)&dlng=\(lng)&appname=com.fashionweek.Runway-iOS") else { return }
-        // 네이버지도 앱스토어 url
-        guard let appStoreURL = URL(string: "http://itunes.apple.com/app/id311867728?mt=8") else { return }
-
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            UIApplication.shared.open(appStoreURL)
-        }
     }
 }

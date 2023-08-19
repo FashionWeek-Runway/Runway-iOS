@@ -64,6 +64,8 @@ final class MyPageFlow: Flow {
             return coordinateToWithdrawalScreen()
         case .back(let animated):
             return back(animated: animated)
+        case .openNaverMap(let title, let latitude, let longitude):
+            return showNaverMap(storeName: title, lat: latitude, lng: longitude)
         default:
             return .none
         }

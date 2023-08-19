@@ -1,5 +1,5 @@
 //
-//  RWHomeNoticeCollectionViewCell.swift
+//  RWHomeInstagramCollectionViewCell.swift
 //  Runway-iOS
 //
 //  Created by 김인환 on 2023/03/07.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RWHomeNoticeCollectionViewCell: UICollectionViewCell {
+final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let view = UIImageView()
@@ -23,7 +23,7 @@ final class RWHomeNoticeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    static let identifier = "RWHomeNoticeCollectionViewCell"
+    static let identifier = "RWHomeInstagramCollectionViewCell"
     
     // MARK: - initializer
     
