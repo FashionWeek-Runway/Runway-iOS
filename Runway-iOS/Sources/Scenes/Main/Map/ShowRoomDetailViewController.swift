@@ -280,14 +280,14 @@ final class ShowRoomDetailViewController: BaseViewController {
         return view
     }()
     
-//    private let moreButton: UIButton = {
-//        let button = UIButton()
-//        button.setAttributedTitle(NSAttributedString(string: "더보기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray900]), for: .normal)
-//        button.setImage(UIImage(named: "icon_down_black"), for: .normal)
-//        button.semanticContentAttribute = .forceRightToLeft
-//        button.imageEdgeInsets.left = 10
-//        return button
-//    }()
+    private let moreButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "더보기", attributes: [.font: UIFont.body2, .foregroundColor: UIColor.gray900]), for: .normal)
+        button.setImage(UIImage(named: "icon_down_black"), for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
+        button.imageEdgeInsets.left = 10
+        return button
+    }()
     
     private let cameraPickerController: UIImagePickerController = {
         let picker = UIImagePickerController()
@@ -400,7 +400,7 @@ final class ShowRoomDetailViewController: BaseViewController {
                                    userReviewLabel, reviewRegisterButton, reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel,
                                    reviewCollectionView,
                                    divider2, blogReviewLabel, blogReviewTableView,
-//                                   moreButton
+                                   moreButton
                                   ])
         
         topArea.snp.makeConstraints {
