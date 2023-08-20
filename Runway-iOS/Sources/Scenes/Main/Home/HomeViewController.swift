@@ -232,8 +232,7 @@ final class HomeViewController: BaseViewController {
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
                                   similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel, userReviewCollectionView,
-                                   noticeLabel, emptyNoticeLabel, emptyNoticeImageView
-//                                  noticeLabel, noticeCollectionView
+                                   noticeLabel, emptyNoticeLabel, emptyNoticeImageView, noticeCollectionView
                                   ])
         
         pagerCollectionView.snp.makeConstraints {
@@ -294,14 +293,14 @@ final class HomeViewController: BaseViewController {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
         }
-//
-//        noticeCollectionView.snp.makeConstraints {
-//            $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
-//            $0.leading.equalToSuperview().offset(20)
-//            $0.trailing.equalToSuperview().offset(-20)
-//            $0.height.equalTo(266)
-//            $0.bottom.equalToSuperview()
-//        }
+        
+        noticeCollectionView.snp.makeConstraints {
+            $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(266)
+            $0.bottom.equalToSuperview()
+        }
         
         gradientTopArea.addSubviews([guideLabelText, categorySelectButton, showAllContentButton])
         guideLabelText.snp.makeConstraints {
@@ -377,7 +376,7 @@ extension HomeViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        userReviewCollectionView.rx.didEndDecelerating
+        userReviewCollectionView.rx.willBeginDecelerating
             .asDriver()
             .drive(onNext: { [weak self] in
                 guard let self else { return }

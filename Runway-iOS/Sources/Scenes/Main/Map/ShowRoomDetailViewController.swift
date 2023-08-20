@@ -938,8 +938,9 @@ extension ShowRoomDetailViewController: View {
                     $0.horizontalEdges.equalToSuperview()
                     $0.top.equalTo(self.blogReviewLabel.snp.bottom).offset(16)
                     $0.height.equalTo(items.count * 136)
-                    $0.bottom.equalToSuperview()
+                    $0.bottom.equalToSuperview().offset(-16)
                 }
+                self.view.layoutIfNeeded()
             })
             .bind(to: blogReviewTableView.rx.items(cellIdentifier: RWStoreBlogReviewTableViewCell.identifier, cellType: RWStoreBlogReviewTableViewCell.self)) { indexPath, item, cell in
                 guard let url = URL(string: item.imageURL) else { return }
