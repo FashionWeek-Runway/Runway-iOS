@@ -22,6 +22,7 @@ protocol HomeServiceProtocol {
     func categorySelect(categories: [Int]) -> Observable<DataRequest>
     func review(page: Int, size: Int) -> Observable<DataRequest>
     func reviewDetail(reviewId: Int) -> Observable<DataRequest>
+    func instagram(page: Int, size: Int) -> Observable<DataRequest>
 }
 
 final class HomeService: APIService, HomeServiceProtocol {
@@ -53,5 +54,12 @@ final class HomeService: APIService, HomeServiceProtocol {
     
     func reviewDetail(reviewId: Int) -> Observable<DataRequest> {
         return request(.get, "home/review/detail/\(reviewId)")
+    }
+    
+    func instagram(page: Int, size: Int) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(page, forKey: "page")
+        params.updateValue(size, forKey: "size")
+        return request(.get, "home/insta", parameters: params, encoding: URLEncoding.default)
     }
 }

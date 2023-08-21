@@ -147,6 +147,7 @@
 		19BC31E029F1949600EA6D83 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BC31DF29F1949600EA6D83 /* ImageCache.swift */; };
 		19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE015229980ED700E7C35D /* RWAlertViewController.swift */; };
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
+		19BE69F32A91E95200AE90D8 /* InstagramFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */; };
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
@@ -381,6 +382,7 @@
 		19BC31DF29F1949600EA6D83 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		19BE015229980ED700E7C35D /* RWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertViewController.swift; sourceTree = "<group>"; };
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
+		19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedResponse.swift; sourceTree = "<group>"; };
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				1948E27029BB3EA400B8A0FB /* ExistingProfileResponse.swift */,
 				1948E27629BB4C8A00B8A0FB /* ProfileEditCompleteResponse.swift */,
 				190A5E0B2A863AF9001E3925 /* TokenRefreshResponse.swift */,
+				19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				1975D82B2A8A26BD0013F19A /* RWLoadingButton.swift in Sources */,
 				19F07AF22A51DC98004417E2 /* NavigationController.swift in Sources */,
 				196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */,
+				19BE69F32A91E95200AE90D8 /* InstagramFeedResponse.swift in Sources */,
 				194F95452993B7890016DDFF /* LoginService.swift in Sources */,
 				1939390629A168FD0037810A /* SignUpAsPhoneResponse.swift in Sources */,
 				19F8FD9629BB756E0072F3E5 /* NewChangePasswordInputViewController.swift in Sources */,

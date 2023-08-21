@@ -199,7 +199,9 @@ final class ShowRoomDetailViewController: BaseViewController {
     
     private let divider: UIView = {
         let view = UIView()
-        view.backgroundColor = .runwayBlack
+        view.layer.borderColor = UIColor.gray50.cgColor
+        view.layer.borderWidth = 0.5
+        view.backgroundColor = .gray100
         return view
     }()
     
@@ -523,7 +525,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         divider.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(webLabel.snp.bottom).offset(16)
-            $0.height.equalTo(2)
+            $0.height.equalTo(8)
         }
         
         userReviewLabel.snp.makeConstraints {

@@ -27,6 +27,7 @@ final class HomeReactor: Reactor, Stepper {
         case pagerCellDidTap(Int)
         case userReviewCollectionViewReachesEnd
         case userReviewCellDidTap(Int)
+        case instagramCollectionViewReachesEnd
     }
     
     enum Mutation {
@@ -34,6 +35,8 @@ final class HomeReactor: Reactor, Stepper {
         case setUserReview(HomeReviewResponseResult)
         case appendUserReview(HomeReviewResponseResult)
         case setUserName(String)
+        case setInstagramFeed(InstagramResponseResult)
+        case appendInstagramFeed(InstagramResponseResult)
     }
     
     struct State {
@@ -44,7 +47,9 @@ final class HomeReactor: Reactor, Stepper {
         var userReviewIsLast: Bool = false
         var userReviewPage: Int = 0
         
-        
+        @Pulse var instagramFeed: [InstaFeed] = []
+        var instagramFeedIsLast: Bool = false
+        var instagramFeedPage: Int = 0
     }
     
     // MARK: - Properties
@@ -67,13 +72,17 @@ final class HomeReactor: Reactor, Stepper {
         case .viewWillAppear:
             return Observable.concat([
                 provider.homeService.home(type: .home).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder()).map {
-                    return Mutation.setPagerData($0.result)
+                    Mutation.setPagerData($0.result)
                 },
                 provider.homeService.review(page: 0, size: 30).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
-                    return Mutation.setUserReview($0.result)
+                    Mutation.setUserReview($0.result)
                 },
                 provider.userService.mypageInformation().data().decode(type: MyPageInformationResponse.self, decoder: JSONDecoder()).map {
-                    return Mutation.setUserName($0.result.nickname)
+                    Mutation.setUserName($0.result.nickname)
+                },
+                
+                provider.homeService.instagram(page: 0, size: 30).data().decode(type: InstagramResponse.self, decoder: JSONDecoder()).map {
+                    Mutation.setInstagramFeed($0.result)
                 }
             ])
             
@@ -97,13 +106,18 @@ final class HomeReactor: Reactor, Stepper {
             return .empty()
             
         case .userReviewCollectionViewReachesEnd:
-            return currentState.userReviewIsLast ? .empty() : provider.homeService.review(page: currentState.userReviewPage, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map {
-                return Mutation.appendUserReview($0.result)
-            }
+            return currentState.userReviewIsLast
+            ? .empty()
+            : provider.homeService.review(page: currentState.userReviewPage, size: 10).data().decode(type: HomeReviewResponse.self, decoder: JSONDecoder()).map { Mutation.appendUserReview($0.result) }
             
         case .userReviewCellDidTap(let reviewId):
             steps.accept(AppStep.userReviewReels(Id: reviewId, mode: .home))
             return .empty()
+            
+        case .instagramCollectionViewReachesEnd:
+            return currentState.instagramFeedIsLast
+            ? .empty()
+            : provider.homeService.instagram(page: currentState.instagramFeedPage, size: 10).data().decode(type: InstagramResponse.self, decoder: JSONDecoder()).map { Mutation.appendInstagramFeed($0.result) }
         }
     }
     
@@ -136,6 +150,18 @@ final class HomeReactor: Reactor, Stepper {
             
         case .setUserName(let username):
             state.nickname = username
+            
+        case .setInstagramFeed(let result):
+            state.instagramFeedPage = 0
+            state.instagramFeedIsLast = result.isLast
+            state.instagramFeed = result.contents
+            
+        case .appendInstagramFeed(let result):
+            state.instagramFeed.append(contentsOf: result.contents)
+            state.instagramFeedIsLast = result.isLast
+            if !result.isLast {
+                state.instagramFeedPage += 1
+            }
         }
         
         return state
