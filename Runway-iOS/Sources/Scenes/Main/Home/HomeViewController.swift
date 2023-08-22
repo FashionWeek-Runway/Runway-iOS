@@ -144,9 +144,12 @@ final class HomeViewController: BaseViewController {
         view.showsVerticalScrollIndicator = false
         view.register(RWHomeInstagramCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeInstagramCollectionViewCell.identifier)
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 4
+        layout.minimumInteritemSpacing = 18
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        layout.estimatedItemSize = CGSize(width: UIScreen.getDeviceWidth() - 40, height: UIScreen.getDeviceWidth() - 40 + 56)
+        layout.scrollDirection = .vertical
         view.collectionViewLayout = layout
+        view.isScrollEnabled = false
         return view
     }()
     
@@ -231,8 +234,8 @@ final class HomeViewController: BaseViewController {
         }
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
-                                  similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel, userReviewCollectionView,
-                                   noticeLabel, emptyNoticeLabel, emptyNoticeImageView, noticeCollectionView
+                                   similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel,
+                                   userReviewCollectionView, noticeLabel, emptyNoticeLabel, emptyNoticeImageView, noticeCollectionView
                                   ])
         
         pagerCollectionView.snp.makeConstraints {
@@ -282,23 +285,22 @@ final class HomeViewController: BaseViewController {
             $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(20)
         }
-        // 임시
+        
+        emptyNoticeLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyNoticeImageView.snp.bottom).offset(14)
+            $0.centerX.equalToSuperview()
+//            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
+        }
+        
         emptyNoticeImageView.snp.makeConstraints {
             $0.top.equalTo(noticeLabel.snp.bottom).offset(25)
             $0.centerX.equalToSuperview()
         }
         
-        emptyNoticeLabel.snp.makeConstraints {
-            $0.top.equalTo(emptyNoticeImageView.snp.bottom).offset(14)
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
-        }
-        
         noticeCollectionView.snp.makeConstraints {
             $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(266)
+            $0.horizontalEdges.equalToSuperview()
+//            $0.height.equalTo(266)
             $0.bottom.equalToSuperview()
         }
         
@@ -475,9 +477,8 @@ extension HomeViewController: View {
                 self?.userReviewCollectionView.isHidden = reviews.isEmpty
             })
             .bind(to: userReviewCollectionView.rx.items(cellIdentifier: RWUserReviewCollectionViewCell.identifier, cellType: RWUserReviewCollectionViewCell.self)) { indexPath, item, cell in
-                guard let imageUrl = URL(string: item.imageURL) else { return }
                 cell.imageView.kf.indicatorType = .activity
-                cell.imageView.kf.setImage(with: imageUrl)
+                cell.imageView.kf.setImage(with: URL(string: item.imageURL))
                 cell.addressLabel.text = item.regionInfo
             }.disposed(by: disposeBag)
         
@@ -485,6 +486,23 @@ extension HomeViewController: View {
             .bind(onNext: { [weak self] nickname in
                 self?.guideLabelText.text = "\(nickname)님의\n취향을 가득 담은 매장"
             }).disposed(by: disposeBag)
+        
+        reactor.state.map { $0.instagramFeed }
+            .do(onNext: { [weak self] item in
+                self?.emptyNoticeLabel.isHidden = !item.isEmpty
+                self?.emptyNoticeImageView.isHidden = !item.isEmpty
+                self?.noticeCollectionView.isHidden = item.isEmpty
+                self?.noticeCollectionView.snp.updateConstraints {
+                    $0.height.equalTo(item.isEmpty ? 266 : item.count * (UIScreen.getDeviceWidth() + 50))
+                }
+                
+                self?.containerView.layoutIfNeeded()
+            })
+            .bind(to: noticeCollectionView.rx.items(cellIdentifier: RWHomeInstagramCollectionViewCell.identifier, cellType: RWHomeInstagramCollectionViewCell.self)) { indexPath, item, cell in
+                cell.imageURLRelay.accept(item.imgList)
+                cell.titleLabel.text = item.storeName
+                cell.descriptionLabel.text = item.instagramLink
+            }.disposed(by: disposeBag)
     }
 }
 

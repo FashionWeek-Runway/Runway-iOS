@@ -8,7 +8,7 @@
 import Foundation
 
 struct InstagramResponse: Decodable {
-    let code: Int
+    let code: String
     let isSuccess: Bool
     let message: String
     let result: InstagramResponseResult
@@ -28,7 +28,7 @@ struct InstaFeed: Decodable {
     enum CodingKeys: String, CodingKey {
         case feedId
         case imgList
-        case instagramLink = "instalink"
+        case instagramLink = "instaLink"
         case storeName
     }
 }

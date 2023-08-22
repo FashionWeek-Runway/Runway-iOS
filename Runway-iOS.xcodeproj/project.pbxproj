@@ -148,6 +148,7 @@
 		19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE015229980ED700E7C35D /* RWAlertViewController.swift */; };
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
 		19BE69F32A91E95200AE90D8 /* InstagramFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */; };
+		19BE69F52A944E5700AE90D8 /* RWInstagramImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F42A944E5700AE90D8 /* RWInstagramImageCell.swift */; };
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
@@ -383,6 +384,7 @@
 		19BE015229980ED700E7C35D /* RWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertViewController.swift; sourceTree = "<group>"; };
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
 		19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedResponse.swift; sourceTree = "<group>"; };
+		19BE69F42A944E5700AE90D8 /* RWInstagramImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWInstagramImageCell.swift; sourceTree = "<group>"; };
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 				19FF9B2D29B77F6F00C48BD7 /* RWHomeInstagramCollectionViewCell.swift */,
 				19FF9B3D29B7BBAA00C48BD7 /* RWAllStoreCollectionViewCell.swift */,
 				19E4E4D52A83AD7100A83205 /* RWMainStoreImageCollectionViewCell.swift */,
+				19BE69F42A944E5700AE90D8 /* RWInstagramImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1487,6 +1490,7 @@
 				1963A80429CCAE0400C98337 /* RWSlider.swift in Sources */,
 				1963A80229CCABC800C98337 /* RWReviewTextEditView.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
+				19BE69F52A944E5700AE90D8 /* RWInstagramImageCell.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,
 				19A9624429915F5600F952DA /* APIEventLogger.swift in Sources */,
 				191B8EB929B4D75300CF5C83 /* ReviewReelsReactor.swift in Sources */,
