@@ -41,6 +41,7 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     
     private let imageCountLabel: UIButton = {
         let label = UIButton()
+        label.setBackgroundColor(UIColor(hex: "#0A0A0A", alpha: 0.8), for: .normal)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.setInsets(forContentPadding: UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6), imageTitlePadding: .zero)
@@ -89,9 +90,26 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     
     private func setRx() {
         imageURLRelay
+            .do(onNext: { [weak self] imageURLs in
+                self?.setImageCountLabel(itemCount: imageURLs.count)
+            })
             .bind(to: imageCollectionView.rx.items(cellIdentifier: RWInstagramImageCell.identifier, cellType: RWInstagramImageCell.self)) { _, item, cell in
                 cell.imageView.kf.setImage(with: URL(string: item))
             }
             .disposed(by: disposeBag)
+        
+        imageCollectionView.rx.didEndDecelerating
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.setImageCountLabel(itemCount: owner.imageCollectionView.numberOfItems(inSection: 0))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setImageCountLabel(itemCount: Int) {
+        let page = Int(imageCollectionView.contentOffset.x / (UIScreen.getDeviceWidth() - 40)) + 1
+        let attributedString = NSMutableAttributedString(string: "\(page)/\(itemCount)", attributes: [.font: UIFont.button2, .foregroundColor: UIColor.gray300])
+        attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: "\(page)".count))
+        imageCountLabel.setAttributedTitle(attributedString, for: .normal)
     }
 }
