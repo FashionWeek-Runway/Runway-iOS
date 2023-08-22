@@ -14,10 +14,13 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     let imageCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.register(RWInstagramImageCell.self, forCellWithReuseIdentifier: RWInstagramImageCell.identifier)
+        view.isPagingEnabled = true
+        view.showsHorizontalScrollIndicator = false
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         layout.itemSize = CGSize(width: UIScreen.getDeviceWidth() - 40, height: UIScreen.getDeviceWidth() - 40)
         layout.scrollDirection = .horizontal
-        view.showsHorizontalScrollIndicator = false
         view.collectionViewLayout = layout
         return view
     }()
@@ -62,7 +65,7 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        addSubviews([imageCollectionView, imageCountLabel, titleLabel, descriptionLabel])
+        contentView.addSubviews([imageCollectionView, imageCountLabel, titleLabel, descriptionLabel])
         imageCollectionView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.equalTo(UIScreen.getDeviceWidth() - 40)
