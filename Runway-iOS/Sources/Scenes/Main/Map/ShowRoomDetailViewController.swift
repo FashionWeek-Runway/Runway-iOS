@@ -655,7 +655,7 @@ final class ShowRoomDetailViewController: BaseViewController {
          timeIcon, timeLabel,
          phoneIcon, phoneLabel,
          instagramIcon, instagramLabel,
-         webIcon, webLabel].forEach {
+         webIcon, webLabel, questionIcon, requestCorrectionButton].forEach {
             $0.showAnimatedSkeleton()
         }
     }
@@ -874,6 +874,8 @@ extension ShowRoomDetailViewController: View {
             .distinctUntilChanged()
             .filter { $0 != "" }
             .do(onNext: { [weak self] event in
+                self?.questionIcon.hideSkeleton()
+                self?.requestCorrectionButton.hideSkeleton()
                 self?.showRoomTitleLabel.hideSkeleton()
             })
             .bind(to: showRoomTitleLabel.rx.text)
