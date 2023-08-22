@@ -197,6 +197,27 @@ final class ShowRoomDetailViewController: BaseViewController {
         return label
     }()
     
+    private let splitter: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray200
+        return view
+    }()
+    
+    private let questionIcon: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "icon_question"))
+        imageView.isSkeletonable = true
+        return imageView
+    }()
+    
+    private let requestCorrectionButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "정보가 올바르지 않나요? 여기를 눌러서 알려주세요!",
+                                                     attributes: [.font: UIFont.caption, .foregroundColor: UIColor.gray800]), for: .normal)
+        button.isSkeletonable = true
+        button.isHiddenWhenSkeletonIsActive = true
+        return button
+    }()
+    
     private let divider: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.gray50.cgColor
@@ -399,7 +420,9 @@ final class ShowRoomDetailViewController: BaseViewController {
                                    timeIcon, timeLabel,
                                    phoneIcon, phoneLabel,
                                    instagramIcon, instagramLabel,
-                                   webIcon, webLabel, divider,
+                                   webIcon, webLabel,
+                                   splitter, questionIcon, requestCorrectionButton,
+                                   divider,
                                    userReviewLabel, reviewRegisterButton, reviewEmptyImageView, reviewEmptyTitleLabel, reviewEmptyDescriptionLabel,
                                    reviewCollectionView,
                                    divider2, blogReviewLabel, blogReviewTableView,
@@ -523,9 +546,26 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.top.equalTo(webIcon.snp.top).offset(1)
         }
         
+        splitter.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(1)
+            $0.top.equalTo(webLabel.snp.bottom).offset(17)
+        }
+        
+        questionIcon.snp.makeConstraints {
+            $0.top.equalTo(splitter.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        requestCorrectionButton.snp.makeConstraints {
+            $0.leading.equalTo(questionIcon.snp.trailing).offset(8)
+            $0.centerY.equalTo(questionIcon)
+        }
+        
         divider.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(webLabel.snp.bottom).offset(16)
+            $0.top.equalTo(requestCorrectionButton.snp.bottom).offset(17)
             $0.height.equalTo(8)
         }
         
