@@ -139,7 +139,7 @@ final class HomeViewController: BaseViewController {
         return label
     }()
     
-    private let noticeCollectionView: UICollectionView = {
+    private let instagramCollectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: .init())
         view.showsVerticalScrollIndicator = false
         view.register(RWHomeInstagramCollectionViewCell.self, forCellWithReuseIdentifier: RWHomeInstagramCollectionViewCell.identifier)
@@ -235,7 +235,7 @@ final class HomeViewController: BaseViewController {
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
                                    similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel,
-                                   userReviewCollectionView, noticeLabel, emptyNoticeLabel, emptyNoticeImageView, noticeCollectionView
+                                   userReviewCollectionView, noticeLabel, emptyNoticeLabel, emptyNoticeImageView, instagramCollectionView
                                   ])
         
         pagerCollectionView.snp.makeConstraints {
@@ -297,7 +297,7 @@ final class HomeViewController: BaseViewController {
             $0.centerX.equalToSuperview()
         }
         
-        noticeCollectionView.snp.makeConstraints {
+        instagramCollectionView.snp.makeConstraints {
             $0.top.equalTo(noticeLabel.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview()
 //            $0.height.equalTo(266)
@@ -393,6 +393,23 @@ extension HomeViewController: View {
         
         userReviewCollectionView.rx.modelSelected(HomeReviewResponseResultContent.self)
             .map { Reactor.Action.userReviewCellDidTap($0.reviewID) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        instagramCollectionView.rx.willBeginDecelerating
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                let width = owner.instagramCollectionView.frame.width
+                let contentWidth = owner.instagramCollectionView.contentSize.width
+                let reachesEnd = (owner.instagramCollectionView.contentOffset.x) >= contentWidth - width
+                
+                if reachesEnd {
+                    owner.reactor?.action.onNext(.instagramCollectionViewReachesEnd)
+                }
+            }).disposed(by: disposeBag)
+        
+        instagramCollectionView.rx.itemSelected
+            .map { Reactor.Action.instagramCellDidTap($0.item) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -491,14 +508,14 @@ extension HomeViewController: View {
             .do(onNext: { [weak self] item in
                 self?.emptyNoticeLabel.isHidden = !item.isEmpty
                 self?.emptyNoticeImageView.isHidden = !item.isEmpty
-                self?.noticeCollectionView.isHidden = item.isEmpty
-                self?.noticeCollectionView.snp.updateConstraints {
+                self?.instagramCollectionView.isHidden = item.isEmpty
+                self?.instagramCollectionView.snp.updateConstraints {
                     $0.height.equalTo(item.isEmpty ? 266 : item.count * (UIScreen.getDeviceWidth() + 50))
                 }
                 
                 self?.containerView.layoutIfNeeded()
             })
-            .bind(to: noticeCollectionView.rx.items(cellIdentifier: RWHomeInstagramCollectionViewCell.identifier, cellType: RWHomeInstagramCollectionViewCell.self)) { indexPath, item, cell in
+            .bind(to: instagramCollectionView.rx.items(cellIdentifier: RWHomeInstagramCollectionViewCell.identifier, cellType: RWHomeInstagramCollectionViewCell.self)) { indexPath, item, cell in
                 cell.imageURLRelay.accept(item.imgList)
                 cell.titleLabel.text = item.storeName
                 cell.descriptionLabel.text = item.instagramLink

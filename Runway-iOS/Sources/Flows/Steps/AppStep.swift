@@ -76,5 +76,6 @@ enum AppStep: Step {
         case bookmarkedReview
     }
     
+    case open(url: URL)
     case openNaverMap(title: String, lat: Double, lng: Double)
 }

@@ -28,6 +28,8 @@ final class HomeReactor: Reactor, Stepper {
         case userReviewCollectionViewReachesEnd
         case userReviewCellDidTap(Int)
         case instagramCollectionViewReachesEnd
+        
+        case instagramCellDidTap(Int)
     }
     
     enum Mutation {
@@ -118,6 +120,11 @@ final class HomeReactor: Reactor, Stepper {
             return currentState.instagramFeedIsLast
             ? .empty()
             : provider.homeService.instagram(page: currentState.instagramFeedPage, size: 10).data().decode(type: InstagramResponse.self, decoder: JSONDecoder()).map { Mutation.appendInstagramFeed($0.result) }
+            
+        case .instagramCellDidTap(let itemIndex):
+            guard let url = URL(string: currentState.instagramFeed[itemIndex].instagramLink) else { return .empty()}
+            steps.accept(AppStep.open(url: url))
+            return .empty()
         }
     }
     
