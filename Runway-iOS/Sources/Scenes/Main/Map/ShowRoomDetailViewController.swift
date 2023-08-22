@@ -807,6 +807,13 @@ extension ShowRoomDetailViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        requestCorrectionButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                let vc = InformationChangeRequestViewController()
+                owner.present(vc, animated: true)
+            }).disposed(by: disposeBag)
+        
         blogReviewTableView.rx.modelSelected(ShowRoomBlogsResponseResult.self)
             .asDriver()
             .drive(onNext: { [weak self] item in

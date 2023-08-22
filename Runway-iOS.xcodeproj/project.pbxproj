@@ -149,6 +149,7 @@
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
 		19BE69F32A91E95200AE90D8 /* InstagramFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */; };
 		19BE69F52A944E5700AE90D8 /* RWInstagramImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F42A944E5700AE90D8 /* RWInstagramImageCell.swift */; };
+		19BE69F72A9483D500AE90D8 /* InformationChangeRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE69F62A9483D500AE90D8 /* InformationChangeRequestViewController.swift */; };
 		19BF2C772993FC4200F1134D /* AppleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C762993FC4200F1134D /* AppleService.swift */; };
 		19BF2C812994100F00F1134D /* RWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C802994100F00F1134D /* RWButton.swift */; };
 		19BF2C832994153C00F1134D /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF2C822994153C00F1134D /* UIButton+.swift */; };
@@ -385,6 +386,7 @@
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
 		19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramFeedResponse.swift; sourceTree = "<group>"; };
 		19BE69F42A944E5700AE90D8 /* RWInstagramImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWInstagramImageCell.swift; sourceTree = "<group>"; };
+		19BE69F62A9483D500AE90D8 /* InformationChangeRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationChangeRequestViewController.swift; sourceTree = "<group>"; };
 		19BF2C762993FC4200F1134D /* AppleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleService.swift; sourceTree = "<group>"; };
 		19BF2C802994100F00F1134D /* RWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWButton.swift; sourceTree = "<group>"; };
 		19BF2C822994153C00F1134D /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
@@ -756,6 +758,7 @@
 				191B8EBC29B4E84800CF5C83 /* ReviewReportingViewController.swift */,
 				1939390129A0D12A0037810A /* MapViewController.swift */,
 				19E88C3729ACAF6500B111CE /* ShowRoomDetailViewController.swift */,
+				19BE69F62A9483D500AE90D8 /* InformationChangeRequestViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1466,6 +1469,7 @@
 				19849B7D29B9A84300B1FA1F /* PolicyURL.swift in Sources */,
 				196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */,
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
+				19BE69F72A9483D500AE90D8 /* InformationChangeRequestViewController.swift in Sources */,
 				190A5E0C2A863AF9001E3925 /* TokenRefreshResponse.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
 				199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */,
