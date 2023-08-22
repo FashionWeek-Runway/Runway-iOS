@@ -38,6 +38,7 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         sheet.searchResultView.isHidden = false
         sheet.aroundView.isHidden = true
         sheet.aroundEmptyView.isHidden = true
+        sheet.grabber.isHidden = true
         return sheet
     }()
     

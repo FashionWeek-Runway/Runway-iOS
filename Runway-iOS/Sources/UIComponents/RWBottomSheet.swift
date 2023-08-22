@@ -14,7 +14,7 @@ final class RWBottomSheet: UIView {
     
     // MARK: - UI Components
     
-    private let grabber: UIView = {
+    let grabber: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.gray200
         view.layer.cornerRadius = 1.5

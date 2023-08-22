@@ -278,6 +278,7 @@ final class ShowRoomDetailViewController: BaseViewController {
         let view = UITableView()
         view.register(RWStoreBlogReviewTableViewCell.self, forCellReuseIdentifier: RWStoreBlogReviewTableViewCell.identifier)
         view.showsHorizontalScrollIndicator = false
+        view.isScrollEnabled = false
         view.rowHeight = 136
         return view
     }()
