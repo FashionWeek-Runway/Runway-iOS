@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class InformationChangeRequestViewController: BaseViewController {
     
@@ -19,67 +20,47 @@ final class InformationChangeRequestViewController: BaseViewController {
     
     private let addressButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "checkbox_off"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setImage(UIImage(named: "checkbox_off"), for: .normal)
+        button.setImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "주소가 올바르지 않아요", attributes: [.font: UIFont.body1]), for: .normal)
+        button.setInsets(forContentPadding: .zero, imageTitlePadding: 12)
         return button
-    }()
-    private let addressLabel: UILabel = {
-        let label = UILabel()
-        label.text = "주소가 올바르지 않아요"
-        label.font = .body1
-        return label
     }()
     
     private let timeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "checkbox_off"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setImage(UIImage(named: "checkbox_off"), for: .normal)
+        button.setImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "영업 시간이 올바르지 않아요", attributes: [.font: UIFont.body1]), for: .normal)
+        button.setInsets(forContentPadding: .zero, imageTitlePadding: 12)
         return button
-    }()
-    private let timeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "영업 시간이 올바르지 않아요"
-        label.font = .body1
-        return label
     }()
     
     private let phoneButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "checkbox_off"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setImage(UIImage(named: "checkbox_off"), for: .normal)
+        button.setImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "전화번호가 올바르지 않아요", attributes: [.font: UIFont.body1]), for: .normal)
+        button.setInsets(forContentPadding: .zero, imageTitlePadding: 12)
         return button
-    }()
-    private let phoneLabel: UILabel = {
-        let label = UILabel()
-        label.text = "전화번호가 올바르지 않아요"
-        label.font = .body1
-        return label
     }()
     
     private let instagramButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "checkbox_off"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setImage(UIImage(named: "checkbox_off"), for: .normal)
+        button.setImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "인스타그램이 연결되지 않아요", attributes: [.font: UIFont.body1]), for: .normal)
+        button.setInsets(forContentPadding: .zero, imageTitlePadding: 12)
         return button
-    }()
-    private let instagramLabel: UILabel = {
-        let label = UILabel()
-        label.text = "인스타그램이 연결되지 않아요"
-        label.font = .body1
-        return label
     }()
     
     private let homepageButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(named: "checkbox_off"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setImage(UIImage(named: "checkbox_off"), for: .normal)
+        button.setImage(UIImage(named: "checkbox_on"), for: .selected)
+        button.setAttributedTitle(NSAttributedString(string: "홈페이지가 연결되지 않아요", attributes: [.font: UIFont.body1]), for: .normal)
+        button.setInsets(forContentPadding: .zero, imageTitlePadding: 12)
         return button
-    }()
-    private let homepageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "홈페이지가 연결되지 않아요"
-        label.font = .body1
-        return label
     }()
     
     private let splitter: UIView = {
@@ -94,24 +75,24 @@ final class InformationChangeRequestViewController: BaseViewController {
         button.title = "완료"
         return button
     }()
+    
+    
+    lazy var buttonStackView = UIStackView(arrangedSubviews: [addressButton, timeButton, phoneButton, instagramButton, homepageButton])
+    
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupIfModalPresent()
+        setRx()
     }
     
     override func configureUI() {
-        let buttonStackView = UIStackView(arrangedSubviews: [addressButton, timeButton, phoneButton, instagramButton, homepageButton])
         buttonStackView.axis = .vertical
         buttonStackView.spacing = 32
-        buttonStackView.alignment = .center
+        buttonStackView.alignment = .leading
         
-        let labelStackView = UIStackView(arrangedSubviews: [addressLabel, timeLabel, phoneLabel, instagramLabel, homepageLabel])
-        labelStackView.axis = .vertical
-        labelStackView.spacing = 34
-        labelStackView.alignment = .leading
-        
-        view.addSubviews([titleLabel, buttonStackView, labelStackView, splitter, completeButton])
+        view.addSubviews([titleLabel, buttonStackView, splitter, completeButton])
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
@@ -121,11 +102,6 @@ final class InformationChangeRequestViewController: BaseViewController {
         buttonStackView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalTo(titleLabel.snp.bottom).offset(36)
-        }
-        
-        labelStackView.snp.makeConstraints {
-            $0.leading.equalTo(buttonStackView.snp.trailing).offset(12)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(37)
         }
         
         completeButton.snp.makeConstraints {
@@ -145,5 +121,42 @@ final class InformationChangeRequestViewController: BaseViewController {
         if let sheetPresentationController = sheetPresentationController {
             sheetPresentationController.detents = [.medium()]
         }
+    }
+    
+    private func setRx() {
+        addressButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.addressButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+        
+        timeButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.timeButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+        
+        phoneButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.phoneButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+        
+        instagramButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.instagramButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+        
+        homepageButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.homepageButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
     }
 }
