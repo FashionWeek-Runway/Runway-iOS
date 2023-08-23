@@ -90,6 +90,8 @@ final class RWBottomSheet: UIView {
     lazy var sheetPanCoverTopConstant: CGFloat = self.getSafeArea().top + 51 - 62
     // 드래그 하기 전에 Bottom Sheet의 top Constraint value를 저장하기 위한 프로퍼티
     private lazy var sheetPanStartingTopConstant: CGFloat = frame.origin.y
+    // 드래그 시작 시 방향
+    private lazy var sheetPanDirection: SheetViewState = .expanded
     
     // MARK: - Life Cycle
     
@@ -162,6 +164,8 @@ final class RWBottomSheet: UIView {
                 switch event.state {
                 case .began:
                     self.sheetPanStartingTopConstant = self.frame.origin.y
+                    self.sheetPanDirection = event.velocity(in: self).y > 0 ? .folded : .expanded
+                
                 case .changed:
                     if self.sheetPanStartingTopConstant + transition.y > self.sheetPanMinTopConstant {
                         self.frame = CGRect(x: 0, y: self.sheetPanStartingTopConstant + transition.y, width: self.frame.width, height: self.frame.height)
@@ -169,7 +173,8 @@ final class RWBottomSheet: UIView {
                 case .ended:
                     let nearestValue = self.nearest(to: self.frame.origin.y, inValues: [self.sheetPanMinTopConstant, self.sheetPanMaxTopConstant])
                     
-                    if nearestValue == self.sheetPanMinTopConstant { // 시트를 펼쳐야 한다
+//                    if nearestValue == self.sheetPanMinTopConstant { // 시트를 펼쳐야 한다
+                    if self.sheetPanDirection == .expanded { // 시트를 펼쳐야 한다
                         self.showSheet(atState: .expanded)
                     } else { // 시트를 접어야 한다
                         self.showSheet(atState: .folded)
