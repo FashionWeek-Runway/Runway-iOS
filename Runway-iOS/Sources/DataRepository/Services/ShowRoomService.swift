@@ -44,6 +44,12 @@ final class ShowRoomService: APIService {
         return request(.get, "stores/review/\(storeId)", parameters: params, encoding: URLEncoding.default)
     }
     
+    func storeReport(storeId: Int, reportReason: [Int]) -> Observable<DataRequest> {
+        var params = Parameters()
+        params.updateValue(reportReason, forKey: "reportReason")
+        return request(.post, "/stores/report/\(storeId)", parameters: params, encoding: URLEncoding.default)
+    }
+    
     func storeReview(storeId: Int, imageData: Data) -> Observable<UploadRequest> {
         let headers: HTTPHeaders = ["Content-Type": "multipart/form-data", "accept": "application/json"]
         
