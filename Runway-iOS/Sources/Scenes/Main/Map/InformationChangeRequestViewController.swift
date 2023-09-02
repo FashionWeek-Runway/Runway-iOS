@@ -194,5 +194,11 @@ extension InformationChangeRequestViewController: View {
                 owner.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.requestEnabled }
+            .bind(with: self, onNext: { (owner, isEnabled ) in
+                owner.completeButton.isEnabled = isEnabled
+            })
+            .disposed(by: disposeBag)
     }
 }

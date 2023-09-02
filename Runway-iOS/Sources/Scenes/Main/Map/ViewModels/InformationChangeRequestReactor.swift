@@ -30,6 +30,10 @@ final class InformationChangeRequestReactor: Reactor, Stepper {
     struct State {
         var reasons: [Int: Bool] = Dictionary(grouping: 1...5, by: { $0 }).mapValues { _ in false }
         var needDismiss: Bool = false
+        
+        var requestEnabled: Bool {
+            return reasons.values.contains(true)
+        }
     }
     
     // MARK: - Properties
