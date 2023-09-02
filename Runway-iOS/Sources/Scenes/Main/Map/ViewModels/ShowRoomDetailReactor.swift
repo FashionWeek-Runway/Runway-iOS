@@ -27,6 +27,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case userReviewScrollReachesBottom
         case reviewCellDidTap(Int)
         case pickingReviewImage(Data?)
+        case moreButtonDidTap
     }
 
     enum Mutation {
@@ -35,6 +36,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case setStoreReviewAppend(UserReviewResponseResult)
         case setIsBookMark(Bool)
         case setBlogReviews([ShowRoomBlogsResponseResult])
+        case setAllBlogReviews
     }
 
     struct State {
@@ -51,7 +53,11 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         var longitude: Double? = nil
         
         var userReviewImages: [UserReviewResponseResultContent] = []
-        var blogReviews: [ShowRoomBlogsResponseResult] = []
+        fileprivate var blogReviews: [ShowRoomBlogsResponseResult] = []
+        var blogReviewsToShow: [ShowRoomBlogsResponseResult] = []
+        var isMoreButtonHidden: Bool {
+            blogReviews.count == blogReviewsToShow.count
+        }
         
         var userReviewPage: Int = 0
         var userReviewIsLast: Bool = false
@@ -90,7 +96,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
                             .flatMap { blogData -> Observable<Mutation> in
                                 Observable.concat([
                                     .just(.setStoreDetailInfo(data.result)),
-                                    .just(.setBlogReviews(blogData.result)),
+                                    .just(.setBlogReviews(blogData.result))
                                 ])
                             }
                     },
@@ -134,9 +140,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             guard let imageData else { return .empty() }
             steps.accept(AppStep.editReviewImage(storeId, imageData))
             return .empty()
+            
+        case .moreButtonDidTap:
+            return .just(.setAllBlogReviews)
         }
-        
-
     }
 
     func reduce(state: State, mutation: Mutation) -> State {
@@ -176,6 +183,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
             
         case .setBlogReviews(let results):
             state.blogReviews = results
+            state.blogReviewsToShow = Array(results.prefix(5))
+            
+        case .setAllBlogReviews:
+            state.blogReviewsToShow = state.blogReviews
         }
         
         return state

@@ -632,12 +632,12 @@ final class ShowRoomDetailViewController: BaseViewController {
 //            $0.bottom.equalToSuperview().offset(-50)
         }
         
-//        moreButton.snp.makeConstraints {
-//            $0.top.equalTo(blogReviewTableView.snp.bottom)
-//            $0.horizontalEdges.equalToSuperview()
-//            $0.height.equalTo(44)
-//            $0.bottom.equalToSuperview().offset(-50)
-//        }
+        moreButton.snp.makeConstraints {
+            $0.top.equalTo(blogReviewTableView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(44)
+            $0.bottom.equalToSuperview().offset(-view.getSafeArea().bottom)
+        }
         
         configureSkeletonUI()
     }
@@ -865,6 +865,10 @@ extension ShowRoomDetailViewController: View {
                 self?.reactor?.action.onNext(action)
             }).disposed(by: disposeBag)
         
+        moreButton.rx.tap
+            .map { Reactor.Action.moreButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         Observable.merge([cameraPickerController.rx.didCancel, albumPickerController.rx.didCancel])
             .bind(onNext: { _ in self.dismiss(animated: true) })
@@ -999,7 +1003,7 @@ extension ShowRoomDetailViewController: View {
                 cell.locationIcon.isHidden = true
             }.disposed(by: disposeBag)
 
-        reactor.state.map { $0.blogReviews }
+        reactor.state.map { $0.blogReviewsToShow }
             .do(onNext: {[weak self] items in
                 guard let self = self else { return }
                 self.skeletonBlogReviewTableView.hideSkeleton()
@@ -1010,7 +1014,7 @@ extension ShowRoomDetailViewController: View {
                     $0.horizontalEdges.equalToSuperview()
                     $0.top.equalTo(self.blogReviewLabel.snp.bottom).offset(16)
                     $0.height.equalTo(items.count * 136)
-                    $0.bottom.equalToSuperview().offset(-16)
+//                    $0.bottom.equalToSuperview().offset(-16)
                 }
                 self.view.layoutIfNeeded()
             })
@@ -1026,6 +1030,10 @@ extension ShowRoomDetailViewController: View {
                 cell.descriptionLabel.text = item.content
                 cell.webURL = item.webURL
             }.disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isMoreButtonHidden }
+            .bind(to: moreButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
 }
 

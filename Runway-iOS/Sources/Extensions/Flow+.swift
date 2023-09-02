@@ -6,6 +6,7 @@
 //
 
 import RxFlow
+import UIKit
 
 extension Flow {
     func open(url: URL) -> FlowContributors {
