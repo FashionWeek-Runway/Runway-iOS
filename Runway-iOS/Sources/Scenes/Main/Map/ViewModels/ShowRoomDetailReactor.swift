@@ -23,6 +23,7 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case backButtonDidTap
         case bookmarkButtonDidTap
         case directionButtonDidTap
+        case informationChangeRequestButtonDidTap
         case userReviewScrollReachesBottom
         case reviewCellDidTap(Int)
         case pickingReviewImage(Data?)
@@ -105,6 +106,10 @@ final class ShowRoomDetailReactor: Reactor, Stepper {
         case .directionButtonDidTap:
             guard let lat = currentState.latitude, let lng = currentState.longitude else { return .empty() }
             steps.accept(AppStep.openNaverMap(title: currentState.title, lat: lat, lng: lng))
+            return .empty()
+            
+        case .informationChangeRequestButtonDidTap:
+            steps.accept(AppStep.showRoomInformationChangeRequest(storeId))
             return .empty()
             
         case .bookmarkButtonDidTap:

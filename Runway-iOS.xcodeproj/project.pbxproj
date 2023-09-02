@@ -198,6 +198,7 @@
 		19F8FD9829BB757B0072F3E5 /* NewChangePasswordInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */; };
 		19F917692A59047E00090099 /* DataRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F917682A59047E00090099 /* DataRepositoryMock.swift */; };
 		19F9176E2A5906E200090099 /* HomeServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F9176D2A5906E200090099 /* HomeServiceMock.swift */; };
+		19FAE1A52AA2DA1D00A8E7D1 /* InformationChangeRequestReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FAE1A42AA2DA1D00A8E7D1 /* InformationChangeRequestReactor.swift */; };
 		19FAEB722A85363900BB45CA /* LoginServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FAEB712A85363900BB45CA /* LoginServiceTest.swift */; };
 		19FF2D9629AE16B00055A5DF /* RegionSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */; };
 		19FF2D9829AE17FF0055A5DF /* StoreSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */; };
@@ -436,6 +437,7 @@
 		19F8FD9729BB757B0072F3E5 /* NewChangePasswordInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChangePasswordInputReactor.swift; sourceTree = "<group>"; };
 		19F917682A59047E00090099 /* DataRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepositoryMock.swift; sourceTree = "<group>"; };
 		19F9176D2A5906E200090099 /* HomeServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceMock.swift; sourceTree = "<group>"; };
+		19FAE1A42AA2DA1D00A8E7D1 /* InformationChangeRequestReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationChangeRequestReactor.swift; sourceTree = "<group>"; };
 		19FAEB712A85363900BB45CA /* LoginServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceTest.swift; sourceTree = "<group>"; };
 		19FF2D9529AE16B00055A5DF /* RegionSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSearchResponse.swift; sourceTree = "<group>"; };
 		19FF2D9729AE17FF0055A5DF /* StoreSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSearchResponse.swift; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 				191B8EAE29B491E100CF5C83 /* EditReviewReactor.swift */,
 				191B8EB829B4D75300CF5C83 /* ReviewReelsReactor.swift */,
 				191B8EBE29B4E87300CF5C83 /* ReviewReportingReactor.swift */,
+				19FAE1A42AA2DA1D00A8E7D1 /* InformationChangeRequestReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1399,6 +1402,7 @@
 				19FF9B2C29B7761700C48BD7 /* RWUserReviewCollectionViewCell.swift in Sources */,
 				196CE20D29A93F9C000809C1 /* RWMapSearchView.swift in Sources */,
 				199B9C7D299D319E00877AAE /* NewPasswordInputReactor.swift in Sources */,
+				19FAE1A52AA2DA1D00A8E7D1 /* InformationChangeRequestReactor.swift in Sources */,
 				19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */,
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
 				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,

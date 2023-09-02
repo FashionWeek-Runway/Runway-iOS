@@ -33,12 +33,17 @@ final class MapFlow: Flow {
         // TODO: later
         guard let step = step as? AppStep else { return .none }
         switch step {
+        case .dismiss:
+            rootViewController.presentedViewController?.dismiss(animated: true)
+            return .none
         case .mapTab:
             return coordinateToMapTabScreen()
         case .mapSearch(let location):
             return coordinateToMapSearchScreen(mapLocation: location)
         case .showRoomDetail(let storeId):
             return coordinateToShowRoomDetailScreen(storeId: storeId)
+        case .showRoomInformationChangeRequest(let storeId):
+            return coordinateToShowRoomInformationChangeRequestScreen(storeId: storeId)
         case .editReviewImage(let storeId, let data):
             return coordinateToEditReviewImageScreen(storeId: storeId, imageData: data)
         case .userReviewReels(let reviewId, let mode):
@@ -74,6 +79,13 @@ final class MapFlow: Flow {
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToShowRoomInformationChangeRequestScreen(storeId: Int) -> FlowContributors {
+        let reactor = InformationChangeRequestReactor(provider: provider, storeId: storeId)
+        let viewController = InformationChangeRequestViewController(with: reactor)
+        self.rootViewController.present(viewController, animated: true)
+        return .none
     }
     
     private func coordinateToEditReviewImageScreen(storeId: Int, imageData: Data) -> FlowContributors {

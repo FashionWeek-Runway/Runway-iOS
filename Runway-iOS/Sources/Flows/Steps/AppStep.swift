@@ -50,6 +50,7 @@ enum AppStep: Step {
     case mapTab
     case mapSearch((Double, Double))
     case showRoomDetail(Int)
+    case showRoomInformationChangeRequest(Int)
     case editReviewImage(Int, Data)
     case reportReview(Int)
     

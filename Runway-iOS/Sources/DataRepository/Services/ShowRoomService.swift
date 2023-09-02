@@ -47,7 +47,7 @@ final class ShowRoomService: APIService {
     func storeReport(storeId: Int, reportReason: [Int]) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(reportReason, forKey: "reportReason")
-        return request(.post, "/stores/report/\(storeId)", parameters: params, encoding: URLEncoding.default)
+        return request(.post, "stores/report/\(storeId)", parameters: params, encoding: URLEncoding.default)
     }
     
     func storeReview(storeId: Int, imageData: Data) -> Observable<UploadRequest> {

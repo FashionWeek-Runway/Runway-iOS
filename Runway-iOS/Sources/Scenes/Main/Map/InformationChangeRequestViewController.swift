@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RxSwift
+import ReactorKit
 
 final class InformationChangeRequestViewController: BaseViewController {
     
@@ -73,11 +73,23 @@ final class InformationChangeRequestViewController: BaseViewController {
         let button = RWButton()
         button.type = .primary
         button.title = "완료"
+        button.imageView?.isUserInteractionEnabled = true
         return button
     }()
     
     
     lazy var buttonStackView = UIStackView(arrangedSubviews: [addressButton, timeButton, phoneButton, instagramButton, homepageButton])
+    
+    // MARK: - initializer
+    
+    init(with reactor: InformationChangeRequestReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
 
@@ -156,6 +168,30 @@ final class InformationChangeRequestViewController: BaseViewController {
             .asDriver()
             .drive(with: self, onNext: { owner, _ in
                 owner.homepageButton.isSelected.toggle()
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension InformationChangeRequestViewController: View {
+    func bind(reactor: InformationChangeRequestReactor) {
+        [addressButton, timeButton, phoneButton, instagramButton, homepageButton].enumerated()
+            .forEach { (index, button) in
+                button.rx.tap
+                    .map { Reactor.Action.reasonButtonDidTap(index + 1) }
+                    .bind(to: reactor.action)
+                    .disposed(by: disposeBag)
+            }
+        
+        completeButton.rx.tap
+            .map { Reactor.Action.requestButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.needDismiss }
+            .filter { $0 }
+            .bind(with: self, onNext: {(owner, _) in
+                owner.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
     }

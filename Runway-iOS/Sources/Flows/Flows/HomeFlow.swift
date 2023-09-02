@@ -32,6 +32,9 @@ final class HomeFlow: Flow {
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? AppStep else { return .none }
         switch step {
+        case .dismiss:
+            rootViewController.presentedViewController?.dismiss(animated: true)
+            return .none
         case .homeTab:
             return coordinateToHomeTabScreen()
         case .categorySelect(let nickname):
@@ -40,6 +43,8 @@ final class HomeFlow: Flow {
             return coordinateToAllStoreScreen()
         case .showRoomDetail(let storeId):
             return coordinateToShowRoomDetailScreen(storeId: storeId)
+        case .showRoomInformationChangeRequest(let storeId):
+            return coordinateToShowRoomInformationChangeRequestScreen(storeId: storeId)
         case .editReviewImage(let storeId, let imageData):
             return coordinateToEditReviewImageScreen(storeId: storeId, imageData: imageData)
         case .userReviewReels(let reviewId, let mode):
@@ -89,6 +94,13 @@ final class HomeFlow: Flow {
         viewController.hidesBottomBarWhenPushed = true
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
+    private func coordinateToShowRoomInformationChangeRequestScreen(storeId: Int) -> FlowContributors {
+        let reactor = InformationChangeRequestReactor(provider: provider, storeId: storeId)
+        let viewController = InformationChangeRequestViewController(with: reactor)
+        self.rootViewController.present(viewController, animated: true)
+        return .none
     }
     
     private func coordinateToEditReviewImageScreen(storeId: Int, imageData: Data) -> FlowContributors {
