@@ -66,6 +66,13 @@ final class ShowRoomDetailViewController: BaseViewController {
         return view
     }()
     
+    private let pageIndicator: UIPageControl = {
+        let pageIndicator = UIPageControl()
+        pageIndicator.currentPageIndicatorTintColor = .white
+        pageIndicator.pageIndicatorTintColor = UIColor.white.withAlphaComponent(0.6)
+        return pageIndicator
+    }()
+    
     private let mainImageCollectionViewGradientView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.getDeviceWidth(), height: 21))
         return view
@@ -414,7 +421,7 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.width.centerX.top.bottom.equalToSuperview()
         }
         
-        containerView.addSubviews([mainImageCollectionView, mainImageCollectionViewGradientView,
+        containerView.addSubviews([mainImageCollectionView, pageIndicator, mainImageCollectionViewGradientView,
                                    showRoomTitleLabel, tagCollectionView, getDirectionButton,
                                    locationIcon, addressLabel, copyButton,
                                    timeIcon, timeLabel,
@@ -470,6 +477,12 @@ final class ShowRoomDetailViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(21)
             $0.bottom.equalTo(mainImageCollectionView.snp.bottom)
+        }
+        
+        pageIndicator.snp.makeConstraints {
+            $0.height.equalTo(6)
+            $0.centerX.equalTo(mainImageCollectionView)
+            $0.bottom.equalTo(mainImageCollectionViewGradientView).offset(-14)
         }
         
         showRoomTitleLabel.snp.makeConstraints {
@@ -668,6 +681,14 @@ final class ShowRoomDetailViewController: BaseViewController {
                 UIWindow.makeToastAnimation(message: "클립보드에 복사되었습니다.", .bottom, 20)
             }).disposed(by: disposeBag)
         
+        mainImageCollectionView.rx.didScroll
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                guard let self = self else { return }
+                let page = Int(self.mainImageCollectionView.contentOffset.x / self.mainImageCollectionView.frame.width)
+                self.pageIndicator.currentPage = page
+            }).disposed(by: disposeBag)
+        
         scrollView.rx.contentOffset
             .asDriver()
             .drive(onNext: { [weak self] offset in
@@ -864,9 +885,10 @@ extension ShowRoomDetailViewController: View {
         reactor.state.map { $0.mainImageUrlList }
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
-            .do(onNext: { [weak self] _ in
+            .do(onNext: { [weak self] items in
                 self?.mainImageSkeletonView.hideSkeleton()
                 self?.mainImageSkeletonView.isHidden = true
+                self?.pageIndicator.numberOfPages = items.count
             })
             .bind(to: mainImageCollectionView.rx.items(cellIdentifier: RWMainStoreImageCollectionViewCell.identifier, cellType: RWMainStoreImageCollectionViewCell.self)) { IndexPath, item, cell in
                 cell.storeImageView.image = nil
