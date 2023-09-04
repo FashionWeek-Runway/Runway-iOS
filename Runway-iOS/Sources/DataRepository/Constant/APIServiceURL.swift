@@ -9,8 +9,8 @@ import Foundation
 
 class APIServiceURL {
     #if RELEASE
-    static let RUNWAY_BASEURL = "https://prod.runwayserver.shop/"
+    static let RUNWAY_BASEURL = "https://prod.runway-api.link/"
     #else
-    static let RUNWAY_BASEURL = "http://runway-dev-env.eba-h3xrns2m.ap-northeast-2.elasticbeanstalk.com/"
+    static let RUNWAY_BASEURL = "https://dev.runway-api.link/"
     #endif
 }
