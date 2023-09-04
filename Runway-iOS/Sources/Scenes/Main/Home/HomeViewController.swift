@@ -13,6 +13,8 @@ import Kingfisher
 
 import SkeletonView
 
+import FirebaseAnalytics
+
 final class HomeViewController: BaseViewController {
     
     private let pagerCollectionView: UICollectionView = {
@@ -518,7 +520,8 @@ extension HomeViewController: View {
             .bind(to: instagramCollectionView.rx.items(cellIdentifier: RWHomeInstagramCollectionViewCell.identifier, cellType: RWHomeInstagramCollectionViewCell.self)) { indexPath, item, cell in
                 cell.imageURLRelay.accept(item.imgList)
                 cell.titleLabel.text = item.storeName
-                cell.descriptionLabel.text = item.instagramLink
+                cell.descriptionLabel.text = item.description
+                cell.instagramURL = URL(string: item.instagramLink)
             }.disposed(by: disposeBag)
     }
 }

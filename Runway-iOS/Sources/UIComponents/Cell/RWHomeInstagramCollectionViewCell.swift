@@ -51,6 +51,7 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
     static let identifier = "RWHomeInstagramCollectionViewCell"
     
     var imageURLRelay = PublishRelay<[String]>()
+    var instagramURL: URL? = nil
     var disposeBag = DisposeBag()
     
     // MARK: - initializer
@@ -98,10 +99,18 @@ final class RWHomeInstagramCollectionViewCell: UICollectionViewCell {
             }
             .disposed(by: disposeBag)
         
-        imageCollectionView.rx.didEndDecelerating
+        imageCollectionView.rx.didScroll
             .asDriver()
             .drive(with: self, onNext: { owner, _ in
                 owner.setImageCountLabel(itemCount: owner.imageCollectionView.numberOfItems(inSection: 0))
+            })
+            .disposed(by: disposeBag)
+        
+        imageCollectionView.rx.itemSelected
+            .asDriver()
+            .drive(with: self, onNext: { owner, indexPath in
+                guard let url = owner.instagramURL else { return }
+                UIApplication.shared.open(url)
             })
             .disposed(by: disposeBag)
     }

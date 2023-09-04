@@ -24,11 +24,13 @@ struct InstaFeed: Decodable {
     let imgList: [String]
     let instagramLink: String
     let storeName: String
+    let description: String
     
     enum CodingKeys: String, CodingKey {
         case feedId
         case imgList
         case instagramLink = "instaLink"
         case storeName
+        case description
     }
 }
