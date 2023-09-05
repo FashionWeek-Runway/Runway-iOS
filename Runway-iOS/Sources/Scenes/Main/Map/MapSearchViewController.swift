@@ -8,6 +8,8 @@
 import UIKit
 import ReactorKit
 
+import FirebaseAnalytics
+
 final class MapSearchViewController: BaseViewController {
     
     let searchField: UITextField = {
@@ -145,6 +147,10 @@ final class MapSearchViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.map_search_01
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -341,6 +347,11 @@ extension MapSearchViewController: View {
             .disposed(by: disposeBag)
         
         searchTableView.rx.itemSelected
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+                    "screen_name": Tracking.Screen.map_02.rawValue
+                ])
+            })
             .map { Reactor.Action.selectSearchItem($0.item) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

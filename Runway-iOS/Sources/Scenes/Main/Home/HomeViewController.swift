@@ -220,6 +220,10 @@ final class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.home.rawValue
+        ])
     }
 
     override func configureUI() {

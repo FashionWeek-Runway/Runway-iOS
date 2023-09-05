@@ -14,6 +14,8 @@ import RxFlow
 import ReactorKit
 import RxGesture
 
+import FirebaseAnalytics
+
 final class IdentityVerificationViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -132,6 +134,10 @@ final class IdentityVerificationViewController: BaseViewController {
         setNameFieldKeyboardToolbar()
         setBirthDayFieldKeyboardToolbar()
         setPhoneNumberFieldKeyboardToolbar()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_selfish_02.rawValue
+        ])
     }
     
     override func configureUI() {

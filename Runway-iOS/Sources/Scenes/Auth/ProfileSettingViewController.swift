@@ -15,6 +15,8 @@ import ReactorKit
 import AVFoundation
 import Photos
 
+import FirebaseAnalytics
+
 final class ProfileSettingViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -75,6 +77,10 @@ final class ProfileSettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_common_02.rawValue
+        ])
     }
     
     override func configureUI() {

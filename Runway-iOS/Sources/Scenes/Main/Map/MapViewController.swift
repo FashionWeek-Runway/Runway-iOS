@@ -14,6 +14,8 @@ import NMapsMap
 import CoreLocation
 import Kingfisher
 
+import FirebaseAnalytics
+
 final class MapViewController: BaseViewController { // naver map sdk에서 카메라 delegate 프로퍼티 지원하지 않아 delegate pattern 사용
     
     private let mapSearchBar: RWMapSearchBar = RWMapSearchBar()
@@ -190,6 +192,10 @@ final class MapViewController: BaseViewController { // naver map sdk에서 카�
         super.viewDidLoad()
         requestLocationAuthorization()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.map_01
+        ])
     }
     
     override func configureUI() {

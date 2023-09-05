@@ -12,6 +12,8 @@ import RxCocoa
 import ReactorKit
 import RxDataSources
 
+import FirebaseAnalytics
+
 final class CategorySelectViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -63,6 +65,10 @@ final class CategorySelectViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.category_01.rawValue
+        ])
     }
     
     override func configureUI() {

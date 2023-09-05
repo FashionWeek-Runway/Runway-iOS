@@ -13,6 +13,8 @@ import RxCocoa
 import Kingfisher
 import Lottie
 
+import FirebaseAnalytics
+
 final class SignUpCompleteViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -66,6 +68,10 @@ final class SignUpCompleteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .runwayBlack
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_common_04.rawValue
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {

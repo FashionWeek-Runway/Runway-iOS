@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
+import FirebaseAnalytics
+
 final class EditReviewViewController: BaseViewController {
     
     private let imageView: UIImageView = {
@@ -64,6 +66,10 @@ final class EditReviewViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.review_01
+        ])
     }
     
     override func configureUI() {

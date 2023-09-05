@@ -12,6 +12,8 @@ import RxCocoa
 import RxKeyboard
 import ReactorKit
 
+import FirebaseAnalytics
+
 final class PasswordInputViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -90,6 +92,10 @@ final class PasswordInputViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_selfish_04.rawValue
+        ])
     }
 
     

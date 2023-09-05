@@ -13,6 +13,8 @@ import ReactorKit
 
 import SafariServices
 
+import FirebaseAnalytics
+
 final class PolicyAgreementViewController: BaseViewController {
     
     
@@ -150,6 +152,10 @@ final class PolicyAgreementViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_common_01.rawValue
+        ])
     }
     
     override func configureUI() {

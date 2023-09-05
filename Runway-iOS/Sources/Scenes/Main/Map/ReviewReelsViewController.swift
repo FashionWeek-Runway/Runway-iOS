@@ -12,6 +12,8 @@ import ReactorKit
 
 import Kingfisher
 
+import FirebaseAnalytics
+
 final class ReviewReelsViewController: BaseViewController {
     
     private lazy var collectionView: UICollectionView = {

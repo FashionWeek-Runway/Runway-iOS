@@ -12,6 +12,8 @@ import RxCocoa
 import RxKeyboard
 import ReactorKit
 
+import FirebaseAnalytics
+
 final class PhoneCertificationNumberInputViewController: BaseViewController {
     
     private let guideTextLabel: UILabel = {
@@ -103,6 +105,10 @@ final class PhoneCertificationNumberInputViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.sign_selfish_03.rawValue
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {

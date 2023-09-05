@@ -12,6 +12,8 @@ import ReactorKit
 
 import SafariServices
 
+import FirebaseAnalytics
+
 final class SettingViewController: BaseViewController {
     
     private let accountLabel: UILabel = {
@@ -159,6 +161,9 @@ final class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue,
+                           parameters: ["screen_name": Tracking.Screen.my_setting_01.rawValue])
     }
     
     override func configureUI() {

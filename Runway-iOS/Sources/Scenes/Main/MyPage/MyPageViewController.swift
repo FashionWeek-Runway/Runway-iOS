@@ -12,6 +12,8 @@ import ReactorKit
 
 import Kingfisher
 
+import FirebaseAnalytics
+
 final class MyPageViewController: BaseViewController {
     
     private let myLabel: UILabel = {
@@ -221,6 +223,9 @@ final class MyPageViewController: BaseViewController {
         super.viewDidLoad()
         setRx()
         showMyReviewDatas()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue,
+                           parameters: ["screen_name": Tracking.Screen.my.rawValue])
     }
     
     override func configureUI() {

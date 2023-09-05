@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
+import FirebaseAnalytics
+
 final class PhoneLoginViewController: BaseViewController {
     
     private let loginLabel: UILabel = {
@@ -75,6 +77,10 @@ final class PhoneLoginViewController: BaseViewController {
     init(with reactor: PhoneLoginReactor) {
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.login_selfish_01.rawValue
+        ])
     }
     
     required init?(coder: NSCoder) {

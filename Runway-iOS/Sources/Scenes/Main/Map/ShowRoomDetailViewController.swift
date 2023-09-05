@@ -15,6 +15,8 @@ import SafariServices
 import AVFoundation
 import Photos
 
+import FirebaseAnalytics
+
 final class ShowRoomDetailViewController: BaseViewController {
     
     private let scrollView: UIScrollView = {
@@ -400,6 +402,10 @@ final class ShowRoomDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.map_detail.rawValue
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {

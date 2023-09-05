@@ -123,6 +123,7 @@
 		199B9C87299E087600877AAE /* RxImagePickerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */; };
 		199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */; };
 		199B9C8B299E094600877AAE /* UIImagePickerController+RxCreate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */; };
+		199BD72A2AA6382C006CCAB5 /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BD7292AA6382C006CCAB5 /* Tracking.swift */; };
 		199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */; };
 		199DF21D29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */; };
 		19A11BB0299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */; };
@@ -361,6 +362,7 @@
 		199B9C86299E087600877AAE /* RxImagePickerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxImagePickerDelegateProxy.swift; sourceTree = "<group>"; };
 		199B9C88299E092900877AAE /* UIImagePickerController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Rx.swift"; sourceTree = "<group>"; };
 		199B9C8A299E094600877AAE /* UIImagePickerController+RxCreate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+RxCreate.swift"; sourceTree = "<group>"; };
+		199BD7292AA6382C006CCAB5 /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
 		199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchHistory.swift; sourceTree = "<group>"; };
 		199DF21C29AD1E7500F36BB0 /* MapKeywordSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKeywordSearchResponse.swift; sourceTree = "<group>"; };
 		19A11BAF299E5B8A00BBD6C5 /* LoginAsKakaoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAsKakaoResponse.swift; sourceTree = "<group>"; };
@@ -999,6 +1001,7 @@
 				19E0C76F29A27FEF003E1F10 /* TokenUtils.swift */,
 				19F10C7029A67BE80060F0BD /* NSCacheManager.swift */,
 				19BC31DF29F1949600EA6D83 /* ImageCache.swift */,
+				199BD7292AA6382C006CCAB5 /* Tracking.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1483,6 +1486,7 @@
 				19345E8129955FC300E1EF9A /* ForgotPasswordViewController.swift in Sources */,
 				191B8EAB29B3B9B900CF5C83 /* MyPageInformationResponse.swift in Sources */,
 				196D23B029A5273F00E262FB /* UIScreen+.swift in Sources */,
+				199BD72A2AA6382C006CCAB5 /* Tracking.swift in Sources */,
 				198372D829BA7C0500F01CB7 /* BookmarkedStoreResponse.swift in Sources */,
 				19E0C77629A2A835003E1F10 /* MyPageViewController.swift in Sources */,
 				191B8EA929B3AD8600CF5C83 /* RWReviewCollectionViewCell.swift in Sources */,

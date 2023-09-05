@@ -9,6 +9,8 @@ import UIKit
 import ReactorKit
 import RxFlow
 
+import FirebaseAnalytics
+
 final class MainLoginViewController: BaseViewController {
     
     private let logoTextImageView: UIImageView = {
@@ -129,11 +131,21 @@ extension MainLoginViewController: View {
     func bind(reactor: MainLoginReactor) {
         
         kakaoLoginButton.rx.tap
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+                    "screen_name": Tracking.Screen.login_social_01.rawValue
+                ])
+            })
             .map { Reactor.Action.kakaoLoginButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         appleLoginButton.rx.tap
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+                    "screen_name": Tracking.Screen.login_social_01.rawValue
+                ])
+            })
             .map { Reactor.Action.appleLoginButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

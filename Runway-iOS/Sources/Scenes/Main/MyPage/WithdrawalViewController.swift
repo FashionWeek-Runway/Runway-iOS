@@ -12,6 +12,8 @@ import ReactorKit
 
 import Kingfisher
 
+import FirebaseAnalytics
+
 final class WithdrawalViewController: BaseViewController {
     
     private lazy var titleLabel: UILabel = {
@@ -117,6 +119,9 @@ final class WithdrawalViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setRx()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue,
+                           parameters: ["screen_name": Tracking.Screen.my_leave_01.rawValue])
     }
     
     override func configureUI() {

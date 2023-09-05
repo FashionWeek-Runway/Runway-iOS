@@ -13,6 +13,7 @@ import ReactorKit
 import Kingfisher
 
 import SkeletonView
+import FirebaseAnalytics
 
 final class AllStoreViewController: BaseViewController {
     
@@ -60,6 +61,10 @@ final class AllStoreViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue, parameters: [
+            "screen_name": Tracking.Screen.home_total.rawValue
+        ])
     }
     
     override func configureUI() {

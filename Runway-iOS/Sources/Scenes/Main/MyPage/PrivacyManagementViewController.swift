@@ -12,6 +12,7 @@ import RxCocoa
 import ReactorKit
 
 import SafariServices
+import FirebaseAnalytics
 
 final class PrivacyManagementViewController: BaseViewController {
     
@@ -179,6 +180,9 @@ final class PrivacyManagementViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Analytics.logEvent(Tracking.Event.lookup.rawValue,
+                           parameters: ["screen_name": Tracking.Screen.my_setting_02.rawValue])
     }
     
     override func configureUI() {
