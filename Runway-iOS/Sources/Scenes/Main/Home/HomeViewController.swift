@@ -349,6 +349,15 @@ final class HomeViewController: BaseViewController {
                 let percentage = (offset.x + self.pagerCollectionView.bounds.width) / self.pagerCollectionView.contentSize.width
                 self.pageProgressBar.setProgress(Float(percentage), animated: false)
             }).disposed(by: disposeBag)
+        
+        scrollView.rx.didScroll
+            .asDriver()
+            .drive(onNext: {
+                Analytics.logEvent(Tracking.Event.homeTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Event.homeScroll.rawValue
+                ])
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -374,6 +383,11 @@ extension HomeViewController: View {
             .disposed(by: disposeBag)
         
         pagerCollectionView.rx.modelSelected(HomeStoreResponseResult.self)
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.homeTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.homeAreaTop.rawValue
+                ])
+            })
             .map {
                 if $0.cellType == .store {
                     return Reactor.Action.pagerCellDidTap($0.storeID)
@@ -386,6 +400,11 @@ extension HomeViewController: View {
         
         userReviewCollectionView.rx.willBeginDecelerating
             .asDriver()
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.homeTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.homeAreaMid.rawValue
+                ])
+            })
             .drive(onNext: { [weak self] in
                 guard let self else { return }
                 let width = self.userReviewCollectionView.frame.width
@@ -404,6 +423,11 @@ extension HomeViewController: View {
         
         instagramCollectionView.rx.willBeginDecelerating
             .asDriver()
+            .do(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.homeTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.homeAreaBot.rawValue
+                ])
+            })
             .drive(with: self, onNext: { owner, _ in
                 let width = owner.instagramCollectionView.frame.width
                 let contentWidth = owner.instagramCollectionView.contentSize.width

@@ -683,9 +683,23 @@ final class ShowRoomDetailViewController: BaseViewController {
         copyButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
+                
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea02.rawValue
+                ])
+                
                 UIPasteboard.general.string = self?.addressLabel.text
                 UIWindow.makeToastAnimation(message: "클립보드에 복사되었습니다.", .bottom, 20)
             }).disposed(by: disposeBag)
+        
+        mainImageCollectionView.rx.itemSelected
+            .asDriver()
+            .drive(onNext: { _ in
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea01.rawValue
+                ])
+            })
+            .disposed(by: disposeBag)
         
         mainImageCollectionView.rx.didScroll
             .asDriver()
@@ -727,6 +741,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         instagramLabel.rx.tapGesture()
             .asDriver()
             .drive(onNext: { [weak self] _ in
+                
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea03.rawValue
+                ])
+                
                 guard let instagramId = self?.reactor?.currentState.instagramID,
                       let url = URL(string: instagramId) else { return }
                 if UIApplication.shared.canOpenURL(url) {
@@ -737,6 +756,11 @@ final class ShowRoomDetailViewController: BaseViewController {
         webLabel.rx.tapGesture()
             .asDriver()
             .drive(onNext: { [weak self] _ in
+                
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea04.rawValue
+                ])
+                
                 guard let webLink = self?.reactor?.currentState.webSiteLink,
                       let url = URL(string: webLink) else { return }
                 let webView = SFSafariViewController(url: url)
@@ -842,6 +866,11 @@ extension ShowRoomDetailViewController: View {
         blogReviewTableView.rx.modelSelected(ShowRoomBlogsResponseResult.self)
             .asDriver()
             .drive(onNext: { [weak self] item in
+                
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea06.rawValue
+                ])
+                
                 guard let url = URL(string: item.webURL) else { return }
                 let webView = SFSafariViewController(url: url)
                 webView.modalPresentationStyle = .pageSheet
@@ -867,6 +896,11 @@ extension ShowRoomDetailViewController: View {
         reviewCollectionView.rx.modelSelected((Int, String).self)
             .asDriver()
             .drive(onNext: { [weak self] data in
+                
+                Analytics.logEvent(Tracking.Event.detailTouch.rawValue, parameters: [
+                    "touch_name": Tracking.Screen.mapDetailArea05.rawValue
+                ])
+                
                 let action = Reactor.Action.reviewCellDidTap(data.0)
                 self?.reactor?.action.onNext(action)
             }).disposed(by: disposeBag)
