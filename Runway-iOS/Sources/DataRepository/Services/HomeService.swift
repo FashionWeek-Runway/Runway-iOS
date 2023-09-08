@@ -62,4 +62,8 @@ final class HomeService: APIService, HomeServiceProtocol {
         params.updateValue(size, forKey: "size")
         return request(.get, "home/insta", parameters: params, encoding: URLEncoding.default)
     }
+    
+    func popUp() -> Observable<DataRequest> {
+        return request(.get, "home/pop-up", encoding: URLEncoding.default)
+    }
 }
