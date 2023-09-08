@@ -97,6 +97,10 @@
 		198B9DF629CAA77000D9A0F8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 198B9DF529CAA77000D9A0F8 /* GoogleService-Info.plist */; };
 		198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2AA29976BA3000457CE /* RWPicker.swift */; };
 		198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CA2B229980136000457CE /* RWCheckLabelView.swift */; };
+		198D57172AAB25D500462F62 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D57162AAB25D500462F62 /* PopUpViewController.swift */; };
+		198D57192AAB2C2100462F62 /* PopUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D57182AAB2C2100462F62 /* PopUpReactor.swift */; };
+		198D571B2AAB2CEC00462F62 /* PopUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D571A2AAB2CEC00462F62 /* PopUpResponse.swift */; };
+		198D571D2AAB802500462F62 /* PopUpHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198D571C2AAB802500462F62 /* PopUpHistory.swift */; };
 		19917EF12994DC440016A175 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF02994DC440016A175 /* AppStep.swift */; };
 		19917EF42994DFC40016A175 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF32994DFC40016A175 /* AppFlow.swift */; };
 		19917EF62994E34F0016A175 /* LoginFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19917EF52994E34F0016A175 /* LoginFlow.swift */; };
@@ -335,6 +339,10 @@
 		198B9DF529CAA77000D9A0F8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		198CA2AA29976BA3000457CE /* RWPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWPicker.swift; sourceTree = "<group>"; };
 		198CA2B229980136000457CE /* RWCheckLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWCheckLabelView.swift; sourceTree = "<group>"; };
+		198D57162AAB25D500462F62 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		198D57182AAB2C2100462F62 /* PopUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpReactor.swift; sourceTree = "<group>"; };
+		198D571A2AAB2CEC00462F62 /* PopUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpResponse.swift; sourceTree = "<group>"; };
+		198D571C2AAB802500462F62 /* PopUpHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpHistory.swift; sourceTree = "<group>"; };
 		19917EF02994DC440016A175 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
 		19917EF32994DFC40016A175 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		19917EF52994E34F0016A175 /* LoginFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlow.swift; sourceTree = "<group>"; };
@@ -561,6 +569,7 @@
 				1948E27629BB4C8A00B8A0FB /* ProfileEditCompleteResponse.swift */,
 				190A5E0B2A863AF9001E3925 /* TokenRefreshResponse.swift */,
 				19BE69F22A91E95200AE90D8 /* InstagramFeedResponse.swift */,
+				198D571A2AAB2CEC00462F62 /* PopUpResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -727,6 +736,7 @@
 			isa = PBXGroup;
 			children = (
 				199DF21829AD050F00F36BB0 /* MapSearchHistory.swift */,
+				198D571C2AAB802500462F62 /* PopUpHistory.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -738,6 +748,7 @@
 				19E0C77329A2A82E003E1F10 /* HomeViewController.swift */,
 				19FF9B3B29B7B92C00C48BD7 /* AllStoreViewController.swift */,
 				19FF9B2F29B7ABB600C48BD7 /* CategorySelectViewController.swift */,
+				198D57162AAB25D500462F62 /* PopUpViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -748,6 +759,7 @@
 				19E0C77A29A2ABC0003E1F10 /* HomeReactor.swift */,
 				19FF9B3129B7ABEE00C48BD7 /* CategorySelectReactor.swift */,
 				19FF9B3729B7B8FE00C48BD7 /* AllStoreReactor.swift */,
+				198D57182AAB2C2100462F62 /* PopUpReactor.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1362,6 +1374,7 @@
 				19FF9B3029B7ABB600C48BD7 /* CategorySelectViewController.swift in Sources */,
 				19A96247299165B500F952DA /* AppSettingService.swift in Sources */,
 				19CA8D7229ABB8C900FE18E3 /* RWTagCollectionViewCell.swift in Sources */,
+				198D571D2AAB802500462F62 /* PopUpHistory.swift in Sources */,
 				1948130429AF61DC00C1110D /* RegionAroundMapSearchResponse.swift in Sources */,
 				1941DFE629B2522B00C7F5BA /* RWContentSizedTableView.swift in Sources */,
 				19345E7D2994F54400E1EF9A /* PhoneLoginViewController.swift in Sources */,
@@ -1379,6 +1392,7 @@
 				19A96237299157EC00F952DA /* Reactive+.swift in Sources */,
 				199B9C89299E092900877AAE /* UIImagePickerController+Rx.swift in Sources */,
 				196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */,
+				198D571B2AAB2CEC00462F62 /* PopUpResponse.swift in Sources */,
 				19BE01552998103200E7C35D /* RWAlertView.swift in Sources */,
 				198CA2B329980136000457CE /* RWCheckLabelView.swift in Sources */,
 				19BC31E029F1949600EA6D83 /* ImageCache.swift in Sources */,
@@ -1455,6 +1469,7 @@
 				191B8EBF29B4E87300CF5C83 /* ReviewReportingReactor.swift in Sources */,
 				19FF9B2629B6F71300C48BD7 /* RWHomePagerCollectionViewCell.swift in Sources */,
 				197F7D95299A40B900D6B9A4 /* RWRadioSelector.swift in Sources */,
+				198D57172AAB25D500462F62 /* PopUpViewController.swift in Sources */,
 				19A9623E29915D7400F952DA /* APIService.swift in Sources */,
 				19345E952995686300E1EF9A /* MainLoginReactor.swift in Sources */,
 				19345E872995611400E1EF9A /* NewPasswordInputViewController.swift in Sources */,
@@ -1501,6 +1516,7 @@
 				199B9C79299D1F0500877AAE /* BaseResponse.swift in Sources */,
 				1963A80429CCAE0400C98337 /* RWSlider.swift in Sources */,
 				1963A80229CCABC800C98337 /* RWReviewTextEditView.swift in Sources */,
+				198D57192AAB2C2100462F62 /* PopUpReactor.swift in Sources */,
 				19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */,
 				19BE69F52A944E5700AE90D8 /* RWInstagramImageCell.swift in Sources */,
 				19E0C77F29A2AC19003E1F10 /* MapReactor.swift in Sources */,

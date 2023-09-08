@@ -43,6 +43,7 @@ enum AppStep: Step {
     case signUpIsCompleted(nickname: String, styles: [String], imageURL: String?)
     
     // Main
+    case popUp(imageURL: URL)
     case homeTab
     case categorySelect(String)
     case showAllStore

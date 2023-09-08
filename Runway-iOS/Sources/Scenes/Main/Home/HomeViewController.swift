@@ -368,6 +368,10 @@ extension HomeViewController: View {
     }
     
     private func bindAction(reactor: HomeReactor) {
+        rx.viewDidLoad.map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rx.viewWillAppear.map { Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

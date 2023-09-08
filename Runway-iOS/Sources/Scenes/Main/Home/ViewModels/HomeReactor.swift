@@ -11,15 +11,16 @@ import ReactorKit
 import RxFlow
 import RxSwift
 import RxCocoa
-
 import Alamofire
+import RealmSwift
 
 
 final class HomeReactor: Reactor, Stepper {
+    
     // MARK: - Events
-
     
     enum Action {
+        case viewDidLoad
         case viewWillAppear
         case categorySelectButtonDidTap
         case showAllContentButtonDidTap
@@ -71,6 +72,30 @@ final class HomeReactor: Reactor, Stepper {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .viewDidLoad:
+            return provider.homeService.popUp().data().decode(type: PopUpResponse.self, decoder: JSONDecoder())
+                .flatMap { [weak self] response -> Observable<Mutation> in
+                    let realm = self?.provider.realm
+                    let histories = realm?.objects(PopUpHistory.self).sorted(byKeyPath: "date", ascending: false)
+                    var historyContainer = [PopUpHistory]()
+                    histories?.forEach {
+                        historyContainer.append($0)
+                    }
+                    
+                    if historyContainer.first(where: { $0.popUpId == response.result.first?.popUpID && $0.userId == response.result.first?.userID}) == nil {
+                        try! realm?.write {
+                            let history = PopUpHistory()
+                            history.popUpId = response.result.first!.popUpID
+                            history.userId = response.result.first!.userID
+                            realm?.create(PopUpHistory.self, value: history)
+                        }
+                        if let imageURL = URL(string: response.result.first!.imageURL) {
+                            self?.steps.accept(AppStep.popUp(imageURL: imageURL))
+                        }
+                    }
+                    return .empty()
+                }
+            
         case .viewWillAppear:
             return Observable.concat([
                 provider.homeService.home(type: .home).data().decode(type: HomeStoreResponse.self, decoder: JSONDecoder()).map {

@@ -35,6 +35,8 @@ final class HomeFlow: Flow {
         case .dismiss:
             rootViewController.presentedViewController?.dismiss(animated: true)
             return .none
+        case .popUp(let imageURL):
+            return coordinateToPopUpScreen(imageURL: imageURL)
         case .homeTab:
             return coordinateToHomeTabScreen()
         case .categorySelect(let nickname):
@@ -63,14 +65,20 @@ final class HomeFlow: Flow {
         return .none
     }
     
+    private func coordinateToPopUpScreen(imageURL: URL) -> FlowContributors {
+        let reactor = PopUpReactor(provider: provider, imageURL: imageURL)
+        let viewController = PopUpViewController(with: reactor)
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.rootViewController.parent?.present(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
+    }
+    
     private func coordinateToHomeTabScreen() -> FlowContributors {
         let reactor = HomeReactor(provider: provider)
         let viewController = HomeViewController(with: reactor)
         self.rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
     }
-    
-    
     
     private func coordinateToCategorySelectScreen(nickname: String) -> FlowContributors {
         let reactor = CategorySelectReactor(provider: provider, nickname: nickname)
