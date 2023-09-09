@@ -120,6 +120,11 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
+    private let instagramImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "icon_instagram"))
+        return view
+    }()
+    
     private let noticeLabel: UILabel = {
         let label = UILabel()
         label.text = "흥미로운 가게 소식을 알려드려요"
@@ -241,7 +246,7 @@ final class HomeViewController: BaseViewController {
         
         containerView.addSubviews([pagerCollectionView, pageProgressBar, gradientTopArea,
                                    similiarUserReviewLabel, emptyReviewImageView, emptyReviewTitleLabel, emptyReviewDescriptionLabel,
-                                   userReviewCollectionView, noticeLabel, emptyNoticeLabel, emptyNoticeImageView, instagramCollectionView
+                                   userReviewCollectionView, instagramImageView, noticeLabel, emptyNoticeLabel, emptyNoticeImageView, instagramCollectionView
                                   ])
         
         pagerCollectionView.snp.makeConstraints {
@@ -287,9 +292,14 @@ final class HomeViewController: BaseViewController {
 //            $0.bottom.equalToSuperview().offset(-(self.tabBarController?.tabBar.frame.height ?? 0.0) - 10.0)
         }
         
+        instagramImageView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(18)
+            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(32)
+        }
+        
         noticeLabel.snp.makeConstraints {
-            $0.top.equalTo(userReviewCollectionView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(20)
+            $0.centerY.equalTo(instagramImageView)
+            $0.leading.equalTo(instagramImageView.snp.trailing).offset(8)
         }
         
         emptyNoticeLabel.snp.makeConstraints {
