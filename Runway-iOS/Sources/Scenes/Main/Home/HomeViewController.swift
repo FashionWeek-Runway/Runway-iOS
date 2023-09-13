@@ -360,9 +360,9 @@ final class HomeViewController: BaseViewController {
                 self.pageProgressBar.setProgress(Float(percentage), animated: false)
             }).disposed(by: disposeBag)
         
-        scrollView.rx.didScroll
+        pagerCollectionView.rx.didEndDragging
             .asDriver()
-            .drive(onNext: {
+            .drive(onNext: {  _ in
                 Analytics.logEvent(Tracking.Event.homeTouch.rawValue, parameters: [
                     "touch_name": Tracking.Event.homeScroll.rawValue
                 ])

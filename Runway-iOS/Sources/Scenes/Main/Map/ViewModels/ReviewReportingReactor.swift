@@ -48,13 +48,15 @@ final class ReviewReportingReactor: Reactor, Stepper {
     var steps = PublishRelay<Step>()
     
     let initialState: State
+    let reviewId: Int
     let provider: ServiceProviderType
     
     private let disposeBag = DisposeBag()
     
     // MARK: - initializer
-    init(provider: ServiceProviderType) {
+    init(provider: ServiceProviderType, reviewId: Int) {
         self.provider = provider
+        self.reviewId = reviewId
         self.initialState = State()
     }
     
@@ -97,8 +99,13 @@ final class ReviewReportingReactor: Reactor, Stepper {
         case .enterOpinion(let text):
             return .just(.setOpinion(text ?? ""))
         case .reportButtonDidTap:
-            steps.accept(AppStep.back(animated: true))
-            return .empty()
+            guard let reportReason = currentState.reportingReason else { return .empty() }
+            
+            return provider.showRoomService.reviewReport(reviewId: reviewId, reportReason: reportReason, opinion: currentState.opinion)
+                .flatMap { [weak self] response -> Observable<Mutation> in
+                    self?.steps.accept(AppStep.back(animated: true))
+                    return .empty()
+                }
         }
     }
     

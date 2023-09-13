@@ -133,7 +133,7 @@ final class MyPageFlow: Flow {
     }
     
     private func coordinateToReviewReportingScreen(reviewId: Int) -> FlowContributors {
-        let reactor = ReviewReportingReactor(provider: provider)
+        let reactor = ReviewReportingReactor(provider: provider, reviewId: reviewId)
         let viewController = ReviewReportingViewController(with: reactor)
         self.rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: reactor))
