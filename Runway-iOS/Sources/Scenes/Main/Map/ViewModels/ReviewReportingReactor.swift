@@ -101,7 +101,7 @@ final class ReviewReportingReactor: Reactor, Stepper {
         case .reportButtonDidTap:
             guard let reportReason = currentState.reportingReason else { return .empty() }
             
-            return provider.showRoomService.reviewReport(reviewId: reviewId, reportReason: reportReason, opinion: currentState.opinion)
+            return provider.showRoomService.reviewReport(reviewId: reviewId, report: reportReason, opinion: currentState.opinion)
                 .flatMap { [weak self] response -> Observable<Mutation> in
                     self?.steps.accept(AppStep.back(animated: true))
                     return .empty()

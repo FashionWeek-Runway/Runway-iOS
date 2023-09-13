@@ -73,10 +73,10 @@ final class ShowRoomService: APIService {
         return request(.patch, "stores/review/detail/\(reviewId)")
     }
     
-    func reviewReport(reviewId: Int, reportReason: Int, opinion: String) -> Observable<DataRequest> {
+    func reviewReport(reviewId: Int, report: Int, opinion: String) -> Observable<DataRequest> {
         var params = Parameters()
         params.updateValue(reviewId, forKey: "reviewId")
-        params.updateValue(reportReason, forKey: "reportReason")
+        params.updateValue(report, forKey: "reason")
         params.updateValue(opinion, forKey: "opinion")
         
         return request(.post, "stores/review/report", parameters: params, encoding: JSONEncoding.default)
