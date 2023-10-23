@@ -65,7 +65,6 @@
 		196662BB299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BA299B6C3000BD0897 /* FashionStyleCollectionViewCell.swift */; };
 		196662BD299B73F400BD0897 /* CategorySettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196662BC299B73F400BD0897 /* CategorySettingReactor.swift */; };
 		196A3E3A29C4F5830091C7EB /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 196A3E3929C4F5830091C7EB /* confetti.json */; };
-		196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED3F298E5C16007A9E23 /* AppDelegate.swift */; };
 		196AED42298E5C16007A9E23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED41298E5C16007A9E23 /* SceneDelegate.swift */; };
 		196AED49298E5C16007A9E23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AED48298E5C16007A9E23 /* Assets.xcassets */; };
 		196AED61298E5C17007A9E23 /* Runway_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */; };
@@ -108,6 +107,8 @@
 		1993ACFA2994197700BEE983 /* RWTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1993ACF92994197700BEE983 /* RWTextField.swift */; };
 		199613322AE59B4800645062 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 199613312AE59B4800645062 /* Secrets.plist */; };
 		199613342AE59B5A00645062 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199613332AE59B5A00645062 /* Bundle+.swift */; };
+		199613432AE604F600645062 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199613422AE604F600645062 /* AppDelegate.swift */; };
+		199613472AE6051300645062 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 199613462AE6051300645062 /* Info.plist */; };
 		199B9C54299BACE500877AAE /* RWProfileTagCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */; };
 		199B9C56299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */; };
 		199B9C58299BE74700877AAE /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */; };
@@ -306,10 +307,8 @@
 		196662BC299B73F400BD0897 /* CategorySettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySettingReactor.swift; sourceTree = "<group>"; };
 		196A3E3929C4F5830091C7EB /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		196AED3C298E5C16007A9E23 /* Runway-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Runway-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		196AED3F298E5C16007A9E23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AED41298E5C16007A9E23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		196AED48298E5C16007A9E23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		196AED4D298E5C16007A9E23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		196AED52298E5C17007A9E23 /* Runway-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED5C298E5C17007A9E23 /* Runway-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runway-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AED60298E5C17007A9E23 /* Runway_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Runway_iOSUITests.swift; sourceTree = "<group>"; };
@@ -352,6 +351,8 @@
 		1993ACF92994197700BEE983 /* RWTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWTextField.swift; sourceTree = "<group>"; };
 		199613312AE59B4800645062 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		199613332AE59B5A00645062 /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
+		199613422AE604F600645062 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		199613462AE6051300645062 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		199B9C53299BACE500877AAE /* RWProfileTagCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWProfileTagCardView.swift; sourceTree = "<group>"; };
 		199B9C55299BB0C100877AAE /* Helvetica93-ExtendedBlack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica93-ExtendedBlack.ttf"; sourceTree = "<group>"; };
 		199B9C57299BE74700877AAE /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
@@ -918,7 +919,7 @@
 			isa = PBXGroup;
 			children = (
 				19A96238299158FD00F952DA /* Assets */,
-				196AED4D298E5C16007A9E23 /* Info.plist */,
+				199613462AE6051300645062 /* Info.plist */,
 				19A9622B2991529600F952DA /* Fonts */,
 			);
 			path = Resources;
@@ -934,7 +935,7 @@
 				19A9621F2991303B00F952DA /* Scenes */,
 				19917EED2994D8570016A175 /* Flows */,
 				19A9621E29912FD800F952DA /* Extensions */,
-				196AED3F298E5C16007A9E23 /* AppDelegate.swift */,
+				199613422AE604F600645062 /* AppDelegate.swift */,
 				196AED41298E5C16007A9E23 /* SceneDelegate.swift */,
 				19488E9F29C31A5E002540F9 /* LaunchScreenViewController.swift */,
 			);
@@ -1225,6 +1226,7 @@
 				198B9DF629CAA77000D9A0F8 /* GoogleService-Info.plist in Resources */,
 				19A962332991566A00F952DA /* SpoqaHanSansNeo-Regular.otf in Resources */,
 				19A962342991566A00F952DA /* SpoqaHanSansNeo-Thin.otf in Resources */,
+				199613472AE6051300645062 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1431,6 +1433,7 @@
 				199613342AE59B5A00645062 /* Bundle+.swift in Sources */,
 				19E0C77229A2A673003E1F10 /* MainFlow.swift in Sources */,
 				1939390229A0D12A0037810A /* MapViewController.swift in Sources */,
+				199613432AE604F600645062 /* AppDelegate.swift in Sources */,
 				19F10C7329A680100060F0BD /* MapMarkerData.swift in Sources */,
 				1941DFE229B24A6B00C7F5BA /* ShowRoomBlogsResponse.swift in Sources */,
 				19938A1729B2026D00234C5D /* ShowRoomDetailResponse.swift in Sources */,
@@ -1439,7 +1442,6 @@
 				1979591229939D5F009A4DDE /* APIServiceURL.swift in Sources */,
 				199B9C7B299D28A900877AAE /* SignUpAsPhoneData.swift in Sources */,
 				19E0C7A529A3B2B7003E1F10 /* Reactive+NMFMapView.swift in Sources */,
-				196AED40298E5C16007A9E23 /* AppDelegate.swift in Sources */,
 				198CA2AB29976BA3000457CE /* RWPicker.swift in Sources */,
 				19345E832995603C00E1EF9A /* PhoneCertificationNumberInputViewController.swift in Sources */,
 				190A5E0A2A85ACF3001E3925 /* RequestAuthInterceptor.swift in Sources */,
