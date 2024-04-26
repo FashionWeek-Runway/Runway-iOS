@@ -58,18 +58,19 @@ final class MainFlow: Flow {
             let myPageTabbarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_my_off"), selectedImage: UIImage(named: "icon_my_on"))
             myPageTabbarItem.imageInsets = UIEdgeInsets(top: 12.0, left: 0, bottom: -12.0, right: 0)
             flow3Root.tabBarItem = myPageTabbarItem
-            
+
             self.rootViewController.setViewControllers([flow1Root, flow2Root, flow3Root], animated: false)
-            switch RemoteConfigValues.shared.string(forKey: .initialScreenDuration) {
-            case "map":
-                self.rootViewController.selectedIndex = 1
-            default: // home
-                self.rootViewController.selectedIndex = 0
-            }
         }
 
         UserDefaults.standard.set(Date.now, forKey: "firstScreenOpenTime")
         UserDefaults.standard.set(false, forKey: "didSendFirstScreenTime")
+        
+        switch RemoteConfigValues.shared.string(forKey: .initialScreen) {
+        case "map":
+            self.rootViewController.selectedIndex = 1
+        default: // home
+            self.rootViewController.selectedIndex = 0
+        }
         return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
                                             .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),
                                             .contribute(withNextPresentable: myPageFlow, withNextStepper: OneStepper(withSingleStep: AppStep.myPageTab))])
