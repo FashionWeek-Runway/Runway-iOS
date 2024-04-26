@@ -7,6 +7,7 @@
 
 import UIKit
 import RxFlow
+import FirebaseAnalytics
 
 final class MainFlow: Flow {
     var root: Presentable {
@@ -20,7 +21,7 @@ final class MainFlow: Flow {
         tabBarController.tabBar.backgroundColor = .white
         return tabBarController
     }()
-    
+
     // MARK: - intializer
     
     init(with provider: ServiceProviderType) {
@@ -59,8 +60,16 @@ final class MainFlow: Flow {
             flow3Root.tabBarItem = myPageTabbarItem
             
             self.rootViewController.setViewControllers([flow1Root, flow2Root, flow3Root], animated: false)
-            self.rootViewController.selectedIndex = 0
+            switch RemoteConfigValues.shared.string(forKey: .initialScreenDuration) {
+            case "map":
+                self.rootViewController.selectedIndex = 1
+            default: // home
+                self.rootViewController.selectedIndex = 0
+            }
         }
+
+        UserDefaults.standard.set(Date.now, forKey: "firstScreenOpenTime")
+        UserDefaults.standard.set(false, forKey: "didSendFirstScreenTime")
         return .multiple(flowContributors: [.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
                                             .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),
                                             .contribute(withNextPresentable: myPageFlow, withNextStepper: OneStepper(withSingleStep: AppStep.myPageTab))])

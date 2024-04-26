@@ -27,6 +27,7 @@ target 'Runway-iOS' do
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/RemoteConfig'
 
   target 'Runway-iOSTests' do
     inherit! :search_paths

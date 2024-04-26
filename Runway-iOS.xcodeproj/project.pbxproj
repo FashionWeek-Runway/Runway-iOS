@@ -151,6 +151,7 @@
 		19AB007F299E36E2006D2FCF /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB007E299E36E2006D2FCF /* String+.swift */; };
 		19AB0081299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB0080299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift */; };
 		19AB0083299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AB0082299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift */; };
+		19AFAF722BDBF4F6000E6A8C /* RemoteConfigValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AFAF712BDBF4F6000E6A8C /* RemoteConfigValues.swift */; };
 		19BC31E029F1949600EA6D83 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BC31DF29F1949600EA6D83 /* ImageCache.swift */; };
 		19BE015329980ED700E7C35D /* RWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE015229980ED700E7C35D /* RWAlertViewController.swift */; };
 		19BE01552998103200E7C35D /* RWAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE01542998103200E7C35D /* RWAlertView.swift */; };
@@ -396,6 +397,7 @@
 		19AB007E299E36E2006D2FCF /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		19AB0080299E39B7006D2FCF /* ForgotPasswordPhoneCertificationNumberInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPhoneCertificationNumberInputViewController.swift; sourceTree = "<group>"; };
 		19AB0082299E3A28006D2FCF /* ForgotPasswordPhoneCertificationNumberInputReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordPhoneCertificationNumberInputReactor.swift; sourceTree = "<group>"; };
+		19AFAF712BDBF4F6000E6A8C /* RemoteConfigValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigValues.swift; sourceTree = "<group>"; };
 		19BC31DF29F1949600EA6D83 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		19BE015229980ED700E7C35D /* RWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertViewController.swift; sourceTree = "<group>"; };
 		19BE01542998103200E7C35D /* RWAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWAlertView.swift; sourceTree = "<group>"; };
@@ -1020,6 +1022,7 @@
 				19F10C7029A67BE80060F0BD /* NSCacheManager.swift */,
 				19BC31DF29F1949600EA6D83 /* ImageCache.swift */,
 				199BD7292AA6382C006CCAB5 /* Tracking.swift */,
+				19AFAF712BDBF4F6000E6A8C /* RemoteConfigValues.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1501,6 +1504,7 @@
 				1939390429A14E3E0037810A /* AppleLoginResponse.swift in Sources */,
 				19BE69F72A9483D500AE90D8 /* InformationChangeRequestViewController.swift in Sources */,
 				190A5E0C2A863AF9001E3925 /* TokenRefreshResponse.swift in Sources */,
+				19AFAF722BDBF4F6000E6A8C /* RemoteConfigValues.swift in Sources */,
 				19A962492991666D00F952DA /* HeaderInterceptor.swift in Sources */,
 				199DF21929AD050F00F36BB0 /* MapSearchHistory.swift in Sources */,
 				199B9C5A299BEBAC00877AAE /* SignUpService.swift in Sources */,

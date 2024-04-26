@@ -231,6 +231,22 @@ final class HomeViewController: BaseViewController {
         ])
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if !UserDefaults.standard.bool(forKey: "didSendFirstScreenTime") {
+            UserDefaults.standard.set(true, forKey: "didSendFirstScreenTime")
+            guard let firstOpenTime = UserDefaults.standard.value(forKey: "firstScreenOpenTime") as? Date else { return }
+
+            Analytics.logEvent(
+                "first_screen_duration",
+                parameters: [
+                    "seconds": Date.timeIntervalSince(firstOpenTime)
+                ]
+            )
+        }
+    }
+
     override func configureUI() {
         super.configureUI()
         view.addSubviews([scrollView])

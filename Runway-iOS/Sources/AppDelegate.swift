@@ -32,7 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-    
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.standard.removeObject(forKey: "firstScreenOpenTime")
+        UserDefaults.standard.removeObject(forKey: "didSendFirstScreenTime")
+    }
+
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
